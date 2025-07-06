@@ -3,9 +3,9 @@ import Image from "astro/components/Image.astro";
 
 const games = [
     {
-        id: "minecraft",
         name: 'Minecraft',
         icon: 'https://www.minecraft.net/content/dam/minecraftnet/franchise/logos/Homepage_Download-Launcher_Creeper-Logo_500x500.png',
+        logo: 'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg',
         slides: [
             'https://cdn.discordapp.com/attachments/1334920071331709009/1390432621728759828/image.png?ex=686b888a&is=686a370a&hm=33961f87c1066a01f09611b539cd3b4a4e1110dba9331bc03c057c06dda0ace1&',
             'https://cdn.discordapp.com/attachments/1334920071331709009/1390432057225904230/image.png?ex=686b8803&is=686a3683&hm=0e7549697bb9eec14521572ad001f2f9af7ad71ccced8315cdfad822ccd89cb7&',
@@ -15,9 +15,9 @@ const games = [
         ]
     },
     {
-        id: "palworld",
         name: 'Palworld',
         icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
+        logo: 'https://cdn2.steamgriddb.com/logo_thumb/f4d2c65fbcc14da4fc777d0cf119062d.png',
         slides: [
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
@@ -48,8 +48,9 @@ const games = [
                         ))}
 
                         <div class="flex justify-center w-full">
-                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-6 rounded-xl absolute top-2/5 transform -translate-y-1/2 shadow-lg transition-all duration-500 opacity-0 border-2">
-                                <h2 class="text-3xl font-bold text-center bg-clip-text text-transparent bg-white game-title">{game.name}</h2>
+                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-6 rounded-xl absolute top-2/5 transform -translate-y-1/2 shadow-lg transition-all duration-500 opacity-0">
+                                <Image src={game.logo} alt={game.name} class="w-100 h-100 object-contain shadow-lg"
+                                       width={100} height={100}/>
                             </div>
                         </div>
                         <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-center w-full gap-8">
