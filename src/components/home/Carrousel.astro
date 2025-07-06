@@ -9,7 +9,9 @@ const games = [
         slides: [
             'https://cdn.discordapp.com/attachments/1334920071331709009/1390432621728759828/image.png?ex=686b888a&is=686a370a&hm=33961f87c1066a01f09611b539cd3b4a4e1110dba9331bc03c057c06dda0ace1&',
             'https://cdn.discordapp.com/attachments/1334920071331709009/1390432057225904230/image.png?ex=686b8803&is=686a3683&hm=0e7549697bb9eec14521572ad001f2f9af7ad71ccced8315cdfad822ccd89cb7&',
-            'https://cdn.discordapp.com/attachments/1334920071331709009/1390432055745315017/image.png?ex=686b8803&is=686a3683&hm=290fdb6449ce57852cdd7c3450c3cbc8b9ef37e52a9d47d955142ed061604cc0&'
+            'https://cdn.discordapp.com/attachments/1334920071331709009/1390432055745315017/image.png?ex=686b8803&is=686a3683&hm=290fdb6449ce57852cdd7c3450c3cbc8b9ef37e52a9d47d955142ed061604cc0&',
+            'https://cdn.discordapp.com/attachments/1112800068794331137/1391382492350779493/image.png?ex=686bb16c&is=686a5fec&hm=909b07aa565d91f1299f537ac2e53b1996140dae9c21290be864a6656e6ce8c5&',
+            'https://cdn.discordapp.com/attachments/1112800068794331137/1390750840662261872/image.png?ex=686b5f67&is=686a0de7&hm=5bddec7cfecdb799aff284f2a2618b0bb8fd435e2ab276a487fd69f2e0ef979a&'
         ]
     },
     {
@@ -29,7 +31,10 @@ const games = [
         {games.map((game, i) => (
                 <div class="w-screen hidden" id="carrousel-game"
                      data-game={i}>
+
                     <div class="relative w-screen md:h-screen h-120 overflow-hidden" id={`carousel-${i}`}>
+
+                        <!-- Image de fond du carrousel -->
                         {game.slides.map((src, j) => (
                                 <Image
                                         src={src}
@@ -41,15 +46,16 @@ const games = [
                                         height={100}
                                 />
                         ))}
+
                         <div class="flex justify-center w-full">
-                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 backdrop-blur-sm text-white p-6 rounded-xl absolute top-2/5 transform -translate-y-1/2 shadow-lg transition-all duration-500 opacity-0">
+                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-6 rounded-xl absolute top-2/5 transform -translate-y-1/2 shadow-lg transition-all duration-500 opacity-0 border-2">
                                 <h2 class="text-3xl font-bold text-center bg-clip-text text-transparent bg-white game-title">{game.name}</h2>
                             </div>
                         </div>
                         <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-center w-full gap-8">
                             {games.map((g, idx) => (
                                     <div
-                                            class={`game-icon text-6xl cursor-pointer transform transition duration-300 ${i === idx ? 'scale-125' : 'scale-100 hover:scale-110'}`}
+                                            class={`game-icon text-6xl cursor-pointer transform transition duration-300`}
                                             data-index={idx}
                                     >
                                         <Image
@@ -74,7 +80,6 @@ const games = [
     window.addEventListener("DOMContentLoaded", () => {
         const carousels = document.querySelectorAll('#carrousel-game');
         const icons = document.querySelectorAll('.game-icon');
-        const titles = document.querySelectorAll('.game-title');
 
         const showCarousel = (carousel, direction = 'right') => {
             carousel.classList.remove('hidden');
@@ -97,18 +102,6 @@ const games = [
                     titleContainer.style.transform = 'translateY(0)';
                 }
             }, 300);
-
-            // Update icons scale
-            const gameIndex = parseInt(carousel.dataset.game);
-            icons.forEach((icon, idx) => {
-                if (idx === gameIndex) {
-                    icon.classList.add('scale-125');
-                    icon.classList.remove('scale-100');
-                } else {
-                    icon.classList.remove('scale-125');
-                    icon.classList.add('scale-100');
-                }
-            });
         };
 
         showCarousel(carousels[0]);
