@@ -27,32 +27,35 @@ const games = [
 <div class="w-full">
     <div id="container-carrousel" class="w-full">
         {games.map((game, i) => (
-                <div class="w-screen hidden" id="carrousel-game" data-game={i}>
+                <div class="w-screen hidden" id="carrousel-game"
+                     data-game={i}>
                     <div class="relative w-screen md:h-screen h-120 overflow-hidden" id={`carousel-${i}`}>
                         {game.slides.map((src, j) => (
                                 <Image
                                         src={src}
                                         alt={`${game.name} slide ${j + 1}`}
-                                        class={`carousel-slide absolute top-0 left-0 w-screen h-full object-cover transition-opacity duration-700 ease-in-out ${j === 0 ? 'opacity-100' : 'opacity-0'}`}
+                                        class={`carousel-slide absolute top-0 left-0 w-screen h-full object-cover transition-all duration-500 ease-in-out opacity-0 scale-105 translate-x-4`}
                                         id="carousel-slide"
                                         loading="lazy"
                                         width={100}
                                         height={100}
                                 />
                         ))}
-                        <div class="bg-white text-black p-4 justify-center rounded-md absolute left-1/2 top-2/5 transform -translate-x-1/2 -translate-y-1/2">
-                            <h2 class="text-2xl font-semibold text-center">{game.name}</h2>
+                        <div class="flex justify-center w-full">
+                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 backdrop-blur-sm text-white p-6 rounded-xl absolute top-2/5 transform -translate-y-1/2 shadow-lg transition-all duration-500 opacity-0">
+                                <h2 class="text-3xl font-bold text-center bg-clip-text text-transparent bg-white game-title">{game.name}</h2>
+                            </div>
                         </div>
                         <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-center w-full gap-8">
                             {games.map((g, idx) => (
                                     <div
-                                            class={`game-icon text-6xl cursor-pointer hover:scale-110 transform transition`}
+                                            class={`game-icon text-6xl cursor-pointer transform transition duration-300 ${i === idx ? 'scale-125' : 'scale-100 hover:scale-110'}`}
                                             data-index={idx}
                                     >
-                                    <Image
+                                        <Image
                                                 src={g.icon}
                                                 alt={g.name}
-                                                class="w-12 h-12 object-contain"
+                                                class="w-16 h-16 object-contain rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
                                                 width={100}
                                                 height={100}
                                         />
@@ -71,26 +74,80 @@ const games = [
     window.addEventListener("DOMContentLoaded", () => {
         const carousels = document.querySelectorAll('#carrousel-game');
         const icons = document.querySelectorAll('.game-icon');
+        const titles = document.querySelectorAll('.game-title');
 
-        carousels[0].classList.remove('hidden');
+        const showCarousel = (carousel, direction = 'right') => {
+            carousel.classList.remove('hidden');
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const titleContainer = carousel.querySelector('.bg-gradient-to-r');
+
+            slides.forEach(slide => {
+                slide.classList.remove('translate-x-4', '-translate-x-4');
+                slide.classList.add(direction === 'right' ? 'translate-x-4' : '-translate-x-4');
+            });
+
+            setTimeout(() => {
+                slides[0].classList.add('opacity-100', 'scale-100');
+                slides[0].classList.remove(direction === 'right' ? 'translate-x-4' : '-translate-x-4');
+            }, 50);
+
+            setTimeout(() => {
+                if (titleContainer) {
+                    titleContainer.style.opacity = '1';
+                    titleContainer.style.transform = 'translateY(0)';
+                }
+            }, 300);
+
+            // Update icons scale
+            const gameIndex = parseInt(carousel.dataset.game);
+            icons.forEach((icon, idx) => {
+                if (idx === gameIndex) {
+                    icon.classList.add('scale-125');
+                    icon.classList.remove('scale-100');
+                } else {
+                    icon.classList.remove('scale-125');
+                    icon.classList.add('scale-100');
+                }
+            });
+        };
+
+        showCarousel(carousels[0]);
 
         const clearIntervals = () => {
             intervals.forEach(interval => clearInterval(interval));
             intervals = [];
         };
 
-        const switchToGame = (gameIndex) => {
+        const switchToGame = (gameIndex, currentCarousel) => {
+            if (currentCarousel === carousels[gameIndex]) return;
+
+            const direction = gameIndex > parseInt(currentCarousel.dataset.game) ? 'right' : 'left';
+
             clearIntervals();
 
             carousels.forEach(carousel => {
-                carousel.classList.add('hidden');
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const titleContainer = carousel.querySelector('.bg-gradient-to-r');
+
+                slides.forEach(slide => {
+                    slide.classList.remove('opacity-100', 'scale-100', 'translate-x-0');
+                    slide.classList.add('opacity-0', 'scale-105');
+                    slide.classList.add(direction === 'right' ? '-translate-x-4' : 'translate-x-4');
+                });
+
+                if (titleContainer) {
+                    titleContainer.style.opacity = '0';
+                    titleContainer.style.transform = 'translateY(-20px)';
+                }
+
+                setTimeout(() => {
+                    carousel.classList.add('hidden');
+                }, 300);
             });
 
-            carousels[gameIndex].classList.remove('hidden');
-
-            icons.forEach((icon, idx) => {
-                const isCurrentGame = idx === Number(gameIndex);
-            });
+            setTimeout(() => {
+                showCarousel(carousels[gameIndex], direction);
+            }, 300);
 
             startCarousel(carousels[gameIndex]);
         };
@@ -98,25 +155,45 @@ const games = [
         icons.forEach((icon) => {
             icon.addEventListener('click', (e) => {
                 const gameIndex = e.currentTarget.dataset.index;
-                switchToGame(gameIndex);
+                const currentCarousel = document.querySelector('#carrousel-game:not(.hidden)');
+                switchToGame(gameIndex, currentCarousel);
             });
         });
 
         const startCarousel = (carousel) => {
-            const images = carousel.querySelectorAll('.carousel-slide');
+            const slides = carousel.querySelectorAll('.carousel-slide');
             let current = 0;
 
+            slides[current].classList.add('opacity-100', 'scale-100', 'translate-x-0');
+
             const interval = setInterval(() => {
-                images[current].classList.remove('opacity-100');
-                images[current].classList.add('opacity-0');
-                current = (current + 1) % images.length;
-                images[current].classList.remove('opacity-0');
-                images[current].classList.add('opacity-100');
-            }, 3000);
+                slides[current].classList.remove('opacity-100', 'scale-100', 'translate-x-0');
+                slides[current].classList.add('opacity-0', 'scale-105', 'translate-x-4');
+                current = (current + 1) % slides.length;
+                setTimeout(() => {
+                    slides[current].classList.remove('opacity-0', 'scale-105', 'translate-x-4');
+                    slides[current].classList.add('opacity-100', 'scale-100', 'translate-x-0');
+                }, 50);
+            }, 5000);
 
             intervals.push(interval);
         };
 
         startCarousel(carousels[0]);
+
+        // Initialize title containers
+        document.querySelectorAll('.bg-gradient-to-r').forEach(container => {
+            container.style.transition = 'all 0.5s ease-out';
+            container.style.transform = 'translateY(-20px)';
+        });
+
+        // Show initial title with animation
+        const initialTitleContainer = carousels[0].querySelector('.bg-gradient-to-r');
+        if (initialTitleContainer) {
+            setTimeout(() => {
+                initialTitleContainer.style.opacity = '1';
+                initialTitleContainer.style.transform = 'translateY(0)';
+            }, 50);
+        }
     });
 </script>
