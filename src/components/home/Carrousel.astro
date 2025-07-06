@@ -1,8 +1,11 @@
 ---
+import Image from "astro/components/Image.astro";
+
 const games = [
     {
+        id: "minecraft",
         name: 'Minecraft',
-        icon: '🏗️',
+        icon: 'https://www.minecraft.net/content/dam/minecraftnet/franchise/logos/Homepage_Download-Launcher_Creeper-Logo_500x500.png',
         slides: [
             'https://cdn.discordapp.com/attachments/1334920071331709009/1390432621728759828/image.png?ex=686b888a&is=686a370a&hm=33961f87c1066a01f09611b539cd3b4a4e1110dba9331bc03c057c06dda0ace1&',
             'https://cdn.discordapp.com/attachments/1334920071331709009/1390432057225904230/image.png?ex=686b8803&is=686a3683&hm=0e7549697bb9eec14521572ad001f2f9af7ad71ccced8315cdfad822ccd89cb7&',
@@ -10,23 +13,15 @@ const games = [
         ]
     },
     {
+        id: "palworld",
         name: 'Palworld',
-        icon: '🐲',
+        icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
         slides: [
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&'
         ]
     },
-    {
-        name: 'Pokémon',
-        icon: '⚡',
-        slides: [
-            '/valorant/slide1.jpg',
-            '/valorant/slide2.jpg',
-            '/valorant/slide3.jpg'
-        ]
-    }
 ];
 ---
 <div class="w-full">
@@ -35,11 +30,14 @@ const games = [
                 <div class="w-screen hidden" id="carrousel-game" data-game={i}>
                     <div class="relative w-screen md:h-screen h-120 overflow-hidden" id={`carousel-${i}`}>
                         {game.slides.map((src, j) => (
-                                <img
+                                <Image
                                         src={src}
                                         alt={`${game.name} slide ${j + 1}`}
-                                        class={`absolute top-0 left-0 w-screen h-full object-cover transition-opacity duration-700 ease-in-out ${j === 0 ? 'opacity-100' : 'opacity-0'}`}
+                                        class={`carousel-slide absolute top-0 left-0 w-screen h-full object-cover transition-opacity duration-700 ease-in-out ${j === 0 ? 'opacity-100' : 'opacity-0'}`}
+                                        id="carousel-slide"
                                         loading="lazy"
+                                        width={100}
+                                        height={100}
                                 />
                         ))}
                         <div class="bg-white text-black p-4 justify-center rounded-md absolute left-1/2 top-2/5 transform -translate-x-1/2 -translate-y-1/2">
@@ -47,8 +45,18 @@ const games = [
                         </div>
                         <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-center w-full gap-8">
                             {games.map((g, idx) => (
-                                    <span class={`text-6xl cursor-pointer game-icon ${i === idx ? 'scale-125' : 'opacity-75'}`}
-                                          data-index={idx}>{g.icon}</span>
+                                    <div
+                                            class={`game-icon text-6xl cursor-pointer hover:scale-110 transform transition`}
+                                            data-index={idx}
+                                    >
+                                    <Image
+                                                src={g.icon}
+                                                alt={g.name}
+                                                class="w-12 h-12 object-contain"
+                                                width={100}
+                                                height={100}
+                                        />
+                                    </div>
                             ))}
                         </div>
                     </div>
@@ -58,14 +66,22 @@ const games = [
 </div>
 
 <script type="module">
+    let intervals = [];
+
     window.addEventListener("DOMContentLoaded", () => {
         const carousels = document.querySelectorAll('#carrousel-game');
-        const buttons = document.querySelectorAll('.game-select-btn');
         const icons = document.querySelectorAll('.game-icon');
 
         carousels[0].classList.remove('hidden');
 
+        const clearIntervals = () => {
+            intervals.forEach(interval => clearInterval(interval));
+            intervals = [];
+        };
+
         const switchToGame = (gameIndex) => {
+            clearIntervals();
+
             carousels.forEach(carousel => {
                 carousel.classList.add('hidden');
             });
@@ -73,39 +89,34 @@ const games = [
             carousels[gameIndex].classList.remove('hidden');
 
             icons.forEach((icon, idx) => {
-                if (idx === parseInt(gameIndex)) {
-                    icon.classList.add('scale-125');
-                    icon.classList.remove('opacity-75');
-                } else {
-                    icon.classList.remove('scale-125');
-                    icon.classList.add('opacity-75');
-                }
+                const isCurrentGame = idx === Number(gameIndex);
             });
+
+            startCarousel(carousels[gameIndex]);
         };
 
-        buttons.forEach(button => {
-            button.addEventListener('click', () => {
-                switchToGame(button.dataset.game);
+        icons.forEach((icon) => {
+            icon.addEventListener('click', (e) => {
+                const gameIndex = e.currentTarget.dataset.index;
+                switchToGame(gameIndex);
             });
         });
 
-        icons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                switchToGame(icon.dataset.index);
-            });
-        });
-
-        carousels.forEach((carousel) => {
-            const images = carousel.querySelectorAll('img');
+        const startCarousel = (carousel) => {
+            const images = carousel.querySelectorAll('.carousel-slide');
             let current = 0;
 
-            setInterval(() => {
+            const interval = setInterval(() => {
                 images[current].classList.remove('opacity-100');
                 images[current].classList.add('opacity-0');
                 current = (current + 1) % images.length;
                 images[current].classList.remove('opacity-0');
                 images[current].classList.add('opacity-100');
             }, 3000);
-        });
+
+            intervals.push(interval);
+        };
+
+        startCarousel(carousels[0]);
     });
 </script>
