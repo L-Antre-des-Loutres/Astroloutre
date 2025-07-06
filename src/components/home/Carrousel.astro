@@ -20,7 +20,7 @@ const games = [
         logo: 'https://cdn2.steamgriddb.com/logo_thumb/f4d2c65fbcc14da4fc777d0cf119062d.png',
         slides: [
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
-            'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
+            'https://cdn.discordapp.com/attachments/1112790847256281179/1255734272493355028/image.png?ex=686beeec&is=686a9d6c&hm=27feaa2b3ec0bf0fee5e006129b11341a4c40451099b645893bc7a2589681b98&',
             'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&'
         ]
     },
@@ -28,7 +28,10 @@ const games = [
 ---
 <div class="w-full">
     <div id="container-carrousel" class="w-full">
+
+        <!-- MAP : Pour chaque jeu dans la variables games -->
         {games.map((game, i) => (
+
                 <div class="w-screen hidden" id="carrousel-game"
                      data-game={i}>
 
@@ -39,7 +42,8 @@ const games = [
                                 <Image
                                         src={src}
                                         alt={`${game.name} slide ${j + 1}`}
-                                        class={`carousel-slide absolute top-0 left-0 w-screen h-full object-cover transition-all duration-500 ease-in-out opacity-0 scale-105 translate-x-4`}
+                                        class={`carousel-slide absolute top-0 left-0 w-screen h-full object-cover 
+                                        transition-all duration-500 ease-in-out opacity-0 scale-105 translate-x-4`}
                                         id="carousel-slide"
                                         loading="lazy"
                                         width={100}
@@ -47,18 +51,26 @@ const games = [
                                 />
                         ))}
 
+                        <!-- Container Logo des jeux -->
                         <div class="flex justify-center w-full">
-                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-6 rounded-xl absolute top-2/5 transform -translate-y-1/2 shadow-lg transition-all duration-500 opacity-0">
-                                <Image src={game.logo} alt={game.name} class="w-100 h-100 object-contain shadow-lg"
+                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-6 rounded-xl
+                            absolute top-2/5 transform -translate-y-1/2 transition-all duration-500 opacity-0">
+
+                                <Image src={game.logo} alt={game.name} class="w-100 h-100 object-contain"
                                        width={100} height={100}/>
+
                             </div>
                         </div>
-                        <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-center w-full gap-8">
+
+                        <!-- Container Icone des jeux -->
+                        <div class="absolute md:top-2/4 top-2/3 transform -translate-y-1/2 flex justify-center w-full gap-8">
                             {games.map((g, idx) => (
                                     <div
                                             class={`game-icon text-6xl cursor-pointer transform transition duration-300`}
                                             data-index={idx}
                                     >
+
+                                        <!-- Icone des jeux -->
                                         <Image
                                                 src={g.icon}
                                                 alt={g.name}
