@@ -1,17 +1,21 @@
 ---
-// Header.astro
+import Image from "astro/components/Image.astro";
+import github_icon from "../assets/icons/github_icon.png";
+import discord_icon from "../assets/icons/discord_icon.png";
+import profil_icon from "../assets/icons/profil_icon.png";
+const adl_logo = "https://avatars.githubusercontent.com/u/164324475?s=48&v=4";
 ---
 
 <header>
 	<div class="header-inner">
 		<div id="left">
-			<a href="#"><img src="https://avatars.githubusercontent.com/u/164324475?s=48&v=4" alt="Logo" /></a>
+			<a href="#"><Image class="header_logo" src={adl_logo} alt="logo" width={48} height={48} /></a>
 			<h1>Antre des Loutres</h1>
 		</div>
 		<div id="right">
-			<a href="#"><img src="https://avatars.githubusercontent.com/u/164324475?s=48&v=4" alt="lien_1" /></a>
-			<a href="#"><img src="https://avatars.githubusercontent.com/u/164324475?s=48&v=4" alt="lien_2" /></a>
-			<a href="#"><img src="https://avatars.githubusercontent.com/u/164324475?s=48&v=4" alt="lien_3" /></a>
+			<a href="#"><Image src={github_icon} alt="lien_2" /></a>
+			<a href="#"><Image src={discord_icon} alt="lien_2" /></a>
+			<a href="#"><Image src={profil_icon} alt="lien_3" /></a>
 		</div>
 	</div>
 </header>
@@ -32,14 +36,18 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		background-color: white;
+		background-color: rgba(255, 255, 255, 0.50); /* 75% transparent */
+		transition: background-color 0.3s ease;
 		padding: 1rem 2rem;
 		margin: 1rem auto;
-		border-radius: 0.5rem;
+		border-radius: 10rem;
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 		max-width: 1200px;
 		width: calc(100% - 2rem);
 		pointer-events: auto;
+	}
+	.header-inner.scrolled {
+		background-color: rgba(255, 255, 255, 1);
 	}
 
 	#left {
@@ -60,13 +68,31 @@
 	}
 
 	#right img {
-		width: 32px;
-		height: 32px;
+		width: 42px;
+		height: 42px;
 		cursor: pointer;
 		transition: transform 0.2s;
+		object-fit: cover;
 	}
 
 	#right img:hover {
 		transform: scale(1.1);
 	}
 </style>
+
+<script>
+	const headerInner = document.querySelector(".header-inner");
+
+	if (typeof window !== "undefined" && headerInner != null) {
+		const toggleOpacity = () => {
+			if (window.scrollY > 50) {
+				headerInner.classList.add("scrolled");
+			} else {
+				headerInner.classList.remove("scrolled");
+			}
+		};
+
+		window.addEventListener("scroll", toggleOpacity);
+		toggleOpacity();
+	}
+</script>
