@@ -9,12 +9,12 @@ import adl_logo from "../assets/adl_small_logo.png"
 <header>
 	<div class="header-inner">
 		<div id="left">
-			<a href="#"><Image class="header_logo" src={adl_logo} alt="logo" width={48} height={48} /></a>
+			<a href="/"><Image class="header_logo" src={adl_logo} alt="logo" width={48} height={48} /></a>
 			<h1>Antre des Loutres</h1>
 		</div>
 		<div id="right">
-			<a href="https://github.com/L-Antre-des-Loutres"><Image src={github_icon} alt="lien_2" /></a>
-			<a href="https://discord.gg/k4ZBFVdntp"><Image src={discord_icon} alt="lien_2" /></a>
+			<a href="https://github.com/L-Antre-des-Loutres" target="_blank"><Image src={github_icon} alt="lien_2" /></a>
+			<a href="https://discord.gg/k4ZBFVdntp" target="_blank"><Image src={discord_icon} alt="lien_2" /></a>
 			<a href="#"><Image src={profil_icon} alt="lien_3" /></a>
 		</div>
 	</div>
@@ -62,6 +62,11 @@ import adl_logo from "../assets/adl_small_logo.png"
 		line-height: 1;
 		display: flex;
 		align-items: center;
+	}
+	@media (max-width: 600px) {
+		#left h1 {
+			display: none;
+		}
 	}
 
 	#right {

@@ -3,6 +3,8 @@ import Image from "astro/components/Image.astro";
 import MC1 from "../../assets/panoramas/mc1.png?w=2000"
 import MC2 from "../../assets/panoramas/mc2.png?w=2000"
 import MC3 from "../../assets/panoramas/mc3.png?w=2000"
+import MC4 from "../../assets/panoramas/mc4.png?w=2000"
+import PAL1 from "../../assets/panoramas/pal1.jpg?w=2000"
 
 const games = [
     {
@@ -13,18 +15,37 @@ const games = [
             MC1,
             MC2,
             MC3,
-        ]
+            MC4
+        ],
+        buttons: {
+            servers: {
+                title: "Nos serveurs",
+                link: "#"
+            },
+            classement: {
+                title: "Classement",
+                link: "#"
+            }
+        }
     },
-    {
-        name: 'Palworld',
-        icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
-        logo: 'https://cdn2.steamgriddb.com/logo_thumb/f4d2c65fbcc14da4fc777d0cf119062d.png',
-        slides: [
-            'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&',
-            'https://cdn.discordapp.com/attachments/1112790847256281179/1255734272493355028/image.png?ex=686beeec&is=686a9d6c&hm=27feaa2b3ec0bf0fee5e006129b11341a4c40451099b645893bc7a2589681b98&',
-            'https://cdn.discordapp.com/attachments/1112790847256281179/1362887135841091604/image.png?ex=686b84ce&is=686a334e&hm=f3ad12b979e544f5cd24af5a5a6d3ce5a2b2a28b268bf337a212106a7a9ac8ed&'
-        ]
-    },
+        {
+            name: 'Palworld',
+            icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
+            logo: 'https://static.wixstatic.com/media/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png/v1/fill/w_980,h_337,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png',
+            slides: [
+                PAL1
+            ],
+            buttons: {
+                servers: {
+                    title: "Nos serveurs",
+                    link: "#"
+                },
+                classement: {
+                    title: "Classement",
+                    link: "#"
+                }
+            }
+        },
 ];
 ---
 <div class="w-full">
@@ -82,11 +103,25 @@ const games = [
                                     </div>
                             ))}
                         </div>
+
+                        <!-- Boutons -->
+                        <div class="absolute md:top-[65%] top-[75%] transform -translate-y-1/2 w-full flex justify-center gap-6 z-10">
+                            {Object.values(game.buttons).map((btn) => (
+                                    <a
+                                            href={btn.link}
+                                            class="text-white border border-white/90 font-semibold py-2 px-6 rounded-lg shadow-md backdrop-blur-md transition-all duration-300 hover:bg-white/10"
+                                    >
+                                        {btn.title}
+                                    </a>
+                            ))}
+                        </div>
+
                     </div>
                 </div>
         ))}
     </div>
 </div>
+
 
 <script type="module">
     let intervals = [];
