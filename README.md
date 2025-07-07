@@ -1,7 +1,13 @@
 # Astroloutre
 
+<a href="https://wiki.antredesloutres.fr/fr/doc-technique/sites/Astroloutre" target="_blank">
+  <img src="https://img.shields.io/badge/Wiki_du_site-Accéder-1f4da8?style=for-the-badge&logo=wikimedia-commons&logoColor=white" alt="Wiki du site" />
+</a>
+
 Maquette du projet :
-![Maquette de la page d’accueil](/docs/model/maquette-page-acceuil.webp)
+![Maquette de la page d’accueil](https://raw.githubusercontent.com/L-Antre-des-Loutres/Reactisoutre/refs/heads/main/public/docs/%20model/maquette-page-acceuil.webp)
+
+
 
 
 Framework Astro :
