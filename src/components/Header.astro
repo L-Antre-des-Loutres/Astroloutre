@@ -1,0 +1,101 @@
+---
+import Image from "astro/components/Image.astro";
+import github_icon from "../assets/icons/github_icon.png";
+import discord_icon from "../assets/icons/discord_icon.png";
+import profil_icon from "../assets/icons/profil_icon.png";
+const adl_logo = "https://avatars.githubusercontent.com/u/164324475?s=48&v=4";
+---
+
+<header>
+	<div class="header-inner">
+		<div id="left">
+			<a href="#"><Image class="header_logo" src={adl_logo} alt="logo" width={48} height={48} /></a>
+			<h1>Antre des Loutres</h1>
+		</div>
+		<div id="right">
+			<a href="https://github.com/L-Antre-des-Loutres"><Image src={github_icon} alt="lien_2" /></a>
+			<a href="https://discord.gg/k4ZBFVdntp"><Image src={discord_icon} alt="lien_2" /></a>
+			<a href="#"><Image src={profil_icon} alt="lien_3" /></a>
+		</div>
+	</div>
+</header>
+
+<style>
+	header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		display: flex;
+		justify-content: center;
+		z-index: 1000;
+		pointer-events: none;
+	}
+
+	.header-inner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background-color: rgba(255, 255, 255, 0.48);
+		transition: background-color 0.3s ease;
+		padding: 1rem 2rem;
+		margin: 1rem auto;
+		border-radius: 10rem;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		max-width: 1200px;
+		width: calc(100% - 2rem);
+		pointer-events: auto;
+	}
+	.header-inner.scrolled {
+		background-color: rgba(255, 255, 255, 0.92);
+	}
+
+	#left {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	#left h1 {
+		margin: 0;
+		font-size: 1.5rem;
+		line-height: 1;
+		display: flex;
+		align-items: center;
+	}
+
+	#right {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	#right img {
+		width: 42px;
+		height: 42px;
+		cursor: pointer;
+		transition: transform 0.2s;
+		object-fit: cover;
+	}
+
+	#right img:hover {
+		transform: scale(1.1);
+	}
+</style>
+
+<script>
+	const headerInner = document.querySelector(".header-inner");
+
+	if (typeof window !== "undefined" && headerInner != null) {
+		const toggleOpacity = () => {
+			if (window.scrollY > 50) {
+				headerInner.classList.add("scrolled");
+			} else {
+				headerInner.classList.remove("scrolled");
+			}
+		};
+
+		window.addEventListener("scroll", toggleOpacity);
+		toggleOpacity();
+	}
+</script>
