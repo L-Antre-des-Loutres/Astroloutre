@@ -1,0 +1,12 @@
+---
+const { bannerUrl = '' } = Astro.props;
+---
+
+<div
+        id="container-banner"
+        class="w-full h-28 object-cover bg-cover bg-center relative overflow-hidden bg-fixed"
+        style={`background-image: url(${bannerUrl})`}
+>
+    <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+    </div>
+</div>
