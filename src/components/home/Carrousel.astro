@@ -20,7 +20,7 @@ const games = [
         buttons: {
             servers: {
                 title: "Nos serveurs",
-                link: "#"
+                link: "/serveurs/minecraft"
             },
             classement: {
                 title: "Classement",
@@ -38,7 +38,7 @@ const games = [
             buttons: {
                 servers: {
                     title: "Nos serveurs",
-                    link: "#"
+                    link: "/serveurs/palworld"
                 },
                 classement: {
                     title: "Classement",
@@ -105,7 +105,7 @@ const games = [
                         </div>
 
                         <!-- Boutons -->
-                        <div class="absolute md:top-[65%] top-[75%] transform -translate-y-1/2 w-full flex justify-center gap-6 z-10">
+                        <div class="absolute md:top-[65%] top-[80%] transform -translate-y-1/2 w-full flex justify-center gap-6 z-10">
                             {Object.values(game.buttons).map((btn) => (
                                     <a
                                             href={btn.link}

@@ -41,7 +41,9 @@ if (apiUrl) {
                 <div class="p-4 min-h-50 max-h-50">
                     <h3 class="text-lg font-semibold">{item.nom ?? 'Sans titre'}</h3>
                     <p class="text-sm text-gray-600">{item.description ?? 'Aucune description.'}</p>
-                    <p class="text-md text-gray-600">🛠️ Version : {item.version} 🌐 Ip : {item.type === "primaire" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}</p>
+                    <p class="text-md text-gray-600">🛠️ Version : {item.version}
+                        🌐 Ip : {jeu === "palworld" ? "antredesloutres.fr:8211" : item.type === "primaire" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}
+                    </p>
                 </div>
             </div>
             </a>
