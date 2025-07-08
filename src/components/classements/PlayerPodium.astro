@@ -1,0 +1,36 @@
+---
+// Composant : PlayerPodium.astro
+
+import Image from "astro/components/Image.astro";
+import Title from "../../assets/titles/top-joueurs.png"
+---
+
+<div class="podium-container">
+    <div class="page-title">
+        <Image src={Title} alt="Titre" />
+    </div>
+</div>
+
+<style>
+    .page-title {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+    @media (max-width: 768px) {
+        .page-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    }
+
+    .podium-container {
+        width: 100%;
+        background: linear-gradient(to right, #170F24, #0b0f3e);
+        color: white;
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+</style>

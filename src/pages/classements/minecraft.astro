@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
 import Title from "../../assets/titles/classement-joueurs.png"
 import Banner from "../../components/Banner.astro";
-import ClassementGetDatas from "../../components/classements/ClassementGetDatas.astro"
+import PlayerClassement from "../../components/classements/PlayerClassement.astro"
 ---
 
 <Layout>
@@ -12,7 +12,9 @@ import ClassementGetDatas from "../../components/classements/ClassementGetDatas.
     <div class="page-title">
         <Image src={Title} alt="Titre" />
     </div>
-    <ClassementGetDatas jeu="minecraft" />
+    <div class="classement-container">
+        <PlayerClassement jeu="minecraft" />
+    </div>
 </Layout>
 
 <style>

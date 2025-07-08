@@ -1,0 +1,73 @@
+---
+// Composant : PlayerClassement.astro
+import PlayerClassementReactComposant from './PlayerClassement.tsx';
+import PlayerPodium from './PlayerPodium.astro';
+
+const { jeu } = Astro.props;
+
+// Déclaration des types
+type Server = {
+    id: number;
+    nom: string;
+};
+
+type PlayerStats = {
+    playername: string;
+    uuid: string;
+    tmps_jeu: number;
+    nb_mort: number;
+    nb_kills: number;
+    nb_playerkill: number;
+    nb_blocs_detr: number;
+    nb_blocs_pose: number;
+    dist_total: number;
+}
+
+// Récupération de la liste des serveurs
+const res = await fetch("https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/" + jeu);
+const json = await res.json();
+
+const serversList: Record<string, string> = {};
+(json.data as Server[]).forEach((server) => {
+    serversList[server.id.toString()] = server.nom;
+});
+
+// Récupération des statistique de joueurs
+const allData: Record<string, any[]> = {
+    "1": [
+        { "playername": "Alice", "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479", "tmps_jeu": 120, "nb_mort": 5, "nb_kills": 30, "nb_playerkill": 3, "nb_blocs_detr": 1000, "nb_blocs_pose": 800, "dist_total": 30000, "dist_pieds": 20000, "dist_elytres": 10000 },
+        { "playername": "PixelMage", "uuid": "a12f34b5-c678-4d9e-b123-987f65c4a321", "tmps_jeu": 95, "nb_mort": 7, "nb_kills": 22, "nb_playerkill": 5, "nb_blocs_detr": 850, "nb_blocs_pose": 900, "dist_total": 28000, "dist_pieds": 19000, "dist_elytres": 9000 },
+        { "playername": "BlockNinja", "uuid": "b98e12d3-e456-4f78-8a90-123abcde4567", "tmps_jeu": 130, "nb_mort": 3, "nb_kills": 35, "nb_playerkill": 7, "nb_blocs_detr": 1200, "nb_blocs_pose": 1100, "dist_total": 32000, "dist_pieds": 22000, "dist_elytres": 10000 },
+        { "playername": "CraftWizard", "uuid": "cde12345-6789-4abc-def0-1234567890ab", "tmps_jeu": 110, "nb_mort": 4, "nb_kills": 28, "nb_playerkill": 6, "nb_blocs_detr": 1000, "nb_blocs_pose": 950, "dist_total": 31000, "dist_pieds": 21000, "dist_elytres": 10000 },
+        { "playername": "DiamondHero", "uuid": "fab12345-6789-4def-1234-56789abcdef0", "tmps_jeu": 90, "nb_mort": 1, "nb_kills": 15, "nb_playerkill": 1, "nb_blocs_detr": 600, "nb_blocs_pose": 700, "dist_total": 22000, "dist_pieds": 15000, "dist_elytres": 7000 },
+        { "playername": "RedstoneMaster", "uuid": "d1f2e3c4-b5a6-4789-9abc-def123456789", "tmps_jeu": 140, "nb_mort": 6, "nb_kills": 40, "nb_playerkill": 8, "nb_blocs_detr": 1300, "nb_blocs_pose": 1200, "dist_total": 35000, "dist_pieds": 25000, "dist_elytres": 10000 },
+        { "playername": "EnderQueen", "uuid": "e9f8d7c6-b5a4-3210-9abc-def123456789", "tmps_jeu": 105, "nb_mort": 3, "nb_kills": 20, "nb_playerkill": 4, "nb_blocs_detr": 900, "nb_blocs_pose": 850, "dist_total": 27000, "dist_pieds": 18000, "dist_elytres": 9000 },
+        { "playername": "CreeperKing", "uuid": "f0a1b2c3-d4e5-6789-abcd-ef0123456789", "tmps_jeu": 100, "nb_mort": 8, "nb_kills": 25, "nb_playerkill": 5, "nb_blocs_detr": 1100, "nb_blocs_pose": 900, "dist_total": 29000, "dist_pieds": 20000, "dist_elytres": 9000 },
+        { "playername": "NetherKnight", "uuid": "a2345678-b89c-4def-0123-456789abcdef", "tmps_jeu": 115, "nb_mort": 5, "nb_kills": 32, "nb_playerkill": 6, "nb_blocs_detr": 1150, "nb_blocs_pose": 1050, "dist_total": 33000, "dist_pieds": 22000, "dist_elytres": 11000 },
+        { "playername": "SkyWalker", "uuid": "b3456789-c90d-5ef0-1234-56789abcdef0", "tmps_jeu": 125, "nb_mort": 4, "nb_kills": 29, "nb_playerkill": 5, "nb_blocs_detr": 1000, "nb_blocs_pose": 1000, "dist_total": 31000, "dist_pieds": 21000, "dist_elytres": 10000 }
+    ],
+    "2": [
+        { "playername": "Bob", "uuid": "9f8c8d9a-8f74-4b62-b4ad-e22f2a3e3a8c", "tmps_jeu": 90, "nb_mort": 2, "nb_kills": 15, "nb_playerkill": 1, "nb_blocs_detr": 500, "nb_blocs_pose": 1200, "dist_total": 15000, "dist_pieds": 10000, "dist_elytres": 5000 },
+        { "playername": "CraftWizard", "uuid": "cde12345-6789-4abc-def0-1234567890ab", "tmps_jeu": 105, "nb_mort": 4, "nb_kills": 20, "nb_playerkill": 3, "nb_blocs_detr": 700, "nb_blocs_pose": 950, "dist_total": 21000, "dist_pieds": 14000, "dist_elytres": 7000 },
+        { "playername": "DiamondHero", "uuid": "fab12345-6789-4def-1234-56789abcdef0", "tmps_jeu": 80, "nb_mort": 1, "nb_kills": 10, "nb_playerkill": 0, "nb_blocs_detr": 300, "nb_blocs_pose": 400, "dist_total": 12000, "dist_pieds": 9000, "dist_elytres": 3000 },
+        { "playername": "IronGolem", "uuid": "d2345678-e90f-5abc-2345-6789abcdef01", "tmps_jeu": 95, "nb_mort": 3, "nb_kills": 18, "nb_playerkill": 2, "nb_blocs_detr": 800, "nb_blocs_pose": 850, "dist_total": 23000, "dist_pieds": 16000, "dist_elytres": 7000 },
+        { "playername": "LavaLord", "uuid": "e3456789-f01a-6bcd-3456-789abcdef012", "tmps_jeu": 85, "nb_mort": 5, "nb_kills": 22, "nb_playerkill": 4, "nb_blocs_detr": 900, "nb_blocs_pose": 1000, "dist_total": 25000, "dist_pieds": 17000, "dist_elytres": 8000 },
+        { "playername": "MineMaster", "uuid": "f4567890-a12b-7cde-4567-89abcdef0123", "tmps_jeu": 100, "nb_mort": 2, "nb_kills": 15, "nb_playerkill": 3, "nb_blocs_detr": 700, "nb_blocs_pose": 800, "dist_total": 20000, "dist_pieds": 14000, "dist_elytres": 6000 }
+    ],
+    "6": [
+        { "playername": "Herobrine", "uuid": "a1234567-b89c-4def-0123-456789abcdef", "tmps_jeu": 50, "nb_mort": 20, "nb_kills": 5, "nb_playerkill": 0, "nb_blocs_detr": 300, "nb_blocs_pose": 400, "dist_total": 10000, "dist_pieds": 7000, "dist_elytres": 3000 },
+        { "playername": "NetherKnight", "uuid": "d1e2f3a4-b5c6-4789-8abc-def012345678", "tmps_jeu": 75, "nb_mort": 10, "nb_kills": 18, "nb_playerkill": 4, "nb_blocs_detr": 600, "nb_blocs_pose": 700, "dist_total": 18000, "dist_pieds": 13000, "dist_elytres": 5000 },
+        { "playername": "EnderShadow", "uuid": "e9f8d7c6-b5a4-3210-9abc-def123456789", "tmps_jeu": 60, "nb_mort": 15, "nb_kills": 12, "nb_playerkill": 2, "nb_blocs_detr": 450, "nb_blocs_pose": 500, "dist_total": 14000, "dist_pieds": 10000, "dist_elytres": 4000 },
+        { "playername": "BlazeRunner", "uuid": "f0123456-789a-bcde-f012-3456789abcde", "tmps_jeu": 80, "nb_mort": 8, "nb_kills": 20, "nb_playerkill": 3, "nb_blocs_detr": 700, "nb_blocs_pose": 750, "dist_total": 19000, "dist_pieds": 14000, "dist_elytres": 5000 },
+        { "playername": "GhastHunter", "uuid": "a2345678-9abc-def0-1234-56789abcdef0", "tmps_jeu": 70, "nb_mort": 12, "nb_kills": 15, "nb_playerkill": 1, "nb_blocs_detr": 500, "nb_blocs_pose": 600, "dist_total": 16000, "dist_pieds": 11000, "dist_elytres": 5000 },
+        { "playername": "WitherSlayer", "uuid": "b3456789-abcd-ef01-2345-6789abcdef01", "tmps_jeu": 90, "nb_mort": 5, "nb_kills": 25, "nb_playerkill": 5, "nb_blocs_detr": 900, "nb_blocs_pose": 950, "dist_total": 27000, "dist_pieds": 18000, "dist_elytres": 9000 },
+        { "playername": "EnderDragon", "uuid": "c4567890-bcde-f012-3456-789abcdef012", "tmps_jeu": 100, "nb_mort": 3, "nb_kills": 30, "nb_playerkill": 7, "nb_blocs_detr": 1100, "nb_blocs_pose": 1000, "dist_total": 30000, "dist_pieds": 21000, "dist_elytres": 9000 },
+        { "playername": "ShulkerBox", "uuid": "d5678901-cdef-0123-4567-89abcdef0123", "tmps_jeu": 65, "nb_mort": 10, "nb_kills": 18, "nb_playerkill": 2, "nb_blocs_detr": 600, "nb_blocs_pose": 650, "dist_total": 17000, "dist_pieds": 12000, "dist_elytres": 5000 },
+        { "playername": "SoulSand", "uuid": "e6789012-def0-1234-5678-9abcdef01234", "tmps_jeu": 85, "nb_mort": 7, "nb_kills": 22, "nb_playerkill": 4, "nb_blocs_detr": 800, "nb_blocs_pose": 900, "dist_total": 22000, "dist_pieds": 15000, "dist_elytres": 7000 },
+        { "playername": "LapisLazuli", "uuid": "f7890123-ef01-2345-6789-abcdef012345", "tmps_jeu": 95, "nb_mort": 6, "nb_kills": 25, "nb_playerkill": 5, "nb_blocs_detr": 1000, "nb_blocs_pose": 950, "dist_total": 25000, "dist_pieds": 18000, "dist_elytres": 7000 }
+    ]
+}
+---
+
+<PlayerClassementReactComposant client:load {serversList} {allData} />
+<PlayerPodium {allData} />
