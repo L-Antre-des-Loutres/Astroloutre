@@ -1,15 +1,21 @@
 ---
+// Composant : Header.astro
 import Image from "astro/components/Image.astro";
 import github_icon from "../assets/icons/github_icon.png";
 import discord_icon from "../assets/icons/discord_icon.png";
 import profil_icon from "../assets/icons/profil_icon.png";
+import home_icon from "../assets/icons/home_icon.png";
 import adl_logo from "../assets/adl_small_logo.png"
 ---
 
 <header>
 	<div class="header-inner">
 		<div id="left">
-			<a href="/"><Image class="header_logo" src={adl_logo} alt="logo" width={48} height={48} /></a>
+			<a href="/" class="logo-hover-wrapper">
+				<img src={adl_logo.src} alt="logo normal" class="logo-default" width="48" height="48" />
+				<img src={home_icon.src} alt="logo hover" class="logo-hover" width="48" height="48" />
+			</a>
+
 			<h1>Antre des Loutres</h1>
 		</div>
 		<div id="right">
@@ -86,6 +92,38 @@ import adl_logo from "../assets/adl_small_logo.png"
 	#right img:hover {
 		transform: scale(1.1);
 	}
+
+	/* CSS pour la transition d'une icone à l'autre */
+	.logo-hover-wrapper {
+		position: relative;
+		display: inline-block;
+		width: 48px;
+		height: 48px;
+	}
+
+	.logo-hover-wrapper img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		transition: opacity 0.2s ease;
+	}
+
+	.logo-default {
+		opacity: 1;
+	}
+
+	.logo-hover {
+		opacity: 0;
+	}
+
+	.logo-hover-wrapper:hover .logo-default {
+		opacity: 0;
+	}
+
+	.logo-hover-wrapper:hover .logo-hover {
+		opacity: 1;
+	}
+
 </style>
 
 <script>

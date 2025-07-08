@@ -42,7 +42,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
 
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
-        <div className="mb-6 flex flex-wrap gap-2 justify-center w-full max-w-full">
+            <div className="mb-6 flex flex-wrap gap-2 justify-center w-full max-w-full">
                 {Object.entries(serversList).map(([id, nom]) => (
                     <button
                         key={id}
