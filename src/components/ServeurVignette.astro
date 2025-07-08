@@ -1,0 +1,49 @@
+---
+const { apiUrl = '', jeu = '' } = Astro.props;
+
+type ServeurType = {
+    nom : string,
+    jeu : string,
+    version: string,
+    modpack: string,
+    modpack_url: string,
+    nom_monde: string,
+    embed_color: string,
+    actif: boolean,
+    global: boolean
+    image: string,
+    description: string,
+    contenaire: string,
+    type: string
+}
+
+// Récupération des données depuis l'API
+let data
+if (apiUrl) {
+    const res = await fetch(apiUrl);
+    const json = await res.json();
+    if (json.success && Array.isArray(json.data)) {
+        data = json.data;
+    }
+}
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pt-4 mx-4">
+    {data.map((item : ServeurType, index : number) => (
+            <a href={'/serveurs/' + jeu + "/" + item.contenaire} class="block">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-102 transition-transform">
+
+                <div class="h-48 w-full bg-gray-200">
+                    {item.image && (
+                            <img src={item.image} alt={item.nom ?? 'Image'} class="w-full h-full object-cover" />
+                    )}
+                </div>
+                <div class="p-4 min-h-50 max-h-50">
+                    <h3 class="text-lg font-semibold">{item.nom ?? 'Sans titre'}</h3>
+                    <p class="text-sm text-gray-600">{item.description ?? 'Aucune description.'}</p>
+                    <p class="text-md text-gray-600">🛠️ Version : {item.version} 🌐 Ip : {item.type === "primaire" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}</p>
+                </div>
+            </div>
+            </a>
+    ))}
+</div>
