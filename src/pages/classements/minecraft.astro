@@ -1,0 +1,32 @@
+---
+// page minecraft.astro
+import Layout from "../../layouts/Layout.astro";
+import Image from "astro/components/Image.astro";
+import Title from "../../assets/titles/classement-joueurs.png"
+import Banner from "../../components/Banner.astro";
+import ClassementGetDatas from "../../components/classements/ClassementGetDatas.astro"
+---
+
+<Layout>
+    <Banner bannerUrl="'https://cdn.discordapp.com/attachments/640874969227722752/1391830540008558622/2025-07-07_19.14.34.png?ex=686d52b3&is=686c0133&hm=bf1ae0e9ffa2b15149543d39fb83881fe319a6f4584b0bc90b47f4baaabafb86&'"/>
+    <div class="page-title">
+        <Image src={Title} alt="Titre" />
+    </div>
+    <ClassementGetDatas jeu="minecraft" />
+</Layout>
+
+<style>
+    .page-title {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+    @media (max-width: 768px) {
+        .page-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    }
+</style>
