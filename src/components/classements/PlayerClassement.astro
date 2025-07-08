@@ -1,0 +1,68 @@
+---
+// Composant : PlayerClassement.astro
+import PlayerClassementReactComposant from './PlayerClassement.tsx';
+import PlayerPodium from './PlayerPodium.astro';
+
+const { jeu } = Astro.props;
+
+// Déclaration des types
+type Server = {
+    id: number;
+    nom: string;
+};
+
+type PlayerStats = {
+    playername: string;
+    uuid: string;
+    tmps_jeu: number;
+    nb_mort: number;
+    nb_kills: number;
+    nb_playerkill: number;
+    nb_blocs_detr: number;
+    nb_blocs_pose: number;
+    dist_total: number;
+}
+
+// Récupération de la liste des serveurs
+const res = await fetch("https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/" + jeu);
+const json = await res.json();
+
+const serversList: Record<string, string> = {};
+(json.data as Server[]).forEach((server) => {
+    serversList[server.id.toString()] = server.nom;
+});
+
+// Appel à l'API des stats minimales
+const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/minimum");
+const jsonStats = await resStats.json();
+
+const playersRaw = jsonStats.data;
+
+const allData: Record<string, PlayerStats[]> = {};
+
+playersRaw.forEach((entry: any) => {
+    const playerStats: PlayerStats = {
+        playername: entry.playername,
+        uuid: entry.compte_id,
+        tmps_jeu: entry.tmps_jeux,
+        nb_mort: entry.nb_mort,
+        nb_kills: entry.nb_kills,
+        nb_playerkill: entry.nb_playerkill,
+        nb_blocs_detr: entry.nb_blocs_detr,
+        nb_blocs_pose: entry.nb_blocs_pose,
+        dist_total: entry.dist_total,
+    };
+
+    const serverId = entry.serveur_id.toString();
+
+    if (!allData[serverId]) {
+        allData[serverId] = [];
+    }
+
+    allData[serverId].push(playerStats);
+});
+
+---
+
+<PlayerClassementReactComposant client:load {serversList} {allData} />
+<PlayerPodium {allData} />
