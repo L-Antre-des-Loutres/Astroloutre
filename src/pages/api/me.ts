@@ -1,7 +1,9 @@
 import type { APIRoute } from 'astro';
 import jwt from 'jsonwebtoken';
 
-export const get: APIRoute = async ({ request }) => {
+export const prerender = false;
+
+export const GET: APIRoute = async ({ request }) => {
     const cookieHeader = request.headers.get('cookie') || '';
     const cookies = Object.fromEntries(
         cookieHeader.split('; ').map(c => {
