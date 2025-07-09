@@ -10,6 +10,9 @@ export default defineConfig({
   integrations: [react()],
 
   vite: {
+    define: {
+      'import.meta.env.JWT_SECRET': JSON.stringify(process.env.ASTRO_JWT_SECRET),
+    },
     plugins: [tailwindcss()]
   }
 });
