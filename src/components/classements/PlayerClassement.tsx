@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+/* Gestion des statistiques de joueur */
 type PlayerStats = Record<string, any>;
 type Props = {
     serversList: Record<string, string>;
@@ -8,21 +9,19 @@ type Props = {
 
 const playerStats: Record<string, string> = {
     playername: "Nom du joueur",
-    uuid: "UUID",
-    tmps_jeu: "Temps de jeu",
+    tmps_jeu: "Heures de jeu",
     nb_mort: "Morts",
-    nb_kills: "Kills",
+    nb_kills: "Kills total",
     nb_playerkill: "Kills joueurs",
     nb_blocs_detr: "Blocs cassés",
     nb_blocs_pose: "Blocs posés",
-    dist_total: "Dist. totale",
-    dist_pieds: "Dist. à pied",
-    dist_elytres: "Dist. elytres",
+    dist_total: "Distance totale",
+    dist_pieds: "Distance à pied",
+    dist_elytres: "Distance en elytres",
 };
 
 const columnWidths: Record<string, string> = {
     playername: "220px",
-    uuid: "180px",
     tmps_jeu: "140px",
     nb_mort: "100px",
     nb_kills: "100px",
@@ -34,6 +33,11 @@ const columnWidths: Record<string, string> = {
     dist_elytres: "120px",
 };
 
+/* Code pour le tableau */
+
+
+
+/* Logique & html */
 const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
     const firstServer = Object.keys(serversList)[0] || null;
     const [selectedServer, setSelectedServer] = useState<string | null>(firstServer);
@@ -111,28 +115,38 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                         className="px-6 py-4 whitespace-nowrap"
                                         style={{ minWidth: columnWidths[key] }}
                                     >
-                                        {key === "playername" ? (
-                                            <div className="flex items-center gap-3">
-                                                <img
-                                                    src={`https://mc-heads.net/avatar/${player.uuid}/28`}
-                                                    alt={player.playername}
-                                                    width={28}
-                                                    height={28}
-                                                    className="rounded-sm"
-                                                />
-                                                <span>
-                                                  <a
-                                                      href={`/joueurs/${encodeURIComponent(player.playername)}`}
-                                                      className="text-[#101550] underline hover:text-[#101550] transition"
-                                                  >
-                                                    {player.playername}
-                                                  </a>
-                                                </span>
-                                            </div>
-                                        ) : (
-                                            player[key]
-                                        )}
+                                        {(() => {
+                                            if (key === "playername") {
+                                                return (
+                                                    <div className="flex items-center gap-3">
+                                                        <img
+                                                            src={`https://mc-heads.net/avatar/${player.uuid}/28`}
+                                                            alt={player.playername}
+                                                            width={28}
+                                                            height={28}
+                                                            className="rounded-sm"
+                                                        />
+                                                        <span>
+                                                            <a
+                                                                href={`/joueurs/${encodeURIComponent(player.playername)}`}
+                                                                className="text-[#101550] underline hover:text-[#101550] transition"
+                                                            >
+                                                              {player.playername}
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                );
+                                            } else if (key === "tmps_jeu") {
+                                                const heures = Math.floor(player[key] / 72000);
+                                                return <div>{heures} heures</div>;
+                                            } else if (key === "nb_blocs_pose" || key === "nb_blocs_detr" || key === "dist_total" || key === "dist_pieds" || key === "dist_elytres") {
+                                                return <div>{player[key]} blocs</div>;
+                                            } else {
+                                                return player[key];
+                                            }
+                                        })()}
                                     </td>
+
                                 ))}
                             </tr>
                         ))
