@@ -155,11 +155,9 @@ import adl_logo from "../assets/adl_small_logo.png"
 				if (data.avatarUrl && data.id) {
 					const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
 					const profilLink = document.getElementById('profil-url') as HTMLAnchorElement | null;
-
 					if (avatarImg) {
-						avatarImg.src = data.avatarUrl;
+						avatarImg.src = data.avatarUrl; // OK maintenant
 					}
-
 					if (profilLink) {
 						profilLink.href = `/profil/${data.id}`;
 					}
