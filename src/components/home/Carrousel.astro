@@ -216,7 +216,13 @@ const games = [
         const hideCarousels = (direction) => {
             carousels.forEach(carousel => {
                 const slides = carousel.querySelectorAll('.carousel-slide');
+                const slidesAuteurs = carousel.querySelectorAll('.carousel-auteur');
                 const titleContainer = carousel.querySelector('.bg-gradient-to-r');
+
+                slidesAuteurs.forEach((auteur, i) => {
+                    auteur.classList.remove('opacity-100');
+                    auteur.classList.add('opacity-0');
+                });
 
                 slides.forEach(slide => {
                     slide.classList.remove('opacity-100', 'scale-100', 'translate-x-0');
