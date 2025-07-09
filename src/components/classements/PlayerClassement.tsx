@@ -41,8 +41,24 @@ const columnWidths: Record<string, string> = {
 const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
     const firstServer = Object.keys(serversList)[0] || null;
     const [selectedServer, setSelectedServer] = useState<string | null>(firstServer);
+    const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
+        key: "tmps_jeu",
+        direction: "desc",
+    });
 
     const players = selectedServer ? allData[selectedServer] || [] : [];
+
+    const sortedPlayers = [...players];
+    if (sortConfig) {
+        sortedPlayers.sort((a, b) => {
+            const aValue = a[sortConfig.key];
+            const bValue = b[sortConfig.key];
+
+            if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+            if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+            return 0;
+        });
+    }
 
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
@@ -82,15 +98,25 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                         className="text-white text-base"
                     >
                     <tr>
-                        {Object.entries(playerStats).map(([key, label]) => (
-                            <th
-                                key={key}
-                                className="px-6 py-4 font-semibold"
-                                style={{ minWidth: columnWidths[key] }}
-                            >
-                                {label}
-                            </th>
-                        ))}
+                        {Object.entries(playerStats).map(([key, label]) => {
+                            const isActive = sortConfig?.key === key;
+                            return (
+                                <th
+                                    key={key}
+                                    onClick={() => {
+                                        let direction: "asc" | "desc" = "asc";
+                                        if (isActive && sortConfig?.direction === "asc") {
+                                            direction = "desc";
+                                        }
+                                        setSortConfig({ key, direction });
+                                    }}
+                                    className="px-6 py-4 font-semibold cursor-pointer select-none"
+                                    style={{ minWidth: columnWidths[key] }}
+                                >
+                                    {label} {isActive ? (sortConfig.direction === "asc" ? "▲" : "▼") : ""}
+                                </th>
+                            );
+                        })}
                     </tr>
                     </thead>
                     <tbody>
@@ -104,7 +130,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                             </td>
                         </tr>
                     ) : (
-                        players.map((player, idx) => (
+                        sortedPlayers.map((player, idx) => (
                             <tr
                                 key={idx}
                                 className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
