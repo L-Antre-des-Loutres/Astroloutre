@@ -21,10 +21,14 @@ import adl_logo from "../assets/adl_small_logo.png"
 		<div id="right">
 			<a href="https://github.com/L-Antre-des-Loutres" target="_blank"><Image src={github_icon} alt="lien_2" /></a>
 			<a href="https://discord.gg/k4ZBFVdntp" target="_blank"><Image src={discord_icon} alt="lien_2" /></a>
-			<a href="#"><Image src={profil_icon} alt="lien_3" /></a>
+			<a id="profil-url" href="https://otterlyapi.antredesloutres.fr/api/auth/discord/login">
+			<!-- Image avec id pour JS -->
+				<img id="user-avatar" src={profil_icon.src} alt="Photo de profil" style="width:42px; height:42px; border-radius:50%; object-fit:cover;" />
+			</a>
 		</div>
 	</div>
 </header>
+
 
 <style>
 	header {
@@ -141,4 +145,28 @@ import adl_logo from "../assets/adl_small_logo.png"
 		window.addEventListener("scroll", toggleOpacity);
 		toggleOpacity();
 	}
+
+	// Fetch utilisateur connecté et mettre à jour l'avatar
+	async function fetchUserAvatar() {
+		try {
+			const res = await fetch('https://otterlyapi.antredesloutres.fr/api/auth/discord/me', { credentials: 'include' });
+			if (res.ok) {
+				const data = await res.json();
+				console.log('User data:', data);
+				if (data.avatarUrl) {
+					const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
+					const profilLink = document.getElementById('profil-url') as HTMLAnchorElement | null;
+					if (avatarImg) {
+						avatarImg.src = data.avatarUrl; // OK maintenant
+					}
+					if (profilLink && data.username) {
+						profilLink.href = `/profil/${data.username}`;
+					}
+				}
+			}
+		} catch (e) {
+			console.error('Erreur fetch user:', e);
+		}
+	}
+	fetchUserAvatar()
 </script>
