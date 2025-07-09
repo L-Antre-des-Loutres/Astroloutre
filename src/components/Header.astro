@@ -21,7 +21,7 @@ import adl_logo from "../assets/adl_small_logo.png"
 		<div id="right">
 			<a href="https://github.com/L-Antre-des-Loutres" target="_blank"><Image src={github_icon} alt="lien_2" /></a>
 			<a href="https://discord.gg/k4ZBFVdntp" target="_blank"><Image src={discord_icon} alt="lien_2" /></a>
-			<a href="#">
+			<a class="profil-url" href="https://otterlyapi.antredesloutres.fr/api/auth/discord/login">
 				<!-- Image avec id pour JS -->
 				<img id="user-avatar" src={profil_icon.src} alt="Photo de profil" style="width:42px; height:42px; border-radius:50%; object-fit:cover;" />
 			</a>
@@ -152,10 +152,16 @@ import adl_logo from "../assets/adl_small_logo.png"
 			const res = await fetch('https://otterlyapi.antredesloutres.fr/api/auth/discord/me', { credentials: 'include' });
 			if (res.ok) {
 				const data = await res.json();
-				if (data.avatarUrl) {
+				if (data.avatarUrl && data.id) {
 					const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
+					const profilLink = document.getElementById('profil-url') as HTMLAnchorElement | null;
+
 					if (avatarImg) {
-						avatarImg.src = data.avatarUrl; // OK maintenant
+						avatarImg.src = data.avatarUrl;
+					}
+
+					if (profilLink) {
+						profilLink.href = `/profil/${data.id}`;
 					}
 				}
 			}
