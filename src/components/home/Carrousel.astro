@@ -1,36 +1,68 @@
 ---
 import Image from "astro/components/Image.astro";
-import MC1 from "../../assets/panoramas/mc1.png?w=2000"
-import MC2 from "../../assets/panoramas/mc2.png?w=2000"
-import MC3 from "../../assets/panoramas/mc3.png?w=2000"
-import MC4 from "../../assets/panoramas/mc4.png?w=2000"
-import MC5 from "../../assets/panoramas/mc5.png?w=2000"
-import MC6 from "../../assets/panoramas/mc6.png?w=2000"
-import MC7 from "../../assets/panoramas/mc7.png?w=2000"
-import MC8 from "../../assets/panoramas/mc8.png?w=2000"
-import MC9 from "../../assets/panoramas/mc9.png?w=2000"
-import MC10 from "../../assets/panoramas/mc10.png?w=2000"
-import MC12 from "../../assets/panoramas/mc12.png?w=2000"
-import PAL1 from "../../assets/panoramas/pal1.jpg?w=2000"
+
+type CarrouselImage = {
+    id: number,
+    nom: string,
+    origine: string,
+    auteur: string,
+    path: string,
+    jeu: string,
+};
+
+// Fonction de mélange
+const shuffleArray = (array: any[]) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+};
+
+let minecraftImages: CarrouselImage[] = [];
+let palworldImages: CarrouselImage[] = []
+
+try {
+    const res = await fetch("https://otterlyapi.antredesloutres.fr/api/astroloutre/images");
+    if (!res.ok) throw new Error(`Erreur réseau: ${res.status}`);
+
+    const json = await res.json();
+    const images: CarrouselImage[] = json.data;
+
+    // Filtrer uniquement les images du jeu Minecraft
+    minecraftImages = images
+        .filter(img => img.jeu.toLowerCase() === "minecraft")
+        .map(img => ({
+            id: img.id,
+            nom: img.nom,
+            auteur: img.auteur,
+            origine: img.origine,
+            path: img.path,
+            jeu: img.jeu
+        }));
+
+    palworldImages = images
+        .filter(img => img.jeu.toLowerCase() === "palworld")
+        .map(img => ({
+            id: img.id,
+            nom: img.nom,
+            auteur: img.auteur,
+            origine: img.origine,
+            path: img.path,
+            jeu: img.jeu
+        }));
+
+} catch (error) {
+    console.error("Erreur lors de la récupération des images :", error);
+}
 
 const games = [
     {
         name: 'Minecraft',
         icon: 'https://www.minecraft.net/content/dam/minecraftnet/franchise/logos/Homepage_Download-Launcher_Creeper-Logo_500x500.png',
         logo: 'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg',
-        slides: [
-            MC1,
-            MC2,
-            MC3,
-            MC4,
-            MC5,
-            MC6,
-            MC7,
-            MC8,
-            MC9,
-            MC10,
-            MC12,
-        ],
+        slides: shuffleArray(minecraftImages),
         buttons: {
             servers: {
                 title: "Nos serveurs",
@@ -42,20 +74,18 @@ const games = [
             }
         }
     },
-        {
-            name: 'Palworld',
-            icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
-            logo: 'https://static.wixstatic.com/media/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png/v1/fill/w_980,h_337,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png',
-            slides: [
-                PAL1
-            ],
-            buttons: {
-                servers: {
-                    title: "Nos serveurs",
-                    link: "/serveurs/palworld"
-                }
+    {
+        name: 'Palworld',
+        icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
+        logo: 'https://static.wixstatic.com/media/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png/v1/fill/w_980,h_337,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png',
+        slides: shuffleArray(palworldImages),
+        buttons: {
+            servers: {
+                title: "Nos serveurs",
+                link: "/serveurs/palworld"
             }
-        },
+        }
+    }
 ];
 ---
 <div class="w-full">
@@ -64,15 +94,14 @@ const games = [
         <!-- MAP : Pour chaque jeu dans la variables games -->
         {games.map((game, i) => (
 
-                <div class="w-screen hidden overflow-hidden" id="carrousel-game"
+                <div class="carrousel-game w-screen hidden overflow-hidden"
                      data-game={i}>
 
+                    <!-- Image de fond du carrousel -->
                     <div class="relative w-screen md:h-screen h-120 overflow-hidden" id={`carousel-${i}`}>
-
-                        <!-- Image de fond du carrousel -->
                         {game.slides.map((src, j) => (
                                 <Image
-                                        src={src}
+                                        src={src.path}
                                         alt={`${game.name} slide ${j + 1}`}
                                         class={`carousel-slide absolute top-0 left-0 w-screen h-full object-cover 
                                         transition-all duration-500 ease-in-out opacity-0 scale-105 translate-x-4`}
@@ -81,6 +110,9 @@ const games = [
                                         width={100}
                                         height={100}
                                 />
+                                <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
+                                    <p>Image par {src.auteur} sur le serveur {src.origine}</p>
+                                </div>
                         ))}
 
                         <!-- Container Logo des jeux -->
@@ -132,59 +164,63 @@ const games = [
     </div>
 </div>
 
-
 <script type="module">
     let intervals = [];
 
     window.addEventListener("DOMContentLoaded", () => {
-        const carousels = document.querySelectorAll('#carrousel-game');
+        const carousels = document.querySelectorAll('.carrousel-game');
         const icons = document.querySelectorAll('.game-icon');
+
+        const clearIntervals = () => {
+            intervals.forEach(clearInterval);
+            intervals = [];
+        };
 
         const showCarousel = (carousel, direction = 'right') => {
             carousel.classList.remove('hidden');
             const slides = carousel.querySelectorAll('.carousel-slide');
+            const slidesAuteurs = carousel.querySelectorAll('.carousel-auteur');
             const titleContainer = carousel.querySelector('.bg-gradient-to-r');
 
-            slides.forEach(slide => {
-                slide.classList.remove('translate-x-4', '-translate-x-4');
-                slide.classList.add(direction === 'right' ? 'translate-x-4' : '-translate-x-4');
+            slides.forEach((slide, i) => {
+                // Reset all slides
+                slide.classList.remove(
+                    'opacity-100', 'scale-100', 'translate-x-0',
+                    'opacity-0', 'scale-105', 'translate-x-4', '-translate-x-4'
+                );
+                slide.classList.add('opacity-0', 'scale-105', direction === 'right' ? 'translate-x-4' : '-translate-x-4');
             });
 
+            // Show first slide
             setTimeout(() => {
-                slides[0].classList.add('opacity-100', 'scale-100');
-                slides[0].classList.remove(direction === 'right' ? 'translate-x-4' : '-translate-x-4');
+                slides[0].classList.remove('opacity-0', 'scale-105', 'translate-x-4', '-translate-x-4');
+                slides[0].classList.add('opacity-100', 'scale-100', 'translate-x-0');
+
+                if (slidesAuteurs[0]) {
+                    slidesAuteurs[0].classList.remove('opacity-0');
+                    slidesAuteurs[0].classList.add('opacity-100');
+                }
+
             }, 50);
 
-            setTimeout(() => {
-                if (titleContainer) {
+            if (titleContainer) {
+                setTimeout(() => {
                     titleContainer.style.opacity = '1';
                     titleContainer.style.transform = 'translateY(0)';
-                }
-            }, 300);
+                }, 300);
+            }
+
+            startCarousel(carousel); // start the carousel after it's shown
         };
 
-        showCarousel(carousels[0]);
-
-        const clearIntervals = () => {
-            intervals.forEach(interval => clearInterval(interval));
-            intervals = [];
-        };
-
-        const switchToGame = (gameIndex, currentCarousel) => {
-            if (currentCarousel === carousels[gameIndex]) return;
-
-            const direction = gameIndex > parseInt(currentCarousel.dataset.game) ? 'right' : 'left';
-
-            clearIntervals();
-
+        const hideCarousels = (direction) => {
             carousels.forEach(carousel => {
                 const slides = carousel.querySelectorAll('.carousel-slide');
                 const titleContainer = carousel.querySelector('.bg-gradient-to-r');
 
                 slides.forEach(slide => {
                     slide.classList.remove('opacity-100', 'scale-100', 'translate-x-0');
-                    slide.classList.add('opacity-0', 'scale-105');
-                    slide.classList.add(direction === 'right' ? '-translate-x-4' : 'translate-x-4');
+                    slide.classList.add('opacity-0', 'scale-105', direction === 'right' ? '-translate-x-4' : 'translate-x-4');
                 });
 
                 if (titleContainer) {
@@ -196,56 +232,72 @@ const games = [
                     carousel.classList.add('hidden');
                 }, 300);
             });
+        };
+
+        const switchToGame = (gameIndex, currentCarousel) => {
+            if (currentCarousel === carousels[gameIndex]) return;
+
+            const direction = gameIndex > parseInt(currentCarousel.dataset.game) ? 'right' : 'left';
+
+            clearIntervals();
+            hideCarousels(direction);
 
             setTimeout(() => {
                 showCarousel(carousels[gameIndex], direction);
             }, 300);
-
-            startCarousel(carousels[gameIndex]);
         };
 
         icons.forEach((icon) => {
             icon.addEventListener('click', (e) => {
-                const gameIndex = e.currentTarget.dataset.index;
-                const currentCarousel = document.querySelector('#carrousel-game:not(.hidden)');
+                const gameIndex = parseInt(e.currentTarget.dataset.index);
+                const currentCarousel = document.querySelector('.carrousel-game:not(.hidden)');
                 switchToGame(gameIndex, currentCarousel);
             });
         });
 
         const startCarousel = (carousel) => {
             const slides = carousel.querySelectorAll('.carousel-slide');
+            const auteurs = carousel.querySelectorAll('.carousel-auteur');
+            if (slides.length < 2) return;
+
             let current = 0;
 
-            slides[current].classList.add('opacity-100', 'scale-100', 'translate-x-0');
-
             const interval = setInterval(() => {
+                // Masquer l'ancienne image et son auteur
                 slides[current].classList.remove('opacity-100', 'scale-100', 'translate-x-0');
                 slides[current].classList.add('opacity-0', 'scale-105', 'translate-x-4');
+
+                if (auteurs[current]) {
+                    auteurs[current].classList.remove('opacity-100');
+                    auteurs[current].classList.add('opacity-0');
+                }
+
                 current = (current + 1) % slides.length;
+
+                // Afficher la nouvelle image et son auteur
                 setTimeout(() => {
                     slides[current].classList.remove('opacity-0', 'scale-105', 'translate-x-4');
                     slides[current].classList.add('opacity-100', 'scale-100', 'translate-x-0');
+
+                    if (auteurs[current]) {
+                        auteurs[current].classList.remove('opacity-0');
+                        auteurs[current].classList.add('opacity-100');
+                    }
                 }, 50);
             }, 5000);
 
             intervals.push(interval);
         };
 
-        startCarousel(carousels[0]);
 
-        // Initialize title containers
+        // Init style for all titles
         document.querySelectorAll('.bg-gradient-to-r').forEach(container => {
             container.style.transition = 'all 0.5s ease-out';
             container.style.transform = 'translateY(-20px)';
+            container.style.opacity = '0';
         });
 
-        // Show initial title with animation
-        const initialTitleContainer = carousels[0].querySelector('.bg-gradient-to-r');
-        if (initialTitleContainer) {
-            setTimeout(() => {
-                initialTitleContainer.style.opacity = '1';
-                initialTitleContainer.style.transform = 'translateY(0)';
-            }, 50);
-        }
+        // Show first carousel
+        showCarousel(carousels[0], 'right');
     });
 </script>
