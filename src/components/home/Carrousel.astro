@@ -13,24 +13,55 @@ import MC10 from "../../assets/panoramas/mc10.png?w=2000"
 import MC12 from "../../assets/panoramas/mc12.png?w=2000"
 import PAL1 from "../../assets/panoramas/pal1.jpg?w=2000"
 
+type CarrouselImage = {
+    id: number,
+    nom: string,
+    origine: string,
+    auteur: string,
+    path: string,
+    jeu: string,
+};
+
+// Récupération de la liste des images
+try {
+    const res = await fetch("https://otterlyapi.antredesloutres.fr/api/astroloutre/images");
+    if (!res.ok) throw new Error(`Erreur réseau: ${res.status}`);
+
+    const json = await res.json();
+    const images: CarrouselImage[] = json.data;
+
+    // ✅ Affichage dans la console
+    images.forEach((img, i) => {
+        console.log(`Image ${i + 1}:`, {
+            nom: img.nom,
+            auteur: img.auteur,
+            origine: img.origine,
+            path: img.path,
+            jeu: img.jeu
+        });
+    });
+} catch (error) {
+    console.error("Erreur lors de la récupération des images :", error);
+}
+
+// Mélange les images du carrousel lors du build
+const shuffleArray = (array : any) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+};
+
 const games = [
     {
         name: 'Minecraft',
         icon: 'https://www.minecraft.net/content/dam/minecraftnet/franchise/logos/Homepage_Download-Launcher_Creeper-Logo_500x500.png',
         logo: 'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg',
-        slides: [
-            MC1,
-            MC2,
-            MC3,
-            MC4,
-            MC5,
-            MC6,
-            MC7,
-            MC8,
-            MC9,
-            MC10,
-            MC12,
-        ],
+        slides: shuffleArray([
+            MC1, MC2, MC3, MC4, MC5, MC6, MC7, MC8, MC9, MC10, MC12
+        ]),
         buttons: {
             servers: {
                 title: "Nos serveurs",
@@ -42,20 +73,20 @@ const games = [
             }
         }
     },
-        {
-            name: 'Palworld',
-            icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
-            logo: 'https://static.wixstatic.com/media/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png/v1/fill/w_980,h_337,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png',
-            slides: [
-                PAL1
-            ],
-            buttons: {
-                servers: {
-                    title: "Nos serveurs",
-                    link: "/serveurs/palworld"
-                }
+    {
+        name: 'Palworld',
+        icon: 'https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg',
+        logo: 'https://static.wixstatic.com/media/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png/v1/fill/w_980,h_337,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png',
+        slides: shuffleArray([
+            PAL1
+        ]),
+        buttons: {
+            servers: {
+                title: "Nos serveurs",
+                link: "/serveurs/palworld"
             }
-        },
+        }
+    }
 ];
 ---
 <div class="w-full">
