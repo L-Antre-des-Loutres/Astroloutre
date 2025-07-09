@@ -5,7 +5,7 @@ export default function DiscordConnexion() {
     const [user, setUser] = useState<any>(null);
 
     useEffect(() => {
-        fetch("/api/me", { credentials: "include" })
+        fetch("https://otterlyapi.antredesloutres.fr/api/auth/discord/me", { credentials: "include" })
             .then((res) => res.ok ? res.json() : null)
             .then((data) => {
                 if (data?.authenticated) setUser(data.user);

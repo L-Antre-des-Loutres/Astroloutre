@@ -149,7 +149,7 @@ import adl_logo from "../assets/adl_small_logo.png"
 	// Fetch utilisateur connecté et mettre à jour l'avatar
 	async function fetchUserAvatar() {
 		try {
-			const res = await fetch('/api/me', { credentials: 'include' });
+			const res = await fetch('https://otterlyapi.antredesloutres.fr/api/auth/discord/me', { credentials: 'include' });
 			if (res.ok) {
 				const data = await res.json();
 				if (data.avatarUrl) {
