@@ -34,12 +34,12 @@ if (apiUrl) {
             <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="block">
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-102 transition-transform">
 
-                <div class="h-48 w-full bg-gray-200">
+                <div class="h-65 w-full bg-gray-200">
                     {item.image && (
                             <img src={item.image} alt={item.nom ?? 'Image'} class="w-full h-full object-cover" />
                     )}
                 </div>
-                <div class="p-4 min-h-50 max-h-50">
+                <div class="p-4 min-h-40 max-h-40">
                     <h3 class="text-lg font-semibold">{item.nom ?? 'Sans titre'}</h3>
                     <p class="text-sm text-gray-600">{item.description ?? 'Aucune description.'}</p>
                     <p class="text-md text-gray-600">🛠️ Version : {item.version}

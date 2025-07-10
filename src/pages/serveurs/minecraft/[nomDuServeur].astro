@@ -1,5 +1,9 @@
 ---
 import {slugify} from "../../../components/serveurs/serveurFormater";
+import Layout from "../../../layouts/Layout.astro";
+import Banner from "../../../components/Banner.astro";
+
+// Type du serveur
 type ServeurType = {
     nom: string,
     jeu: string,
@@ -16,9 +20,10 @@ type ServeurType = {
     type: string
 };
 
-// Le serveur est passé via getStaticPaths -> props
+// Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 
+// Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
 
     const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/';
@@ -30,7 +35,10 @@ export async function getStaticPaths() {
 
     const json = await response.json();
 
-    // Ici on suppose que les serveurs sont dans json.data, ajuste selon ta réponse
+    // On vérifie si la requête est un succès
+    if (!json.success) return
+
+    // On récupère les informations dans les Data
     const serveurs = json.data ?? json; // si c'est directement la liste, sinon json.data
 
     if (!Array.isArray(serveurs)) {
@@ -43,18 +51,47 @@ export async function getStaticPaths() {
     }));
 }
 ---
-
+<Layout>
 {!serveur && <h1>Serveur introuvable</h1>}
-
 {serveur && (
-<main>
-    <h1>{serveur.nom}</h1>
-    <img src={serveur.image} alt={`Image du serveur ${serveur.nom}`} />
-    <p>{serveur.description}</p>
-    <p><strong>Version :</strong> {serveur.version}</p>
-    <p><strong>Modpack :</strong> <a href={serveur.modpack_url} target="_blank">{serveur.modpack}</a></p>
-    <p><strong>Jeu :</strong> {serveur.jeu}</p>
-    <p><strong>Contenaire :</strong> {serveur.contenaire}</p>
-    <p><strong>Type :</strong> {serveur.type}</p>
-</main>
+        <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
+        <div class="mx-auto px-6 py-8 backdrop-blur-md space-y-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight">{serveur.nom}</h1>
+                <p class="mt-2 text-zinc-400 text-sm uppercase tracking-wide">{serveur.jeu}</p>
+            </div>
+
+            <div class="overflow-hidden rounded-xl border border-zinc-800 shadow-lg">
+                <img src={serveur.image} alt={`Image du serveur ${serveur.nom}`} class="object-cover w-full h-64 sm:h-150" />
+            </div>
+
+            <p class="text-lg leading-relaxed border-l-4 border-blue-500 pl-4 italic">{serveur.description}</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm">
+                <div class="rounded-lg p-4 shadow-inner border border-zinc-700">
+                    <p>📦 <span class="font-semibold">Version :</span></p>
+                    <p>{serveur.version}</p>
+                </div>
+                <div class="rounded-lg p-4 shadow-inner border border-zinc-700">
+                    <p>🧰 <span class="font-semibold">Modpack :</span></p>
+                    <a href={serveur.modpack_url} target="_blank" class="text-blue-400 hover:underline">
+                        {serveur.modpack}
+                    </a>
+                </div>
+                <div class="rounded-lg p-4 shadow-inner border border-zinc-700">
+                    <p>🟢 <span class="font-semibold ">Statut :</span></p>
+                    <span class={`inline-block px-2 py-1 rounded-full text-xs font-semibold
+        ${serveur.actif ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}>
+        {serveur.actif ? 'Actif' : 'Inactif'}
+      </span>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <a href="/serveurs/minecraft" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md transition">
+                    ← Retour à la liste des serveurs
+                </a>
+            </div>
+        </div>
     )}
+</Layout>
