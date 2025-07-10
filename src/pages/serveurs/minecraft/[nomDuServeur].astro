@@ -1,0 +1,60 @@
+---
+import {slugify} from "../../../components/serveurs/serveurFormater";
+type ServeurType = {
+    nom: string,
+    jeu: string,
+    version: string,
+    modpack: string,
+    modpack_url: string,
+    nom_monde: string,
+    embed_color: string,
+    actif: boolean,
+    global: boolean,
+    image: string,
+    description: string,
+    contenaire: string,
+    type: string
+};
+
+// Le serveur est passé via getStaticPaths -> props
+const serveur: ServeurType | undefined = Astro.props.serveur;
+
+export async function getStaticPaths() {
+
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/';
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch servers: ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    // Ici on suppose que les serveurs sont dans json.data, ajuste selon ta réponse
+    const serveurs = json.data ?? json; // si c'est directement la liste, sinon json.data
+
+    if (!Array.isArray(serveurs)) {
+        throw new Error("Serveurs is not an array");
+    }
+
+    return serveurs.map((serveur) => ({
+        params: { nomDuServeur: slugify(serveur.nom) },
+        props: { serveur },
+    }));
+}
+---
+
+{!serveur && <h1>Serveur introuvable</h1>}
+
+{serveur && (
+<main>
+    <h1>{serveur.nom}</h1>
+    <img src={serveur.image} alt={`Image du serveur ${serveur.nom}`} />
+    <p>{serveur.description}</p>
+    <p><strong>Version :</strong> {serveur.version}</p>
+    <p><strong>Modpack :</strong> <a href={serveur.modpack_url} target="_blank">{serveur.modpack}</a></p>
+    <p><strong>Jeu :</strong> {serveur.jeu}</p>
+    <p><strong>Contenaire :</strong> {serveur.contenaire}</p>
+    <p><strong>Type :</strong> {serveur.type}</p>
+</main>
+    )}
