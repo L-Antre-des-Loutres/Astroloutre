@@ -35,7 +35,7 @@ const playTime: number | undefined = Astro.props.playTime;
 export async function getStaticPaths() {
 
     // On récupère la liste des serveurs
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/minecraft';
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/palworld';
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
@@ -88,16 +88,16 @@ export async function getStaticPaths() {
 <Layout>
 {!serveur && <h1>Serveur introuvable</h1>}
 {serveur && (
-        <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
+        <Banner bannerUrl=`/banner/palworld/${slugify(serveur.nom)}.webp`/>
         <div class="mx-auto px-6 py-8 backdrop-blur-md space-y-8">
 
             <!-- Titre du site et logo du jeu -->
             <div class="text-center">
                 <h1 class="text-4xl font-extrabold tracking-tight">{serveur.nom}</h1>
                 <img
-                        src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg"
+                        src="https://static.wixstatic.com/media/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png/v1/fill/w_980,h_337,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/f8429d_3dc22015906f4c1e98dfc6e1d97267f0~mv2.png"
                         alt="minecraft logo"
-                        class="h-20 inline-block mt-1"
+                        class="h-40 inline-block mt-1"
                 />
             </div>
 
