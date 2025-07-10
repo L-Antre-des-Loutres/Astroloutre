@@ -167,6 +167,8 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                                 return <div>{heures} heures</div>;
                                             } else if (key === "nb_blocs_pose" || key === "nb_blocs_detr" || key === "dist_total" || key === "dist_pieds" || key === "dist_elytres") {
                                                 return <div>{player[key]} blocs</div>;
+                                            } else if (key === "morts") {
+                                                return <div>${player.mort} heures</div>;
                                             } else {
                                                 return player[key];
                                             }
