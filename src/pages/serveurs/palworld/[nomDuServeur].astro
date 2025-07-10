@@ -103,9 +103,9 @@ export async function getStaticPaths() {
 
             <!-- Affichage de l'ip du serveur -->
             <div class="py-3">
-                <span class="bg-zinc-800 text-blue-400 px-4 py-4 rounded-full font-mono text-sm shadow-sm border border-zinc-700">
-                    🌐 Ip : {serveur.jeu === "palworld" ? "antredesloutres.fr:8211" : serveur.type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}
-                </span>
+                  <span class="inline-block bg-zinc-800 text-blue-400 px-4 py-2 rounded-full font-mono text-xs sm:text-sm md:text-base shadow-sm border border-zinc-700">
+                    🌐 {serveur.jeu === "palworld" ? "antredesloutres.fr:8211" : serveur.type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}
+                  </span>
             </div>
 
             {playTime !== undefined ? (
