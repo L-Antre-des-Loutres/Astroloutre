@@ -21,6 +21,9 @@ type PlayerStats = {
     nb_blocs_detr: number;
     nb_blocs_pose: number;
     dist_total: number;
+    dist_pieds: number;
+    dist_elytres: number;
+    dist_vol: number;
 }
 
 // Récupération de la liste des serveurs
@@ -51,6 +54,9 @@ playersRaw.forEach((entry: any) => {
         nb_blocs_detr: entry.nb_blocs_detr,
         nb_blocs_pose: entry.nb_blocs_pose,
         dist_total: entry.dist_total,
+        dist_pieds: entry.dist_pieds,
+        dist_elytres: entry.dist_elytres,
+        dist_vol: entry.dist_vol
     };
 
     const serverId = entry.serveur_id.toString();

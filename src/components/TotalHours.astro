@@ -1,0 +1,119 @@
+---
+import Image from "astro/components/Image.astro";
+import Title from "../assets/titles/serveurs.png";
+
+const response = await fetch('https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime');
+
+let totalHours = 0;
+if (response.ok) {
+    const json = await response.json();
+    totalHours = Number(json?.data?.[0]?.total_hours || 0);
+    totalHours = Math.floor(totalHours / 72000)
+} else {
+    console.error('Erreur API:', response.statusText);
+}
+---
+
+<div class="total-hours">
+    <p>
+        Un total de plus de <strong>{totalHours} heures</strong> joué sur nos{' '}
+        <span class="inline-image">
+            <Image class="incrusted_image" src={Title} alt="serveurs" width={1000} height={50} />
+        </span>{' '} !
+    </p>
+</div>
+
+<style>
+    .total-hours {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10em;
+        padding: 1rem;
+        background-color: #222;
+        text-align: center;
+        border: 2px solid #444;
+        position: relative;
+        overflow: hidden;
+    }
+    @media (max-width: 500px) {
+        .total-hours {
+            height: 15em;
+        }
+    }
+    @media (max-width: 300px) {
+        .total-hours {
+            height: 18em;
+        }
+    }
+
+    .total-hours::before {
+        content: attr(data-players);
+        position: absolute;
+        top: 50%;
+        left: 0;
+        font-size: 5rem;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.1);
+        white-space: nowrap;
+        transform: translateY(-50%);
+        animation: slideLeftLoop 20s linear infinite;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0;
+    }
+
+    .total-hours p {
+        position: relative;
+        z-index: 1;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .total-hours strong {
+        animation: colorShift 3s ease-in-out infinite;
+        position: relative;
+    }
+
+    .total-hours strong::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        height: 3px;
+        width: 0%;
+        background: linear-gradient(90deg, #FFDDA0, #FFB347, #FF8C42);
+        border-radius: 2px;
+        animation: underlineExpandOnce 3s ease forwards;
+    }
+
+    @keyframes colorShift {
+        0%   { color: #FFDDA0; }
+        33%  { color: #FFB347; }
+        66%  { color: #FF8C42; }
+        100% { color: #FFDDA0; }
+    }
+
+    @keyframes slideLeftLoop {
+        0%   { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    @keyframes underlineExpandOnce {
+        to { width: 100%; }
+    }
+
+    .inline-image {
+        display: inline-block;
+        vertical-align: baseline;
+        line-height: 1;
+    }
+
+    .inline-image img {
+        display: inline;
+        height: 1.1em;
+        width: auto;
+        vertical-align: middle;
+        transform: translateY(-5px);
+    }
+</style>
