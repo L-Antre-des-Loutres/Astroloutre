@@ -79,6 +79,9 @@ if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2
 } else {
     joueur.derniere_co = new Date(joueur.derniere_co).toLocaleDateString()
 }
+
+let playtime = 0
+playtime = playtime / 72000
 ---
 
 <Layout>
@@ -91,6 +94,26 @@ if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2
         <a href="/classements/minecraft">← Retour au classement</a>
     </div>
 
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".button-copy");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const uuid = button.getAttribute("data-uuid");
+                    navigator.clipboard.writeText(uuid).then(() => {
+                        const span = button.querySelector("span");
+                        const originalText = span.textContent;
+                        span.textContent = "UUID copié !";
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+
     {joueur && (
         <div class="profile-container">
             <h1>Information du compte {prefixe}<span class="playername">{joueur.playername}</span></h1>
@@ -101,16 +124,61 @@ if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2
                 </div>
                 <div class="info-grid">
                     <h2>Informations</h2>
-                    <div><strong>🆔 UUID :</strong><br /> {joueur.compte_id}</div>
-                    <div><strong>🕹️ Jeu :</strong><br /> {joueur.jeu}</div>
-                    <div><strong>📅 Première connexion :</strong><br /> {joueur.premiere_co}</div>
-                    <div><strong>📅 Dernière connexion :</strong><br /> {joueur.derniere_co}</div>
+                    <div>
+                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                            {/* Icône ID */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            UUID du compte :
+                        </label>
+                        <input
+                                type="text"
+                                value={joueur.compte_id}
+                                readonly
+                                onclick="this.select()"
+                                style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: monospace;"
+                        />
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Heures de jeu (horloge) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Heures de jeux :
+                        </strong>
+                        <br /> {playtime} heures total
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Première connexion (calendrier) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Première connexion :
+                        </strong>
+                        <br /> {joueur.premiere_co}
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Dernière connexion (calendrier) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Dernière connexion :
+                        </strong>
+                        <br /> {joueur.derniere_co}
+                    </div>
                 </div>
+
                 <div class="info-grid">
                     <h2>Action</h2>
-                    <button class="button-copy" onclick={`navigator.clipboard.writeText('${joueur.compte_id}')`}>
+                    <button
+                            class="button-copy"
+                            data-uuid={joueur.compte_id}>
                         <img src={`https://mc-heads.net/avatar/${joueur.playername}/128`} alt="Copier UUID" />
-                        Copier UUID
+                        <span>Copier UUID</span>
                     </button>
                     <a class="button-namemc" href={`https://fr.namemc.com/profile/${joueur.playername}`} target="_blank" rel="noopener noreferrer">
                         <img src="https://s.namemc.com/img/favicon-30.png" alt="NameMC" />
@@ -137,6 +205,12 @@ if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2
     )}
 
     <style>
+        .icon {
+            display: inline;
+            vertical-align: middle;
+            margin-right: 6px;
+            color: #9f3f02;
+        }
 
         .inline-image {
             display: inline-block;
