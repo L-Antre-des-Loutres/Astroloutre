@@ -3,6 +3,7 @@ import React from 'react';
 type PlayerStat = {
     playername: string;
     uuid: string;
+    nom: string
     tmps_jeux: number;
     nb_mort: number;
     nb_kills: number;
@@ -17,81 +18,62 @@ type PlayerStat = {
 };
 
 type Props = {
-    player: PlayerStat;
+    player: PlayerStat[];
 };
 
 const formatHeures = (ticks?: number) =>
     typeof ticks === "number" ? `${Math.floor(ticks / 72000)} h` : "—";
 
 const formatBlocs = (val?: number) =>
-    typeof val === "number" ? val.toLocaleString("fr-FR") + " blocs" : "—";
+    typeof val === "number" ? val.toLocaleString("fr-FR") : "—";
 
-const PlayerStatsReact: React.FC<Props> = ({ player }) => {
-    console.log(player)
-    return (player?.playername?.trim()) ? (
-        <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
-            <div className="w-full max-w-3xl overflow-x-auto shadow-lg rounded-xl bg-white">
-                <table className="w-full text-base text-left overflow-hidden rounded-xl">
-                    <thead
-                        style={{
-                            background: "linear-gradient(to right, #170F24, #101550)",
-                        }}
-                        className="text-white text-base"
+const PlayerStatsTable: React.FC<Props> = ({ player }) => {
+    if (!player?.length) return <div style={{ padding: "5em" }}>Aucune donnée joueur disponible</div>;
+
+    return (
+        <div className="overflow-x-auto px-4 py-8">
+            <table className="min-w-[900px] w-full text-left shadow-lg rounded-xl overflow-hidden bg-white">
+                <thead
+                    className="text-white text-sm"
+                    style={{
+                        background: "linear-gradient(to right, #170F24, #101550)",
+                    }}
+                >
+                <tr>
+                    <th className="px-4 py-3">Nom du serveur</th>
+                    <th className="px-4 py-3">Temps de jeu</th>
+                    <th className="px-4 py-3">Morts</th>
+                    <th className="px-4 py-3">Kills</th>
+                    <th className="px-4 py-3">Kills joueurs</th>
+                    <th className="px-4 py-3">Blocs cassés</th>
+                    <th className="px-4 py-3">Blocs posés</th>
+                    <th className="px-4 py-3">Distance totale</th>
+                    <th className="px-4 py-3">À pied</th>
+                    <th className="px-4 py-3">Elytres</th>
+                </tr>
+                </thead>
+                <tbody className="text-sm text-[#101550]">
+                {player.map((stat, index) => (
+                    <tr
+                        key={stat.serveur_id}
+                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
                     >
-                    <tr>
-                        <th className="px-6 py-4 font-semibold">Statistique</th>
-                        <th className="px-6 py-4 font-semibold">Valeur</th>
+                        <td className="px-4 py-3">{stat.nom}</td>
+                        <td className="px-4 py-3">{formatHeures(stat.tmps_jeux)}</td>
+                        <td className="px-4 py-3">{stat.nb_mort}</td>
+                        <td className="px-4 py-3">{stat.nb_kills}</td>
+                        <td className="px-4 py-3">{stat.nb_playerkill}</td>
+                        <td className="px-4 py-3">{formatBlocs(stat.nb_blocs_detr)}</td>
+                        <td className="px-4 py-3">{formatBlocs(stat.nb_blocs_pose)}</td>
+                        <td className="px-4 py-3">{formatBlocs(stat.dist_total)}</td>
+                        <td className="px-4 py-3">{formatBlocs(stat.dist_pieds)}</td>
+                        <td className="px-4 py-3">{formatBlocs(stat.dist_elytres)}</td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <tr className="bg-white">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Nom du joueur</td>
-                        <td className="px-6 py-4">{player.playername}</td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Temps de jeu</td>
-                        <td className="px-6 py-4">{formatHeures(player.tmps_jeux)}</td>
-                    </tr>
-                    <tr className="bg-white">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Morts</td>
-                        <td className="px-6 py-4">{player.nb_mort}</td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Kills (total)</td>
-                        <td className="px-6 py-4">{player.nb_kills}</td>
-                    </tr>
-                    <tr className="bg-white">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Kills joueurs</td>
-                        <td className="px-6 py-4">{player.nb_playerkill}</td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Blocs cassés</td>
-                        <td className="px-6 py-4">{formatBlocs(player.nb_blocs_detr)}</td>
-                    </tr>
-                    <tr className="bg-white">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Blocs posés</td>
-                        <td className="px-6 py-4">{formatBlocs(player.nb_blocs_pose)}</td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Distance totale</td>
-                        <td className="px-6 py-4">{formatBlocs(player.dist_total)}</td>
-                    </tr>
-                    <tr className="bg-white">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Distance à pied</td>
-                        <td className="px-6 py-4">{formatBlocs(player.dist_pieds)}</td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                        <td className="px-6 py-4 font-medium text-[#101550]">Distance en elytres</td>
-                        <td className="px-6 py-4">{formatBlocs(player.dist_elytres)}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                ))}
+                </tbody>
+            </table>
         </div>
-    ) : (
-        <div style={{ padding: "5em" }}>Aucune donnée joueur disponible</div>
     );
 };
 
-
-export default PlayerStatsReact;
+export default PlayerStatsTable;
