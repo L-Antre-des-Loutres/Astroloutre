@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { slugify } from "../joueurs/joueurFormater";
 
 /* Gestion des statistiques de joueur */
 type PlayerStats = Record<string, any>;
@@ -154,7 +155,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                                         />
                                                         <span>
                                                             <a
-                                                                href={`/joueurs/${encodeURIComponent(player.playername)}`}
+                                                                href={`/joueurs/minecraft/${slugify(player.playername)}`}
                                                                 className="text-[#101550] underline hover:text-[#101550] transition"
                                                             >
                                                               {player.playername}
