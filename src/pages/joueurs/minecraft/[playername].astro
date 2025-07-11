@@ -1,5 +1,6 @@
 ---
 import Banner from "../../../components/Banner.astro";
+import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
 import Image from "astro/components/Image.astro";
 import Title from "../../../assets/titles/profil-joueur.webp"
 import { slugify } from "../../../components/joueurs/joueurFormater";
@@ -68,7 +69,6 @@ if (joueur.utilisateur_id !== null) {
     profilText = "Lier ce profil"
 }
 
-console.log(joueur)
 if (joueur.premiere_co === "2000-01-01T00:00:00.000" ||joueur.premiere_co === "2000-01-01T00:00:00.000Z" ) {
     joueur.premiere_co = "Cette date à été oublié !"
 } else {
@@ -194,6 +194,8 @@ playtime = playtime / 72000
             </div>
 
             <h1>Statistiques {prefixe}<span class="playername">{joueur.playername}</span></h1>
+            <PlayerStats client:load player={joueur} />
+
             <h1>
                 Badges {' '}
                 <span class="inline-image">
