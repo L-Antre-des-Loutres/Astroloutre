@@ -1,0 +1,372 @@
+---
+import Banner from "../../../components/Banner.astro";
+import Image from "astro/components/Image.astro";
+import Title from "../../../assets/titles/profil-joueur.webp"
+import { slugify } from "../../../components/joueurs/joueurFormater";
+import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
+import Layout from "../../../layouts/Layout.astro";
+
+// Type des données joueur
+type JoueurType = {
+    id: number;
+    utilisateur_id: number | null;
+    jeu: string;
+    compte_id: string;
+    premiere_co: string;
+    derniere_co: string;
+    playername: string;
+};
+
+// Props passées depuis getStaticPaths
+const joueur: JoueurType | undefined = Astro.props.joueur;
+
+// Génération des pages statiques
+export async function getStaticPaths() {
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/joueurs/';
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+        throw new Error(`Erreur API joueurs: ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    if (!json.success || !Array.isArray(json.data)) return [];
+
+    const joueurs: JoueurType[] = json.data;
+
+    return joueurs
+        .filter((joueur) => typeof joueur.playername === 'string' && joueur.playername.trim() !== '')
+        .map((joueur) => {
+            return {
+                params: {
+                    playername: slugify(joueur.playername),
+                },
+                props: {
+                    joueur,
+                },
+            };
+        });
+}
+
+const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'h'];
+let prefixe = "de ";
+
+if (joueur && joueur.playername && voyelles.includes(joueur.playername[0].toLowerCase())) {
+    prefixe = "d’";
+}
+
+let profilLink
+let profilText
+if (joueur.utilisateur_id !== null) {
+    // Le compte joueur est lié à un profil discord
+    // TODO : Le récupéré pour rediriger correctement vers le profil discord
+    profilLink = `/profil/${joueur.utilisateur_id}`
+    profilText = "Profil Discord"
+} else {
+    profilLink = `#`
+    profilText = "Lier ce profil"
+}
+
+console.log(joueur)
+if (joueur.premiere_co === "2000-01-01T00:00:00.000" ||joueur.premiere_co === "2000-01-01T00:00:00.000Z" ) {
+    joueur.premiere_co = "Cette date à été oublié !"
+} else {
+    joueur.premiere_co = new Date(joueur.premiere_co).toLocaleDateString()
+}
+if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2000-01-01T00:00:00.000Z" ) {
+    joueur.derniere_co = "Cette date à été oublié !"
+} else {
+    joueur.derniere_co = new Date(joueur.derniere_co).toLocaleDateString()
+}
+
+let playtime = 0
+playtime = playtime / 72000
+---
+
+<Layout>
+    <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
+    <div class="page-title">
+        <Image src={Title} alt="Titre" />
+    </div>
+
+    <div class="back-link">
+        <a href="/classements/minecraft">← Retour au classement</a>
+    </div>
+
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".button-copy");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const uuid = button.getAttribute("data-uuid");
+                    navigator.clipboard.writeText(uuid).then(() => {
+                        const span = button.querySelector("span");
+                        const originalText = span.textContent;
+                        span.textContent = "UUID copié !";
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+
+    {joueur && (
+        <div class="profile-container">
+            <h1>Information du compte {prefixe}<span class="playername">{joueur.playername}</span></h1>
+
+            <div class="profile-details">
+                <div class="avatar">
+                    <img src={`https://mc-heads.net/body/${joueur.playername}/128`} alt={`Avatar de ${joueur.playername}`} style="display: inline;" />
+                </div>
+                <div class="info-grid">
+                    <h2>Informations</h2>
+                    <div>
+                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                            {/* Icône ID */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            UUID du compte :
+                        </label>
+                        <input
+                                type="text"
+                                value={joueur.compte_id}
+                                readonly
+                                onclick="this.select()"
+                                style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: monospace;"
+                        />
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Heures de jeu (horloge) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Heures de jeux :
+                        </strong>
+                        <br /> {playtime} heures total
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Première connexion (calendrier) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Première connexion :
+                        </strong>
+                        <br /> {joueur.premiere_co}
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Dernière connexion (calendrier) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Dernière connexion :
+                        </strong>
+                        <br /> {joueur.derniere_co}
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <h2>Action</h2>
+                    <button
+                            class="button-copy"
+                            data-uuid={joueur.compte_id}>
+                        <img src={`https://mc-heads.net/avatar/${joueur.playername}/128`} alt="Copier UUID" />
+                        <span>Copier UUID</span>
+                    </button>
+                    <a class="button-namemc" href={`https://fr.namemc.com/profile/${joueur.playername}`} target="_blank" rel="noopener noreferrer">
+                        <img src="https://s.namemc.com/img/favicon-30.png" alt="NameMC" />
+                        Profil NameMC
+                    </a>
+                    {profilLink !== "#" && (
+                        <a class="button-namemc" href={`${profilLink}`}>
+                            <Image src={DiscordIcon} alt="Discord" />
+                            {profilText}
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            <h1>Statistiques {prefixe}<span class="playername">{joueur.playername}</span></h1>
+            <h1>
+                Badges {' '}
+                <span class="inline-image">
+                    <Image src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg" alt="Minecraft" width={1000} height={50} />
+                </span>
+                {' '} obtenus
+            </h1>
+        </div>
+    )}
+
+    <style>
+        .icon {
+            display: inline;
+            vertical-align: middle;
+            margin-right: 6px;
+            color: #9f3f02;
+        }
+
+        .inline-image {
+            display: inline-block;
+            vertical-align: baseline;
+            line-height: 1;
+        }
+
+        .inline-image img {
+            display: inline;
+            height: 1.1em;
+            width: auto;
+            vertical-align: middle;
+            transform: translateY(-5px);
+        }
+
+        .page-title {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (max-width: 768px) {
+            .page-title {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        }
+
+        .profile-container {
+            background: rgba(255 255 255 / 0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-container h1 {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        @media (max-width: 350px) {
+            .profile-container h1 {
+                font-size: 1.25rem;
+            }
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .playername {
+            animation: colorShift 3s ease-in-out infinite;
+        }
+        @keyframes colorShift {
+            0%   { color: #FFDDA0; }
+            33%  { color: #FFB347; }
+            66%  { color: #FF8C42; }
+            100% { color: #FFDDA0; }
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3 colonnes égales */
+            gap: 1rem;
+            align-items: flex-start;
+            justify-items: center;
+            padding: 2rem;
+            background-color: snow;
+        }
+
+        .avatar, .info-grid {
+            width: 100%;
+            max-width: 300px;
+        }
+        @media (max-width: 768px) {
+            .profile-details {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .info-grid {
+                text-align: center;
+            }
+        }
+
+        .avatar {
+            margin-bottom: 1rem;
+        }
+
+        .avatar img {
+            width: 128px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .back-link {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .button-copy,
+        .button-namemc {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #white;
+            color: #000;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: 2px solid #000;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .button-copy img,
+        .button-namemc img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .button-copy:hover,
+        .button-namemc:hover {
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #333;
+            animation: colorShift 3s ease-in-out infinite;
+        }
+    </style>
+</Layout>
