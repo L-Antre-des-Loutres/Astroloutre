@@ -3,6 +3,7 @@ import Banner from "../../../components/Banner.astro";
 import Image from "astro/components/Image.astro";
 import Title from "../../../assets/titles/profil-joueur.webp"
 import { slugify } from "../../../components/joueurs/joueurFormater";
+import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 
 // Type des données joueur
@@ -60,7 +61,7 @@ let profilText
 if (joueur.utilisateur_id !== null) {
     // Le compte joueur est lié à un profil discord
     // TODO : Le récupéré pour rediriger correctement vers le profil discord
-    profilLink = `/discord/profil/${joueur.utilisateur_id}`
+    profilLink = `/profil/${joueur.utilisateur_id}`
     profilText = "Profil Discord"
 } else {
     profilLink = `#`
@@ -97,12 +98,14 @@ if (joueur.utilisateur_id !== null) {
                     </button>
                     <a class="button-namemc" href={`https://fr.namemc.com/profile/${joueur.playername}`} target="_blank" rel="noopener noreferrer">
                         <img src="https://s.namemc.com/img/favicon-30.png" alt="NameMC" />
-                        Profil NameMC 
+                        Profil NameMC
                     </a>
-                    <a class="button-namemc" href={`${profilLink}`} target="_blank" rel="noopener noreferrer">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcExYZPFXZPJXZPFXZPFXZPFXZPFXZPFYZPJYZfJYZPJXZfFWY/JhbfNsd/OSmvbS1fv////x8/6pr/hQXvLl5/2Bi/XAxfpYg8U1AAAADHRSTlMADzmFwOT8YtP/sloPkm6kAAABAklEQVR4AYWTBbLFIAxFcXs4lf3vFEg1X2+9JzITIZco40IqJQVnlGBRbewtoxFmziI59rCPRGhIfn5hiLKDYSkJkemZz98689IB9YlCjPMlxnBgr4ejgTebcqltqJacLFBDCQPHJZWX0gIOjHB4Lusbrgu4ciKQI3IVRALMGGaAkqgZNdQRK4U8foc0MtQw46oDbmC9pBkQomwHlBPOlOsW9lL2sK1XUknETNnKpNOl5slKm1AQfsFaxw2eF+RQBB9HwLq3PedxG3CPMyc7yufDqF6b5Q2+jfoFf5SPaH/WPXhQuCqvn5bNVqEXR1GzkST7e0wwxeyX0fSO/T/Uf65DBzQNHUMopTvLAAAAAElFTkSuQmCC" alt="NameMC" />
-                        {profilText}
-                    </a>
+                    {profilLink !== "#" && (
+                        <a class="button-namemc" href={`${profilLink}`}>
+                            <Image src={DiscordIcon} alt="Discord" />
+                            {profilText}
+                        </a>
+                    )}
                 </div>
             </div>
 
