@@ -67,12 +67,28 @@ if (joueur.utilisateur_id !== null) {
     profilLink = `#`
     profilText = "Lier ce profil"
 }
+
+console.log(joueur)
+if (joueur.premiere_co === "2000-01-01T00:00:00.000" ||joueur.premiere_co === "2000-01-01T00:00:00.000Z" ) {
+    joueur.premiere_co = "Cette date à été oublié !"
+} else {
+    joueur.premiere_co = new Date(joueur.premiere_co).toLocaleDateString()
+}
+if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2000-01-01T00:00:00.000Z" ) {
+    joueur.derniere_co = "Cette date à été oublié !"
+} else {
+    joueur.derniere_co = new Date(joueur.derniere_co).toLocaleDateString()
+}
 ---
 
 <Layout>
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
         <Image src={Title} alt="Titre" />
+    </div>
+
+    <div class="back-link">
+        <a href="/classements/minecraft">← Retour au classement</a>
     </div>
 
     {joueur && (
@@ -87,8 +103,8 @@ if (joueur.utilisateur_id !== null) {
                     <h2>Informations</h2>
                     <div><strong>🆔 UUID :</strong><br /> {joueur.compte_id}</div>
                     <div><strong>🕹️ Jeu :</strong><br /> {joueur.jeu}</div>
-                    <div><strong>📅 Première connexion :</strong><br /> {new Date(joueur.premiere_co).toLocaleDateString()}</div>
-                    <div><strong>📅 Dernière connexion :</strong><br /> {new Date(joueur.derniere_co).toLocaleDateString()}</div>
+                    <div><strong>📅 Première connexion :</strong><br /> {joueur.premiere_co}</div>
+                    <div><strong>📅 Dernière connexion :</strong><br /> {joueur.derniere_co}</div>
                 </div>
                 <div class="info-grid">
                     <h2>Action</h2>
@@ -110,14 +126,32 @@ if (joueur.utilisateur_id !== null) {
             </div>
 
             <h1>Statistiques {prefixe}<span class="playername">{joueur.playername}</span></h1>
-
-            <div class="back-link">
-                <a href="/classements/minecraft">← Retour à la liste des joueurs</a>
-            </div>
+            <h1>
+                Badges {' '}
+                <span class="inline-image">
+                    <Image src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg" alt="Minecraft" width={1000} height={50} />
+                </span>
+                {' '} obtenus
+            </h1>
         </div>
     )}
 
     <style>
+
+        .inline-image {
+            display: inline-block;
+            vertical-align: baseline;
+            line-height: 1;
+        }
+
+        .inline-image img {
+            display: inline;
+            height: 1.1em;
+            width: auto;
+            vertical-align: middle;
+            transform: translateY(-5px);
+        }
+
         .page-title {
             margin-top: 50px;
             margin-bottom: 50px;
@@ -213,13 +247,14 @@ if (joueur.utilisateur_id !== null) {
         }
 
         .back-link {
-            margin-top: 2rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         .back-link a {
             color: #1e40af;
             text-decoration: none;
-            font-weight: bold;
         }
 
         .back-link a:hover {
