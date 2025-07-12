@@ -5,6 +5,7 @@ import {slugify} from "../../components/joueurs/joueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import Void from "../../components/Void.astro";
+import {formatDate} from "../../components/date/DateFormater";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -93,19 +94,6 @@ if (joueur.discord_id !== null) {
 } else {
     profilLink = `#`
     profilText = "Lier ce profil"
-}
-
-// Formatte la date en toLocaleString
-function formatDate(date: string | null | Date): string {
-    if (
-        !date ||
-        date === "2000-01-01T00:00:00.000" ||
-        date === "2000-01-01T00:00:00.000Z"
-    ) {
-        return "Cette date a été oubliée !";
-    }
-
-    return new Date(date).toLocaleDateString();
 }
 
 // Vérifie le nombre de message des joueurs

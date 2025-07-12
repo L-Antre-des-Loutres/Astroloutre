@@ -7,6 +7,7 @@ import Title from "../../../assets/titles/profil-joueur.webp"
 import { slugify } from "../../../components/joueurs/joueurFormater";
 import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
+import {formatDate} from "../../../components/date/DateFormater";
 
 // Type des données joueur
 type JoueurType = {
@@ -70,17 +71,6 @@ if (joueur.utilisateur_id !== null) {
     profilText = "Lier ce profil"
 }
 
-function formatDate(date: string | null | Date): string {
-    if (
-        !date ||
-        date === "2000-01-01T00:00:00.000" ||
-        date === "2000-01-01T00:00:00.000Z"
-    ) {
-        return "Cette date a été oubliée !";
-    }
-
-    return new Date(date).toLocaleDateString();
-}
 
 let playtime = 0;
 
