@@ -2,6 +2,7 @@
 // Composant : PlayerClassement.astro
 import PlayerClassementReactComposant from './PlayerClassement.tsx';
 import PlayerPodium from './PlayerPodium.astro';
+import Void from "../Void.astro";
 
 const { jeu } = Astro.props;
 
@@ -71,3 +72,4 @@ playersRaw.forEach((entry: any) => {
 
 <PlayerClassementReactComposant client:load {serversList} {allData} />
 <PlayerPodium {allData} />
+<Void/>

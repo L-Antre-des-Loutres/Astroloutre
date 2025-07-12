@@ -65,9 +65,9 @@ const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
         <h3 class="text-2xl font-semibold text-amber-800 mb-4 text-center">Fondateurs</h3>
         <ul class="flex flex-wrap gap-6 justify-center">
             {fondateurs.map((user) => (
-                    <li class="flex flex-col items-center text-center max-w-[7rem] transition transform hover:scale-105">
-                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group">
-                            <div class="bg-gray-100 rounded-xl p-4 shadow-md hover:shadow-lg transition">
+                    <li class="w-[10rem] flex flex-col items-center text-center transition transform hover:scale-105">
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group w-full">
+                            <div class="rounded-xl p-4 transition flex flex-col items-center">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
@@ -84,16 +84,16 @@ const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
 
     <!-- Section Investisseurs -->
     <section>
-        <h3 class="text-2xl font-semibold text-emerald-600 mb-4 text-center">Investisseurs</h3>
+        <h3 class="text-2xl font-semibold text-emerald-600 mb-4 text-center">Nos investisseurs</h3>
         <ul class="flex flex-wrap gap-6 justify-center">
             {investisseurs.map((user) => (
-                    <li class="flex flex-col items-center text-center max-w-[7rem] transition transform hover:scale-105">
-                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group">
-                            <div class="bg-gray-100 rounded-xl p-4 min-h-50 shadow-md hover:shadow-lg transition">
+                    <li class="w-[10rem] flex flex-col items-center text-center transition transform hover:scale-105">
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group w-full">
+                            <div class=" min-h-50 rounded-xl p-4 transition flex flex-col items-center">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
-                                        class="w-20 h-20 rounded-full mb-3 border-2 border-emerald-500 group-hover:brightness-105"
+                                        class="w-20 h-20 rounded-full mb-3 border-2 border-emerald-600 group-hover:brightness-105"
                                 />
                                 <div class="font-medium text-gray-800 text-sm break-words">{user.pseudo_discord}</div>
                                 <div class="text-xs text-gray-500 break-words">{user.tag_discord}</div>

@@ -2,9 +2,30 @@
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import ServeurVignette from "../../components/serveurs/ServeurVignette.astro";
+import Title from "../../assets/titles/nos-serveurs.webp"
+import Image from "astro/components/Image.astro";
 ---
 
 <Layout>
 <Banner bannerUrl="/banner/minecraft/nos_serveurs.webp"/>
+    <div class="page-title">
+        <Image src={Title} alt="Titre" />
+    </div>
 <ServeurVignette apiUrl="https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/minecraft" jeu="minecraft"/>
 </Layout>
+
+<style>
+    .page-title {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+    @media (max-width: 768px) {
+        .page-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    }
+</style>
