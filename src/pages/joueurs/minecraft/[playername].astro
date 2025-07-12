@@ -1,5 +1,6 @@
 ---
 import Banner from "../../../components/Banner.astro";
+import Void from "../../../components/Void.astro";
 import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
 import Image from "astro/components/Image.astro";
 import Title from "../../../assets/titles/profil-joueur.webp"
@@ -80,8 +81,21 @@ if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2
     joueur.derniere_co = new Date(joueur.derniere_co).toLocaleDateString()
 }
 
-let playtime = 0
-playtime = playtime / 72000
+let playtime = 0;
+
+try {
+    const totalRes = await fetch(`https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats-uid/${joueur.compte_id}`);
+    const totalJson = await totalRes.json();
+    const totalData = totalJson?.data?.[0];
+
+    if (totalData && totalData.tmps_jeux) {
+        const ticks = parseInt(totalData.tmps_jeux, 10); // 1 tick = 1/20 sec
+        playtime = Math.round(ticks / 72000); // 72000 ticks = 1 heure
+    }
+} catch (error) {
+    console.error("Erreur lors du fetch des stats totales:", error);
+}
+
 ---
 
 <Layout>
@@ -194,7 +208,7 @@ playtime = playtime / 72000
             </div>
 
             <h1>Statistiques {prefixe}<span class="playername">{joueur.playername}</span></h1>
-            <PlayerStats client:load player={joueur} />
+            <PlayerStats client:load player={joueur} uuid={joueur.compte_id} />
 
             <h1>
                 Badges {' '}
@@ -203,6 +217,8 @@ playtime = playtime / 72000
                 </span>
                 {' '} obtenus
             </h1>
+            <Void />
+
         </div>
     )}
 
