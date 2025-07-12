@@ -123,7 +123,11 @@ if (joueur.nb_message === null) {
 
             <div class="profile-details">
                 <div class="h-full rounded-2xl">
-                    <img src={joueur.avatar_url} alt={`Avatar de ${joueur.pseudo_discord}`} class="w-full rounded-2xl" />
+                    <img
+                            src={joueur.avatar_url}
+                            alt={`Avatar de ${joueur.pseudo_discord}`}
+                            class="w-[18rem] h-auto rounded-2xl object-cover"
+                    />
                 </div>
                 <div class="info-grid">
 

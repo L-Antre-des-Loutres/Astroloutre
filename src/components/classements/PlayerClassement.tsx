@@ -80,7 +80,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                     borderColor: "#101550",
                                 }
                                 : {
-                                    background: "linear-gradient(to right, #081245, #101550)",
+                                    background: "#333",
                                     borderColor: "transparent",
                                 }
                         }
@@ -94,7 +94,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                 <table className="w-full text-base text-left overflow-hidden rounded-xl">
                     <thead
                         style={{
-                            background: "linear-gradient(to right, #170F24, #101550)",
+                            background: "linear-gradient(to right, #333, #333, #5a1a00)",
                         }}
                         className="text-white text-base"
                     >
