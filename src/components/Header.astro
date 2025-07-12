@@ -131,6 +131,8 @@ import adl_logo from "../assets/adl_small_logo.png"
 </style>
 
 <script>
+	import {slugify} from "./serveurs/serveurFormater";
+
 	const headerInner = document.querySelector(".header-inner");
 
 	if (typeof window !== "undefined" && headerInner != null) {
@@ -160,7 +162,7 @@ import adl_logo from "../assets/adl_small_logo.png"
 						avatarImg.src = data.avatarUrl; // OK maintenant
 					}
 					if (profilLink && data.username) {
-						profilLink.href = `/profil/${data.username}`;
+						profilLink.href = `/profil/${slugify(data.username)}`;
 					}
 				}
 			}
