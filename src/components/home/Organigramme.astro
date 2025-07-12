@@ -89,7 +89,7 @@ const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
             {investisseurs.map((user) => (
                     <li class="flex flex-col items-center text-center max-w-[7rem] transition transform hover:scale-105">
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="group">
-                            <div class="bg-gray-100 rounded-xl p-4 shadow-md hover:shadow-lg transition">
+                            <div class="bg-gray-100 rounded-xl p-4 min-h-50 shadow-md hover:shadow-lg transition">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
