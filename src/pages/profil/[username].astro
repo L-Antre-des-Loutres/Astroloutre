@@ -4,6 +4,7 @@ import Title from "../../assets/titles/profil_discord.webp"
 import {slugify} from "../../components/joueurs/joueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
+import Void from "../../components/Void.astro";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -223,7 +224,7 @@ if (joueur.nb_message === null) {
             <h1>
                 Badges
             </h1>
-                <span class="text-2xl">Pour la prochaine mise à jour :)</span>
+                <Void/>
             </div>
     )}
 
