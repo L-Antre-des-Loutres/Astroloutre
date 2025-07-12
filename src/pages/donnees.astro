@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Banner from "../components/Banner.astro";
+---
+
+<Layout title="Utilisation des données utilisateur">
+    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
+
+    <section class="page-header">
+        <h1>Comment nous utilisons vos données</h1>
+        <p class="intro">
+            Cette page vous informe en toute transparence sur quelles sont les données récupérées et ce que nous en faisons, mais aussi sur comment vous pouvez demander à les faire supprimer.
+        </p>
+    </section>
+
+    <section class="data-section">
+        <h2>1. Utilisation des données</h2>
+        <p>
+            Nous utilisons vos données uniquement pour les finalités suivantes :
+        </p>
+        <ul>
+            <li>Afficher vos statistiques de jeu sur votre profil et dans des classements pour <u>(votre satisfaction et celle de la communauté)</u>.</li>
+            <li>Établir des statistiques de performance pour améliorer la qualité de nos serveurs.</li>
+            <li>Protéger les créations de nos joueurs, notamment dans Minecraft, et identifier les comportements malveillants via l’historique de connexions.</li>
+        </ul>
+    </section>
+
+    <section class="data-section">
+        <h2>2. Données collectées</h2>
+        <p>
+            Les données que nous collectons sont soit publiques, soit spécifiques à nos serveurs, donc essentiellement vos données de jeu. Voici en détail tout ce que nous enregistrons :
+        </p>
+
+        <h3>Données Discord</h3>
+        <ul>
+            <li>Votre ID Discord</li>
+            <li>Votre pseudo Discord <u>(celui de votre profil serveur)</u></li>
+            <li>Votre TAG Discord</li>
+            <li>La date à laquelle vous avez rejoint le serveur Discord</li>
+            <li>La date de votre première activité sur le serveur Discord</li>
+            <li>La date de votre dernière activité sur le serveur Discord</li>
+            <li>Votre nombre de messages sur le serveur Discord</li>
+            <li>Votre image de profil</li>
+        </ul>
+
+        <h3>Données de joueur Minecraft</h3>
+        <ul>
+            <li>Votre UUID de compte Minecraft</li>
+            <li>Un historique de toutes vos connexions sur nos serveurs Minecraft</li>
+            <li>Votre pseudo Minecraft</li>
+            <li>Vos statistiques sur chacun de nos serveurs <u>(temps de jeu, blocs détruits, distance parcourue, etc...)</u></li>
+        </ul>
+
+        <h3>Données de joueur Palworld</h3>
+        <p>
+            Nous ne récoltons, pour le moment, aucune donnée sur les joueurs Palworld. <u>(Cette politique pourrait évoluer selon les fonctionnalités futures de nos serveurs)</u>.
+        </p>
+    </section>
+
+    <section class="data-section">
+        <h2>3. Comment vos données sont collectées</h2>
+        <p>
+            Vos données sont collectées par des outils que nous développons nous-mêmes et qui sont <a href="https://opensource.org/" target="_blank">open source</a>, garantissant transparence, sécurité et confidentialité.
+        </p>
+        <h3>Outils utilisés :</h3>
+        <ul>
+            <li><a href="https://github.com/L-Antre-des-Loutres/Arisoutre" target="_blank">Arisoutre</a> : collecte toutes les données liées aux utilisateurs Discord de notre communauté.</li>
+            <li><a href="https://github.com/Corentin-cott/ServerSentinel" target="_blank">ServerSentinel</a> : collecte les données des joueurs de nos serveurs, tous jeux confondus.</li>
+        </ul>
+    </section>
+
+    <section class="data-section">
+        <h2>4. Durée de conservation</h2>
+        <p>
+            Vos données sont conservées pour une durée illimitée, sauf dans les cas suivants :
+        </p>
+        <ul>
+            <li>
+                L’Antre des Loutres s’arrête, auquel cas vos données seront soit anonymisées, soit détruites.
+            </li>
+            <li>
+                Vous demandez la suppression de vos données : dans ce cas, nous procéderons à leur suppression dans un délai de 30 jours, conformément au
+                <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32016R0679" target="_blank">Règlement Général sur la Protection des Données (RGPD)</a>.
+            </li>
+        </ul>
+    </section>
+
+    <section class="data-section">
+        <h2>5. Partage des données</h2>
+        <p>
+            <strong>Nous ne partageons vos données avec aucun tiers.</strong> Elles sont exclusivement utilisées par l'équipe de L’Antre des Loutres et ne seront jamais vendues, cédées ou exploitées commercialement.
+        </p>
+    </section>
+
+    <section class="data-section">
+        <h2>6. Comment faire supprimer vos données</h2>
+        <p>
+            Pour faire supprimer vos données, vous pouvez nous contacter via
+            <a href="https://discord.gg/k4ZBFVdntp" target="_blank">Discord</a>
+            ou en envoyant un e-mail à
+            <a href="mailto:arisoutre@gmail.com">arisoutre@gmail.com</a>.
+            <br />
+        </p>
+    </section>
+
+    <section class="data-section">
+        <h2>7. Vos droits</h2>
+        <p>
+            Vos droits sur vos données sont les suivants :
+        </p>
+        <ul>
+            <li>
+                Droit d’accès : via nos plateformes publiques telles que <a href="https://antredesloutres.fr" target="_blank">notre site</a>, nos <a href="https://github.com/L-Antre-des-Loutres" target="_blank">bots open source</a>, et autres outils.
+            </li>
+            <li>
+                Droit de modification : vous pouvez demander la correction des données provenant de sources externes (ex. : changement de pseudonyme Minecraft).
+            </li>
+            <li>
+                Droit de suppression : en suivant les instructions de la section 6 ou en remplissant ce formulaire :
+                <a href="https://antredesloutres.fr/suppression-donnees" target="_blank">Formulaire de suppression</a> <u>(si vous ne souhaitez pas passer par Discord)</u>.
+            </li>
+        </ul>
+    </section>
+
+    <section class="data-section">
+        <h2>8. Contact</h2>
+        <p>
+            Pour toute question concernant vos données personnelles, vous pouvez nous contacter à :
+            <a href="mailto:arisoutre@antredesloutres.fr">arisoutre@antredesloutres.fr</a>
+        </p>
+    </section>
+
+    <style>
+        .page-header {
+            padding: 2rem 1rem;
+            background: #f9fafb;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro {
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .data-section {
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .data-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .data-section h3 {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #334155;
+        }
+
+        .data-section p,
+        .data-section li {
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        u {
+            text-decoration: underline dotted;
+            color: #9ca3af;
+        }
+    </style>
+</Layout>
