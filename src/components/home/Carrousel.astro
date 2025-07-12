@@ -100,6 +100,7 @@ const games = [
                     <!-- Image de fond du carrousel -->
                     <div class="relative w-screen h-screen overflow-hidden" id={`carousel-${i}`}>
                         {game.slides.map((src, j) => (
+                                <!-- Image du carrousel -->
                                 <Image
                                         src={src.path}
                                         alt={`${game.name} slide ${j + 1}`}
@@ -110,6 +111,7 @@ const games = [
                                         width={100}
                                         height={100}
                                 />
+                                <!-- Crédit de l'image -->
                                 <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
                                     <p>Image par {src.auteur} sur le serveur {src.origine}</p>
                                 </div>
