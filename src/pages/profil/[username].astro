@@ -1,0 +1,395 @@
+---
+import Image from "astro/components/Image.astro";
+import Title from "../../assets/titles/profil_discord.webp"
+import {slugify} from "../../components/joueurs/joueurFormater";
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/Banner.astro";
+
+// Type des données joueur
+type DiscordUserType = {
+    id: number
+    discord_id: string
+    tag_discord: string
+    pseudo_discord: string
+    join_date_discord: string
+    first_activity: string
+    last_activity: string
+    nb_message: number
+    avatar_url: string
+};
+
+// Type des données des joueurs
+type LinkAccount = {
+    id: number
+    utilisateur_id: number
+    jeu: string
+    compte_id: string
+    premiere_co: string
+    derniere_co: string
+    playername: string
+}
+
+// Props passées depuis getStaticPaths
+const joueur: DiscordUserType | undefined = Astro.props.joueur;
+const accountLink : LinkAccount | null = Astro.props.accountLink
+
+// Génération des pages statiques
+export async function getStaticPaths() {
+
+    // Récupération des informations des utilisateurs discord
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+        throw new Error(`Erreur API joueurs: ${response.status}`);
+    }
+    const json = await response.json();
+    if (!json.success || !Array.isArray(json.data)) return [];
+    const joueurs: DiscordUserType[] = json.data;
+
+    // Récupération des informations des comptes liées
+    const reponseAccountLink = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs")
+    if (!reponseAccountLink.ok){
+        throw new Error(`Erreur API Link account : ${reponseAccountLink.status}`)
+    }
+    const jsonAccountLink = await reponseAccountLink.json()
+    if (!json.success || !Array.isArray(json.data)) return [];
+    const accountsLinks: LinkAccount[] = jsonAccountLink.data;
+
+    return joueurs
+        .filter((joueur) => typeof joueur.pseudo_discord === 'string' && joueur.pseudo_discord.trim() !== '')
+        .map((joueur) => {
+            const accountLink = accountsLinks.find(
+                (link) => link.utilisateur_id === joueur.id
+            );
+
+            return {
+                params: {
+                    username: slugify(joueur.tag_discord),
+                },
+                props: {
+                    joueur,
+                    accountLink: accountLink || null, // null si non trouvé
+                },
+            };
+        });
+
+}
+
+const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'h'];
+let prefixe = "de ";
+
+if (joueur && joueur.pseudo_discord && voyelles.includes(joueur.pseudo_discord[0].toLowerCase())) {
+    prefixe = "d’";
+}
+
+let profilLink
+let profilText
+if (joueur.discord_id !== null) {
+    // Le compte joueur est lié à un profil discord
+    // TODO : Le récupéré pour rediriger correctement vers le profil discord
+    profilLink = `/profil/${joueur.discord_id}`
+    profilText = "Profil Discord"
+} else {
+    profilLink = `#`
+    profilText = "Lier ce profil"
+}
+
+// Formatte la date en toLocaleString
+function formatDate(date: string | null | Date): string {
+    if (
+        !date ||
+        date === "2000-01-01T00:00:00.000" ||
+        date === "2000-01-01T00:00:00.000Z"
+    ) {
+        return "Cette date a été oubliée !";
+    }
+
+    return new Date(date).toLocaleDateString();
+}
+
+// Vérifie le nombre de message des joueurs
+let messageFormat = "message"
+if (joueur.nb_message === null) {
+    joueur.nb_message = 0
+} else if (joueur.nb_message > 1) {
+    messageFormat = "messages"
+}
+
+---
+
+<Layout>
+    <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
+    <div class="page-title">
+        <Image src={Title} alt="Titre" />
+    </div>
+
+    <div class="back-link">
+        <a href="/classements/minecraft">← Retour à la page d'accueil</a>
+    </div>
+
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".button-copy");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const uuid = button.getAttribute("data-uuid");
+                    navigator.clipboard.writeText(uuid).then(() => {
+                        const span = button.querySelector("span");
+                        const originalText = span.textContent;
+                        span.textContent = "UUID copié !";
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+
+    {joueur && (
+        <div class="profile-container">
+            <h1>Information du compte {prefixe}<span class="playername">{joueur.pseudo_discord}</span></h1>
+
+            <div class="profile-details">
+                <div class="h-full rounded-2xl">
+                    <img src={joueur.avatar_url} alt={`Avatar de ${joueur.pseudo_discord}`} class="w-full rounded-2xl" />
+                </div>
+                <div class="info-grid">
+
+                    <h2>Informations</h2>
+                    <div>
+                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                            {/* Icône ID */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Tag Discord de l'utilisateur :
+                        </label>
+                        <input
+                                type="text"
+                                value={joueur.tag_discord}
+                                readonly
+                                onclick="this.select()"
+                                style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: monospace;"
+                        />
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Heures de jeu (horloge) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Nombres de message :
+                        </strong>
+                        <br /> {joueur.nb_message} {messageFormat}
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Première connexion (calendrier) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Date d'arrivée :
+                        </strong>
+                        <br /> {formatDate(joueur.join_date_discord)}
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Dernière connexion (calendrier) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Activité récente :
+                        </strong>
+                        <br /> {formatDate(joueur.last_activity)}
+                    </div>
+                </div>
+                <div class="info-grid">
+
+                    <h2>Comptes Liés</h2>
+                    {accountLink &&
+                            <a href={`/joueurs/minecraft/${slugify(accountLink.playername)}`} class="block w-full">
+                                <button
+                                        class="button-copy w-full"
+                                        data-uuid={accountLink.playername}>
+                                    <img src={`https://mc-heads.net/avatar/${accountLink.playername}/128`} alt="Copier UUID" />
+                                    <span>RereBleue (Minecraft)</span>
+                                </button>
+                            </a>
+                    }
+                </div>
+            </div>
+            <h1>
+                Badges
+            </h1>
+                <span class="text-2xl">Pour la prochaine mise à jour :)</span>
+            </div>
+    )}
+
+    <style>
+        .icon {
+            display: inline;
+            vertical-align: middle;
+            margin-right: 6px;
+            color: #9f3f02;
+        }
+
+        .inline-image {
+            display: inline-block;
+            vertical-align: baseline;
+            line-height: 1;
+        }
+
+        .inline-image img {
+            display: inline;
+            height: 1.1em;
+            width: auto;
+            vertical-align: middle;
+            transform: translateY(-5px);
+        }
+
+        .page-title {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (max-width: 768px) {
+            .page-title {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        }
+
+        .profile-container {
+            background: rgba(255 255 255 / 0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-container h1 {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        @media (max-width: 350px) {
+            .profile-container h1 {
+                font-size: 1.25rem;
+            }
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .playername {
+            animation: colorShift 3s ease-in-out infinite;
+        }
+        @keyframes colorShift {
+            0%   { color: #FFDDA0; }
+            33%  { color: #FFB347; }
+            66%  { color: #FF8C42; }
+            100% { color: #FFDDA0; }
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3 colonnes égales */
+            gap: 1rem;
+            align-items: flex-start;
+            justify-items: center;
+            padding: 2rem;
+            background-color: snow;
+        }
+
+        .avatar, .info-grid {
+            width: 100%;
+            max-width: 300px;
+        }
+        @media (max-width: 768px) {
+            .profile-details {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .info-grid {
+                text-align: center;
+            }
+        }
+
+        .avatar {
+            margin-bottom: 1rem;
+        }
+
+        .avatar img {
+            width: 128px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .back-link {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .button-copy,
+        .button-namemc {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #white;
+            color: #000;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: 2px solid #000;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .button-copy img,
+        .button-namemc img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .button-copy:hover,
+        .button-namemc:hover {
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #333;
+            animation: colorShift 3s ease-in-out infinite;
+        }
+    </style>
+</Layout>
