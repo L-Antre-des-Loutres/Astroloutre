@@ -195,7 +195,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                     </a>.
                 </p>
                 <p>
-                    <a href="https://perdu.com" style={{ textDecoration: "underline", color: "#101550" }}>
+                    <a href="/donnees" style={{ textDecoration: "underline", color: "#101550" }}>
                         En savoir plus sur la suppression de mes données
                     </a>
                 </p>

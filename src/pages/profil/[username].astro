@@ -128,25 +128,6 @@ if (joueur.nb_message === null) {
         <a href="/classements/minecraft">← Retour à la page d'accueil</a>
     </div>
 
-    <script is:inline>
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".button-copy");
-
-            buttons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    const uuid = button.getAttribute("data-uuid");
-                    navigator.clipboard.writeText(uuid).then(() => {
-                        const span = button.querySelector("span");
-                        const originalText = span.textContent;
-                        span.textContent = "UUID copié !";
-                        setTimeout(() => {
-                            span.textContent = originalText;
-                        }, 2000);
-                    });
-                });
-            });
-        });
-    </script>
 
     {joueur && (
         <div class="profile-container">

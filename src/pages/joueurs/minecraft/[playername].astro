@@ -70,15 +70,16 @@ if (joueur.utilisateur_id !== null) {
     profilText = "Lier ce profil"
 }
 
-if (joueur.premiere_co === "2000-01-01T00:00:00.000" ||joueur.premiere_co === "2000-01-01T00:00:00.000Z" ) {
-    joueur.premiere_co = "Cette date à été oublié !"
-} else {
-    joueur.premiere_co = new Date(joueur.premiere_co).toLocaleDateString()
-}
-if (joueur.derniere_co === "2000-01-01T00:00:00.000" ||joueur.derniere_co === "2000-01-01T00:00:00.000Z" ) {
-    joueur.derniere_co = "Cette date à été oublié !"
-} else {
-    joueur.derniere_co = new Date(joueur.derniere_co).toLocaleDateString()
+function formatDate(date: string | null | Date): string {
+    if (
+        !date ||
+        date === "2000-01-01T00:00:00.000" ||
+        date === "2000-01-01T00:00:00.000Z"
+    ) {
+        return "Cette date a été oubliée !";
+    }
+
+    return new Date(date).toLocaleDateString();
 }
 
 let playtime = 0;
@@ -172,7 +173,7 @@ try {
                             </svg>
                             Première connexion :
                         </strong>
-                        <br /> {joueur.premiere_co}
+                        <br /> {formatDate(joueur.premiere_co)}
                     </div>
                     <div>
                         <strong>
@@ -182,7 +183,7 @@ try {
                             </svg>
                             Dernière connexion :
                         </strong>
-                        <br /> {joueur.derniere_co}
+                        <br /> {formatDate(joueur.derniere_co)}
                     </div>
                 </div>
 
