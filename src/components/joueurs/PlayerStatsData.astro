@@ -1,0 +1,17 @@
+---
+// PlayerStatsData.astro
+import PlayerStatsTable from './PlayerStatsTable.tsx';
+
+const { uuid } = Astro.props;
+
+const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/per-server-uid/${uuid}`);
+const json = await res.json();
+
+const playerDataList = json.data ?? [];
+---
+
+{playerDataList.length > 0 ? (
+<PlayerStatsTable client:load player={playerDataList} />
+    ) : (
+<p style="padding: 5em;">Ce joueur n’a pas de données.</p>
+    )}
