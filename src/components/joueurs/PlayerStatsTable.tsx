@@ -1,3 +1,4 @@
+// PlayerStatsTable.tsx
 import React from 'react';
 
 type PlayerStat = {

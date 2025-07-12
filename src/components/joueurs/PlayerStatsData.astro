@@ -1,6 +1,6 @@
 ---
 // PlayerStatsData.astro
-import PlayerStatsTable from './PlayerStatsTable.tsx';
+import PlayerStatsTable from './PlayerStatsTable';
 
 const { uuid } = Astro.props;
 
@@ -11,7 +11,7 @@ const playerDataList = json.data ?? [];
 ---
 
 {playerDataList.length > 0 ? (
-<PlayerStatsTable client:load player={playerDataList} />
+<PlayerStatsTable client:only="react" player={playerDataList} />
     ) : (
 <p style="padding: 5em;">Ce joueur n’a pas de données.</p>
     )}
