@@ -1,36 +1,23 @@
 ---
 import "../styles/global.css";
 import Header from '../components/Header.astro';
-import adl_logo from "../assets/adl_small_logo.png"
+import adl_logo from "../assets/adl_small_logo.png";
+import Footer from "../components/Footer.astro";
 ---
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href={adl_logo.src} />
-		<meta name="generator" content={Astro.generator} />
-		<title>Antre des Loutres</title>
-	</head>
-	<body class="overflow-x-hidden">
-		<header>
-			<Header />
-		</header>
-		<main>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/png" href={adl_logo.src} />
+	<meta name="generator" content={Astro.generator} />
+	<title>Antre des Loutres</title>
+</head>
+<body class="flex flex-col min-h-screen overflow-x-hidden bg-white">
+	<Header />
+		<main class="flex-grow">
 			<slot />
 		</main>
-	</body>
+	<Footer />
+</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-
-	main {
-		height: 100%;
-	}
-</style>
