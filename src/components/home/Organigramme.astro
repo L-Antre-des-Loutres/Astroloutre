@@ -1,0 +1,107 @@
+---
+// Enregistrement du type de tableau Discord ID
+
+import {slugify} from "../joueurs/joueurFormater";
+type discordID = {
+    DiscordId: string;
+};
+
+// Liste des fondateurs
+const discordFondateur: discordID[] = [
+    { DiscordId: "518780404057112580" },
+    { DiscordId: "383676607434457088" }
+];
+
+// Liste des investisseur
+const discordInvestisseur: discordID[] = [
+    {DiscordId: "556501819468152832"},
+    {DiscordId: "432541622065168385"},
+    {DiscordId: "442285755113668609"},
+    {DiscordId: "334269770809606154"}
+]
+
+// Type pour enregistrer notre requête
+type DiscordUserType = {
+    id: number
+    discord_id: string
+    tag_discord: string
+    pseudo_discord: string
+    join_date_discord: string
+    first_activity: string
+    last_activity: string
+    nb_message: number
+    avatar_url: string
+};
+
+// Récupération des informations des utilisateurs discord
+const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
+const response = await fetch(apiUrl);
+if (!response.ok) {
+    throw new Error(`Erreur API joueurs: ${response.status}`);
+}
+const json = await response.json();
+if (!json.success || !Array.isArray(json.data)) return [];
+const utilisateurs: DiscordUserType[] = json.data;
+
+// Récupération des données pour les id Discord Fondateur
+const idsFondateurs = discordFondateur.map(fondateur => fondateur.DiscordId);
+const fondateurs: DiscordUserType[] = utilisateurs.filter(joueur =>
+    idsFondateurs.includes(joueur.discord_id)
+);
+
+// Recupération des données pour les id Discord Investisseur
+const idsInvestisseurs = discordInvestisseur.map(investisseur => investisseur.DiscordId);
+const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
+    idsInvestisseurs.includes(joueur.discord_id)
+);
+
+
+
+---
+<!-- Organigramme -->
+<div class="organigramme w-full bg-white p-6">
+    <!-- Section Fondateurs -->
+    <section class="mb-10">
+        <h3 class="text-2xl font-semibold text-amber-800 mb-4">Fondateurs</h3>
+        <ul class="flex flex-wrap gap-6">
+            {fondateurs.map((user) => (
+                    <li class="flex flex-col items-center text-center max-w-[7rem] transition transform hover:scale-105">
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group">
+                            <div class="bg-gray-100 rounded-xl p-4 shadow-md hover:shadow-lg transition">
+                                <img
+                                        src={user.avatar_url}
+                                        alt={`Avatar de ${user.pseudo_discord}`}
+                                        class="w-20 h-20 rounded-full mb-3 border-2 border-amber-800 group-hover:brightness-105"
+                                />
+                                <div class="font-medium text-gray-800 text-sm break-words">{user.pseudo_discord}</div>
+                                <div class="text-xs text-gray-500 break-words">{user.tag_discord}</div>
+                            </div>
+                        </a>
+                    </li>
+            ))}
+        </ul>
+    </section>
+
+    <!-- Section Investisseurs -->
+    <section>
+        <h3 class="text-2xl font-semibold text-emerald-600 mb-4">Investisseurs</h3>
+        <ul class="flex flex-wrap gap-6">
+            {investisseurs.map((user) => (
+                    <li class="flex flex-col items-center text-center max-w-[7rem] transition transform hover:scale-105">
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group">
+                            <div class="bg-gray-100 rounded-xl p-4 shadow-md hover:shadow-lg transition">
+                                <img
+                                        src={user.avatar_url}
+                                        alt={`Avatar de ${user.pseudo_discord}`}
+                                        class="w-20 h-20 rounded-full mb-3 border-2 border-emerald-500 group-hover:brightness-105"
+                                />
+                                <div class="font-medium text-gray-800 text-sm break-words">{user.pseudo_discord}</div>
+                                <div class="text-xs text-gray-500 break-words">{user.tag_discord}</div>
+                            </div>
+                        </a>
+                    </li>
+            ))}
+        </ul>
+    </section>
+</div>
+
