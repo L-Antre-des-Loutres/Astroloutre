@@ -1,6 +1,5 @@
 ---
-// Props
-const { imageSrc, imageAlt, title, link, paragraph } = Astro.props;
+const { imageSrc, imageAlt, title, link, paragraph, paragraph2 } = Astro.props;
 ---
 
 <div class="container">
@@ -16,34 +15,43 @@ const { imageSrc, imageAlt, title, link, paragraph } = Astro.props;
 <style>
     .container {
         display: flex;
-        gap: 5rem;
-        margin: 2rem;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1.5rem;
+        max-width: 1500px;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
 
     .image-column {
-        flex: 1;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
     }
 
     .image-column img {
-        width: 35em;
+        width: 100%;
+        max-width: 400px; /* Taille réduite pour libérer de l'espace au texte */
+        height: auto;
         object-fit: cover;
+        border-radius: 0.5rem;
     }
 
     .text-column {
-        flex: 1;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        padding: 0 1rem;
+        max-width: 100%; /* Garantit que ça n'est pas contraint inutilement */
     }
 
     .title-link {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: bold;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
         text-decoration: none;
         color: #007acc;
+        word-break: break-word;
     }
 
     .title-link:hover {
@@ -51,8 +59,29 @@ const { imageSrc, imageAlt, title, link, paragraph } = Astro.props;
     }
 
     .fixed-height-paragraph {
-        height: 150px; /* Hauteur fixe, tu peux ajuster */
-        overflow: auto;
+        height: 180px; /* Un peu plus haute si tu veux plus de lecture visible */
+        overflow-y: auto;
         margin: 0;
+        line-height: 1.6;
+        padding-right: 0.5rem;
+        font-size: 1.05rem;
+        max-width: 500px;
+    }
+
+    @media (min-width: 768px) {
+        .container {
+            flex-direction: row;
+            gap: 3rem;
+            padding: 2rem 3rem;
+        }
+
+        .image-column {
+            flex: 0 0 35%; /* 35% image */
+        }
+
+        .text-column {
+            flex: 0 0 65%; /* 65% texte */
+            padding: 0;
+        }
     }
 </style>
