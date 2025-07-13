@@ -4,8 +4,7 @@ import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/Banner.astro";
 import Image from "astro/components/Image.astro";
 import Void from "../../../components/Void.astro";
-import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
-import {formatDate} from "../../../components/date/DateFormater";
+import PlayerList from "../../../components/serveurs/PlayerList.astro";
 
 // Type du serveur
 type ServeurType = {
@@ -224,7 +223,7 @@ export async function getStaticPaths() {
                 </span>
                 {' '} ayant rejoint le serveur
             </h1>
-            <Void />
+            <PlayerList serveurId={serveur.id}/>
 
             <h1>Screenshot des joueurs sur le serveur <span class="golden">{serveur.nom}</span></h1>
             <Void />
