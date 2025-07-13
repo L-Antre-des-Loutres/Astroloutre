@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { slugify } from "../joueurs/joueurFormater";
+import {formatNumber} from "../formater/NumberFormater.ts";
 
 /* Gestion des statistiques de joueur */
 type PlayerStats = Record<string, any>;
@@ -7,7 +8,6 @@ type Props = {
     serversList: Record<string, string>;
     allData: Record<string, PlayerStats[]>;
 };
-
 const playerStats: Record<string, string> = {
     playername: "Nom du joueur",
     tmps_jeu: "Heures de jeu",
@@ -165,11 +165,13 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                                 );
                                             } else if (key === "tmps_jeu") {
                                                 const heures = Math.floor(player[key] / 72000);
-                                                return <div>{heures} heures</div>;
+                                                return <div>{formatNumber(heures)} heures</div>;
                                             } else if (key === "nb_blocs_pose" || key === "nb_blocs_detr" || key === "dist_total" || key === "dist_pieds" || key === "dist_elytres") {
-                                                return <div>{player[key]} blocs</div>;
+                                                return <div>{formatNumber(player[key])} blocs</div>;
                                             } else if (key === "morts") {
-                                                return <div>${player.mort} heures</div>;
+                                                return <div>${formatNumber(player.mort)} heures</div>;
+                                            } else if (key === "nb_kills") {
+                                                return <div>{formatNumber(player.nb_kills)} heures</div>;
                                             } else {
                                                 return player[key];
                                             }

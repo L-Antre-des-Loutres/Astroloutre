@@ -1,0 +1,66 @@
+---
+import {slugify} from "../joueurs/joueurFormater";
+type Player = {
+    playername: string;
+};
+
+const { serveurId } = Astro.props;
+
+const reponse = await fetch(
+    `https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/stats-by-server/${serveurId}`
+);
+
+const json = await reponse.json();
+const playerDataList: Player[] = json.data ?? [];
+---
+
+<style>
+    .player-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .player-card {
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+        transition: transform 0.2s ease;
+    }
+
+    .player-card:hover {
+        transform: scale(1.05);
+    }
+
+    .player-avatar {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .player-name {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.80rem;
+        word-break: break-word;
+    }
+</style>
+
+<div class="player-grid">
+    {playerDataList.map((player) => (
+            <a href=`/joueurs/minecraft/${slugify(player.playername)}`>
+                <div class="player-card">
+                    <img
+                            class="player-avatar"
+                            src={`https://mc-heads.net/avatar/${player.playername}/64`}
+                            alt={`Avatar de ${player.playername}`}
+                    />
+                    <div class="player-name">{player.playername}</div>
+                </div>
+            </a>
+    ))}
+</div>

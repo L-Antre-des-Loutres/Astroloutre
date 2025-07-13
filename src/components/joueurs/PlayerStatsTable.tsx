@@ -1,5 +1,6 @@
 // PlayerStatsTable.tsx
 import React from 'react';
+import {formatNumber} from "../formater/NumberFormater.ts";
 
 type PlayerStat = {
     playername: string;
@@ -111,9 +112,9 @@ const PlayerStatsTable: React.FC<Props> = ({ player }) => {
                         <td className={`px-4 py-3 ${stat.tmps_jeux > standoutPlaytime ? 'color-shift' : ''}`}>
                             {formatHeures(stat.tmps_jeux)} heures
                         </td>
-                        <td className="px-4 py-3">{stat.nb_mort} morts</td>
-                        <td className="px-4 py-3">{stat.nb_kills} kills</td>
-                        <td className="px-4 py-3">{stat.nb_playerkill} kills de joueurs</td>
+                        <td className="px-4 py-3">{formatNumber(stat.nb_mort)} morts</td>
+                        <td className="px-4 py-3">{formatNumber(stat.nb_kills)} kills</td>
+                        <td className="px-4 py-3">{formatNumber(stat.nb_playerkill)} kills de joueurs</td>
                         <td className="px-4 py-3">{formatBlocs(stat.nb_blocs_detr)} blocs</td>
                         <td className="px-4 py-3">{formatBlocs(stat.nb_blocs_pose)} blocs</td>
                         <td className="px-4 py-3">{formatBlocs(stat.dist_total)} blocs</td>
