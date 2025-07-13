@@ -2,6 +2,10 @@
 import {slugify} from "../../../components/serveurs/serveurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/Banner.astro";
+import Image from "astro/components/Image.astro";
+import Void from "../../../components/Void.astro";
+import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
+import {formatDate} from "../../../components/date/DateFormater";
 
 // Type du serveur
 type ServeurType = {
@@ -18,7 +22,8 @@ type ServeurType = {
     image: string,
     description: string,
     contenaire: string,
-    type: string
+    type: string,
+    ip: string
 };
 
 type PlayTimeType = {
@@ -29,7 +34,7 @@ type PlayTimeType = {
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 const playTime: number | undefined = Astro.props.playTime;
-
+const statutServeur: string | undefined = Astro.props.statutServeur;
 
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
@@ -70,8 +75,24 @@ export async function getStaticPaths() {
     const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
 
     return serveurs.map((serveur) => {
+        let ip: string;
+        if (serveur.jeu === "palworld") {
+            ip = "antredesloutres.fr:8211"
+        } else if (serveur.type === "primary") {
+            ip = "antredesloutres.fr"
+        } else {
+            ip = "secondaire.antredesloutres.fr"
+        }
+        serveur.ip = ip
+
         // Associe le playtime au serveur (par ID, nom ou autre clé logique)
         const playTime = playTimes.find(pt => pt.serveur_id === serveur.id);
+
+        const statutServeur = serveur?.actif === 1
+            ? "Le serveur est actif"
+            : serveur?.actif === 0
+                ? "Le serveur est désactivé"
+                : "Statut inconnu";
 
         return {
             params: {
@@ -79,6 +100,7 @@ export async function getStaticPaths() {
             },
             props: {
                 serveur,
+                statutServeur,
                 playTime: playTime ? playTime.total_hours : undefined,
             },
         };
@@ -86,79 +108,304 @@ export async function getStaticPaths() {
 }
 ---
 <Layout>
-{!serveur && <h1>Serveur introuvable</h1>}
-{serveur && (
-        <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
-        <div class="mx-auto px-6 py-8 backdrop-blur-md space-y-8">
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".button-copy");
 
-            <!-- Titre du site et logo du jeu -->
-            <div class="text-center">
-                <h1 class="text-4xl font-extrabold tracking-tight">{serveur.nom}</h1>
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const ip = button.getAttribute("data-ip");
+                    navigator.clipboard.writeText(ip).then(() => {
+                        const span = button.querySelector("span");
+                        const originalText = span.textContent;
+                        span.textContent = "IP copié !";
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+
+    {!serveur && <h1>Serveur introuvable</h1>}
+    {serveur && (
+        <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
+        <div class="profile-container">
+            <div class="page-title">
+                <p>{serveur.nom}</p>
                 <img
-                        src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg"
-                        alt="minecraft logo"
-                        class="h-20 inline-block mt-1 max-w-full"
+                    src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg"
+                    alt="minecraft logo"
+                    class="h-20 inline-block mt-1 max-w-full"
                 />
             </div>
 
-            <!-- Affichage de l'ip du serveur -->
-            <div class="py-3">
-                  <span class="inline-block bg-zinc-800 text-blue-400 px-4 py-2 rounded-full font-mono text-xs sm:text-sm md:text-base shadow-sm border border-zinc-700">
-                    🌐 {serveur.jeu === "palworld" ? "antredesloutres.fr:8211" : serveur.type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}
-                  </span>
-            </div>
-
-            {playTime !== undefined ? (
-            <!-- Affichage du nombre d'heure joué sur ce serveur -->
-            <div class="py-3">
-                <span class="inline-block px-6 py-3 rounded-2xl bg-gradient-to-br from-blue-700/30 to-blue-500/20 backdrop-blur-md border border-blue-600/30 text-black font-semibold shadow-lg animate-fade-in-up">
-                  ⏱️ {Math.floor(playTime / 72000)} heures de jeu sur ce serveur
-                </span>
-            </div>
-            ) : (
-                    <span class="inline-block px-6 py-3 rounded-2xl bg-gradient-to-br from-blue-700/30 to-blue-500/20 backdrop-blur-md border border-blue-600/30 text-black font-semibold shadow-lg animate-fade-in-up">
-                        Temps de jeu non disponible
-                    </span>
-            )}
-
-            <!-- Description du serveur -->
-            <p class="text-lg leading-relaxed border-l-4 border-blue-500 pl-4 italic">{serveur.description}</p>
-
-            <!-- Informations du serveur -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm">
-                <!-- Version du serveur -->
-                <div class="rounded-lg p-4 shadow-inner border border-zinc-700">
-                    <p>📦 <span class="font-semibold">Version :</span></p>
-                    <p>{serveur.version}</p>
+            <h1>Information du serveur <span class="golden">{serveur.nom}</span></h1>
+            <div class="profile-details">
+                <div class="avatar">
+                    <img src={serveur.image} alt={`Image du serveur`} style="display: inline; height: 21em;" />
                 </div>
-                <!-- Modpack du serveur -->
-                <div class="rounded-lg p-4 shadow-inner border border-zinc-700">
-                    <p>🧰 <span class="font-semibold">Modpack :</span></p>
-                    <a href={serveur.modpack_url} target="_blank" class="text-blue-400 hover:underline">
-                        {serveur.modpack}
+
+                <div class="info-grid">
+                    <h2>Informations</h2>
+                    <div>
+                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                            {/* Icône ID */}
+                            <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            IP du serveur :
+                        </label>
+                        <input
+                            type="text"
+                            value={serveur.ip}
+                            readonly
+                            onclick="this.select()"
+                            style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: monospace;"
+                        />
+                    </div>
+
+                    <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Modpack :
+                    </div>
+                    <p>
+                        <a
+                                href={serveur.modpack_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                class="modpack-link"
+                                style={{ color: serveur.embed_color }}
+                        >
+                            {serveur.modpack}
+                        </a>
+                    </p>
+
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }}
+                             class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Heures de jeux :
+                    </div>
+                    <p>{Math.floor(playTime / 72000)} heures de jeux total</p>
+
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {statutServeur}
+                    </div>
+
+                </div>
+
+                <div class="info-grid">
+                    <h2>Action</h2>
+                    <button
+                        class="button-copy"
+                        data-ip={serveur.ip}>
+                        <img src={`https://www.minecraft.net/content/dam/minecraftnet/franchise/logos/Homepage_Download-Launcher_Creeper-Logo_500x500.png`} alt="Copier UUID" />
+                        <span>Copier l'IP</span>
+                    </button>
+                    <a class="button-namemc" href="/classements/minecraft/" >
+                        <img src="https://mc-heads.net/avatar/__/128" alt="NameMC" />
+                        Acceder au classement
                     </a>
                 </div>
-                <!-- Statut du serveur -->
-                <div class="rounded-lg p-4 shadow-inner border border-zinc-700">
-                    <p>🟢 <span class="font-semibold ">Statut :</span></p>
-                    <span class={`inline-block px-2 py-1 rounded-full text-xs font-semibold
-                        ${serveur.actif ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}>
-                        {serveur.actif ? 'Actif' : 'Inactif'}
-                    </span>
-                </div>
             </div>
 
-            <!-- Image du serveur -->
-            <div class="overflow-hidden rounded-xl border border-zinc-800 shadow-lg">
-                <img src={serveur.image} alt={`Image du serveur ${serveur.nom}`} class="object-cover w-full h-64 sm:h-150" />
-            </div>
+            <h1>
+                Joueurs {' '}
+                <span class="inline-image">
+                    <Image src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg" alt="Minecraft" width={1000} height={50} />
+                </span>
+                {' '} ayant rejoint le serveur
+            </h1>
+            <Void />
 
-            <!-- Bouton de retour à la liste -->
-            <div class="text-center mt-8">
-                <a href="/serveurs/minecraft" class="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md transition">
-                    ← Retour à la liste des serveurs
-                </a>
-            </div>
+            <h1>Screenshot des joueurs sur le serveur <span class="golden">{serveur.nom}</span></h1>
+            <Void />
+
         </div>
     )}
+
+    <style>
+        .icon {
+            display: inline;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: brightness(80%);
+        }
+
+        .modpack-link {
+            font-weight: bold;
+            transition: color 0.3s ease;
+            filter: brightness(80%);
+        }
+
+        .modpack-link:hover {
+            filter: brightness(50%);
+        }
+
+        .profile-container {
+            background: rgba(255 255 255 / 0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-container h1 {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        @media (max-width: 350px) {
+            .profile-container h1 {
+                font-size: 1.25rem;
+            }
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .inline-image {
+            display: inline-block;
+            vertical-align: baseline;
+            line-height: 1;
+        }
+
+        .inline-image img {
+            display: inline;
+            height: 1.1em;
+            width: auto;
+            vertical-align: middle;
+            transform: translateY(-5px);
+        }
+
+        .page-title {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-title {
+            font-weight: bolder;
+            font-size: 2.5rem;
+        }
+        @media (max-width: 768px) {
+            .page-title {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        }
+
+        .golden  {
+            animation: colorShift 3s ease-in-out infinite;
+        }
+        @keyframes colorShift {
+            0%   { color: #FFDDA0; }
+            33%  { color: #FFB347; }
+            66%  { color: #FF8C42; }
+            100% { color: #FFDDA0; }
+        }.profile-details {
+             display: grid;
+             grid-template-columns: 1fr 0.8fr 0.8fr;
+             gap: 1rem;
+             align-items: flex-start;
+             justify-items: center;
+             padding: 2rem;
+             background-color: snow;
+         }
+
+        .avatar, .info-grid {
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .profile-details {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .info-grid {
+                text-align: center;
+            }
+        }
+
+        .avatar {
+            margin-bottom: 1rem;
+        }
+
+        .avatar img {
+            max-height: 100%;
+            height: 20%;
+            border-radius: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .back-link {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #1e40af;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .button-copy,
+        .button-namemc {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #white;
+            color: #000;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: 2px solid #000;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .button-copy img,
+        .button-namemc img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .button-copy:hover,
+        .button-namemc:hover {
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #333;
+            animation: colorShift 3s ease-in-out infinite;
+        }
+    </style>
 </Layout>
