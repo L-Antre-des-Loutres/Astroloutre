@@ -133,12 +133,11 @@ export async function getStaticPaths() {
         <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
         <div class="profile-container">
             <div class="page-title flex items-center">
-                <p class="text-xl font-semibold">{serveur.nom}</p>
+                <p>{serveur.nom}</p>
                 <img
                         src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg"
                         alt="minecraft logo"
-                        class="h-6 ml-3 max-w-full"
-                        style="transform: translateY(-10000000000000000em);"
+                        class="h-15 ml-3 max-w-full"
                 />
             </div>
 
