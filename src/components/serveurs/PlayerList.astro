@@ -2,6 +2,8 @@
 import {slugify} from "../joueurs/joueurFormater";
 type Player = {
     playername: string;
+    compte_id: string
+
 };
 
 const { serveurId } = Astro.props;
@@ -56,7 +58,7 @@ const playerDataList: Player[] = json.data ?? [];
                 <div class="player-card">
                     <img
                             class="player-avatar"
-                            src={`https://mc-heads.net/avatar/${player.playername}/64`}
+                            src={`https://mc-heads.net/avatar/${player.compte_id}/64`}
                             alt={`Avatar de ${player.playername}`}
                     />
                     <div class="player-name">{player.playername}</div>
