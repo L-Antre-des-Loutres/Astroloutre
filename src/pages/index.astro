@@ -1,9 +1,10 @@
 ---
 import Welcome from '../components/Welcome.astro';
-import TotalHours from '../components/TotalHours.astro';
-import Void from '../components/Void.astro';
+import TotalHours from '../components/home/TotalHours.astro';
 import Layout from '../layouts/Layout.astro';
 import QuiSommesNous from "../components/home/QuiSommesNous.astro";
+import BotsLineup from "../components/home/BotsLineup.astro";
+import BotsDescription from "../components/home/BotsDescription.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -13,4 +14,40 @@ import QuiSommesNous from "../components/home/QuiSommesNous.astro";
 	<Welcome />
 	<TotalHours />
 	<QuiSommesNous/>
+	<BotsLineup />
+	<BotsDescription
+		imageSrc=""
+		imageAlt="Logo Arisoutre"
+		title="Arisoutre, elle c'est la patronne"
+		link="https://github.com/L-Antre-des-Loutres/Arisoutre"
+		paragraph="text"
+	/>
+	<BotsDescription
+		imageSrc="https://github.com/Corentin-cott/Mineotter-Bot/blob/main/imgs/logo-text.png?raw=true"
+		imageAlt="Logo Mineotter"
+		title="Mineotter, le bots de nos serveurs Minecraft"
+		link="https://github.com/Corentin-cott/Mineotter-Bot"
+		paragraph="text"
+	/>
+	<BotsDescription
+		imageSrc=""
+		imageAlt="Logo Multiloutre"
+		title="Multiloutre, le bots de tous nos autres serveurs"
+		link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
+		paragraph="text"
+	/>
+	<BotsDescription
+		imageSrc="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
+		imageAlt="Logo Mateloutre"
+		title="Mateloutre, la peluche de notre catégorie Pokémon"
+		link="https://github.com/L-Antre-des-Loutres/Mateloutre"
+		paragraph="text"
+	/>
+	<BotsDescription
+		imageSrc="https://github.com/matheo-1712/Citlali/blob/main/logo.png?raw=true"
+		imageAlt="Logo Citlaloutre"
+		title="Citlaloutre, [text]"
+		link="https://github.com/matheo-1712/Citlali"
+		paragraph="text"
+	/>
 </Layout>

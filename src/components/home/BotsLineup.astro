@@ -1,0 +1,70 @@
+---
+import Image from "astro/components/Image.astro";
+---
+
+<div class="bots-lineup">
+    <div class="flex flex-wrap gap-4 sm:gap-6 md:gap-10 lg:gap-20 justify-center">
+        <div class="flex flex-col items-center min-w-[4rem] sm:min-w-[5rem]">
+            <img
+                    src="https://cdn.discordapp.com/app-icons/1247285437425516647/d9859c21466ea0cc1a164d03926ea7bb.png?size=256"
+                    alt="Avatar bots"
+                    class="w-20 h-20 rounded-full mb-2 border-2 border-cyan-100 group-hover:brightness-105"
+            />
+            <div class="font-medium text-white text-sm break-words">Mineotter</div>
+        </div>
+        <div class="flex flex-col items-center min-w-[4rem] sm:min-w-[5rem]">
+            <img
+                    src="https://cdn.discordapp.com/avatars/1254825736867545210/8ad292215fe7465080123eb643ac8eb0?size=256"
+                    alt="Avatar bots"
+                    class="w-20 h-20 rounded-full mb-2 border-2 border-cyan-100 group-hover:brightness-105"
+            />
+            <div class="font-medium text-white text-sm break-words">Multiloutre</div>
+        </div>
+        <div class="flex flex-col items-center min-w-[4rem] sm:min-w-[5rem]">
+            <img
+                    src="https://cdn.discordapp.com/app-icons/1183777618491879424/75273c789fb1ec486c8e9b08ea60bc5d.png?size=256"
+                    alt="Avatar bots"
+                    class="w-20 h-20 rounded-full mb-2 border-2 border-cyan-100 group-hover:brightness-105"
+            />
+            <div class="font-medium text-white text-sm break-words">Arisoutre</div>
+        </div>
+        <div class="flex flex-col items-center min-w-[4rem] sm:min-w-[5rem]">
+            <img
+                    src="https://cdn.discordapp.com/app-icons/1288580605256142910/4cfaadab77a22999e62a6ac0f10a1778.png?size=256"
+                    alt="Avatar bots"
+                    class="w-20 h-20 rounded-full mb-2 border-2 border-cyan-100 group-hover:brightness-105"
+            />
+            <div class="font-medium text-white text-sm break-words">Mateloutre</div>
+        </div>
+        <div class="flex flex-col items-center min-w-[4rem] sm:min-w-[5rem]">
+            <img
+                    src="https://cdn.discordapp.com/avatars/1300834433221267549/a_2f0403776904e26b35a504e08737f914?size=256"
+                    alt="Avatar bots"
+                    class="w-20 h-20 rounded-full mb-2 border-2 border-cyan-100 group-hover:brightness-105"
+            />
+            <div class="font-medium text-white text-sm break-words">Citlaloutre</div>
+        </div>
+        </div>
+    </div>
+
+<style>
+    .bots-lineup {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10em;
+        padding: 1rem;
+        background-color: #222;
+        text-align: center;
+        border: 2px solid #444;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @media (max-width: 500px) {
+        .bots-lineup {
+            height: auto; /* Ajuste la hauteur automatique pour les petites tailles */
+            padding-bottom: 2rem; /* espace en bas si wrap */
+        }
+    }
+</style>
