@@ -9,10 +9,17 @@ import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../components/formater/DateFormater";
 
+// Type des données utilisateur Discord
+type UtilisateurDiscord = {
+    id: number;
+    tag_discord: string;
+};
+
 // Type des données joueur
 type JoueurType = {
     id: number;
     utilisateur_id: number | null;
+    tag_discord: string | null;
     jeu: string;
     compte_id: string;
     premiere_co: string;
@@ -25,6 +32,7 @@ const joueur: JoueurType | undefined = Astro.props.joueur;
 
 // Génération des pages statiques
 export async function getStaticPaths() {
+
     const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/joueurs/';
     const response = await fetch(apiUrl);
 
@@ -38,19 +46,38 @@ export async function getStaticPaths() {
 
     const joueurs: JoueurType[] = json.data;
 
+    // Récupérer les utilisateurs Discord
+    const apiUrlDiscordTag = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
+    const responseDiscordTag = await fetch(apiUrlDiscordTag);
+
+    if (!responseDiscordTag.ok) {
+        throw new Error(`Erreur API utilisateurs Discord: ${responseDiscordTag.status}`);
+    }
+
+    const jsonDiscord = await responseDiscordTag.json();
+    const utilisateurs: UtilisateurDiscord[] = jsonDiscord.data ?? [];
+
     return joueurs
-        .filter((joueur) => typeof joueur.playername === 'string' && joueur.playername.trim() !== '')
-        .map((joueur) => {
+        .filter(joueur => typeof joueur.playername === 'string' && joueur.playername.trim() !== '')
+        .map(joueur => {
+            // Associer le discord_tag si utilisateur_id est présent
+            const utilisateur = utilisateurs.find(u => u.id === joueur.utilisateur_id);
+            const discordTag = utilisateur ? utilisateur.tag_discord : null;
+
             return {
                 params: {
                     playername: slugify(joueur.playername),
                 },
                 props: {
-                    joueur,
+                    joueur: {
+                        ...joueur,
+                        tag_discord: slugify(discordTag),
+                    }
                 },
             };
         });
 }
+
 
 const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'h'];
 let prefixe = "de ";
@@ -63,8 +90,7 @@ let profilLink
 let profilText
 if (joueur.utilisateur_id !== null) {
     // Le compte joueur est lié à un profil discord
-    // TODO : Le récupéré pour rediriger correctement vers le profil discord
-    profilLink = `/profil/${joueur.utilisateur_id}`
+    profilLink = `/profil/${joueur.tag_discord}`
     profilText = "Profil Discord"
 } else {
     profilLink = `#`
