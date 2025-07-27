@@ -142,7 +142,11 @@ export async function getStaticPaths() {
             <h1>Information du serveur <span class="golden">{serveur.nom}</span></h1>
             <div class="profile-details">
                 <div class="avatar">
-                    <img src={serveur.image} alt={`Image du serveur`} style="display: inline; height: 21em;" />
+                    <img
+                            src={serveur.image}
+                            alt={`Image du serveur`}
+                            class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
+                    />
                 </div>
 
                 <div class="info-grid">
