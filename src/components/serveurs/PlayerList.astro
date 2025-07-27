@@ -1,5 +1,6 @@
 ---
 import {slugify} from "../joueurs/joueurFormater";
+import {formatUUID} from "../formater/UUIDFormater";
 type Player = {
     playername: string;
     compte_id: string
@@ -58,7 +59,7 @@ const playerDataList: Player[] = json.data ?? [];
                 <div class="player-card">
                     <img
                             class="player-avatar"
-                            src={`https://mc-heads.net/avatar/${player.compte_id}/64`}
+                            src={`https://mc-heads.net/avatar/${formatUUID(player.compte_id)}/64`}
                             alt={`Avatar de ${player.playername}`}
                     />
                     <div class="player-name">{player.playername}</div>
