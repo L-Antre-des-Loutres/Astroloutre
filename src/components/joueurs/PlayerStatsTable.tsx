@@ -103,7 +103,7 @@ const PlayerStatsTable: React.FC<Props> = ({ player }) => {
                     >
                         <td className="px-4 py-3 flex items-center gap-2">
                             <img
-                                src="https://cdn.discordapp.com/attachments/640874969227722752/1393385036539232378/Minecraft_Bedrock_2023.webp?ex=6872fa70&is=6871a8f0&hm=1405a15075f746c4972d5114b3491641ada99300c5092c352d8b58b16eb3732e&"
+                                src="/icons/minecraft_icon.webp"
                                 alt="Minecraft Bedrock"
                                 className="w-6 h-6 object-contain"
                             />
