@@ -1,0 +1,137 @@
+---
+type Badge = {
+    image: string;
+    name: string;
+    description: string;
+    date: string | null; // null = non obtenu
+    method: string;
+};
+
+// Données mock
+const badges: Badge[] = [
+    {
+        image: "/images/badges/explorateur.png",
+        name: "Explorateur",
+        description: "Découvrir 10 zones secrètes",
+        date: "2025-08-10",
+        method: "Trouver toutes les zones secrètes du chapitre 1"
+    },
+    {
+        image: "/images/badges/vitesse-lumiere.png",
+        name: "Vitesse lumière",
+        description: "Finir le jeu en moins de 2 heures",
+        date: null,
+        method: "Faire un speedrun complet"
+    },
+    {
+        image: "/images/badges/collectionneur.png",
+        name: "Collectionneur",
+        description: "Obtenir tous les objets rares",
+        date: "2025-08-01",
+        method: "Récupérer 100% des objets rares du jeu"
+    }
+];
+
+let hoveredMethod: string | null = null;
+---
+
+<style>
+    .badge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .badge-card {
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 0.75rem;
+        transition: transform 0.2s ease;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+
+    .badge-card:hover {
+        transform: scale(1.05);
+    }
+
+    .badge-image {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 0.5rem;
+        border-radius: 0.25rem;
+        object-fit: cover;
+    }
+
+    .badge-not-obtained .badge-image {
+        filter: grayscale(100%);
+        opacity: 0.6;
+    }
+
+    .badge-name {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .badge-desc {
+        color: #6b7280;
+        font-size: 0.7rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .badge-date {
+        font-size: 0.65rem;
+        color: #9ca3af;
+    }
+
+    .method-box {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.85);
+        color: white;
+        padding: 0.75rem;
+        text-align: center;
+        font-size: 0.8rem;
+        animation: slide-up 0.3s ease;
+        z-index: 50;
+    }
+
+    @keyframes slide-up {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+</style>
+
+<div class="badge-grid">
+    {badges.map((badge) => (
+            <div
+                    class={`badge-card ${!badge.date ? "badge-not-obtained" : ""}`}
+                    on:mouseenter={() => hoveredMethod = badge.method}
+                    on:mouseleave={() => hoveredMethod = null}
+            >
+                <img
+                        class="badge-image"
+                        src={badge.image}
+                        alt={badge.name}
+                />
+                <div class="badge-name">{badge.name}</div>
+                <div class="badge-desc">{badge.description}</div>
+                <div class="badge-date">
+                    {badge.date ? `Obtenu le ${badge.date}` : "Non obtenu"}
+                </div>
+            </div>
+    ))}
+</div>
+
+{hoveredMethod && (
+<div class="method-box">
+    {hoveredMethod}
+</div>
+    )}
