@@ -1,36 +1,42 @@
 ---
-type Badge = {
-    image: string;
-    name: string;
+const { PlayerOrUser = '', id = '' } = Astro.props;
+export interface Badge {
+    id: number;
+    joueur_id: number;
+    utilisateur_id: number;
+    badge_id: number;
+    date_recu: string; // ISO 8601 format
+    nom: string;
+    categorie_id: number;
+    actif: number; // 1 = actif, 0 = inactif
+    image_url: string;
     description: string;
-    date: string | null; // null = non obtenu
-    method: string;
-};
+    obtention: string;
+    categorie: string;
+    pourcentage_obtention: string; // Stocké en string, peut être converti en number si besoin
+}
 
-// Données mock
-const badges: Badge[] = [
-    {
-        image: "/images/badges/explorateur.png",
-        name: "Explorateur",
-        description: "Découvrir 10 zones secrètes",
-        date: "2025-08-10",
-        method: "Trouver toutes les zones secrètes du chapitre 1"
-    },
-    {
-        image: "/images/badges/vitesse-lumiere.png",
-        name: "Vitesse lumière",
-        description: "Finir le jeu en moins de 2 heures",
-        date: null,
-        method: "Faire un speedrun complet"
-    },
-    {
-        image: "/images/badges/collectionneur.png",
-        name: "Collectionneur",
-        description: "Obtenir tous les objets rares",
-        date: "2025-08-01",
-        method: "Récupérer 100% des objets rares du jeu"
-    }
-];
+
+// Récupération des données
+const playerUrl = 'https://otterlyapi.antredesloutres.fr/api/badges/joueurs/'
+const userUrl = 'https://otterlyapi.antredesloutres.fr/api/badges/utilisateurs/'
+
+let badges: Badge[] = [];
+const switchChoice = PlayerOrUser.toLowerCase();
+switch (switchChoice) {
+    case 'player':
+        const responsePlayer = await fetch(playerUrl + id);
+        const json = await responsePlayer.json();
+        badges = json.data ?? [];
+        break;
+    case 'user':
+        const responseUser = await fetch(userUrl + id);
+        const jsonUser = await responseUser.json();
+        badges = jsonUser.data ?? [];
+        break;
+    default:
+        console.error('PlayerOrUser must be "player" or "user" and not "' + PlayerOrUser + '"');
+}
 
 let hoveredMethod: string | null = null;
 ---
@@ -112,19 +118,19 @@ let hoveredMethod: string | null = null;
 <div class="badge-grid">
     {badges.map((badge) => (
             <div
-                    class={`badge-card ${!badge.date ? "badge-not-obtained" : ""}`}
-                    on:mouseenter={() => hoveredMethod = badge.method}
+                    class={`badge-card ${!badge.date_recu ? "badge-not-obtained" : ""}`}
+                    on:mouseenter={() => hoveredMethod = badge.obtention}
                     on:mouseleave={() => hoveredMethod = null}
             >
                 <img
                         class="badge-image"
-                        src={badge.image}
-                        alt={badge.name}
+                        src={badge.image_url}
+                        alt={badge.nom}
                 />
-                <div class="badge-name">{badge.name}</div>
+                <div class="badge-name">{badge.nom}</div>
                 <div class="badge-desc">{badge.description}</div>
                 <div class="badge-date">
-                    {badge.date ? `Obtenu le ${badge.date}` : "Non obtenu"}
+                    {badge.date_recu ? `Obtenu le ${badge.date_recu}` : "Non obtenu"}
                 </div>
             </div>
     ))}

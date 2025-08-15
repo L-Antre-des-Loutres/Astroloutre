@@ -6,6 +6,7 @@ import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import Void from "../../components/Void.astro";
 import {formatDate} from "../../components/formater/DateFormater";
+import BadgeList from "../../components/BadgeList.astro";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -197,7 +198,7 @@ if (joueur.nb_message === null) {
             <h1>
                 Badges
             </h1>
-                <Void/>
+                <BadgeList PlayerOrUser="User" id={joueur.id}/>
             </div>
     )}
 
