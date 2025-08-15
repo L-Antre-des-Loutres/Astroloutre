@@ -1,11 +1,12 @@
 ---
 const { PlayerOrUser = '', id = '' } = Astro.props;
+
 export interface Badge {
     id: number;
     joueur_id: number;
     utilisateur_id: number;
     badge_id: number;
-    date_recu: string; // ISO 8601 format
+    date_recu: string;
     nom: string;
     categorie_id: number;
     actif: number; // 1 = actif, 0 = inactif
@@ -15,7 +16,6 @@ export interface Badge {
     categorie: string;
     pourcentage_obtention: string; // Stocké en string, peut être converti en number si besoin
 }
-
 
 // Récupération des données
 const playerUrl = 'https://otterlyapi.antredesloutres.fr/api/badges/joueurs/'
