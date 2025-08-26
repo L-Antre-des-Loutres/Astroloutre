@@ -1,6 +1,5 @@
 ---
 import Banner from "../../../components/Banner.astro";
-import Void from "../../../components/Void.astro";
 import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
 import Image from "astro/components/Image.astro";
 import Title from "../../../assets/titles/profil-joueur.webp"
@@ -8,6 +7,7 @@ import { slugify } from "../../../components/joueurs/joueurFormater";
 import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../components/formater/DateFormater";
+import BadgeList from "../../../components/BadgeList.astro";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
@@ -235,7 +235,7 @@ try {
                 </span>
                 {' '} obtenus
             </h1>
-            <Void />
+            <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
 
         </div>
     )}

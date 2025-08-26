@@ -6,6 +6,7 @@ import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import Void from "../../components/Void.astro";
 import {formatDate} from "../../components/formater/DateFormater";
+import BadgeList from "../../components/BadgeList.astro";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -109,7 +110,7 @@ if (joueur.nb_message === null) {
 <Layout>
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
-        <Image src={Title} alt="Titre" />
+        <Image src={Title} alt="Titre" loading="eager" />
     </div>
 
     <div class="back-link">
@@ -123,17 +124,20 @@ if (joueur.nb_message === null) {
 
             <div class="profile-details">
                 <div class="h-full rounded-2xl">
-                    <img
+                    <Image
                             src={joueur.avatar_url}
                             alt={`Avatar de ${joueur.pseudo_discord}`}
                             class="w-[18rem] h-auto rounded-2xl object-cover"
+                            width={50}
+                            height={50}
+                            loading="eager"
                     />
                 </div>
                 <div class="info-grid">
 
                     <h2>Informations</h2>
                     <div>
-                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;" for="tag_discord">
                             {/* Icône ID */}
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -187,7 +191,7 @@ if (joueur.nb_message === null) {
                                 <button
                                         class="button-copy w-full"
                                         data-uuid={accountLink.playername}>
-                                    <img src={`https://mc-heads.net/avatar/${accountLink.playername}/128`} alt="Copier UUID" />
+                                    <Image src={`https://mc-heads.net/avatar/${accountLink.playername}/128`} alt="Copier UUID" width={50} height={50} loading="eager" />
                                     <span>RereBleue (Minecraft)</span>
                                 </button>
                             </a>
@@ -197,7 +201,7 @@ if (joueur.nb_message === null) {
             <h1>
                 Badges
             </h1>
-                <Void/>
+                <BadgeList PlayerOrUser="User" userId={joueur.id} categoryId=1 />
             </div>
     )}
 

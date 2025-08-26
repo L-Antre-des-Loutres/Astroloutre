@@ -1,0 +1,150 @@
+---
+import Image from "astro/components/Image.astro";
+
+const { PlayerOrUser = '', userId = '' , categoryId} = Astro.props;
+
+export interface Badge {
+    id: number;
+    joueur_id: number;
+    utilisateur_id: number;
+    badge_id: number;
+    date_recu: string | null;
+    nom: string;
+    categorie_id: number;
+    actif: number;
+    image_url: string;
+    description: string;
+    obtention: string;
+    categorie: string;
+    pourcentage_obtention: string;
+}
+
+// Récupération de tous les badges
+const apiBase = "https://otterlyapi.antredesloutres.fr/api/badges";
+const allBadges: Badge[] = (await (await fetch(`${apiBase}/infos`)).json()).data ?? [];
+
+// Badges possédés
+let ownedBadges: Badge[] = [];
+if (["player", "user"].includes(PlayerOrUser.toLowerCase())) {
+    const type = PlayerOrUser.toLowerCase() === "player" ? "joueurs" : "utilisateurs";
+    ownedBadges = (await (await fetch(`${apiBase}/${type}/${userId}`)).json()).data ?? [];
+} else {
+    console.error(`PlayerOrUser must be "player" or "user", not "${PlayerOrUser}"`);
+}
+
+// Fusion du total de badge avec les badges optenu
+const badgesWithStatus = allBadges.map(badge => {
+    const owned = ownedBadges.find(ob => ob.badge_id === badge.id);
+    return { ...badge, date_recu: owned?.date_recu ?? null };
+});
+
+// Retrait de tous les badges qui ne sont pas actifs & qui ne sont pas de la bonne catégorie
+const activeBadges = badgesWithStatus.filter(badge =>
+    badge.actif === 1 && badge.categorie_id === Number(categoryId)
+);
+
+// Formatage de dates
+const formatDate = (dateString: string | null) =>
+    dateString ? new Date(dateString).toLocaleDateString("fr-FR") : null;
+---
+
+<div class="badge-grid">
+    {activeBadges.map((badge) => (
+            <div class={`badge-card ${!badge.date_recu ? "badge-not-obtained" : ""}`}>
+                <Image class="badge-image" src={badge.image_url} alt={badge.nom} width={100} height={100} />
+                <div class="badge-name">{badge.nom}</div>
+
+                <div class="badge-info">
+                    <div class="badge-desc">{badge.description}</div>
+                    <div class="badge-obtention">{badge.obtention}</div>
+                </div>
+
+                <div class="badge-date">
+                    <p>{badge.date_recu ? formatDate(badge.date_recu) : "Non obtenu"}</p>
+                </div>
+            </div>
+    ))}
+</div>
+
+<style>
+    .badge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+    @media (max-width: 535px) {
+        .badge-grid {
+            display: inline-grid;
+        }
+    }
+
+    .badge-card {
+        background: #f9fafb;
+        border: 1px solid #93969c;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 0.4rem;
+        transition: transform 0.2s ease;
+        cursor: pointer;
+        width: 15rem;
+        height: 15rem;
+    }
+    .badge-card:hover { transform: scale(1.05); }
+
+    .badge-name {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.8rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 0 0.5rem;
+    }
+
+    .badge-info {
+        height: 6.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+        padding: 0 0.5rem;
+    }
+
+    .badge-desc,
+    .badge-obtention {
+        font-size: 0.8rem;
+        color: #6b7280;
+        line-height: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .badge-obtention { display: none; }
+    .badge-card:hover .badge-desc { display: none; }
+    .badge-card:hover .badge-obtention { display: -webkit-box; }
+
+    .badge-image {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 0.5rem;
+        border-radius: 0.25rem;
+        object-fit: cover;
+    }
+    .badge-not-obtained .badge-image {
+        filter: grayscale(100%);
+        opacity: 0.6;
+    }
+
+    .badge-date {
+        font-size: 0.8rem;
+        color: #6e7581;
+    }
+</style>
