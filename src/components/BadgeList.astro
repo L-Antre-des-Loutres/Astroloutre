@@ -1,4 +1,6 @@
 ---
+import Image from "astro/components/Image.astro";
+
 const { PlayerOrUser = '', userId = '' , categoryId} = Astro.props;
 
 export interface Badge {
@@ -49,7 +51,7 @@ const formatDate = (dateString: string | null) =>
 <div class="badge-grid">
     {activeBadges.map((badge) => (
             <div class={`badge-card ${!badge.date_recu ? "badge-not-obtained" : ""}`}>
-                <img class="badge-image" src={badge.image_url} alt={badge.nom} />
+                <Image class="badge-image" src={badge.image_url} alt={badge.nom} width={100} height={100} />
                 <div class="badge-name">{badge.nom}</div>
 
                 <div class="badge-info">
@@ -70,6 +72,11 @@ const formatDate = (dateString: string | null) =>
         grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
         gap: 1.5rem;
         padding: 1rem;
+    }
+    @media (max-width: 535px) {
+        .badge-grid {
+            display: inline-grid;
+        }
     }
 
     .badge-card {
