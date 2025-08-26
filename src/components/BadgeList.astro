@@ -1,5 +1,5 @@
 ---
-const { PlayerOrUser = '', id = '' } = Astro.props;
+const { PlayerOrUser = '', userId = '' , categoryId} = Astro.props;
 
 export interface Badge {
     id: number;
@@ -25,7 +25,7 @@ const allBadges: Badge[] = (await (await fetch(`${apiBase}/infos`)).json()).data
 let ownedBadges: Badge[] = [];
 if (["player", "user"].includes(PlayerOrUser.toLowerCase())) {
     const type = PlayerOrUser.toLowerCase() === "player" ? "joueurs" : "utilisateurs";
-    ownedBadges = (await (await fetch(`${apiBase}/${type}/${id}`)).json()).data ?? [];
+    ownedBadges = (await (await fetch(`${apiBase}/${type}/${userId}`)).json()).data ?? [];
 } else {
     console.error(`PlayerOrUser must be "player" or "user", not "${PlayerOrUser}"`);
 }
@@ -36,13 +36,18 @@ const badgesWithStatus = allBadges.map(badge => {
     return { ...badge, date_recu: owned?.date_recu ?? null };
 });
 
+// Retrait de tous les badges qui ne sont pas actifs & qui ne sont pas de la bonne catégorie
+const activeBadges = badgesWithStatus.filter(badge =>
+    badge.actif === 1 && badge.categorie_id === Number(categoryId)
+);
+
 // Formatage de dates
 const formatDate = (dateString: string | null) =>
     dateString ? new Date(dateString).toLocaleDateString("fr-FR") : null;
 ---
 
 <div class="badge-grid">
-    {badgesWithStatus.map((badge) => (
+    {activeBadges.map((badge) => (
             <div class={`badge-card ${!badge.date_recu ? "badge-not-obtained" : ""}`}>
                 <img class="badge-image" src={badge.image_url} alt={badge.nom} />
                 <div class="badge-name">{badge.nom}</div>
