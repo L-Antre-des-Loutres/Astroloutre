@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { slugify } from "../joueurs/joueurFormater";
 import { formatNumber } from "../formater/NumberFormater.ts";
 
-/* Gestion des statistiques de joueur */
+/* Types */
 type PlayerStats = Record<string, any>;
 type ServerInfo = { nom: string; description: string };
+
+/* Props attendues */
 type Props = {
-    serversList: Record<string, ServerInfo>;
-    allData: Record<string, PlayerStats[]>;
+    serversListActiveGlobal: Record<string, ServerInfo>;
+    serversListInactiveGlobal: Record<string, ServerInfo>;
+    serversListPartner: Record<string, ServerInfo>;
+
+    statsAllServer: Record<string, PlayerStats[]>;
 };
 
+/* Colonnes et largeurs */
 const playerStats: Record<string, string> = {
     playername: "Nom du joueur",
     tmps_jeu: "Heures de jeu",
@@ -36,71 +42,109 @@ const columnWidths: Record<string, string> = {
     dist_elytres: "120px",
 };
 
-const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
-    const firstServer = Object.keys(serversList)[0] || null;
-    const [selectedServer, setSelectedServer] = useState<string | null>(firstServer);
+const PlayerClassement: React.FC<Props> = ({
+                                               serversListActiveGlobal,
+                                               serversListInactiveGlobal,
+                                               serversListPartner,
+
+                                               statsAllServer,
+                                           }) => {
+    // Listes par catégorie
+    const activeServersEntries = Object.entries(serversListActiveGlobal);
+    const inactiveServersEntries = Object.entries(serversListInactiveGlobal);
+    const partnerServersEntries = Object.entries(serversListPartner);
+
+    // Serveur sélectionné au chargement de la page. "" = tous les serveurs
+    const firstServer = "";
+    const [selectedServer, setSelectedServer] = useState<string>(firstServer);
+
+    // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
         key: "tmps_jeu",
         direction: "desc",
     });
 
-    const players = selectedServer ? allData[selectedServer] || [] : [];
+    // tri des joueurs du serveur sélectionné
+    const sortedPlayers = useMemo(() => {
+        const players = Array.isArray(statsAllServer[selectedServer])
+            ? statsAllServer[selectedServer]
+            : [];
 
-    const sortedPlayers = [...players];
-    if (sortConfig) {
-        sortedPlayers.sort((a, b) => {
-            const aValue = a[sortConfig.key];
-            const bValue = b[sortConfig.key];
+        if (!sortConfig) return players;
 
-            if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-            if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-            return 0;
+        return [...players].sort((a, b) => {
+            const aVal = a[sortConfig.key] ?? 0;
+            const bVal = b[sortConfig.key] ?? 0;
+
+            if (typeof aVal === "number" && typeof bVal === "number") {
+                return sortConfig.direction === "asc" ? aVal - bVal : bVal - aVal;
+            }
+            return sortConfig.direction === "asc"
+                ? String(aVal).localeCompare(String(bVal))
+                : String(bVal).localeCompare(String(aVal));
         });
-    }
+    }, [selectedServer, sortConfig, statsAllServer]);
 
-    const PARTNER_TAG = "[Serveur partenaire]"; // Si présent dans la description, le serveur est considéré comme partenaire
-
-    // Prépare les listes
-    const serverEntries = Object.entries(serversList); // [id, ServerInfo]
-    const partnerServers = serverEntries.filter(([, srv]) =>
-        (srv.description || "").startsWith(PARTNER_TAG)
-    );
-    const antreServers = serverEntries.filter(([, srv]) =>
-        !(srv.description || "").startsWith(PARTNER_TAG)
-    );
-
-    /* Début de l'affichage de la page */
+    /* Front */
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
+            {/* Total tous les serveurs */}
+            <div className="mb-4">
+                <button
+                    key={"__all__"}
+                    onClick={() => setSelectedServer("")}
+                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
+                        selectedServer === "" ? "bg-white" : "text-white"
+                    }`}
+                    style={
+                        selectedServer === ""
+                            ? { color: "#081245", borderColor: "#101550" }
+                            : { background: "#333", borderColor: "transparent" }
+                    }
+                >
+                    Total de tous les serveurs
+                </button>
+            </div>
 
-            <div className="mb-6 flex flex-col sm:flex-row gap-6 justify-center w-full max-w-full">
-
-                {/* Serveurs Antre des loutres */}
+            <div
+                className="mb-6 flex flex-col sm:flex-row gap-6 justify-center w-full max-w-full"
+                style={{ marginTop: "12px" }}
+            >
+                {/* Serveurs Actifs ADL */}
                 <div className="flex-1">
-                    <h3 className="text-center text-lg font-semibold mb-2">Les serveurs de l’Antre des loutres</h3>
+                    <h3 className="text-center text-lg font-semibold mb-2">Serveurs actifs</h3>
                     <div className="flex flex-wrap gap-2 justify-center">
-
-                        {/* Total tous les serveurs */}
-                        <button
-                            key={0}
-                            onClick={0}
-                            className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
-                                selectedServer === "" ? "bg-white" : "text-white"
-                            }`}
-                            style={
-                                selectedServer === 0
-                                    ? { color: "#081245", borderColor: "#101550" }
-                                    : { background: "#333", borderColor: "transparent" }
-                            }
-                        >
-                            Total
-                        </button>
-
-                        {/* Stats serveur par serveur */}
-                        {antreServers.length === 0 ? (
+                        {activeServersEntries.length === 0 ? (
                             <div className="text-gray-500 px-4 py-2">Aucun serveur</div>
                         ) : (
-                            antreServers.map(([id, srv]) => (
+                            activeServersEntries.map(([id, srv]) => (
+                                <button
+                                    key={id}
+                                    onClick={() => setSelectedServer(id)}
+                                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
+                                        selectedServer === id ? "bg-white" : "text-white"
+                                    }`}
+                                    style={
+                                        selectedServer === id
+                                            ? { color: "#081245", borderColor: "#101550" }
+                                            : { background: "#333", borderColor: "transparent" }
+                                    }
+                                >
+                                    {srv.nom}
+                                </button>
+                            ))
+                        )}
+                    </div>
+                </div>
+
+                {/* Serveurs inactifs ADL */}
+                <div className="flex-1">
+                    <h3 className="text-center text-lg font-semibold mb-2">Serveurs désactivés</h3>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                        {inactiveServersEntries.length === 0 ? (
+                            <div className="text-gray-500 px-4 py-2">Aucun serveur</div>
+                        ) : (
+                            inactiveServersEntries.map(([id, srv]) => (
                                 <button
                                     key={id}
                                     onClick={() => setSelectedServer(id)}
@@ -122,12 +166,12 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
 
                 {/* Serveurs partenaires */}
                 <div className="flex-1">
-                    <h3 className="text-center text-lg font-semibold mb-2">Les serveurs partenaires</h3>
+                    <h3 className="text-center text-lg font-semibold mb-2">Serveurs partenaires</h3>
                     <div className="flex flex-wrap gap-2 justify-center">
-                        {partnerServers.length === 0 ? (
+                        {partnerServersEntries.length === 0 ? (
                             <div className="text-gray-500 px-4 py-2">Aucun partenaire</div>
                         ) : (
-                            partnerServers.map(([id, srv]) => (
+                            partnerServersEntries.map(([id, srv]) => (
                                 <button
                                     key={id}
                                     onClick={() => setSelectedServer(id)}
@@ -141,7 +185,6 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                     }
                                     title={srv.description}
                                 >
-                                    {/* J'affiche seulement le nom; la description (qui contient le tag) reste en title */}
                                     {srv.nom}
                                 </button>
                             ))
@@ -182,7 +225,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {players.length === 0 ? (
+                    {sortedPlayers.length === 0 ? (
                         <tr>
                             <td
                                 colSpan={Object.keys(playerStats).length}
@@ -195,7 +238,11 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                         sortedPlayers.map((player, idx) => (
                             <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                                 {Object.keys(playerStats).map((key) => (
-                                    <td key={key} className="px-6 py-4 whitespace-nowrap" style={{ minWidth: columnWidths[key] }}>
+                                    <td
+                                        key={key}
+                                        className="px-6 py-4 whitespace-nowrap"
+                                        style={{ minWidth: columnWidths[key] }}
+                                    >
                                         {(() => {
                                             if (key === "playername") {
                                                 return (
@@ -218,7 +265,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                                     </div>
                                                 );
                                             } else if (key === "tmps_jeu") {
-                                                const heures = Math.floor(player[key] / 72000);
+                                                const heures = Math.floor((player[key] || 0) / 72000);
                                                 return <div>{formatNumber(heures)} heures</div>;
                                             } else if (
                                                 key === "nb_blocs_pose" ||
@@ -227,13 +274,11 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                                 key === "dist_pieds" ||
                                                 key === "dist_elytres"
                                             ) {
-                                                return <div>{formatNumber(player[key])} blocs</div>;
-                                            } else if (key === "morts") {
-                                                return <div>${formatNumber(player.mort)}</div>;
+                                                return <div>{formatNumber(player[key] || 0)} blocs</div>;
                                             } else if (key === "nb_kills") {
-                                                return <div>{formatNumber(player.nb_kills)}</div>;
+                                                return <div>{formatNumber(player.nb_kills || 0)}</div>;
                                             } else {
-                                                return player[key];
+                                                return player[key] ?? "-";
                                             }
                                         })()}
                                     </td>
@@ -245,7 +290,7 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                 </table>
             </div>
 
-            {/* Info */}
+            {/* Infos */}
             <div className="hidden sm:block text-center">
                 <p className="mt-2 sm:mt-4">
                     Ces données sont mises à jour quotidiennement et ne reflètent pas les changements en temps réel.
@@ -254,7 +299,8 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                     Pour faire supprimer vos données, vous pouvez nous contacter sur Discord ou par e-mail à{" "}
                     <a href="mailto:arisoutre@gmail.com" style={{ textDecoration: "underline", color: "#101550" }}>
                         arisoutre@gmail.com
-                    </a>.
+                    </a>
+                    .
                 </p>
                 <p>
                     <a href="/donnees" style={{ textDecoration: "underline", color: "#101550" }}>
