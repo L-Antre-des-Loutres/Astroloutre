@@ -4,9 +4,9 @@ import Title from "../../assets/titles/profil_discord.webp"
 import {slugify} from "../../components/joueurs/joueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
-import Void from "../../components/Void.astro";
 import {formatDate} from "../../components/formater/DateFormater";
 import BadgeList from "../../components/BadgeList.astro";
+import {vocalTimeFormater} from "../../components/formater/VocalTimeFormater";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -18,6 +18,7 @@ type DiscordUserType = {
     first_activity: string
     last_activity: string
     nb_message: number
+    vocal_time: number
     avatar_url: string
 };
 
@@ -118,7 +119,7 @@ if (joueur.nb_message === null) {
             <h1>Information du compte {prefixe}<span class="playername">{joueur.pseudo_discord}</span></h1>
 
             <div class="profile-details">
-                <div class="h-full rounded-2xl">
+                <div class="h-full rounded-2xl flex items-center">
                     <Image
                             src={joueur.avatar_url}
                             alt={`Avatar de ${joueur.pseudo_discord}`}
@@ -134,7 +135,7 @@ if (joueur.nb_message === null) {
                     <div>
                         <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;" for="tag_discord">
                             {/* Icône ID */}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                             </svg>
                             Tag Discord de l'utilisateur :
@@ -156,6 +157,16 @@ if (joueur.nb_message === null) {
                             Nombres de message :
                         </strong>
                         <br /> {joueur.nb_message} {messageFormat}
+                    </div>
+                    <div>
+                        <strong>
+                            {/* Icône Heures de jeu (horloge) */}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="vertical-align: middle; margin-right: 6px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Temps en vocal :
+                        </strong>
+                        <br /> {vocalTimeFormater(joueur.vocal_time)}
                     </div>
                     <div>
                         <strong>
