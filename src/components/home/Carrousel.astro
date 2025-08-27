@@ -100,7 +100,7 @@ const games = [
                     <!-- Image de fond du carrousel -->
                     <div class="relative w-screen h-screen overflow-hidden" id={`carousel-${i}`}>
                         {game.slides.map((src, j) => (
-                                <!-- Image du carrousel -->
+                            <!-- Image du carrousel -->
                                 <Image
                                         src={src.path}
                                         alt={`${game.name} slide ${j + 1}`}
@@ -108,10 +108,10 @@ const games = [
                                         transition-all duration-500 ease-in-out opacity-0 scale-105 translate-x-4`}
                                         id="carousel-slide"
                                         loading="lazy"
-                                        width={100}
-                                        height={100}
+                                        width={120}
+                                        height={120}
                                 />
-                                <!-- Crédit de l'image -->
+                            <!-- Crédit de l'image -->
                                 <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
                                     <p>Image par {src.auteur} sur le serveur {src.origine}</p>
                                 </div>
@@ -119,17 +119,17 @@ const games = [
 
                         <!-- Container Logo des jeux -->
                         <div class="flex justify-center w-full">
-                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-6 rounded-xl
-                            absolute md:top-2/5 top-2/8 transform -translate-y-1/2 transition-all duration-500 opacity-0">
+                            <div class="bg-gradient-to-r from-brown-900/80 to-brown-700/80 text-white p-8 rounded-xl
+                            absolute top-1/4 transform -translate-y-1/2 transition-all duration-500 opacity-0">
 
-                                <Image src={game.logo} alt={game.name} class="w-100 h-100 object-contain"
-                                       width={100} height={100}/>
+                                <Image src={game.logo} alt={game.name} class="object-contain"
+                                       width={500} height={500}/>
 
                             </div>
                         </div>
 
                         <!-- Container Icone des jeux -->
-                        <div class="absolute md:top-2/4 top-3/7 transform -translate-y-1/2 flex justify-center w-full gap-8">
+                        <div class="absolute top-1/2 transform -translate-y-1/2 flex justify-center w-full gap-8">
                             {games.map((g, idx) => (
                                     <div
                                             class={`game-icon text-6xl cursor-pointer transform transition duration-300`}
@@ -140,26 +140,25 @@ const games = [
                                         <Image
                                                 src={g.icon}
                                                 alt={g.name}
-                                                class="w-16 h-16 object-contain rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
-                                                width={100}
-                                                height={100}
+                                                class="w-20 h-20 object-contain rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                                                width={150}
+                                                height={150}
                                         />
                                     </div>
                             ))}
                         </div>
 
                         <!-- Boutons -->
-                        <div class="absolute md:top-[65%] top-[60%] transform -translate-y-1/2 w-full flex flex-wrap justify-center gap-4 sm:gap-6 z-10 px-4">
+                        <div class="absolute top-3/4 transform -translate-y-1/2 w-full flex flex-wrap justify-center gap-4 sm:gap-6 z-10 px-4">
                             {Object.values(game.buttons).map((btn) => (
                                     <a
                                             href={btn.link}
-                                            class="text-white border border-white/90 font-semibold py-2 px-6 rounded-lg shadow-md backdrop-blur-md transition-all duration-300 hover:bg-white/10"
+                                            class="text-white border border-white/90 font-semibold py-3 px-8 text-lg rounded-lg shadow-md backdrop-blur-md transition-all duration-300 hover:bg-white/10"
                                     >
                                         {btn.title}
                                     </a>
                             ))}
                         </div>
-
                     </div>
                 </div>
         ))}
