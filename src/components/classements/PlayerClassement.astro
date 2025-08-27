@@ -1,50 +1,48 @@
 ---
-// Composant : PlayerClassement.astro
 import PlayerClassementReactComposant from './PlayerClassement.tsx';
 import PlayerPodium from './PlayerPodium.astro';
 import Void from "../Void.astro";
 
+import {
+    makeServersMap, pickStatsFor, aggregatePlayers,
+    type Server, type PlayerStats
+} from "../../utils/stats";
+
 const { jeu } = Astro.props;
 
-// Déclaration des types
-type Server = {
-    id: number;
-    nom: string;
-};
+// Fetch des serveurs depuis l’API
+const res = await fetch("https://otterlyapi.antredesloutres.fr/api/serveurs");
+const servers: Server[] = (await res.json()).data ?? [];
 
-type PlayerStats = {
-    playername: string;
-    uuid: string;
-    tmps_jeu: number;
-    nb_mort: number;
-    nb_kills: number;
-    nb_playerkill: number;
-    nb_blocs_detr: number;
-    nb_blocs_pose: number;
-    dist_total: number;
-    dist_pieds: number;
-    dist_elytres: number;
-    dist_vol: number;
-}
+// Catégorisation des serveurs
+// - "activeGlobalServers" → serveurs globaux actifs (global = 1, actif = 1)
+// - "inactiveGlobalServers" → serveurs globaux inactifs (global = 1, actif = 0)
+// - "partnerServers" → serveurs qui ne sont pas globaux (global = 0) ou explicitement tagués "partner"
+const activeGlobalServers   = servers.filter(
+    s => s.global === 1 && s.actif === 1 && s.jeu.toLowerCase() === jeu.toLowerCase()
+);
+const inactiveGlobalServers = servers.filter(
+    s => s.global === 1 && s.actif === 0 && s.jeu.toLowerCase() === jeu.toLowerCase()
+);
+const partnerServers        = servers.filter(
+    s => (s.global === 0 || (s.type?.toLowerCase() === 'partner')) && s.jeu.toLowerCase() === jeu.toLowerCase()
+);
 
-// Récupération de la liste des serveurs
-const res = await fetch("https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/" + jeu);
-const json = await res.json();
+// Construction de maps pour chaque catégorie de serveurs
+const serversListActiveGlobal   = makeServersMap(activeGlobalServers);
+const serversListInactiveGlobal = makeServersMap(inactiveGlobalServers);
+const serversListPartner        = makeServersMap(partnerServers);
 
-const serversList: Record<string, string> = {};
-(json.data as Server[]).forEach((server) => {
-    serversList[server.id.toString()] = server.nom;
-});
-
-// Appel à l'API des stats minimales
+// Fetch des statistiques de joueurs depuis l’API, on stocke le tableau de résultats bruts dans "playersRaw".
 const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/minimum");
-const jsonStats = await resStats.json();
+const playersRaw = (await resStats.json()).data ?? [];
 
-const playersRaw = jsonStats.data;
-
-const allData: Record<string, PlayerStats[]> = {};
-
+// Regroupement des statistiques par serveur
+const groupedStats: Record<string, PlayerStats[]> = {};
 playersRaw.forEach((entry: any) => {
+    const serverId = (entry.serveur_id ?? '').toString();
+
+    // Normalisations des données reçues en construisant un PlayerStats typé
     const playerStats: PlayerStats = {
         playername: entry.playername,
         uuid: entry.compte_id,
@@ -60,16 +58,44 @@ playersRaw.forEach((entry: any) => {
         dist_vol: entry.dist_vol
     };
 
-    const serverId = entry.serveur_id.toString();
+    // Si ce serveur n’a pas encore de tableau de joueurs, on l’initialise
+    if (!groupedStats[serverId]) groupedStats[serverId] = [];
 
-    if (!allData[serverId]) {
-        allData[serverId] = [];
-    }
-
-    allData[serverId].push(playerStats);
+    // Ajoutdu joueur dans le tableau du serveur correspondant
+    groupedStats[serverId].push(playerStats);
 });
+
+
+// Création des stats par catégorie de serveurs
+const statsActiveGlobal   = pickStatsFor(serversListActiveGlobal, groupedStats);
+const statsInactiveGlobal = pickStatsFor(serversListInactiveGlobal, groupedStats);
+const statsPartner        = pickStatsFor(serversListPartner, groupedStats);
+
+
+// Agrégation totale (stats de tous serveurs confondus)
+const TOTAL_SERVER_ID = ""; // "" = toutes les stats
+
+const aggregatedAllStats = aggregatePlayers(Object.values(groupedStats).flat());
+
+// Fusion de toutes les stats (actifs, inactifs, partenaires)
+const statsActiveGlobalWithTotal = {
+    ...statsActiveGlobal,
+    ...statsInactiveGlobal,
+    ...statsPartner,
+    [TOTAL_SERVER_ID]: aggregatedAllStats
+};
 ---
 
-<PlayerClassementReactComposant client:load {serversList} {allData} />
-<PlayerPodium {allData} />
-<Void/>
+<PlayerClassementReactComposant
+        client:load
+
+        serversListActiveGlobal={serversListActiveGlobal}
+        serversListInactiveGlobal={serversListInactiveGlobal}
+        serversListPartner={serversListPartner}
+
+        statsAllServer={statsActiveGlobalWithTotal}
+/>
+
+<PlayerPodium {statsActiveGlobal} />
+
+<Void />
