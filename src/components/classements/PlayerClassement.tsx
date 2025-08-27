@@ -79,6 +79,24 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                 <div className="flex-1">
                     <h3 className="text-center text-lg font-semibold mb-2">Les serveurs de l’Antre des loutres</h3>
                     <div className="flex flex-wrap gap-2 justify-center">
+
+                        {/* Total tous les serveurs */}
+                        <button
+                            key={0}
+                            onClick={0}
+                            className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
+                                selectedServer === "" ? "bg-white" : "text-white"
+                            }`}
+                            style={
+                                selectedServer === 0
+                                    ? { color: "#081245", borderColor: "#101550" }
+                                    : { background: "#333", borderColor: "transparent" }
+                            }
+                        >
+                            Total
+                        </button>
+
+                        {/* Stats serveur par serveur */}
                         {antreServers.length === 0 ? (
                             <div className="text-gray-500 px-4 py-2">Aucun serveur</div>
                         ) : (
