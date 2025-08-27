@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { slugify } from "../joueurs/joueurFormater";
-import {formatNumber} from "../formater/NumberFormater.ts";
+import { formatNumber } from "../formater/NumberFormater.ts";
 
 /* Gestion des statistiques de joueur */
 type PlayerStats = Record<string, any>;
+type ServerInfo = { nom: string; description: string };
 type Props = {
-    serversList: Record<string, string>;
+    serversList: Record<string, ServerInfo>;
     allData: Record<string, PlayerStats[]>;
 };
+
 const playerStats: Record<string, string> = {
     playername: "Nom du joueur",
     tmps_jeu: "Heures de jeu",
@@ -34,11 +36,6 @@ const columnWidths: Record<string, string> = {
     dist_elytres: "120px",
 };
 
-/* Code pour le tableau */
-
-
-
-/* Logique & html */
 const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
     const firstServer = Object.keys(serversList)[0] || null;
     const [selectedServer, setSelectedServer] = useState<string | null>(firstServer);
@@ -61,35 +58,81 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
         });
     }
 
+    const PARTNER_TAG = "[Serveur partenaire]"; // Si présent dans la description, le serveur est considéré comme partenaire
+
+    // Prépare les listes
+    const serverEntries = Object.entries(serversList); // [id, ServerInfo]
+    const partnerServers = serverEntries.filter(([, srv]) =>
+        (srv.description || "").startsWith(PARTNER_TAG)
+    );
+    const antreServers = serverEntries.filter(([, srv]) =>
+        !(srv.description || "").startsWith(PARTNER_TAG)
+    );
+
+    /* Début de l'affichage de la page */
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
-            <div className="mb-6 flex flex-wrap gap-2 justify-center w-full max-w-full">
-                {Object.entries(serversList).map(([id, nom]) => (
-                    <button
-                        key={id}
-                        onClick={() => setSelectedServer(id)}
-                        className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
-                            selectedServer === id
-                                ? "bg-white"
-                                : "text-white"
-                        }`}
-                        style={
-                            selectedServer === id
-                                ? {
-                                    color: "#081245",
-                                    borderColor: "#101550",
-                                }
-                                : {
-                                    background: "#333",
-                                    borderColor: "transparent",
-                                }
-                        }
-                    >
-                        {nom}
-                    </button>
-                ))}
+
+            <div className="mb-6 flex flex-col sm:flex-row gap-6 justify-center w-full max-w-full">
+
+                {/* Serveurs Antre des loutres */}
+                <div className="flex-1">
+                    <h3 className="text-center text-lg font-semibold mb-2">Les serveurs de l’Antre des loutres</h3>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                        {antreServers.length === 0 ? (
+                            <div className="text-gray-500 px-4 py-2">Aucun serveur</div>
+                        ) : (
+                            antreServers.map(([id, srv]) => (
+                                <button
+                                    key={id}
+                                    onClick={() => setSelectedServer(id)}
+                                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
+                                        selectedServer === id ? "bg-white" : "text-white"
+                                    }`}
+                                    style={
+                                        selectedServer === id
+                                            ? { color: "#081245", borderColor: "#101550" }
+                                            : { background: "#333", borderColor: "transparent" }
+                                    }
+                                >
+                                    {srv.nom}
+                                </button>
+                            ))
+                        )}
+                    </div>
+                </div>
+
+                {/* Serveurs partenaires */}
+                <div className="flex-1">
+                    <h3 className="text-center text-lg font-semibold mb-2">Les serveurs partenaires</h3>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                        {partnerServers.length === 0 ? (
+                            <div className="text-gray-500 px-4 py-2">Aucun partenaire</div>
+                        ) : (
+                            partnerServers.map(([id, srv]) => (
+                                <button
+                                    key={id}
+                                    onClick={() => setSelectedServer(id)}
+                                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
+                                        selectedServer === id ? "bg-white" : "text-white"
+                                    }`}
+                                    style={
+                                        selectedServer === id
+                                            ? { color: "#081245", borderColor: "#101550" }
+                                            : { background: "#333", borderColor: "transparent" }
+                                    }
+                                    title={srv.description}
+                                >
+                                    {/* J'affiche seulement le nom; la description (qui contient le tag) reste en title */}
+                                    {srv.nom}
+                                </button>
+                            ))
+                        )}
+                    </div>
+                </div>
             </div>
 
+            {/* Tableau des joueurs */}
             <div className="w-1/1 overflow-x-auto shadow-lg rounded-xl bg-white">
                 <table className="w-full text-base text-left overflow-hidden rounded-xl">
                     <thead
@@ -132,16 +175,9 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                         </tr>
                     ) : (
                         sortedPlayers.map((player, idx) => (
-                            <tr
-                                key={idx}
-                                className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                            >
+                            <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                                 {Object.keys(playerStats).map((key) => (
-                                    <td
-                                        key={key}
-                                        className="px-6 py-4 whitespace-nowrap"
-                                        style={{ minWidth: columnWidths[key] }}
-                                    >
+                                    <td key={key} className="px-6 py-4 whitespace-nowrap" style={{ minWidth: columnWidths[key] }}>
                                         {(() => {
                                             if (key === "playername") {
                                                 return (
@@ -154,19 +190,25 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                                             className="rounded-sm"
                                                         />
                                                         <span>
-                                                            <a
-                                                                href={`/joueurs/minecraft/${slugify(player.playername)}`}
-                                                                className="text-[#101550] underline hover:text-[#101550] transition"
-                                                            >
-                                                              {player.playername}
-                                                            </a>
-                                                        </span>
+                                <a
+                                    href={`/joueurs/minecraft/${slugify(player.playername)}`}
+                                    className="text-[#101550] underline hover:text-[#101550] transition"
+                                >
+                                  {player.playername}
+                                </a>
+                              </span>
                                                     </div>
                                                 );
                                             } else if (key === "tmps_jeu") {
                                                 const heures = Math.floor(player[key] / 72000);
                                                 return <div>{formatNumber(heures)} heures</div>;
-                                            } else if (key === "nb_blocs_pose" || key === "nb_blocs_detr" || key === "dist_total" || key === "dist_pieds" || key === "dist_elytres") {
+                                            } else if (
+                                                key === "nb_blocs_pose" ||
+                                                key === "nb_blocs_detr" ||
+                                                key === "dist_total" ||
+                                                key === "dist_pieds" ||
+                                                key === "dist_elytres"
+                                            ) {
                                                 return <div>{formatNumber(player[key])} blocs</div>;
                                             } else if (key === "morts") {
                                                 return <div>${formatNumber(player.mort)}</div>;
@@ -177,7 +219,6 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                                             }
                                         })()}
                                     </td>
-
                                 ))}
                             </tr>
                         ))
@@ -185,7 +226,8 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                     </tbody>
                 </table>
             </div>
-            {/* Version pour desktop (sm et plus) */}
+
+            {/* Info */}
             <div className="hidden sm:block text-center">
                 <p className="mt-2 sm:mt-4">
                     Ces données sont mises à jour quotidiennement et ne reflètent pas les changements en temps réel.
@@ -203,7 +245,6 @@ const PlayerClassement: React.FC<Props> = ({ serversList, allData }) => {
                 </p>
             </div>
 
-            {/* Version pour mobile uniquement */}
             <div className="block sm:hidden text-center mt-4 mb-4">
                 <p>
                     <a href="https://perdu.com" style={{ textDecoration: "underline", color: "#101550" }}>

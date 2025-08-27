@@ -10,6 +10,7 @@ const { jeu } = Astro.props;
 type Server = {
     id: number;
     nom: string;
+    description: string;
 };
 
 type PlayerStats = {
@@ -27,14 +28,18 @@ type PlayerStats = {
     dist_vol: number;
 }
 
-// Récupération de la liste des serveurs
 const res = await fetch("https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/" + jeu);
 const json = await res.json();
 
-const serversList: Record<string, string> = {};
+const serversList: Record<string, { nom: string; description: string }> = {};
+
 (json.data as Server[]).forEach((server) => {
-    serversList[server.id.toString()] = server.nom;
+    serversList[server.id.toString()] = {
+        nom: server.nom,
+        description: server.description
+    };
 });
+
 
 // Appel à l'API des stats minimales
 const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/minimum");
@@ -68,6 +73,9 @@ playersRaw.forEach((entry: any) => {
 
     allData[serverId].push(playerStats);
 });
+
+console.log("serversList :");
+console.log(serversList);
 ---
 
 <PlayerClassementReactComposant client:load {serversList} {allData} />
