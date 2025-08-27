@@ -113,11 +113,6 @@ if (joueur.nb_message === null) {
         <Image src={Title} alt="Titre" loading="eager" />
     </div>
 
-    <div class="back-link">
-        <a href="/">← Retour à la page d'accueil</a>
-    </div>
-
-
     {joueur && (
         <div class="profile-container">
             <h1>Information du compte {prefixe}<span class="playername">{joueur.pseudo_discord}</span></h1>
@@ -192,7 +187,7 @@ if (joueur.nb_message === null) {
                                         class="button-copy w-full"
                                         data-uuid={accountLink.playername}>
                                     <Image src={`https://mc-heads.net/avatar/${accountLink.playername}/128`} alt="Copier UUID" width={50} height={50} loading="eager" />
-                                    <span>RereBleue (Minecraft)</span>
+                                    <span>{accountLink.playername} (Minecraft)</span>
                                 </button>
                             </a>
                     }
