@@ -1,0 +1,24 @@
+---
+import Image from "astro/components/Image.astro";
+const { titleImage = '', backgroundColor } = Astro.props;
+---
+
+<div class="page-title" style={{ backgroundColor: backgroundColor }}>
+    <Image src={titleImage} alt="Titre"  />
+</div>
+
+<style>
+    .page-title {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+    @media (max-width: 768px) {
+        .page-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    }
+</style>

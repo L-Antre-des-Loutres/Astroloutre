@@ -1,0 +1,283 @@
+---
+// Composant : PlayerTop.astro
+---
+
+<div class="playertop" role="region" aria-label="Top joueur">
+    <div class="stats-select">
+        <button class="stat-btn" data-action="prev" aria-label="Stat précédente">⮜</button>
+        <h2 class="title">Joueur avec le plus d'heures</h2>
+        <button class="stat-btn" data-action="next" aria-label="Stat suivante">➤</button>
+    </div>
+
+    <!-- Trois colonnes : side-text | playerskin | side-text -->
+    <div class="content">
+        <div class="side-text left">
+            <h3 class="subtitle">Paragraphe</h3>
+            <div class="body">Random paragraphe sur le top</div>
+        </div>
+
+        <div class="playerskin" aria-hidden="false">
+            <img src="" alt="Skin du joueur" />
+        </div>
+
+        <div class="side-text right">
+            <h3 class="subtitle">Stats du joueur</h3>
+            <div class="body">
+                <ul>
+                    <li>Heures: 123</li>
+                    <li>Kills: 45</li>
+                    <li>Distance: 12.3 km</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .playertop{
+        max-width: 1100px;
+        margin: 1.5rem auto;
+    }
+
+    /* Ici, c'est la partie selection de la statistique */
+    .stats-select{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .title{
+        width: 20em;
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+    }
+
+    .stat-btn{
+        background: transparent;
+        font-size: 2em;
+        padding: 0.45rem 0.7rem;
+        cursor: pointer;
+        font-weight: 600;
+    }
+    /* Fin de la partie selection de la statistique */
+
+    /* Trois colonnes : side-text | playerskin | side-text */
+    .content{
+        display:flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* Pour les textes sur les cotés */
+    .side-text{
+        flex: 1 1 0;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0.75rem;
+        min-width: 160px;
+    }
+    .side-text .subtitle{
+        margin: 0 0 0.4rem 0;
+        font-size: 1.5rem;
+        font-weight: bolder;
+        animation: colorShift 10s infinite;
+    }
+    .side-text .body{
+        font-size: 1rem;
+    }
+
+    /* Pour le playerskin */
+    .playerskin{
+        flex: 0 0 360px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding: 0.4rem;
+    }
+    .playerskin img{
+        height: 400px;
+        width: auto;
+        max-width: 500px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+    }
+    /* Fin du CSS pour les trois colonnes */
+
+    /* Responsive : sur petits écrans on empile */
+    @media (max-width: 820px){
+        .content{
+            flex-direction: column;
+        }
+        .playerskin{ order: 0; }
+        .side-text{ order: 1; }
+        .playerskin img{ width: 260px; }
+    }
+
+    @media (max-width: 420px){
+        .playerskin img{ width: 200px; }
+        .title{ font-size: 1rem; }
+    }
+    /* Fin du responsive */
+
+    /* Variables */
+    @keyframes colorShift {
+        0%   { color: #e4bc71; }
+        33%  { color: #FFB347; }
+        66%  { color: #FF8C42; }
+        100% { color: #eac47c; }
+    }
+    /* Fin des variables */
+</style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // Récupération des champs
+        const title = document.querySelector('.title');
+        const left = document.querySelector('.side-text.left .subtitle');
+        const leftBody = document.querySelector('.side-text.left .body');
+        const right = document.querySelector('.side-text.right .subtitle');
+        const rightBody = document.querySelector('.side-text.right .body');
+        const playerskinImg = document.querySelector('.playerskin img');
+
+        // Statistiques temporaires
+        const stats = {
+            hours: {
+                playerUUID: "4a575f21-f533-4671-8ef3-aaff4146ff8c",
+                skinPose: "default",
+                skinRender: "full",
+                title: 'Joueur avec le plus d\'heures',
+                leftTitle: 'À propos',
+                leftBody: 'Ce joueur a passé énormément d\'heures à farmer, construire et explorer.',
+                rightTitle: 'Chiffres clés',
+                rightBody: '<ul><li>Heures : 2 342</li><li>Sessions : 412</li><li>Playstyle : Endgame</li></ul>'
+            },
+            kills: {
+                playerUUID: "d4755504-cd0b-4967-af12-ad94360debe1",
+                skinPose: "lunging",
+                skinRender: "full",
+                title: 'Joueur avec le plus de kills',
+                leftTitle: 'Playstyle',
+                leftBody: 'Tireur d\'élite, opportuniste en mêlée, ou joueur agressif ?',
+                rightTitle: 'Stats offensives',
+                rightBody: '<ul><li>Kills : 8 934</li><li>Headshots : 2 102</li><li>K/D : 4.1</li></ul>'
+            },
+            distance: {
+                playerUUID: "4199c666-1193-49b6-8986-099d872d5adf",
+                skinPose: "kicking",
+                skinRender: "full",
+                title: 'Joueur avec le plus de distance parcourue',
+                leftTitle: 'Explorateur',
+                leftBody: 'Toujours en mouvement — aime cartographier et découvrir.',
+                rightTitle: 'Kilométrage',
+                rightBody: '<ul><li>Distance : 12 345 km</li><li>Voyages : 1 204</li><li>Temps en marche : 1 020 h</li></ul>'
+            }
+        };
+
+        const btnPrev = document.querySelector('.stat-btn[data-action="prev"]');
+        const btnNext = document.querySelector('.stat-btn[data-action="next"]');
+
+        const keys = Object.keys(stats);
+        let currentIndex = 0;
+
+        const preloaded = {};
+
+        function buildUrl(playerUUID: string, skinPose: string, skinRender: string) {
+            return `https://starlightskins.lunareclipse.studio/render/${skinPose}/${playerUUID}/${skinRender}`;
+        }
+
+        // Précharge toutes les images et renvoie une promesse
+        function preloadAll() {
+            const promises = keys.map((k) => {
+                const s = stats[k];
+                const url = buildUrl(s.playerUUID, s.skinPose, s.skinRender); // ✅ fixed
+                preloaded[k] = { img: null, status: 'pending', url };
+
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        preloaded[k].img = img;
+                        preloaded[k].status = 'loaded';
+                        resolve({ key: k, ok: true });
+                    };
+                    img.onerror = () => {
+                        preloaded[k].img = null;
+                        preloaded[k].status = 'error';
+                        resolve({ key: k, ok: false });
+                    };
+                    img.src = url;
+                });
+            });
+
+            return Promise.all(promises);
+        }
+
+        // Remplace l'image par l'image préchargée si possible, sinon par l'URL directe
+        function showImageForKey(key) {
+            if (!playerskinImg) return;
+            // Logique de changement d'image
+            const entry = preloaded[key];
+            const targetSrc = (entry && entry.status === 'loaded' && entry.img && entry.img.src) ? entry.img.src : (entry ? entry.url : buildUrl(stats[key].playerUUID, stats[key].skinPose, stats[key].skinRender));
+
+            // Gère l'animation de transition pour l'image
+            (playerskinImg as HTMLImageElement).style.transition = 'opacity 220ms ease';
+            (playerskinImg as HTMLImageElement).style.opacity = '0';
+
+            // Au cas où l'image actuelle est la même src que targetSrc, forcer un repaint en utilisant setTimeout
+            setTimeout(() => {
+                (playerskinImg as HTMLImageElement).src = targetSrc;
+            }, 220);
+
+            // Remet l'opacité normal
+            const onLoad = () => {
+                (playerskinImg as HTMLImageElement).style.opacity = '1';
+                playerskinImg.removeEventListener('load', onLoad);
+            };
+            playerskinImg.addEventListener('load', onLoad);
+        }
+
+        // Fonction pour mettre à jour les champs de texte ainsi que le playerskin
+        function setActiveByKey(key) {
+            const s = stats[key];
+            if (!s) return;
+            if (title) title.textContent = s.title;
+            if (left) left.textContent = s.leftTitle;
+            if (leftBody) leftBody.innerHTML = s.leftBody;
+            if (right) right.textContent = s.rightTitle;
+            if (rightBody) rightBody.innerHTML = s.rightBody;
+            showImageForKey(key);
+        }
+
+        // Logique des boutons pour la navigation
+        btnPrev?.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + keys.length) % keys.length;
+            setActiveByKey(keys[currentIndex]);
+        });
+        btnNext?.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % keys.length;
+            setActiveByKey(keys[currentIndex]);
+        });
+
+        // Fonction pour désactiver les boutons de navigation, nottament au chargement initial pour que les images chargent
+        function setNavDisabled(disabled: boolean) {
+            if (btnPrev) (btnPrev as HTMLInputElement).disabled = disabled;
+            if (btnNext) (btnNext as HTMLInputElement).disabled = disabled;
+        }
+
+        // Start preload
+        setNavDisabled(true);
+        preloadAll().then((results) => {
+            // Preload fini, on peut activer les boutons de navigation
+            setNavDisabled(false);
+            setActiveByKey(keys[currentIndex]);
+        });
+    });
+</script>
+

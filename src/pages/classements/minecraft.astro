@@ -2,16 +2,23 @@
 // page minecraft.astro
 import Layout from "../../layouts/Layout.astro";
 import Image from "astro/components/Image.astro";
-import Title from "../../assets/titles/classement-joueurs.png"
+import Title1 from "../../assets/titles/classement-joueurs.png"
+import Title2 from "../../assets/titles/top-joueurs.png";
 import Banner from "../../components/Banner.astro";
-import PlayerClassement from "../../components/classements/PlayerClassement.astro"
+import PlayerClassement from "../../components/classements/tableau/PlayerClassement.astro"
+import AreaTitle from "../../components/AreaTitle.astro";
+import PlayerTop from "../../components/classements/top/PlayerTop.astro";
 ---
 
 <Layout>
     <Banner  bannerUrl=`/banner/minecraft/la_vanilla.webp`/>
-    <div class="page-title">
-        <Image src={Title} alt="Titre" />
+
+    <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
+    <div class="topjoueurs-container">
+        <PlayerTop></PlayerTop>
     </div>
+
+    <AreaTitle titleImage={Title1} backgroundColor="#333"/>
     <div class="classement-container">
         <PlayerClassement jeu="minecraft" />
     </div>
@@ -25,8 +32,21 @@ import PlayerClassement from "../../components/classements/PlayerClassement.astr
         display: flex;
         flex-direction: column;
     }
+    .page-title-bg {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        background-color: #333;
+    }
     @media (max-width: 768px) {
         .page-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .page-title-bg {
             margin-top: 15px;
             margin-bottom: 15px;
         }
