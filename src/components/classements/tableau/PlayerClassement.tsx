@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { slugify } from "../joueurs/joueurFormater";
-import { formatNumber } from "../formater/NumberFormater.ts";
+import { slugify } from "../../joueurs/joueurFormater.ts";
+import { formatNumber } from "../../formater/NumberFormater.ts";
 
 /* Types */
 type PlayerStats = Record<string, any>;

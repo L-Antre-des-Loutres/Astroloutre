@@ -1,12 +1,12 @@
 ---
 import PlayerClassementReactComposant from './PlayerClassement.tsx';
-import PlayerPodium from './PlayerPodium.astro';
-import Void from "../Void.astro";
+import PlayerTop from '../top/PlayerTop.astro';
+import Void from "../../Void.astro";
 
 import {
     makeServersMap, pickStatsFor, aggregatePlayers,
     type Server, type PlayerStats
-} from "../../utils/stats";
+} from "../../../utils/stats";
 
 const { jeu } = Astro.props;
 
@@ -95,7 +95,3 @@ const statsActiveGlobalWithTotal = {
 
         statsAllServer={statsActiveGlobalWithTotal}
 />
-
-<PlayerPodium {statsActiveGlobal} />
-
-<Void />
