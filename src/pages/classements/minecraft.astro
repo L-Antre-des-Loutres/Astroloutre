@@ -1,7 +1,6 @@
 ---
 // page minecraft.astro
 import Layout from "../../layouts/Layout.astro";
-import Image from "astro/components/Image.astro";
 import Title1 from "../../assets/titles/classement-joueurs.png"
 import Title2 from "../../assets/titles/top-joueurs.png";
 import Banner from "../../components/Banner.astro";
@@ -13,10 +12,10 @@ import PlayerTop from "../../components/classements/top/PlayerTop.astro";
 <Layout>
     <Banner  bannerUrl=`/banner/minecraft/la_vanilla.webp`/>
 
-    <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
+   <!-- <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
     <div class="topjoueurs-container">
         <PlayerTop></PlayerTop>
-    </div>
+    </div> -->
 
     <AreaTitle titleImage={Title1} backgroundColor="#333"/>
     <div class="classement-container">

@@ -4,12 +4,13 @@ import Banner from "../../components/Banner.astro";
 import ServeurVignette from "../../components/serveurs/ServeurVignette.astro";
 import Title from "../../assets/titles/nos-serveurs.webp"
 import Image from "astro/components/Image.astro";
+import AreaTitle from "../../components/AreaTitle.astro";
 ---
 
 <Layout>
     <Banner bannerUrl="/banner/palworld/palworld_endgame.webp"/>
     <div class="page-title">
-        <Image src={Title} alt="Titre" />
+        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
     </div>
     <ServeurVignette apiUrl="https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/palworld" jeu="palworld"/>
 </Layout>

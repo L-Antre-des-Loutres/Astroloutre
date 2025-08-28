@@ -8,6 +8,7 @@ import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../components/formater/DateFormater";
 import BadgeList from "../../../components/BadgeList.astro";
+import AreaTitle from "../../../components/AreaTitle.astro";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
@@ -118,7 +119,7 @@ try {
 <Layout>
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
-        <Image src={Title} alt="Titre" />
+        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
     </div>
 
     <script is:inline>
