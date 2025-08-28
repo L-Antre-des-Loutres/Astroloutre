@@ -3,13 +3,14 @@ import Layout from "../layouts/Layout.astro";
 import Banner from "../components/Banner.astro";
 import Title from "../../src/assets/titles/erreur404.png"
 import Image from "astro/components/Image.astro";
+import AreaTitle from "../components/AreaTitle.astro";
 ---
 
 <Layout title="Utilisation des données utilisateur">
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-content">
         <div class="page-title">
-            <Image src={Title} alt="Titre" />
+            <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
         </div>
         <p>
             Cette page n'existe pas, ou plus… Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?

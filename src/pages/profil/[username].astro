@@ -7,6 +7,7 @@ import Banner from "../../components/Banner.astro";
 import {formatDate} from "../../components/formater/DateFormater";
 import BadgeList from "../../components/BadgeList.astro";
 import {vocalTimeFormater} from "../../components/formater/VocalTimeFormater";
+import AreaTitle from "../../components/AreaTitle.astro";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -111,7 +112,7 @@ if (joueur.nb_message === null) {
 <Layout>
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
-        <Image src={Title} alt="Titre" loading="eager" />
+        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
     </div>
 
     {joueur && (

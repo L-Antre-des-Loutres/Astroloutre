@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Banner from "../components/Banner.astro";
 import Title from "../../src/assets/titles/erreur500.png"
 import Image from "astro/components/Image.astro";
+import AreaTitle from "../components/AreaTitle.astro";
 
 interface Props {
     error: unknown;
@@ -14,7 +15,7 @@ const { error } = Astro.props; // Si jamais on veut afficher l'erreur, c'est dan
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-content">
         <div class="page-title">
-            <Image src={Title} alt="Titre" />
+            <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
         </div>
         <p>
             Une erreur est arrivée de notre côté... Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
