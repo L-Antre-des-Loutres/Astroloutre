@@ -35,26 +35,53 @@ let topPlayerHours = data[0];
 let topPlayerKills = data[0];
 let topPlayerDistance = data[0];
 let topPlayerKillsPerPlayer = data[0];
+let topPlayerTimeDeathRatio = data[0];
 
 for (let i = 0; i < data.length; i++) {
     const tmps_jeux = Number(data[i].tmps_jeux);
     const nb_kills = Number(data[i].nb_kills);
     const dist_total = Number(data[i].dist_total);
     const nb_playerkill = Number(data[i].nb_playerkill);
+    const nb_mort = Number(data[i].nb_mort);
 
+    // Joueur avec le plus d'heures
     if (tmps_jeux > Number(topPlayerHours.tmps_jeux)) {
         topPlayerHours = data[i];
     }
+
+    // Joueur avec le plus de kills
     if (nb_kills > Number(topPlayerKills.nb_kills)) {
         topPlayerKills = data[i];
     }
+
+    // Joueur avec la plus grande distance parcourue
     if (dist_total > Number(topPlayerDistance.dist_total)) {
         topPlayerDistance = data[i];
     }
+
+    // Joueur avec le plus de player kills
     if (nb_playerkill > Number(topPlayerKillsPerPlayer.nb_playerkill)) {
         topPlayerKillsPerPlayer = data[i];
     }
+
+// Joueur avec le meilleur ratio morts / heures de jeu
+    if (tmps_jeux > 0) {
+        const heures_jeu = tmps_jeux / 72000; // conversion ticks → heures
+
+        // Ignore les joueurs avec un temps de jeu trop court
+        if (heures_jeu > 500) {
+
+            const ratio = nb_mort / heures_jeu;
+            const topHeures = Number(topPlayerTimeDeathRatio.tmps_jeux) / 72000;
+            const topRatio = Number(topPlayerTimeDeathRatio.nb_mort) / topHeures;
+
+            if (ratio > 0 && ratio < topRatio) {
+                topPlayerTimeDeathRatio = data[i];
+            }
+        }
+    }
 }
+
 
 const stats = {
     hours: {
@@ -66,7 +93,7 @@ const stats = {
         leftBody: 'Ce joueur a passé énormément d\'heures à farmer, construire et explorer.',
         rightTitle: 'Chiffres clés',
         rightBody: `<ul>
-            <li>Heures : ${Math.round(topPlayerHours.tmps_jeux / 3600)}</li>
+            <li>Heures : ${Math.round(topPlayerHours.tmps_jeux / 72000)}</li>
             <li>Kills : ${topPlayerHours.nb_kills}</li>
             <li>Distance : ${Math.round(topPlayerHours.dist_total / 1000)} km</li>
         </ul>`
@@ -87,7 +114,7 @@ const stats = {
     },
     killsPerPlayer: {
         playerUUID: topPlayerKillsPerPlayer.compte_id,
-        skinPose: "lunging",
+        skinPose: "crouching",
         skinRender: "full",
         title: 'Joueur avec le plus de kills de joueur',
         leftTitle: "L'assasin des peupliers",
@@ -113,6 +140,20 @@ const stats = {
             <li>Temps en marche : ${Math.round(topPlayerDistance.tmps_jeux / 3600)} h</li>
         </ul>`
     },
+    timeDeathRatio: {
+        playerUUID: topPlayerTimeDeathRatio.compte_id,
+        skinPose: "relaxing",
+        skinRender: "full",
+        title: 'Joueur avec le meilleur ratio M/H de : (Morts par Heures)',
+        leftTitle: 'Trop de talent pour mourrir',
+        leftBody: 'C\'est un joueur qui a trop de talent pour mourir.',
+        rightTitle: 'Chiffres clés',
+        rightBody: `<ul>
+            <li>Heures : ${Math.round(topPlayerTimeDeathRatio.tmps_jeux / 72000)}</li>
+            <li>Morts : ${topPlayerTimeDeathRatio.nb_mort}</li>
+            <li>Ratio Mort / Temps de jeux : ${(topPlayerTimeDeathRatio.tmps_jeux / 72000) / topPlayerTimeDeathRatio.nb_mort }</li>
+        </ul>`
+    }
 };
 
 ---
@@ -127,8 +168,8 @@ const stats = {
     <!-- Trois colonnes : side-text | playerskin | side-text -->
     <div class="content">
         <div class="side-text left">
-            <h3 class="subtitle">Paragraphe</h3>
-            <div class="body">Random paragraphe sur le top</div>
+            <h3 class="subtitle">Chargement en cours ...</h3>
+            <div class="body">Minecraft moddée > La Vanilla</div>
         </div>
 
         <div class="playerskin" aria-hidden="false">
@@ -136,12 +177,12 @@ const stats = {
         </div>
 
         <div class="side-text right">
-            <h3 class="subtitle">Stats du joueur</h3>
+            <h3 class="subtitle">Chargement en cours ...</h3>
             <div class="body">
                 <ul>
-                    <li>Heures: 123</li>
-                    <li>Kills: 45</li>
-                    <li>Distance: 12.3 km</li>
+                    <li>La loutre charge la page</li>
+                    <li>Patiente un peu !</li>
+                    <li>PS : Coco est gros</li>
                 </ul>
             </div>
         </div>
