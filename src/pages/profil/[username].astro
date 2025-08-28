@@ -109,7 +109,11 @@ if (joueur.nb_message === null) {
 
 ---
 
-<Layout ogImage={joueur.avatar_url}>
+<Layout
+        ogImage={`${joueur.avatar_url}`}
+        ogTitle={`Profil Discord de ${joueur.pseudo_discord}`}
+        ogDescription={`Voici le profil Discord de ${joueur.pseudo_discord} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
+>
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
         <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
