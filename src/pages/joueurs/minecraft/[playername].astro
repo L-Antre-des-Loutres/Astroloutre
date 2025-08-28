@@ -116,7 +116,11 @@ try {
 
 ---
 
-<Layout ogImage={`https://mc-heads.net/avatar/${joueur.playername}/64`}>
+<Layout
+        ogImage={`https://mc-heads.net/avatar/${joueur.playername}/64`}
+        ogTitle={`Profil de ${joueur.playername}`}
+        ogDescription={`Voici le profil du joueur Minecraft ${joueur.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
+>
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
         <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
