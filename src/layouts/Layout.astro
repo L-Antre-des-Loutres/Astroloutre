@@ -3,6 +3,9 @@ import "../styles/global.css";
 import Header from '../components/Header.astro';
 import adl_logo from "../assets/adl_small_logo.png";
 import Footer from "../components/Footer.astro";
+
+// On définit une prop optionnelle `ogImage`
+const { ogImage ="https://antredesloutres.fr/_astro/adl_small_logo.D-nH0BMB.png"} = Astro.props;
 ---
 <!doctype html>
 <html lang="fr">
@@ -15,8 +18,10 @@ import Footer from "../components/Footer.astro";
     <meta content="Antre des loutres" property="og:title" />
     <meta content="Bienvenue dans l'Antre des loutres 🦦 — un lieu de partage, d'amitié et de bonne humeur !" property="og:description" />
     <meta content="https://antredesloutres.fr" property="og:url" />
-    <meta content="https://antredesloutres.fr/_astro/adl_small_logo.D-nH0BMB.png" property="og:image" />
     <meta content="#7a3716" data-react-helmet="true" name="theme-color" />
+
+    <!-- OG:image dynamique -->
+    <meta content={ogImage} property="og:image" />
 
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden bg-white">
