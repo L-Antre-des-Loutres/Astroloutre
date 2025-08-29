@@ -1,6 +1,8 @@
 ---
 // Composant : PlayerTop.astro
 
+
+import {formatMinecraftPlayTime} from "../../formater/MinecraftPlayTimeFormater";
 const {
     apiLink = 'https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats'
 } = Astro.props;
@@ -66,13 +68,13 @@ for (let i = 0; i < data.length; i++) {
 
 // Joueur avec le meilleur ratio morts / heures de jeu
     if (tmps_jeux > 0) {
-        const heures_jeu = tmps_jeux / 72000; // conversion ticks → heures
+        const heures_jeu = formatMinecraftPlayTime(tmps_jeux) // conversion ticks → heures
 
         // Ignore les joueurs avec un temps de jeu trop court
         if (heures_jeu > 500) {
 
             const ratio = nb_mort / heures_jeu;
-            const topHeures = Number(topPlayerTimeDeathRatio.tmps_jeux) / 72000;
+            const topHeures = formatMinecraftPlayTime(Number(topPlayerTimeDeathRatio.tmps_jeux));
             const topRatio = Number(topPlayerTimeDeathRatio.nb_mort) / topHeures;
 
             if (ratio > 0 && ratio < topRatio) {
@@ -93,7 +95,7 @@ const stats = {
         leftBody: 'Ce joueur a passé énormément d\'heures à farmer, construire et explorer.',
         rightTitle: 'Chiffres clés',
         rightBody: `<ul>
-            <li>Heures : ${Math.round(topPlayerHours.tmps_jeux / 72000)}</li>
+            <li>Heures : ${formatMinecraftPlayTime(topPlayerHours.tmps_jeux)}</li>
             <li>Kills : ${topPlayerHours.nb_kills}</li>
             <li>Distance : ${Math.round(topPlayerHours.dist_total / 1000)} km</li>
         </ul>`
@@ -149,9 +151,9 @@ const stats = {
         leftBody: 'C\'est un joueur qui a trop de talent pour mourir.',
         rightTitle: 'Chiffres clés',
         rightBody: `<ul>
-            <li>Heures : ${Math.round(topPlayerTimeDeathRatio.tmps_jeux / 72000)}</li>
+            <li>Heures : ${formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux)}</li>
             <li>Morts : ${topPlayerTimeDeathRatio.nb_mort}</li>
-            <li>Ratio Mort / Temps de jeux : ${(topPlayerTimeDeathRatio.tmps_jeux / 72000) / topPlayerTimeDeathRatio.nb_mort }</li>
+            <li>Ratio Mort / Temps de jeux : ${formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux) / topPlayerTimeDeathRatio.nb_mort }</li>
         </ul>`
     }
 };

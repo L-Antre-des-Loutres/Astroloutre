@@ -9,6 +9,7 @@ import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../components/formater/DateFormater";
 import BadgeList from "../../../components/BadgeList.astro";
 import AreaTitle from "../../../components/AreaTitle.astro";
+import {formatMinecraftPlayTime} from "../../../components/formater/MinecraftPlayTimeFormater";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
@@ -108,7 +109,7 @@ try {
 
     if (totalData && totalData.tmps_jeux) {
         const ticks = parseInt(totalData.tmps_jeux, 10); // 1 tick = 1/20 sec
-        playtime = Math.round(ticks / 72000); // 72000 ticks = 1 heure
+        playtime = formatMinecraftPlayTime(ticks)
     }
 } catch (error) {
     console.error("Erreur lors du fetch des stats totales:", error);

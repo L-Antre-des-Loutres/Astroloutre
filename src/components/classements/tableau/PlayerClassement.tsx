@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { slugify } from "../../joueurs/joueurFormater.ts";
 import { formatNumber } from "../../formater/NumberFormater.ts";
+import {formatMinecraftPlayTime} from "../../formater/MinecraftPlayTimeFormater.ts";
 
 /* Types */
 type PlayerStats = Record<string, any>;
@@ -265,7 +266,7 @@ const PlayerClassement: React.FC<Props> = ({
                                                     </div>
                                                 );
                                             } else if (key === "tmps_jeu") {
-                                                const heures = Math.floor((player[key] || 0) / 72000);
+                                                const heures = formatMinecraftPlayTime((player[key] || 0));
                                                 return <div>{formatNumber(heures)} heures</div>;
                                             } else if (
                                                 key === "nb_blocs_pose" ||
