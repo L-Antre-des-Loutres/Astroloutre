@@ -137,23 +137,9 @@ const stats = {
             <li><b class="soft-bold">Distance</b> : ${formatNumber(topPlayerHoursModded.dist_total)} blocs</li>
         </ul>`
     },
-    kills: {
-        playerUUID: topPlayerKills.compte_id,
-        skinPose: "lunging",
-        skinRender: "full",
-        title: 'Joueur avec le plus de kills',
-        leftTitle: 'Playstyle',
-        leftBody: `${topPlayerKills.playername} il est un tireur d\'élite, opportuniste en mêlée, ou il a juste une farm à mob`,
-        rightTitle: 'Stats offensives',
-        rightBody: `<ul>
-            <li><b class="soft-bold">Kills</b> : ${topPlayerKills.nb_kills}</li>
-            <li><b class="soft-bold">Kills de joueurs</b> : ${topPlayerKills.nb_playerkill}</li>
-            <li><b class="soft-bold">K/D</b> : ${(topPlayerKills.nb_kills / Math.max(1, topPlayerKills.nb_mort)).toFixed(2)}</li>
-        </ul>`
-    },
     killsPerPlayer: {
         playerUUID: topPlayerKillsPerPlayer.compte_id,
-        skinPose: "crouching",
+        skinPose: "lunging",
         skinRender: "full",
         title: `Le joueur avec le plus de kills de joueur`,
         leftTitle: "L'assasin des peupliers",
