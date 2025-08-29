@@ -85,6 +85,28 @@ for (let i = 0; i < data.length; i++) {
     }
 }
 
+// Récupére les statisitiques pour le moddée seulement :
+const apiLinkModded = 'https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats-only-modded-server';
+const responseModded = await fetch(apiLinkModded);
+const jsonModded = await responseModded.json();
+
+// Récupère le tableau réel dans `data`
+const dataModded: PlayerStatsInterface[] = jsonModded.data;
+
+if (!dataModded || data.length === 0) {
+    throw new Error("Aucune donnée reçue de l'API !");
+}
+
+let topPlayerHoursModded = dataModded[0];
+
+for (let i = 0; i < dataModded.length; i++) {
+    const tmps_jeux = Number(dataModded[i].tmps_jeux);
+
+    if (tmps_jeux > Number(topPlayerHoursModded.tmps_jeux)) {
+        topPlayerHoursModded = dataModded[i];
+    }
+}
+
 
 const stats = {
     hours: {
@@ -93,12 +115,26 @@ const stats = {
         skinRender: "full",
         title: 'Joueur avec le plus d\'heures',
         leftTitle: 'À propos',
-        leftBody: 'Ce joueur a passé énormément d\'heures à farmer, construire et explorer.',
+        leftBody: `${topPlayerHours.playername} ce joueur a passé énormément d\'heures à farmer, construire et explorer (faudrait peut-être lui dire que ce n'est pas le monde réel).`,
         rightTitle: 'Chiffres clés',
         rightBody: `<ul>
-            <li>Heures : ${formatMinecraftPlayTime(topPlayerHours.tmps_jeux)}</li>
-            <li>Kills : ${topPlayerHours.nb_kills}</li>
-            <li>Distance : ${Math.round(topPlayerHours.dist_total / 1000)} km</li>
+            <li><b class="soft-bold">Heures</b> : ${formatMinecraftPlayTime(topPlayerHours.tmps_jeux)}</li>
+            <li><b class="soft-bold">Kills</b> : ${topPlayerHours.nb_kills}</li>
+            <li><b class="soft-bold">Distance</b> : ${formatNumber(topPlayerHours.dist_total / 1000)} blocs</li>
+        </ul>`
+    },
+    hoursModded: {
+        playerUUID: topPlayerHoursModded.compte_id,
+        skinPose: "pointing",
+        skinRender: "full",
+        title: 'Joueur avec le plus d\'heures en modée',
+        leftTitle: 'À propos',
+        leftBody: `${topPlayerHoursModded.playername} ne joue qu'avec des mods (Il doit s'ennuyer sur la vanilla).`,
+        rightTitle: 'Chiffres clés',
+        rightBody: `<ul>
+            <li><b class="soft-bold">Heures</b> : ${formatMinecraftPlayTime(topPlayerHoursModded.tmps_jeux)}</li>
+            <li><b class="soft-bold">Kills</b> : ${topPlayerHoursModded.nb_kills}</li>
+            <li><b class="soft-bold">Distance</b> : ${formatNumber(topPlayerHoursModded.dist_total)} blocs</li>
         </ul>`
     },
     kills: {
@@ -107,54 +143,54 @@ const stats = {
         skinRender: "full",
         title: 'Joueur avec le plus de kills',
         leftTitle: 'Playstyle',
-        leftBody: 'Tireur d\'élite, opportuniste en mêlée, ou joueur agressif ?',
+        leftBody: `${topPlayerKills.playername} il est un tireur d\'élite, opportuniste en mêlée, ou il a juste une farm à mob`,
         rightTitle: 'Stats offensives',
         rightBody: `<ul>
-            <li>Kills : ${topPlayerKills.nb_kills}</li>
-            <li>Kills de joueurs : ${topPlayerKills.nb_playerkill}</li>
-            <li>K/D : ${(topPlayerKills.nb_kills / Math.max(1, topPlayerKills.nb_mort)).toFixed(2)}</li>
+            <li><b class="soft-bold">Kills</b> : ${topPlayerKills.nb_kills}</li>
+            <li><b class="soft-bold">Kills de joueurs</b> : ${topPlayerKills.nb_playerkill}</li>
+            <li><b class="soft-bold">K/D</b> : ${(topPlayerKills.nb_kills / Math.max(1, topPlayerKills.nb_mort)).toFixed(2)}</li>
         </ul>`
     },
     killsPerPlayer: {
         playerUUID: topPlayerKillsPerPlayer.compte_id,
         skinPose: "crouching",
         skinRender: "full",
-        title: 'Joueur avec le plus de kills de joueur',
+        title: `Le joueur avec le plus de kills de joueur`,
         leftTitle: "L'assasin des peupliers",
-        leftBody: 'S\'il pouvait arrêter de tuer des gens, lui ...',
+        leftBody: `Si ${topPlayerKillsPerPlayer.playername} pouvait arrêter de tuer nos joueurs...`,
         rightTitle: 'Stats offensives',
         rightBody: `<ul>
-            <li>Kills : ${topPlayerKillsPerPlayer.nb_kills}</li>
-            <li>Kills de joueurs : ${topPlayerKillsPerPlayer.nb_playerkill}</li>
-            <li>K/D : ${(topPlayerKillsPerPlayer.nb_kills / Math.max(1, topPlayerKills.nb_mort)).toFixed(2)}</li>
+            <li><b class="soft-bold">Kills</b> : ${topPlayerKillsPerPlayer.nb_kills}</li>
+            <li><b class="soft-bold">Kills de joueurs</b> : ${topPlayerKillsPerPlayer.nb_playerkill}</li>
+            <li><b class="soft-bold">K/D</b> : ${(topPlayerKillsPerPlayer.nb_kills / Math.max(1, topPlayerKills.nb_mort)).toFixed(2)}</li>
         </ul>`
     },
     distance: {
         playerUUID: topPlayerDistance.compte_id,
         skinPose: "kicking",
         skinRender: "full",
-        title: 'Joueur avec le plus de distance parcourue',
+        title: `Le joueur avec le plus de distance parcourue`,
         leftTitle: 'Explorateur',
-        leftBody: 'Toujours en mouvement — aime cartographier et découvrir.',
+        leftBody: `${topPlayerDistance.playername} est toujours en mouvement — il aime cartographier et découvrir (ou perdre son temps en marchant sans but).`,
         rightTitle: 'Kilométrage',
         rightBody: `<ul>
-            <li>Distance : ${formatNumber(topPlayerDistance.dist_total)} blocs</li>
-            <li>Voyages (à pied) : ${formatNumber(topPlayerDistance.dist_pieds)} blocs</li>
-            <li>Distance en élytras : ${formatNumber(topPlayerDistance.dist_elytres)} blocs</li>
+            <li><b class="soft-bold">Distance</b> : ${formatNumber(topPlayerDistance.dist_total)} blocs</li>
+            <li><b class="soft-bold">Voyages (à pied)</b> : ${formatNumber(topPlayerDistance.dist_pieds)} blocs</li>
+            <li><b class="soft-bold">Distance en élytras</b> : ${formatNumber(topPlayerDistance.dist_elytres)} blocs</li>
         </ul>`
     },
     timeDeathRatio: {
         playerUUID: topPlayerTimeDeathRatio.compte_id,
         skinPose: "relaxing",
         skinRender: "full",
-        title: 'Joueur avec le meilleur ratio M/H de : (Morts par Heures)',
-        leftTitle: 'Trop de talent pour mourrir',
-        leftBody: 'C\'est un joueur qui a trop de talent pour mourir.',
+        title: `Le joueur avec le meilleur ratio M/H de : (Morts par Heures)`,
+        leftTitle: `Trop de talent pour mourrir`,
+        leftBody: `${topPlayerTimeDeathRatio.playername} a vraiment trop de talent pour mourrir (il est juste h24 AFK)`,
         rightTitle: 'Chiffres clés',
         rightBody: `<ul>
-            <li>Heures : ${formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux)}</li>
-            <li>Morts : ${topPlayerTimeDeathRatio.nb_mort}</li>
-            <li>Ratio Mort / Temps de jeux : ${formatNumber(formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux) / topPlayerTimeDeathRatio.nb_mort)}</li>
+            <li><b class="soft-bold">Heures</b> : ${formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux)}</li>
+            <li><b class="soft-bold">Morts</b> : ${topPlayerTimeDeathRatio.nb_mort}</li>
+            <li><b class="soft-bold">Ratio</b> Mort / Temps de jeux : ${formatNumber(formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux) / topPlayerTimeDeathRatio.nb_mort)}</li>
         </ul>`
     }
 };
@@ -193,6 +229,13 @@ const stats = {
 </div>
 
 <style>
+
+    .soft-bold {
+        color: black;
+        font-weight: 500; /* ou 400 pour normal */
+    }
+
+
     .playertop {
         max-width: 1100px;
         margin: 1.5rem auto;
