@@ -3,6 +3,7 @@
 
 
 import {formatMinecraftPlayTime} from "../../formater/MinecraftPlayTimeFormater";
+import {formatNumber} from "../../formater/NumberFormater";
 const {
     apiLink = 'https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats'
 } = Astro.props;
@@ -137,9 +138,9 @@ const stats = {
         leftBody: 'Toujours en mouvement — aime cartographier et découvrir.',
         rightTitle: 'Kilométrage',
         rightBody: `<ul>
-            <li>Distance : ${Math.round(topPlayerDistance.dist_total / 1000)} km</li>
-            <li>Voyages : ${topPlayerDistance.nb_playerkill}</li>
-            <li>Temps en marche : ${Math.round(topPlayerDistance.tmps_jeux / 3600)} h</li>
+            <li>Distance : ${formatNumber(topPlayerDistance.dist_total)} blocs</li>
+            <li>Voyages (à pied) : ${formatNumber(topPlayerDistance.dist_pieds)} blocs</li>
+            <li>Distance en élytras : ${formatNumber(topPlayerDistance.dist_elytres)} blocs</li>
         </ul>`
     },
     timeDeathRatio: {
@@ -153,7 +154,7 @@ const stats = {
         rightBody: `<ul>
             <li>Heures : ${formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux)}</li>
             <li>Morts : ${topPlayerTimeDeathRatio.nb_mort}</li>
-            <li>Ratio Mort / Temps de jeux : ${formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux) / topPlayerTimeDeathRatio.nb_mort }</li>
+            <li>Ratio Mort / Temps de jeux : ${formatNumber(formatMinecraftPlayTime(topPlayerTimeDeathRatio.tmps_jeux) / topPlayerTimeDeathRatio.nb_mort)}</li>
         </ul>`
     }
 };
