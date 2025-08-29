@@ -5,6 +5,7 @@ import Banner from "../../../components/Banner.astro";
 import Image from "astro/components/Image.astro";
 import Void from "../../../components/Void.astro";
 import PlayerList from "../../../components/serveurs/PlayerList.astro";
+import {formatMinecraftPlayTime} from "../../../components/formater/MinecraftPlayTimeFormater";
 
 
 // Type du serveur
@@ -195,7 +196,7 @@ export async function getStaticPaths() {
                         </svg>
                         Heures de jeux :
                     </div>
-                    <p>{Math.floor(playTime / 72000)} heures de jeux total</p>
+                    <p>{formatMinecraftPlayTime(playTime)} heures de jeux total</p>
 
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">

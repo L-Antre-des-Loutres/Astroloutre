@@ -1,6 +1,7 @@
 // PlayerStatsTable.tsx
 import React from 'react';
 import {formatNumber} from "../formater/NumberFormater.ts";
+import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
 
 type PlayerStat = {
     playername: string;
@@ -24,7 +25,7 @@ type Props = {
 };
 
 const formatHeures = (ticks?: number) =>
-    typeof ticks === "number" ? `${Math.floor(ticks / 72000)}` : "—";
+    typeof ticks === "number" ? `${formatMinecraftPlayTime(ticks)}` : "—";
 
 const formatBlocs = (val?: number) =>
     typeof val === "number" ? val.toLocaleString("fr-FR") : "—";
