@@ -1,34 +1,35 @@
 ---
-export type screenList = {
-    name: string;
-    image_url: string;
-    description: string;
-    serveur_id: string;
-    authors: string;
-}
+type AstroloutreImages = {
+    id?: number,
+    nom: string,
+    origine: string,
+    auteur: string,
+    path: string,
+    jeu: string,
+};
 
-const screenList: screenList[] = [
+const screenList: AstroloutreImages[] = [
     {
-        name: "Screen 1",
-        image_url: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
-        description: "bizzare le train",
-        serveur_id: "",
-        authors: ""
+        nom: "Screen 1",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        origine: "",
+        auteur: "",
+        jeu: "",
     },
     {
-        name: "Screen 2",
-        image_url: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
-        description: "bizzare le train",
-        serveur_id: "",
-        authors: ""
+        nom: "Screen 2",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        origine: "",
+        auteur: "",
+        jeu: "",
     },
     {
-        name: "Screen 3",
-        image_url: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
-        description: "bizzare le train",
-        serveur_id: "",
-        authors: ""
-    }
+        nom: "Screen 3",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        origine: "",
+        auteur: "",
+        jeu: "",
+    },
 ];
 ---
 <!-- CSS -->
@@ -66,8 +67,8 @@ const screenList: screenList[] = [
 <div class="serveur-screen">
     {screenList.map((screen) => (
             <div class="screen-item">
-                <img src={screen.image_url} alt={screen.name}/>
-                <p class="author">Par : {screen.authors || "Inconnu"}</p>
+                <img src={screen.path} alt={screen.nom}/>
+                <p class="author">Par : {screen.auteur || "Inconnu"}</p>
             </div>
     ))}
 </div>
