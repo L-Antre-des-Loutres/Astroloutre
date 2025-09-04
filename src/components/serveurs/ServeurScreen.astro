@@ -1,0 +1,73 @@
+---
+export type screenList = {
+    name: string;
+    image_url: string;
+    description: string;
+    serveur_id: string;
+    authors: string;
+}
+
+const screenList: screenList[] = [
+    {
+        name: "Screen 1",
+        image_url: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        description: "bizzare le train",
+        serveur_id: "",
+        authors: ""
+    },
+    {
+        name: "Screen 2",
+        image_url: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        description: "bizzare le train",
+        serveur_id: "",
+        authors: ""
+    },
+    {
+        name: "Screen 3",
+        image_url: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        description: "bizzare le train",
+        serveur_id: "",
+        authors: ""
+    }
+];
+---
+<!-- CSS -->
+<style>
+    .serveur-screen {
+        display: grid;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .screen-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .screen-item img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        transition: transform 0.2s ease;
+    }
+
+    .author {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #555;
+        font-style: italic;
+    }
+
+</style>
+
+<!-- Contenu de la page -->
+<div class="serveur-screen">
+    {screenList.map((screen) => (
+            <div class="screen-item">
+                <img src={screen.image_url} alt={screen.name}/>
+                <p class="author">Par : {screen.authors || "Inconnu"}</p>
+            </div>
+    ))}
+</div>

@@ -6,6 +6,7 @@ import Image from "astro/components/Image.astro";
 import Void from "../../../components/Void.astro";
 import PlayerList from "../../../components/serveurs/PlayerList.astro";
 import {formatMinecraftPlayTime} from "../../../components/formater/MinecraftPlayTimeFormater";
+import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
 
 
 // Type du serveur
@@ -240,7 +241,7 @@ export async function getStaticPaths() {
             <PlayerList serveurId={serveur.id}/>
 
             <h1>Screenshot des joueurs sur le serveur <span class="golden">{serveur.nom}</span></h1>
-            <Void />
+            <ServeurScreen/>
 
         </div>
     )}
