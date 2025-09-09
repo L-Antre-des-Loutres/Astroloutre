@@ -24,13 +24,13 @@ Ouvrir le projet puis faire l'installation des dépendances ;
 npm install
 ```
 
-Démarrer le projet en mode développement ;
+Démarrer le projet en mode développement :
 
 ```
 npm run dev
 ```
 
-Pour un lancement en production il est conseillé d'utilisé :
+Pour un lancement en production, il est conseillé d’utiliser :
 
 ```
 npm run build
@@ -40,6 +40,9 @@ npm run start
 ## Nos données sur le site :
 
 L'ensemble des données que nous utilisons sont disponibles sur notre [API](https://otterlyapi.antredesloutres.fr/)
+
+Pour toute demande de suppression de données, veuillez consulter
+notre [page de gestion des données](https://antredesloutres.fr/donnees/).
 
 ### Récupération des données :
 
