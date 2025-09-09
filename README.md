@@ -1,46 +1,69 @@
 # Astroloutre
 
-<a href="https://wiki.antredesloutres.fr/fr/doc-technique/sites/Astroloutre" target="_blank">
-  <img src="https://img.shields.io/badge/Wiki_du_site-Accéder-1f4da8?style=for-the-badge&logo=wikimedia-commons&logoColor=white" alt="Wiki du site" />
-</a>
+[![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
+***
+Astroloutre est un projet d'application Web statique, il est accessible sur
+l'adresse [antredesloutres.fr](antredesloutres.fr)
 
-Maquette du projet :
-![Maquette de la page d’accueil](https://raw.githubusercontent.com/L-Antre-des-Loutres/Reactisoutre/refs/heads/main/public/docs/%20model/maquette-page-acceuil.webp)
+## Technologies utilisées :
 
+- Astro
+- TypeScript
 
+## Comment tester ce projet :
 
+Cloner le projet :
 
-Framework Astro :
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-Structure du framework
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+``` bash
+git clone https://github.com/L-Antre-des-Loutres/Astroloutre
 ```
 
-##  Les commandes
+Ouvrir le projet puis faire l'installation des dépendances ;
+``` nodejs
+npm install
+```
 
-| Command                   | Action                                                                      |
-| :------------------------ |:----------------------------------------------------------------------------|
-| `npm install`             | Installation des dépendances                                                |
-| `npm run dev`             | Lancement du serveur en mode dev sur l'adresse : `localhost:4321`           |
-| `npm run build`           | Compile le site dans `./dist/`                                              |
-| `npm run preview`         | Prévisualisez votre build en local avant de le déployer.                    |
-| `npm run astro ...`       | Exécutez des commandes CLI comme astro add, astro check.
- |
+Démarrer le projet en mode développement :
+
+```
+npm run dev
+```
+
+Pour un lancement en production, il est conseillé d’utiliser :
+
+```
+npm run build
+npm run start
+```
+
+## Nos données sur le site :
+
+L'ensemble des données que nous utilisons sont disponibles sur notre [API](https://otterlyapi.antredesloutres.fr/)
+
+Pour toute demande de suppression de données, veuillez consulter
+notre [page de gestion des données](https://antredesloutres.fr/donnees/).
+
+### Récupération des données :
+
+#### Discord :
+
+- [Arisoutre](https://github.com/L-Antre-des-Loutres/Arisoutre) gère tout ce qui est nombre de messages,
+  temps en vocal, date de la première et dernière activité ainsi que la date où l'utilisateur a rejoint notre discord.
+
+#### Minecraft :
+
+- [ServerSentinel](https://github.com/Corentin-cott/ServerSentinel) (version en Go)
+- Bientôt : [Otternel](https://github.com/Corentin-cott/Otternel) (nouvelle version en Rust)
+
+Ces projets permettent de récupérer l'ensemble des statistiques de nos joueurs Minecraft : temps de jeu, nombre de blocs
+cassés, etc.
+Ils permettent également de consulter des données comme la date de dernière connexion.
+
+## Contributeurs :
+
+- Mathéo ([matheo-1712](https://github.com/matheo-1712)) Développement du site et de
+  l'API [Otterly](https://github.com/L-Antre-des-Loutres/ApiServeur) permettant l'affichage des données
+- Corentin ([corentin-cott](https://github.com/corentin-cott)) Développement du site et de la récupération des
+  statistiques des joueurs via [ServeurSentinel](https://github.com/Corentin-cott/ServerSentinel) et bientôt la nouvelle
+  version [Otternel](https://github.com/Corentin-cott/Otternel)
