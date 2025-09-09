@@ -2,19 +2,65 @@
 
 [![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
-[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/L-Antre-des-Loutres/Reactisoutre/releases)
-[![GitHub commits](https://badgen.net/github/commits/Naereen/Strapdown.js)](https://github.com/L-Antre-des-Loutres/Reactisoutre/commits/main/)
-[![TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://typescriptlang.)
 ***
 Astroloutre est un projet d'application Web statique, il est accessible sur
 l'adresse [antredesloutres.fr](antredesloutres.fr)
 
+## Technologies utilisées :
+
+- Astro
+- TypeScript
+
 ## Comment tester ce projet :
 
-1. Il faut l'installer
-2. Avoir une connexion internet qui permet de joindre l'API
+Cloner le projet :
 
+``` bash
+git clone https://github.com/L-Antre-des-Loutres/Astroloutre
+```
+
+Ouvrir le projet puis faire l'installation des dépendances ;
 ``` nodejs
 npm install
+```
+
+Démarrer le projet en mode développement ;
+
+```
 npm run dev
 ```
+
+Pour un lancement en production il est conseillé d'utilisé :
+
+```
+npm run build
+npm run start
+```
+
+## Nos données sur le site :
+
+L'ensemble des données que nous utilisons sont disponibles sur notre [API](https://otterlyapi.antredesloutres.fr/)
+
+### Récupération des données :
+
+#### Discord :
+
+- [Arisoutre](https://github.com/L-Antre-des-Loutres/Arisoutre) gère tout ce qui est nombre de messages,
+  temps en vocal, date de la première et dernière activité ainsi que la date où l'utilisateur a rejoint notre discord.
+
+#### Minecraft :
+
+- [ServerSentinel](https://github.com/Corentin-cott/ServerSentinel) (version en Go)
+- Bientôt : [Otternel](https://github.com/Corentin-cott/Otternel) (nouvelle version en Rust)
+
+Ces projets permettent de récupérer l'ensemble des statistiques de nos joueurs Minecraft : temps de jeu, nombre de blocs
+cassés, etc.
+Ils permettent également de consulter des données comme la date de dernière connexion.
+
+## Contributeurs :
+
+- Mathéo ([matheo-1712](https://github.com/matheo-1712)) Développement du site et de
+  l'API [Otterly](https://github.com/L-Antre-des-Loutres/ApiServeur) permettant l'affichage des données
+- Corentin ([corentin-cott](https://github.com/corentin-cott)) Développement du site et de la récupération des
+  statistiques des joueurs via [ServeurSentinel](https://github.com/Corentin-cott/ServerSentinel) et bientôt la nouvelle
+  version [Otternel](https://github.com/Corentin-cott/Otternel)
