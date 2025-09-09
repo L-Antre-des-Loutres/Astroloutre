@@ -19,23 +19,16 @@ Cloner le projet :
 git clone https://github.com/L-Antre-des-Loutres/Astroloutre
 ```
 
-Ouvrir le projet puis faire l'installation des dépendances ;
-``` nodejs
-npm install
-```
+### Commandes disponibles sur ce projet :
 
-Démarrer le projet en mode développement :
-
-```
-npm run dev
-```
-
-Pour un lancement en production, il est conseillé d’utiliser :
-
-```
-npm run build
-npm run start
-```
+| Command             | Action                                                            |
+|:--------------------|:------------------------------------------------------------------|
+| `npm install`       | Installation des dépendances                                      |
+| `npm run dev`       | Lancement du serveur en mode dev sur l'adresse : `localhost:4321` |
+| `npm run build`     | Compile le site dans `./dist/`                                    |
+| `npm run preview`   | Prévisualisez votre build en local avant de le déployer.          |
+| `npm run astro ...` | Exécutez des commandes CLI comme astro add, astro check.          |
+|
 
 ## Nos données sur le site :
 
