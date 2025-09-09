@@ -2,7 +2,7 @@
 
 [![License: MIT](https://cdn.prod.website-files.com/5e0f1144930a8bc8aace526c/65dd9eb5aaca434fac4f1c34_License-MIT-blue.svg)](/LICENSE)
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)
-***
+
 Astroloutre est un projet d'application Web statique, il est accessible sur
 l'adresse [antredesloutres.fr](antredesloutres.fr)
 
@@ -28,7 +28,6 @@ git clone https://github.com/L-Antre-des-Loutres/Astroloutre
 | `npm run build`     | Compile le site dans `./dist/`                                    |
 | `npm run preview`   | Prévisualisez votre build en local avant de le déployer.          |
 | `npm run astro ...` | Exécutez des commandes CLI comme astro add, astro check.          |
-|
 
 ## Nos données sur le site :
 
