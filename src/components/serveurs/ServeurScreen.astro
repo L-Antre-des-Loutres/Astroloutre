@@ -11,16 +11,16 @@ type AstroloutreImages = {
 const screenList: AstroloutreImages[] = [
     {
         nom: "Screen 1",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415049985707475136/2025-09-09_21.02.41.png?ex=68c3c5be&is=68c2743e&hm=60494362991558398f2341dc7591bfa0e2ea78fda0cb9ae74f0d4d90d54c95ab&",
         origine: "",
-        auteur: "",
+        auteur: "Azertor",
         jeu: "",
     },
     {
         nom: "Screen 2",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
         origine: "",
-        auteur: "",
+        auteur: "Azertor",
         jeu: "",
     },
     {
@@ -39,6 +39,12 @@ const screenList: AstroloutreImages[] = [
         gap: 1rem;
         padding: 1rem;
         grid-template-columns: repeat(2, 1fr); /* 2 colonnes égales */
+    }
+
+    @media (max-width: 1200px) {
+        .serveur-screen {
+            grid-template-columns: 1fr; /* 1 colonne sur petits écrans */
+        }
     }
 
     .screen-item {
