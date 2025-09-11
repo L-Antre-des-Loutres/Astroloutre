@@ -1,12 +1,12 @@
 ---
 import PlayerClassementReactComposant from './PlayerClassement.tsx';
 import PlayerTop from '../top/PlayerTop.astro';
-import Void from "../../Void.astro";
+import Void from "../../../Void.astro";
 
 import {
     makeServersMap, pickStatsFor, aggregatePlayers,
     type Server, type PlayerStats
-} from "../../../utils/stats";
+} from "../../../../utils/stats";
 
 const { jeu } = Astro.props;
 
