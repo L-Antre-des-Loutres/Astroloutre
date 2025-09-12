@@ -1,0 +1,33 @@
+---
+import Void from "../../../Void.astro"
+import React from "react";
+import UserClassementReactComponent from "./UserClassement.tsx"
+
+
+// Type 
+export type UserStatsType = {
+    id: number,
+    discord_id: string,
+    pseudo_discord: string,
+    join_date_discord: string,
+    first_activity: string,
+    last_activity: string,
+    nb_message: number,
+    tag_discord: string,
+    avatar_url: string,
+    vocal_time: number,
+}
+
+// Fetch des statistiques des utilisateurs depuis l'API, on stocke le tableau de résultats bruts dans "playersRaw".
+const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord");
+const userRaw: UserStatsType[] = (await resStats.json()).data ?? [];
+
+// Normalisations des données reçues en construisant un PlayerStats typé
+const userStats: UserStatsType[] = userRaw;
+
+---
+<UserClassementReactComponent
+        client:load
+        jeu="discord"
+        statsAllServer={userStats}
+/>

@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from "react";
-import { slugify } from "../../joueurs/joueurFormater.ts";
-import { formatNumber } from "../../formater/NumberFormater.ts";
-import {formatMinecraftPlayTime} from "../../formater/MinecraftPlayTimeFormater.ts";
+import React, {useMemo, useState} from "react";
+import {slugify} from "../../../joueurs/joueurFormater.ts";
+import {formatNumber} from "../../../formater/NumberFormater.ts";
+import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater.ts";
 
 /* Types */
 type PlayerStats = Record<string, any>;
@@ -70,8 +70,6 @@ const PlayerClassement: React.FC<Props> = ({
         const players = Array.isArray(statsAllServer[selectedServer])
             ? statsAllServer[selectedServer]
             : [];
-
-        if (!sortConfig) return players;
 
         return [...players].sort((a, b) => {
             const aVal = a[sortConfig.key] ?? 0;
