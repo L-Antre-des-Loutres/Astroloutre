@@ -14,5 +14,8 @@ export function formatDecimalHours(hours: number | null): string {
     const minutes = Math.round(decimalPart * 60);
     const totalMinutes = wholeHours * 60 + minutes;
 
-    return (totalMinutes / 60).toFixed(2);
+    const resultHours = Math.floor(totalMinutes / 60);
+    const resultMinutes = totalMinutes % 60;
+
+    return `${resultHours}h et ${resultMinutes.toString().padStart(2, '0')} minutes`;
 }

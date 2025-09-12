@@ -146,7 +146,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                             } else if (key === "last_activity") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
                                             } else if (key === "vocal_time") {
-                                                return <div>{formatDecimalHours(player[key] || 0)} heures</div>;
+                                                return <div>{formatDecimalHours(player[key] || 0)}</div>;
                                             } else if (key === "nb_message") {
                                                 return <div>{formatNumber(player[key] || 0)}</div>;
                                             } else {
