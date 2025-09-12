@@ -91,9 +91,9 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                 <th
                                     key={key}
                                     onClick={() => {
-                                        let direction: "asc" | "desc" = "asc";
-                                        if (isActive && sortConfig?.direction === "asc") {
-                                            direction = "desc";
+                                        let direction: "asc" | "desc" = "desc";
+                                        if (isActive && sortConfig?.direction === "desc") {
+                                            direction = "asc";
                                         }
                                         setSortConfig({key, direction});
                                     }}
