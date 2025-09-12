@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {slugify} from "../../../joueurs/joueurFormater.ts";
 import {formatNumber} from "../../../formater/NumberFormater.ts";
-import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater.ts";
+import {formatDecimalHours} from "../../../formater/DecimalHoursFormater.ts";
+
 
 /* Types */
 type UserStats = Record<string, any>;
@@ -30,7 +30,7 @@ const columnWidths: Record<string, string> = {
     vocal_time: "150px"
 };
 
-const PlayerClassement: React.FC<Props> = ({statsAllServer}) => {
+const UserClassement: React.FC<Props> = ({statsAllServer}) => {
 
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
@@ -39,7 +39,7 @@ const PlayerClassement: React.FC<Props> = ({statsAllServer}) => {
     });
 
     // tri des joueurs du serveur sélectionné
-    const sortedPlayers = userStats
+    const sortedPlayers = statsAllServer
 
     /* Front */
     return (
@@ -76,7 +76,7 @@ const PlayerClassement: React.FC<Props> = ({statsAllServer}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {sortedPlayers.length === 0 ? (
+                    {!Array.isArray(sortedPlayers) || sortedPlayers.length === 0 ? (
                         <tr>
                             <td
                                 colSpan={Object.keys(userStats).length}
@@ -95,39 +95,23 @@ const PlayerClassement: React.FC<Props> = ({statsAllServer}) => {
                                         style={{minWidth: columnWidths[key]}}
                                     >
                                         {(() => {
-                                            if (key === "playername") {
+                                            if (key === "pseudo_discord") {
                                                 return (
                                                     <div className="flex items-center gap-3">
                                                         <img
-                                                            src={`https://mc-heads.net/avatar/${player.uuid}/28`}
-                                                            alt={player.playername}
+                                                            src={player.avatar_url}
+                                                            alt={player.pseudo_discord}
                                                             width={28}
                                                             height={28}
                                                             className="rounded-sm"
                                                         />
-                                                        <span>
-                                <a
-                                    href={`/joueurs/minecraft/${slugify(player.playername)}`}
-                                    className="text-[#101550] underline hover:text-[#101550] transition"
-                                >
-                                  {player.playername}
-                                </a>
-                              </span>
+                                                        <span>{player[key] ?? "-"}</span>
                                                     </div>
                                                 );
-                                            } else if (key === "tmps_jeu") {
-                                                const heures = formatMinecraftPlayTime((player[key] || 0));
-                                                return <div>{formatNumber(heures)} heures</div>;
-                                            } else if (
-                                                key === "nb_blocs_pose" ||
-                                                key === "nb_blocs_detr" ||
-                                                key === "dist_total" ||
-                                                key === "dist_pieds" ||
-                                                key === "dist_elytres"
-                                            ) {
-                                                return <div>{formatNumber(player[key] || 0)} blocs</div>;
-                                            } else if (key === "nb_kills") {
-                                                return <div>{formatNumber(player.nb_kills || 0)}</div>;
+                                            } else if (key === "vocal_time") {
+                                                return <div>{formatDecimalHours(player[key] || 0)} heures</div>;
+                                            } else if (key === "nb_message") {
+                                                return <div>{formatNumber(player[key] || 0)}</div>;
                                             } else {
                                                 return player[key] ?? "-";
                                             }
@@ -171,4 +155,4 @@ const PlayerClassement: React.FC<Props> = ({statsAllServer}) => {
     );
 };
 
-export default PlayerClassement;
+export default UserClassement;

@@ -1,11 +1,8 @@
 ---
 import Void from "../../../Void.astro"
 import React from "react";
-import {slugify} from "../../../joueurs/joueurFormater";
-import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
-import {formatNumber} from "../../../formater/NumberFormater";
-import {formatDate} from "../../../formater/DateFormater";
-import {formatDecimalHours} from "../../../formater/DecimalHoursFormater";
+import UserClassementReactComponent from "./UserClassement.tsx"
+
 
 // Type 
 export type UserStatsType = {
@@ -28,103 +25,9 @@ const userRaw: UserStatsType[] = (await resStats.json()).data ?? [];
 // Normalisations des données reçues en construisant un PlayerStats typé
 const userStats: UserStatsType[] = userRaw;
 
-const columnWidths = {
-    pseudo_discord: "200px",
-    join_date_discord: "150px",
-    first_activity: "150px",
-    last_activity: "150px",
-    nb_message: "150px",
-    vocal_time: "150px"
-};
-
-const sortConfig = {
-    key: "nb_message",
-    direction: "desc"
-};
-
-const sortedPlayers = [...userStats].sort((a, b) => {
-    if (sortConfig.direction === "asc") {
-        return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
-    }
-    return a[sortConfig.key] < b[sortConfig.key] ? 1 : -1;
-});
 ---
-<div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
-    <div className="w-1/1 overflow-x-auto shadow-lg rounded-xl bg-white">
-        <table className="w-full text-base text-left overflow-hidden rounded-xl">
-            <thead
-                    style={{
-                        background: "linear-gradient(to right, #333, #333, #5a1a00)",
-                    }}
-                    className="text-white text-base"
-            >
-            <tr>
-                <th className="px-6 py-4 font-semibold cursor-pointer select-none"
-                    style={{minWidth: columnWidths.pseudo_discord}}>Pseudo
-                </th>
-                <th className="px-6 py-4 font-semibold cursor-pointer select-none"
-                    style={{minWidth: columnWidths.join_date_discord}}>Date d'arrivée
-                </th>
-                <th className="px-6 py-4 font-semibold cursor-pointer select-none"
-                    style={{minWidth: columnWidths.first_activity}}>Première activité
-                </th>
-                <th className="px-6 py-4 font-semibold cursor-pointer select-none"
-                    style={{minWidth: columnWidths.last_activity}}>Dernière activité
-                </th>
-                <th className="px-6 py-4 font-semibold cursor-pointer select-none"
-                    style={{minWidth: columnWidths.nb_message}}>Messages
-                </th>
-                <th className="px-6 py-4 font-semibold cursor-pointer select-none"
-                    style={{minWidth: columnWidths.vocal_time}}>Temps vocal
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {sortedPlayers.length === 0 ? (
-                    <tr>
-                        <td
-                                colSpan={6}
-                                className="text-center px-6 py-8 text-gray-500 bg-white"
-                        >
-                            Pas de données pour ce serveur.
-                        </td>
-                    </tr>
-            ) : (
-                sortedPlayers.map((user, idx) => (
-                        <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                            <td className="px-6 py-4 whitespace-nowrap" style={{minWidth: columnWidths.pseudo_discord}}>
-                                <div className="flex items-center gap-3">
-                                    <img
-                                            src={user.avatar_url}
-                                            alt={user.pseudo_discord}
-                                            width={28}
-                                            height={28}
-                                            className="rounded-full"
-                                    />
-                                    <span>
-                                        <a href={`/joueurs/discord/${slugify(user.tag_discord)}`}
-                                           className="text-[#101550] underline hover:text-[#101550] transition">
-                                            {user.pseudo_discord}
-                                        </a>
-                                    </span>
-                                </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap"
-                                style={{minWidth: columnWidths.join_date_discord}}>{formatDate(user.join_date_discord)}</td>
-                            <td className="px-6 py-4 whitespace-nowrap"
-                                style={{minWidth: columnWidths.first_activity}}>{formatDate(user.first_activity)}</td>
-                            <td className="px-6 py-4 whitespace-nowrap"
-                                style={{minWidth: columnWidths.last_activity}}>{formatDate(user.last_activity)}</td>
-                            <td className="px-6 py-4 whitespace-nowrap" style={{minWidth: columnWidths.nb_message}}>
-                                <div>{formatNumber(user.nb_message)}</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap" style={{minWidth: columnWidths.vocal_time}}>
-                                <div>{formatDecimalHours(user.vocal_time)} heures</div>
-                            </td>
-                        </tr>
-                ))
-            )}
-            </tbody>
-        </table>
-    </div>
-</div>
+<UserClassementReactComponent
+        client:load
+        jeu="discord"
+        statsAllServer={userStats}
+/>
