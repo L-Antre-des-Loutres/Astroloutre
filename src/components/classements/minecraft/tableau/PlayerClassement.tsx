@@ -71,8 +71,6 @@ const PlayerClassement: React.FC<Props> = ({
             ? statsAllServer[selectedServer]
             : [];
 
-        if (!sortConfig) return players;
-
         return [...players].sort((a, b) => {
             const aVal = a[sortConfig.key] ?? 0;
             const bVal = b[sortConfig.key] ?? 0;

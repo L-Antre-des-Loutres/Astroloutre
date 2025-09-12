@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {formatNumber} from "../../../formater/NumberFormater.ts";
 import {formatDecimalHours} from "../../../formater/DecimalHoursFormater.ts";
 import {formatDateWithHours} from "../../../formater/DateWithHoursFormater.ts";
@@ -9,7 +9,7 @@ type UserStats = Record<string, any>;
 
 /* Props attendues */
 type Props = {
-    statsAllServer: Record<string, UserStats[]>;
+    statsAllServer: UserStats[];
 };
 
 /* Colonnes et largeurs */
@@ -39,8 +39,38 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
         direction: "desc",
     });
 
-    // tri des joueurs du serveur sélectionné
-    const sortedPlayers = statsAllServer
+
+    // tri des joueurs du serveur sélectionné 
+    const sortedPlayers = useMemo(() => {
+        const players = Array.isArray(statsAllServer) ? statsAllServer : [];
+
+        if (!sortConfig) return players;
+
+        return [...players].sort((a, b) => {
+            let aVal = a[sortConfig.key];
+            let bVal = b[sortConfig.key];
+
+            // Dates
+            if (["join_date_discord", "first_activity", "last_activity"].includes(sortConfig.key)) {
+                aVal = aVal ? new Date(aVal).getTime() : 0;
+                bVal = bVal ? new Date(bVal).getTime() : 0;
+            }
+            // Nombres
+            else if (["nb_message", "vocal_time"].includes(sortConfig.key)) {
+                aVal = Number(aVal) || 0;
+                bVal = Number(bVal) || 0;
+            }
+            // Chaînes
+            else {
+                aVal = aVal ? String(aVal).toLowerCase() : "";
+                bVal = bVal ? String(bVal).toLowerCase() : "";
+            }
+
+            if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
+            if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
+            return 0;
+        });
+    }, [sortConfig, statsAllServer]);
 
     /* Front */
     return (
@@ -83,7 +113,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                 colSpan={Object.keys(userStats).length}
                                 className="text-center px-6 py-8 text-gray-500 bg-white"
                             >
-                                Pas de données pour ce serveur.
+                                Pas de données discord.
                             </td>
                         </tr>
                     ) : (
