@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {formatNumber} from "../../../formater/NumberFormater.ts";
 import {formatDecimalHours} from "../../../formater/DecimalHoursFormater.ts";
+import {formatDateWithHours} from "../../../formater/DateWithHoursFormater.ts";
 
 
 /* Types */
@@ -101,13 +102,19 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                                         <img
                                                             src={player.avatar_url}
                                                             alt={player.pseudo_discord}
-                                                            width={28}
-                                                            height={28}
+                                                            width={40}
+                                                            height={40}
                                                             className="rounded-sm"
                                                         />
                                                         <span>{player[key] ?? "-"}</span>
                                                     </div>
                                                 );
+                                            } else if (key === "join_date_discord") {
+                                                return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
+                                            } else if (key === "first_activity") {
+                                                return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
+                                            } else if (key === "last_activity") {
+                                                return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
                                             } else if (key === "vocal_time") {
                                                 return <div>{formatDecimalHours(player[key] || 0)} heures</div>;
                                             } else if (key === "nb_message") {
