@@ -2,6 +2,7 @@ import React, {useMemo, useState} from "react";
 import {formatNumber} from "../../../formater/NumberFormater.ts";
 import {formatDecimalHours} from "../../../formater/DecimalHoursFormater.ts";
 import {formatDateWithHours} from "../../../formater/DateWithHoursFormater.ts";
+import {slugify} from "../../../joueurs/joueurFormater.ts";
 
 
 /* Types */
@@ -136,7 +137,12 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                                             height={40}
                                                             className="rounded-sm"
                                                         />
+                                                        <a
+                                                            href={`/profil/${slugify(player.tag_discord)}`}
+                                                            className="text-[#101550] underline hover:text-[#101550] transition"
+                                                        >
                                                         <span>{player[key] ?? "-"}</span>
+                                                        </a>
                                                     </div>
                                                 );
                                             } else if (key === "join_date_discord") {
