@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import {formatNumber} from "../../../formater/NumberFormater.ts";
 import {formatDecimalHours} from "../../../formater/DecimalHoursFormater.ts";
 import {formatDateWithHours} from "../../../formater/DateWithHoursFormater.ts";
-import {slugify} from "../../../joueurs/joueurFormater.ts";
+import {slugify} from "../../../formater/JoueurFormater.ts";
 
 
 /* Types */
