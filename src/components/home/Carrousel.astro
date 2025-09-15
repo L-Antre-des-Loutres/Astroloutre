@@ -10,6 +10,7 @@ type CarrouselImage = {
     jeu: string,
     nom_serveur: string,
     carrousel: boolean,
+    auteur_pseudo: string,
 };
 
 // Fonction de mélange
@@ -44,6 +45,7 @@ try {
             jeu: img.jeu,
             nom_serveur: img.nom_serveur,
             carrousel: img.carrousel,
+            auteur_pseudo: img.auteur_pseudo,
         }));
 
     palworldImages = images
@@ -57,6 +59,7 @@ try {
             jeu: img.jeu,
             nom_serveur: img.nom_serveur,
             carrousel: img.carrousel,
+            auteur_pseudo: img.auteur_pseudo,
         }));
 
 } catch (error) {
@@ -119,7 +122,7 @@ const games = [
                                 />
                             <!-- Crédit de l'image -->
                                 <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
-                                    <p>Image par {src.auteur} sur le serveur : {src.nom_serveur}</p>
+                                    <p>Par {src.auteur_pseudo} sur {src.nom_serveur}</p>
                                 </div>
                         ))}
 
@@ -141,7 +144,6 @@ const games = [
                                             class={`game-icon text-6xl cursor-pointer transform transition duration-300`}
                                             data-index={idx}
                                     >
-
                                         <!-- Icone des jeux -->
                                         <Image
                                                 src={g.icon}
