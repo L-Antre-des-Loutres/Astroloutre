@@ -1,5 +1,11 @@
 ---
 const {screenList} = Astro.props;
+
+type Screen = {
+    nom: string;
+    auteur_pseudo: string;
+    path: string;
+}
 ---
 <!-- CSS -->
 <style>
@@ -55,10 +61,10 @@ const {screenList} = Astro.props;
 
 <!-- Contenu de la page -->
 <div class="serveur-screen">
-    {screenList.map((screen) => (
+    {screenList.map((screen: Screen) => (
             <div class="screen-item">
                 <img src={screen.path} alt={screen.nom}/>
-                <p class="author">Par : {screen.auteur || "Inconnu"}</p>
+                <p class="author">Par : {screen.auteur_pseudo || "Inconnu"}</p>
             </div>
     ))}
 </div>
