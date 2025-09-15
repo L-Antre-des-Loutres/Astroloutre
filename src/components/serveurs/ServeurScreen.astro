@@ -25,12 +25,34 @@ const screenList: AstroloutreImages[] = [
         jeu: "",
     },
     {
-        nom: "Screen 3",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1400569728887427112/image.png?ex=68ba9974&is=68b947f4&hm=0dfb12f861e892251cd5ea85afab685eba6ceee27cce1d8af5223f5b52c9f599&",
+        nom: "Screen 2",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
         origine: "",
-        auteur: "",
+        auteur: "Azertor",
         jeu: "",
     },
+    {
+        nom: "Screen 2",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
+        origine: "",
+        auteur: "Azertor",
+        jeu: "",
+    },
+    {
+        nom: "Screen 2",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
+        origine: "",
+        auteur: "Azertor",
+        jeu: "",
+    },
+    {
+        nom: "Screen 2",
+        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
+        origine: "",
+        auteur: "Azertor",
+        jeu: "",
+    },
+
 ];
 ---
 <!-- CSS -->
@@ -39,19 +61,31 @@ const screenList: AstroloutreImages[] = [
         display: grid;
         gap: 1rem;
         padding: 1rem;
-        grid-template-columns: repeat(2, 1fr); /* 2 colonnes égales */
+        grid-template-columns: repeat(4, 1fr); /* 2 colonnes égales */
     }
 
     @media (max-width: 1200px) {
+        .serveur-screen {
+            grid-template-columns: repeat(3, 1fr); /* 2 colonnes égales */
+        }
+    }
+
+    @media (max-width: 750px) {
         .serveur-screen {
             grid-template-columns: 1fr; /* 1 colonne sur petits écrans */
         }
     }
 
     .screen-item {
+        background-color: #f9fafb;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        padding: 0.5rem;
     }
 
     .screen-item img {
@@ -59,7 +93,10 @@ const screenList: AstroloutreImages[] = [
         height: auto;
         object-fit: cover;
         border-radius: 0.5rem;
-        transition: transform 0.2s ease;
+    }
+
+    .screen-item:hover {
+        transform: scale(1.02);
     }
 
     .author {
