@@ -26,6 +26,7 @@ type ServeurType = {
     contenaire: string,
     type: string,
     ip: string
+    screens: ScreenType[]
 };
 
 type PlayTimeType = {
@@ -33,10 +34,34 @@ type PlayTimeType = {
     total_hours: number;
 }
 
+type ScreenType = {
+    id: number,
+    nom: string,
+    origine: number,
+    auteur: string
+    path: string,
+    jeu: string,
+    carrousel: boolean,
+    nom_serveur: string,
+}
+
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 const playTime: number | undefined = Astro.props.playTime;
 const statutServeur: string | undefined = Astro.props.statutServeur;
+
+export async function getScreenList(): Promise<ScreenType[]> {
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/astroloutre/images';
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch images: ${response.status}`);
+    }
+    const json = await response.json();
+    if (!json.success) return [];
+
+    // On retourne la liste des images
+    return json.data ?? [];
+}
 
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
@@ -76,6 +101,9 @@ export async function getStaticPaths() {
 
     const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
 
+    // On récupére la liste des images
+    const screenList = await getScreenList();
+
     return serveurs.map((serveur) => {
         let ip: string;
         if (serveur.jeu === "palworld") {
@@ -89,6 +117,9 @@ export async function getStaticPaths() {
 
         // Associe le playtime au serveur (par ID, nom ou autre clé logique)
         const playTime = playTimes.find(pt => pt.serveur_id === serveur.id);
+
+        // On associe la liste des screen à chaque serveur
+        serveur.screens = screenList.filter(screen => screen.origine === serveur.id);
 
         const statutServeur = serveur?.actif === 1
             ? "Le serveur est actif"
@@ -241,7 +272,7 @@ export async function getStaticPaths() {
             <PlayerList serveurId={serveur.id}/>
 
             <h1>Screenshot des joueurs sur le serveur <span class="golden">{serveur.nom}</span></h1>
-            <ServeurScreen/>
+            <ServeurScreen screenList={serveur.screens}/>
 
         </div>
     )}

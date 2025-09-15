@@ -4,6 +4,7 @@ import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/Banner.astro";
 import Image from "astro/components/Image.astro";
 import Void from "../../../components/Void.astro";
+import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
 
 // Type du serveur
 type ServeurType = {
@@ -21,7 +22,8 @@ type ServeurType = {
     description: string,
     contenaire: string,
     type: string,
-    ip: string
+    ip: string,
+    screens: ScreenType[],
 };
 
 type PlayTimeType = {
@@ -29,11 +31,34 @@ type PlayTimeType = {
     total_hours: number;
 }
 
+type ScreenType = {
+    id: number,
+    nom: string,
+    origine: number,
+    auteur: string
+    path: string,
+    jeu: string,
+    carrousel: boolean,
+    nom_serveur: string,
+}
+
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 const playTime: number | undefined = Astro.props.playTime;
 const statutServeur: string | undefined = Astro.props.statutServeur;
 
+export async function getScreenList(): Promise<ScreenType[]> {
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/astroloutre/images';
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch images: ${response.status}`);
+    }
+    const json = await response.json();
+    if (!json.success) return [];
+
+    // On retourne la liste des images
+    return json.data ?? [];
+}
 
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
@@ -72,6 +97,7 @@ export async function getStaticPaths() {
     if (!jsonPlayTimePerServeur.success) return
 
     const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
+    const screenList: ScreenType[] = await getScreenList();
 
     return serveurs.map((serveur) => {        let ip: string;
         if (serveur.jeu === "Palworld") {
@@ -84,6 +110,8 @@ export async function getStaticPaths() {
         serveur.ip = ip
 
         const playTime = playTimes.find(pt => pt.serveur_id === serveur.id);
+        // On associe la liste des screen à chaque serveur
+        serveur.screens = screenList.filter(screen => screen.origine === serveur.id);
 
         const statutServeur = serveur?.actif === 1
             ? "Le serveur est actif"
@@ -228,7 +256,7 @@ export async function getStaticPaths() {
             <Void />
 
             <h1>Screenshot des joueurs sur le serveur <span class="golden">{serveur.nom}</span></h1>
-            <Void />
+            <ServeurScreen screenList={serveur.screens}/>
 
         </div>
     )}

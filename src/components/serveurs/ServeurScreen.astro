@@ -1,59 +1,5 @@
 ---
-type AstroloutreImages = {
-    id?: number,
-    nom: string,
-    origine: string,
-    auteur: string,
-    path: string,
-    jeu: string,
-};
-
-// TODO : Mettre la récupération via l'API
-const screenList: AstroloutreImages[] = [
-    {
-        nom: "Screen 1",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415049985707475136/2025-09-09_21.02.41.png?ex=68c3c5be&is=68c2743e&hm=60494362991558398f2341dc7591bfa0e2ea78fda0cb9ae74f0d4d90d54c95ab&",
-        origine: "",
-        auteur: "Azertor",
-        jeu: "",
-    },
-    {
-        nom: "Screen 2",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
-        origine: "",
-        auteur: "Azertor",
-        jeu: "",
-    },
-    {
-        nom: "Screen 2",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
-        origine: "",
-        auteur: "Azertor",
-        jeu: "",
-    },
-    {
-        nom: "Screen 2",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
-        origine: "",
-        auteur: "Azertor",
-        jeu: "",
-    },
-    {
-        nom: "Screen 2",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
-        origine: "",
-        auteur: "Azertor",
-        jeu: "",
-    },
-    {
-        nom: "Screen 2",
-        path: "https://cdn.discordapp.com/attachments/1112800068794331137/1415048777383018496/2025-09-09_20.58.02.png?ex=68c3c49e&is=68c2731e&hm=2ba9b3eeb04ab6945e38cc3da63611fa61d659346149817d06756f5d9a5fa64b&",
-        origine: "",
-        auteur: "Azertor",
-        jeu: "",
-    },
-
-];
+const {screenList} = Astro.props;
 ---
 <!-- CSS -->
 <style>
@@ -90,7 +36,7 @@ const screenList: AstroloutreImages[] = [
 
     .screen-item img {
         width: 100%;
-        height: auto;
+        height: 300px; /* Hauteur fixe pour toutes les images */
         object-fit: cover;
         border-radius: 0.5rem;
     }
