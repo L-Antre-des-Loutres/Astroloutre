@@ -1,57 +1,55 @@
 ---
 // Enregistrement du type de tableau Discord ID
-
 import {slugify} from "../joueurs/joueurFormater";
+
 type discordID = {
     DiscordId: string;
 };
 
-// Liste des fondateurs
+type DiscordUserType = {
+    id: number;
+    discord_id: string;
+    tag_discord: string;
+    pseudo_discord: string;
+    avatar_url: string;
+};
+
 const discordFondateur: discordID[] = [
     { DiscordId: "518780404057112580" },
-    { DiscordId: "383676607434457088" }
+    {DiscordId: "383676607434457088"},
 ];
 
-// Liste des investisseur
 const discordInvestisseur: discordID[] = [
     {DiscordId: "556501819468152832"},
     {DiscordId: "432541622065168385"},
     {DiscordId: "442285755113668609"},
-    {DiscordId: "334269770809606154"}
-]
+    {DiscordId: "334269770809606154"},
+];
 
-// Type pour enregistrer notre requête
-type DiscordUserType = {
-    id: number
-    discord_id: string
-    tag_discord: string
-    pseudo_discord: string
-    avatar_url: string
-};
-
-// Récupération des informations des utilisateurs discord
 const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
 const response = await fetch(apiUrl);
 if (!response.ok) {
     throw new Error(`Erreur API joueurs: ${response.status}`);
 }
 const json = await response.json();
-if (!json.success || !Array.isArray(json.data)) return [];
+if (!json.success || !Array.isArray(json.data)) {
+    throw new Error('Données API invalides');
+}
 const utilisateurs: DiscordUserType[] = json.data;
 
-// Récupération des données pour les id Discord Fondateur
-const idsFondateurs = discordFondateur.map(fondateur => fondateur.DiscordId);
-const fondateurs: DiscordUserType[] = utilisateurs.filter(joueur =>
-    idsFondateurs.includes(joueur.discord_id)
-);
+// Filtrer fondateurs
+const idsFondateurs = discordFondateur.map(f => f.DiscordId);
+const fondateurs = utilisateurs.filter(u => idsFondateurs.includes(u.discord_id));
 
-// Recupération des données pour les id Discord Investisseur
-const idsInvestisseurs = discordInvestisseur.map(investisseur => investisseur.DiscordId);
-const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
-    idsInvestisseurs.includes(joueur.discord_id)
-);
+// Filtrer investisseurs
+const idsInvestisseurs = discordInvestisseur.map(i => i.DiscordId);
+const investisseurs = utilisateurs.filter(u => idsInvestisseurs.includes(u.discord_id));
 
+// Vérifie si un utilisateur apparait plusieurs fois si c'est le cas on ne prend que le premier pour les fondateurs et les investisseurs
+const uniqueFondateurs = [...new Set(fondateurs.map(u => u.discord_id))].map(id => fondateurs.find(u => u.discord_id === id)!);
+const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].map(id => investisseurs.find(u => u.discord_id === id)!);
 ---
+
 <!-- Organigramme -->
 <div class="organigramme w-full bg-white p-6">
 
@@ -59,7 +57,7 @@ const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
     <section class="mb-10">
         <h3 class="text-2xl font-semibold text-amber-800 mb-4 text-center">Fondateurs</h3>
         <ul class="flex flex-wrap gap-6 justify-center">
-            {fondateurs.map((user) => (
+            {uniqueFondateurs.map((user) => (
                     <li class="w-[10rem] flex flex-col items-center text-center transition transform hover:scale-105">
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="group w-full">
                             <div class="rounded-xl p-4 transition flex flex-col items-center">
@@ -81,7 +79,7 @@ const investisseurs : DiscordUserType[] = utilisateurs.filter(joueur =>
     <section>
         <h3 class="text-2xl font-semibold text-emerald-600 mb-4 text-center">Nos investisseurs</h3>
         <ul class="flex flex-wrap gap-6 justify-center">
-            {investisseurs.map((user) => (
+            {uniqueInvestisseurs.map((user) => (
                     <li class="w-[10rem] flex flex-col items-center text-center transition transform hover:scale-105">
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="group w-full">
                             <div class=" min-h-50 rounded-xl p-4 transition flex flex-col items-center">
