@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from "react";
-import {slugify} from "../../../formater/JoueurFormater.ts";
-import {formatNumber} from "../../../formater/NumberFormater.ts";
-import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater.ts";
+import {slugify} from "../../../../formater/JoueurFormater.ts";
+import {formatNumber} from "../../../../formater/NumberFormater.ts";
+import {formatMinecraftPlayTime} from "../../../../formater/MinecraftPlayTimeFormater.ts";
 
 /* Types */
 type PlayerStats = Record<string, any>;
