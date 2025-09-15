@@ -1,7 +1,7 @@
 // PlayerStatsTable.tsx
 import React from 'react';
-import {formatNumber} from "../formater/NumberFormater.ts";
-import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
+import {formatNumber} from "../../formater/NumberFormater.ts";
+import {formatMinecraftPlayTime} from "../../formater/MinecraftPlayTimeFormater.ts";
 
 type PlayerStat = {
     playername: string;

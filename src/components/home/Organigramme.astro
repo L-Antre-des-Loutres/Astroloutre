@@ -1,6 +1,6 @@
 ---
 // Enregistrement du type de tableau Discord ID
-import {slugify} from "../formater/JoueurFormater";
+import {slugify} from "../../formater/JoueurFormater";
 
 type discordID = {
     DiscordId: string;
@@ -50,24 +50,157 @@ const uniqueFondateurs = [...new Set(fondateurs.map(u => u.discord_id))].map(id 
 const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].map(id => investisseurs.find(u => u.discord_id === id)!);
 ---
 
+<style>
+    /* Sections */
+    .fondateurs-section, .investisseurs-section {
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .fondateurs-section h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #b45309; /* amber-800 */
+        margin-bottom: 1rem;
+    }
+
+    .investisseurs-section h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #047857; /* emerald-600 */
+        margin-bottom: 1rem;
+    }
+
+    /* Liste */
+    .user-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem; /* espace entre les cases */
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    /* Carte utilisateur */
+    .user-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    .user-card:hover {
+        transform: scale(1.05);
+    }
+
+    /* Lien */
+    .user-link {
+        width: 100%;
+        text-decoration: none;
+    }
+
+    /* Contenu interne */
+    .user-content {
+        border-radius: 0.75rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.2s;
+        min-height: 12.5rem;
+    }
+
+    /* Avatar */
+    .user-avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        margin-bottom: 0.75rem;
+    }
+
+    .fondateur-border {
+        border: 2px solid #b45309;
+        transition: all 0.2s;
+    }
+
+    .fondateur-border:hover {
+        transform: scale(1.05);
+    }
+
+    .investisseur-border {
+        border: 2px solid #047857;
+        transition: all 0.2s;
+    }
+
+    .investisseur-border:hover {
+        transform: scale(1.05);
+    }
+
+    .user-card.investisseur .user-avatar {
+        border-color: #29e694;
+    }
+
+    .user-card:hover .user-avatar {
+        filter: brightness(1.05);
+    }
+
+    /* Pseudo et tag */
+    .user-name {
+        font-weight: 500;
+        color: #1f2937;
+        font-size: 0.875rem;
+        word-break: break-word;
+    }
+
+    .user-tag {
+        font-size: 0.75rem;
+        color: #6b7280;
+        word-break: break-word;
+    }
+
+    /* Responsive : 2 éléments par ligne sur petit écran */
+    @media (max-width: 640px) {
+        .user-card {
+            width: 50%;
+        }
+    }
+
+    /* Responsive : 3 éléments par ligne sur écran moyen */
+    @media (min-width: 641px) and (max-width: 1024px) {
+        .user-card {
+            width: 33.33%;
+        }
+    }
+
+    /* Responsive : 4 éléments par ligne sur grand écran */
+    @media (min-width: 1025px) {
+        .user-card {
+            width: 10rem;
+        }
+    }
+
+</style>
+
 <!-- Organigramme -->
 <div class="organigramme w-full bg-white p-6">
 
     <!-- Section Fondateurs -->
-    <section class="mb-10">
-        <h3 class="text-2xl font-semibold text-amber-800 mb-4 text-center">Fondateurs</h3>
-        <ul class="flex flex-wrap gap-6 justify-center">
+    <section class="fondateurs-section">
+        <h3>Fondateurs</h3>
+        <ul class="user-list">
             {uniqueFondateurs.map((user) => (
-                    <li class="w-[10rem] flex flex-col items-center text-center transition transform hover:scale-105">
-                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group w-full">
-                            <div class="rounded-xl p-4 transition flex flex-col items-center">
+                    <li key={user.tag_discord} className="user-card fondateur">
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
+                            <div class="user-content">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
-                                        class="w-20 h-20 rounded-full mb-3 border-2 border-amber-800 group-hover:brightness-105"
+                                        class="user-avatar fondateur-border"
                                 />
-                                <div class="font-medium text-gray-800 text-sm break-words">{user.pseudo_discord}</div>
-                                <div class="text-xs text-gray-500 break-words">{user.tag_discord}</div>
+                                <div class="user-name">{user.pseudo_discord}</div>
+                                <div class="user-tag">{user.tag_discord}</div>
                             </div>
                         </a>
                     </li>
@@ -76,20 +209,20 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
     </section>
 
     <!-- Section Investisseurs -->
-    <section>
-        <h3 class="text-2xl font-semibold text-emerald-600 mb-4 text-center">Nos investisseurs</h3>
-        <ul class="flex flex-wrap gap-6 justify-center">
+    <section class="investisseurs-section">
+        <h3>Nos investisseurs</h3>
+        <ul class="user-list">
             {uniqueInvestisseurs.map((user) => (
-                    <li class="w-[10rem] flex flex-col items-center text-center transition transform hover:scale-105">
-                        <a href={`/profil/${slugify(user.tag_discord)}`} class="group w-full">
-                            <div class=" min-h-50 rounded-xl p-4 transition flex flex-col items-center">
+                    <li key={user.tag_discord} className="user-card investisseur">
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
+                            <div class="user-content">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
-                                        class="w-20 h-20 rounded-full mb-3 border-2 border-emerald-600 group-hover:brightness-105"
+                                        class="user-avatar investisseur-border"
                                 />
-                                <div class="font-medium text-gray-800 text-sm break-words">{user.pseudo_discord}</div>
-                                <div class="text-xs text-gray-500 break-words">{user.tag_discord}</div>
+                                <div class="user-name">{user.pseudo_discord}</div>
+                                <div class="user-tag">{user.tag_discord}</div>
                             </div>
                         </a>
                     </li>
