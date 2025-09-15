@@ -8,6 +8,8 @@ type CarrouselImage = {
     auteur: string,
     path: string,
     jeu: string,
+    nom_serveur: string,
+    carrousel: boolean,
 };
 
 // Fonction de mélange
@@ -20,8 +22,8 @@ const shuffleArray = (array: any[]) => {
     return shuffled;
 };
 
-let minecraftImages: CarrouselImage[] = [];
-let palworldImages: CarrouselImage[] = []
+let minecraftImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
+let palworldImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = []
 
 try {
     const res = await fetch("https://otterlyapi.antredesloutres.fr/api/astroloutre/images");
@@ -32,25 +34,29 @@ try {
 
     // Filtrer uniquement les images du jeu Minecraft
     minecraftImages = images
-        .filter(img => img.jeu.toLowerCase() === "minecraft")
+        .filter(img => img.jeu.toLowerCase() === "minecraft" && img.carrousel)
         .map(img => ({
             id: img.id,
             nom: img.nom,
             auteur: img.auteur,
             origine: img.origine,
             path: img.path,
-            jeu: img.jeu
+            jeu: img.jeu,
+            nom_serveur: img.nom_serveur,
+            carrousel: img.carrousel,
         }));
 
     palworldImages = images
-        .filter(img => img.jeu.toLowerCase() === "palworld")
+        .filter(img => img.jeu.toLowerCase() === "palworld" && img.carrousel)
         .map(img => ({
             id: img.id,
             nom: img.nom,
             auteur: img.auteur,
             origine: img.origine,
             path: img.path,
-            jeu: img.jeu
+            jeu: img.jeu,
+            nom_serveur: img.nom_serveur,
+            carrousel: img.carrousel,
         }));
 
 } catch (error) {
@@ -113,7 +119,7 @@ const games = [
                                 />
                             <!-- Crédit de l'image -->
                                 <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
-                                    <p>Image par {src.auteur} sur le serveur {src.origine}</p>
+                                    <p>Image par {src.auteur} sur le serveur : {src.nom_serveur}</p>
                                 </div>
                         ))}
 
