@@ -3,10 +3,11 @@ import {formatNumber} from "../../../../formater/NumberFormater.ts";
 import {formatDecimalHours} from "../../../../formater/DecimalHoursFormater.ts";
 import {formatDateWithHours} from "../../../../formater/DateWithHoursFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
+import {discordActivityScore} from "../../../../utils/discordActivityScore.ts";
 
 
 /* Types */
-type UserStats = Record<string, any>;
+type UserStats = Record<string, any>; // TODO : VIRER CE ANY
 
 /* Props attendues */
 type Props = {
@@ -21,6 +22,7 @@ const userStats: Record<string, string> = {
     last_activity: "Dernière activité",
     nb_message: "Messages envoyés",
     vocal_time: "Temps en vocal",
+    activity_score: "Score d'activité"
 };
 
 const columnWidths: Record<string, string> = {
@@ -29,14 +31,15 @@ const columnWidths: Record<string, string> = {
     first_activity: "150px",
     last_activity: "150px",
     nb_message: "150px",
-    vocal_time: "150px"
+    vocal_time: "150px",
+    activity_score: "150px"
 };
 
 const UserClassement: React.FC<Props> = ({statsAllServer}) => {
 
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
-        key: "nb_message",
+        key: "activity_score",
         direction: "desc",
     });
 
@@ -44,6 +47,11 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
     // tri des joueurs du serveur sélectionné 
     const sortedPlayers = useMemo(() => {
         const players = Array.isArray(statsAllServer) ? statsAllServer : [];
+
+        // Calcul du score d'activité pour chaque joueur
+        players.map(async (player) => {
+            player.activity_score = await discordActivityScore(player.nb_message || 0, player.vocal_time || 0);
+        });
 
         if (!sortConfig) return players;
 
@@ -57,7 +65,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                 bVal = bVal ? new Date(bVal).getTime() : 0;
             }
             // Nombres
-            else if (["nb_message", "vocal_time"].includes(sortConfig.key)) {
+            else if (["nb_message", "vocal_time", "activity_score"].includes(sortConfig.key)) {
                 aVal = Number(aVal) || 0;
                 bVal = Number(bVal) || 0;
             }
@@ -155,6 +163,8 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                                 return <div>{formatDecimalHours(player[key] || 0)}</div>;
                                             } else if (key === "nb_message") {
                                                 return <div>{formatNumber(player[key] || 0)}</div>;
+                                            } else if (key === "activity_score") {
+                                                return <div>{formatNumber(player[key] || 0)}</div>
                                             } else {
                                                 return player[key] ?? "-";
                                             }
