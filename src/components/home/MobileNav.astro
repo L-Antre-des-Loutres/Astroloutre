@@ -1,0 +1,53 @@
+---
+
+---
+<style>
+    .nav-menu {
+        display: flex;
+        justify-content: center; /* centre les éléments horizontalement */
+        text-align: center; /* centre le texte à l'intérieur des boutons */
+        gap: 1rem; /* espace entre plusieurs boutons */
+        /* Tu peux ajouter une hauteur ou un padding si tu veux */
+        padding: 1rem 0;
+        /* Si tu veux un fond ou un flou comme "backdrop-blur-md", ça nécessite du support */
+        background-color: #222;
+        backdrop-filter: blur(8px); /* flou d'arrière-plan */
+        -webkit-backdrop-filter: blur(8px); /* support Safari */
+        flex-wrap: wrap; /* permet le retour à la ligne */
+    }
+
+    .nav-button {
+        width: 90%;
+        color: white;
+        border: 1.5px solid rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        font-size: 1.125rem; /* environ 18px, comme text-lg */
+        border-radius: 0.5rem; /* arrondi des coins */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+    }
+
+    .nav-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Rendre invisible le menu du grand écran */
+    @media (min-width: 768px) {
+        .nav-menu {
+            display: none;
+        }
+    }
+</style>
+
+
+<div class="nav-menu">
+    <a href="./classements/discord" class="nav-button">
+        Classement Discord
+    </a>
+    <a href="./classements/minecraft" class="nav-button">
+        Classement Minecraft
+    </a>
+</div>
