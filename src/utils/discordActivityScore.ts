@@ -26,7 +26,7 @@ export async function discordActivityScore(nbMessage: number, tmpsVocal: number)
     const msgPoints = calculMsgPoints(nbMessage);
     const vocPoints = calculVocPoints(tmpsVocal);
 
-    return msgPoints + vocPoints;
+    return Math.round(msgPoints + vocPoints)
 }
 
 function calculMsgPoints(msgValeur: number): number {
