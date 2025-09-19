@@ -1,6 +1,6 @@
 export function formatDecimalHours(hours: number | null): string {
     if (hours === null || isNaN(hours)) {
-        return "0";
+        return "Aucun temps";
     }
 
     const wholeHours = Math.floor(hours);
@@ -17,5 +17,19 @@ export function formatDecimalHours(hours: number | null): string {
     const resultHours = Math.floor(totalMinutes / 60);
     const resultMinutes = totalMinutes % 60;
 
-    return `${resultHours}h et ${resultMinutes.toString().padStart(2, '0')} minutes`;
+    let hoursFormmat = ""
+    if (resultHours > 1) {
+        hoursFormmat = "heures"
+    } else {
+        hoursFormmat = "heure"
+    }
+
+    let minutesFormmat = ""
+    if (resultMinutes > 1) {
+        minutesFormmat = "minutes"
+    } else {
+        minutesFormmat = "minute"
+    }
+
+    return `${resultHours} ${hoursFormmat} ${resultMinutes.toString().padStart(2, '0')} ${minutesFormmat}`;
 }

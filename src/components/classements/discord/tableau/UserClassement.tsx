@@ -160,11 +160,11 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                             } else if (key === "last_activity") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
                                             } else if (key === "vocal_time") {
-                                                return <div>{formatDecimalHours(player[key] || 0)}</div>;
+                                                return <div>{!player[key] ? "Aucun temps" : formatDecimalHours(player[key])}</div>;
                                             } else if (key === "nb_message") {
-                                                return <div>{formatNumber(player[key] || 0)}</div>;
+                                                return <div>{!player[key] ? "Aucun message" : `${formatNumber(player[key])} ${player[key] > 1 ? "messages" : "message"}`}</div>;
                                             } else if (key === "activity_score") {
-                                                return <div>{formatNumber(player[key] || 0)}</div>
+                                                return <div>{!player[key] ? "Aucun score d'activité" : `${formatNumber(player[key])} ${player[key] > 1 ? "points" : "point"}`}</div>
                                             } else {
                                                 return player[key] ?? "-";
                                             }
