@@ -11,19 +11,32 @@
  */
 
 export async function discordActivityScore(nbMessage: number, tmpsVocal: number): Promise<number> {
-    let saturationVoc = 0.1;
-    let nbPoint = 0;
 
+    // Vérification des valeurs du nombre de messages
     if (!nbMessage) {
         nbMessage = 0;
     }
 
+    // Vérification des valeurs de temps vocal
     if (!tmpsVocal) {
         tmpsVocal = 0;
     }
 
     // Formule de point pour les messages
-    nbPoint = (nbMessage * 0.75) + (10 * (saturationVoc * tmpsVocal))
+    const msgPoints = calculMsgPoints(nbMessage);
+    const vocPoints = calculVocPoints(tmpsVocal);
 
-    return nbPoint;
+    return msgPoints + vocPoints;
+}
+
+function calculMsgPoints(msgValeur: number): number {
+    const echelle = 0.45;
+    const saturation = 0.9;
+    return echelle * Math.pow(msgValeur, saturation);
+}
+
+function calculVocPoints(nbHeures: number): number {
+    const echelle = 2.5;
+    const saturation = 0.9;
+    return echelle * Math.pow(nbHeures, saturation);
 }
