@@ -3,14 +3,14 @@ import Organigramme from "./Organigramme.astro";
 import TexteQuiSommesNous from "./TexteQuiSommesNous.astro";
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8">
     <!-- Colonne 1 : Organigramme -->
-    <section class="p-2">
-        <Organigramme />
+    <section class="px-2">
+        <Organigramme/>
     </section>
 
     <!-- Colonne 2 : Qui sommes-nous -->
-    <section class="p-6">
+    <section class="md:p-6 px-6 py-4">
         <TexteQuiSommesNous/>
     </section>
 </div>
