@@ -14,24 +14,103 @@ if (apiUrl) {
 }
 ---
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pt-4 mx-4 pb-10">
-    {data.map((item : ServeurType) => (
-            <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="block">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-102 transition-transform">
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem 1rem 2.5rem;
+        margin: 0 1rem;
+    }
 
-                <div class="h-65 w-full bg-gray-200">
-                    {item.image && (
-                            <img src={item.image} alt={item.nom ?? 'Image'} class="w-full h-full object-cover" />
-                    )}
+    @media (min-width: 950px) {
+        .grid-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1500px) {
+        .grid-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+
+    .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card {
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+    }
+
+    .card-image {
+        width: 100%;
+        height: 260px; /* équivalent de h-65 */
+        background: #e5e7eb; /* gray-200 */
+    }
+
+    .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-content {
+        padding: 1rem;
+        min-height: 160px;
+        max-height: 160px;
+        overflow: hidden;
+    }
+
+    .card-content h3 {
+        font-size: 1.125rem; /* text-lg */
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-content .description {
+        font-size: 0.875rem; /* text-sm */
+        color: #4b5563; /* gray-600 */
+        margin-bottom: 0.5rem;
+    }
+
+    .card-content .infos {
+        font-size: 1rem; /* text-md */
+        color: #4b5563;
+    }
+</style>
+
+<div class="grid-container">
+    {data.map((item: ServeurType) => (
+            <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
+                <div class="card">
+                    <div class="card-image">
+                        {item.image && (
+                                <img src={item.image} alt={item.nom ?? 'Image'}/>
+                        )}
+                    </div>
+                    <div class="card-content">
+                        <h3>{item.nom ?? 'Sans titre'}</h3>
+                        <p class="description">{item.description ?? 'Aucune description.'}</p>
+                        <p class="infos">
+                            🛠️ Version : {item.version}
+                            🌐 Ip
+                            : {jeu === "palworld" ? "antredesloutres.fr:8211" : item.type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}
+                        </p>
+                    </div>
                 </div>
-                <div class="p-4 min-h-40 max-h-40">
-                    <h3 class="text-lg font-semibold">{item.nom ?? 'Sans titre'}</h3>
-                    <p class="text-sm text-gray-600">{item.description ?? 'Aucune description.'}</p>
-                    <p class="text-md text-gray-600">🛠️ Version : {item.version}
-                        🌐 Ip : {jeu === "palworld" ? "antredesloutres.fr:8211" : item.type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr"}
-                    </p>
-                </div>
-            </div>
             </a>
     ))}
 </div>
+
