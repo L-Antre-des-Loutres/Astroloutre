@@ -16,7 +16,7 @@ l'adresse [antredesloutres.fr](antredesloutres.fr)
 Cloner le projet :
 
 ``` bash
-git clone https://github.com/L-Antre-des-Loutres/Astroloutre
+[git clone https://github.com/L-Antre-des-Loutres/Astroloutre](https://github.com/L-Antre-des-Loutres/Reactisoutre)
 ```
 
 ### Commandes disponibles sur ce projet :
