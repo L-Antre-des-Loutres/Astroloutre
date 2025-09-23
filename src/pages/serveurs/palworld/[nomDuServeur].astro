@@ -5,6 +5,8 @@ import Banner from "../../../components/Banner.astro";
 import Image from "astro/components/Image.astro";
 import Void from "../../../components/Void.astro";
 import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
+import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
+import {formatDecimalHours} from "../../../formater/DecimalHoursFormater";
 
 // Type du serveur
 type ServeurType = {
@@ -83,20 +85,30 @@ export async function getStaticPaths() {
         throw new Error("Serveurs is not an array");
     }
 
-    // On récupère le temps de jeu pour chaque serveur
-    const apiUrlPlayTimePerServeur = "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime-per-server"
-    const responsePlayTimePerServeur = await fetch(apiUrlPlayTimePerServeur);
+    // Récupération des statistiques de Palworld
+    const apiUrlPlayTime = "https://otterlyapi.antredesloutres.fr/api/palworld/stats";
+    const responsePlayTime = await fetch(apiUrlPlayTime);
+    if (!responsePlayTime.ok) throw new Error(`Failed to fetch playtime: ${responsePlayTime.status}`);
+    const jsonPlayTime = await responsePlayTime.json();
+    if (!jsonPlayTime.success) return;
 
-    if (!responsePlayTimePerServeur.ok) {
-        throw new Error(`Failed to fetch servers: ${response.status}`);
-    }
+    // Calcul du temps de jeu total par serveur
+    const playTimes: PlayTimeType[] = [];
+    const rawData: typeof jsonPlayTime.data = jsonPlayTime.data;
 
-    const jsonPlayTimePerServeur = await responsePlayTimePerServeur.json();
+    // On parcourt chaque enregistrement et on ajoute le temps de jeu au serveur correspondant
+    rawData.forEach(record => {
+        const existing = playTimes.find(pt => pt.serveur_id === record.serveur_id);
+        if (existing) {
+            existing.total_hours += record.tmps_jeux; // addition du temps de jeu
+        } else {
+            playTimes.push({
+                serveur_id: record.serveur_id,
+                total_hours: record.tmps_jeux
+            });
+        }
+    });
 
-    // On vérifie si la requête est un succès
-    if (!jsonPlayTimePerServeur.success) return
-
-    const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
     const screenList: ScreenType[] = await getScreenList();
 
     return serveurs.map((serveur) => {        let ip: string;
@@ -126,7 +138,7 @@ export async function getStaticPaths() {
             props: {
                 serveur,
                 statutServeur,
-                playTime: playTime ? playTime.total_hours : undefined,
+                playTime: playTime ? playTime.total_hours : "0h",
             },
         };
     });
@@ -213,6 +225,15 @@ export async function getStaticPaths() {
                             {serveur.modpack}
                         </a>
                     </p>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" style={{color: serveur.embed_color}}
+                             class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Heures de jeux :
+                    </div>
+                    <p>{formatDecimalHours(playTime)} de jeux sur ce serveur</p>
 
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
