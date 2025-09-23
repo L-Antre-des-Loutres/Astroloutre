@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import {formatNumber} from "../../../../formater/NumberFormater.ts";
-import {formatDecimalHours} from "../../../../formater/DecimalHoursFormater.ts";
+import {formatDecimalHoursToString} from "../../../../formater/DecimalHoursFormater.ts";
 import {formatDateWithHours} from "../../../../formater/DateWithHoursFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
 import {discordActivityScore} from "../../../../utils/discordActivityScore.ts";
@@ -160,7 +160,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                             } else if (key === "last_activity") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
                                             } else if (key === "vocal_time") {
-                                                return <div>{!player[key] ? "Aucun temps" : formatDecimalHours(player[key])}</div>;
+                                                return <div>{!player[key] ? "Aucun temps" : formatDecimalHoursToString(player[key])}</div>;
                                             } else if (key === "nb_message") {
                                                 return <div>{!player[key] ? "Aucun message" : `${formatNumber(player[key])} ${player[key] > 1 ? "messages" : "message"}`}</div>;
                                             } else if (key === "activity_score") {

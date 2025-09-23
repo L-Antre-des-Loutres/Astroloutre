@@ -6,7 +6,7 @@ import Image from "astro/components/Image.astro";
 import Void from "../../../components/Void.astro";
 import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
-import {formatDecimalHours} from "../../../formater/DecimalHoursFormater";
+import {formatDecimalHoursToString} from "../../../formater/DecimalHoursFormater";
 
 // Type du serveur
 type ServeurType = {
@@ -233,7 +233,7 @@ export async function getStaticPaths() {
                         </svg>
                         Heures de jeux :
                     </div>
-                    <p>{formatDecimalHours(playTime)} de jeux sur ce serveur</p>
+                    <p>{formatDecimalHoursToString(playTime)} de jeux sur ce serveur</p>
 
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
