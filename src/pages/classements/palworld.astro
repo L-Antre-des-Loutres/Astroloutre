@@ -1,0 +1,49 @@
+---
+import UserClassement from "../../components/classements/discord/tableau/UserClassement.astro";
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/Banner.astro";
+import AreaTitle from "../../components/AreaTitle.astro";
+import Title2 from "../../assets/titles/top-joueurs.png";
+import Title1 from "../../assets/titles/classement-joueurs.png";
+import PlayerClassement from "../../components/classements/palworld/tableau/PlayerClassement.astro"
+---
+<Layout>
+    <Banner bannerUrl=`/panoramas/palworld/palworld_usine.webp`/>
+    <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
+    <AreaTitle titleImage={Title1} backgroundColor="#333"/>
+    <div class="classement-container">
+        <PlayerClassement jeu="palworld"/>
+    </div>
+</Layout>
+
+<style>
+    .page-title {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .page-title-bg {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+        background-color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .page-title-bg {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    }
+</style>

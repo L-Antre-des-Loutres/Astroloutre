@@ -10,37 +10,32 @@ export type Server = {
 };
 
 export type PlayerStats = {
-    playername: string;
-    uuid: string;
+    serveur_playername: string;
+    compte_id: string;
     tmps_jeu: number;
     nb_mort: number;
     nb_kills: number;
-    nb_playerkill: number;
-    nb_blocs_detr: number;
-    nb_blocs_pose: number;
-    dist_total: number;
-    dist_pieds: number;
-    dist_elytres: number;
-    dist_vol: number;
+    nb_pal_catch: number;
+    nb_boss_kill: number;
+    nb_tower_win: number;
 };
 
 // --- Helpers ---
 export const makeServersMap = (list: Server[]) =>
-    Object.fromEntries(list.map(s => [s.id.toString(), { nom: s.nom, description: s.description }]));
+    Object.fromEntries(list.map(s => [s.id.toString(), {nom: s.nom, description: s.description}]));
 
 export const aggregatePlayers = (raw: PlayerStats[]) => {
     const map = new Map<string, PlayerStats>();
     const numericKeys: (keyof PlayerStats)[] = [
-        "tmps_jeu","nb_mort","nb_kills","nb_playerkill","nb_blocs_detr",
-        "nb_blocs_pose","dist_total","dist_pieds","dist_elytres","dist_vol"
+        "tmps_jeu", "nb_mort", "nb_kills", "nb_boss_kill", "nb_tower_win"
     ];
 
     raw.forEach(p => {
-        const key = String(p.uuid ?? p.playername ?? "");
+        const key = String(p.compte_id ?? p.serveur_playername ?? "");
         const existing = map.get(key);
 
         if (!existing) {
-            map.set(key, { ...p });
+            map.set(key, {...p});
             return;
         }
 
@@ -48,8 +43,8 @@ export const aggregatePlayers = (raw: PlayerStats[]) => {
             existing[k] = Number(existing[k] ?? 0) + Number(p[k] ?? 0);
         });
 
-        if (!existing.playername && p.playername) existing.playername = p.playername;
-        if (!existing.uuid && p.uuid) existing.uuid = p.uuid;
+        if (!existing.serveur_playername && p.serveur_playername) existing.serveur_playername = p.serveur_playername;
+        if (!existing.compte_id && p.compte_id) existing.compte_id = p.compte_id;
 
         map.set(key, existing);
     });
