@@ -1,0 +1,23 @@
+---
+import {getCollection} from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/Banner.astro";
+
+const articles = await getCollection('blog');
+
+// Tri par date de publication décroissante
+articles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+<Layout title="Projets">
+    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
+    <h1>Projets</h1>
+    <ul>
+        {articles.map((article) => (
+                <li>
+                    <a href={`/projets/${article.slug}`}>{article.data.title}</a>
+                    <p>{article.data.description}</p>
+                    <small>{article.data.pubDate.toDateString()}</small>
+                </li>
+        ))}
+    </ul>
+</Layout>
