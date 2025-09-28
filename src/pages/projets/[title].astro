@@ -69,9 +69,7 @@ const {Content} = await render(projet);
 
     .project-content {
         background: #fff;
-        padding: 2rem;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         line-height: 1.8;
     }
 
@@ -99,4 +97,35 @@ const {Content} = await render(projet);
     .project-content :global(a:hover) {
         text-decoration: underline;
     }
+
+    .project-content :global(h1) {
+        font-size: 2rem;
+        margin: 2.5rem 0 1.5rem;
+        color: #1a1a1a;
+        font-weight: bold;
+    }
+
+    .project-content :global(h2) {
+        font-size: 1.75rem;
+        margin: 2rem 0 1rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .project-content :global(h3) {
+        font-size: 1.5rem;
+        margin: 1.5rem 0 1rem;
+        color: #34495e;
+        font-weight: 500;
+    }
+
+    .project-content :global(h4),
+    .project-content :global(h5),
+    .project-content :global(h6) {
+        font-size: 1.25rem;
+        margin: 1rem 0 0.75rem;
+        color: #555;
+        font-weight: 500;
+    }
+
 </style>
