@@ -1,0 +1,32 @@
+---
+import {getCollection, render} from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/Banner.astro";
+import {slugify} from "../../formater/JoueurFormater";
+
+// 1. Génère un nouveau chemin pour chaque projet
+export async function getStaticPaths() {
+    const projets = await getCollection("blog");
+
+    return projets.map((projet) => ({
+        params: {title: slugify(projet.data.title)},
+        props: {projet},
+    }));
+}
+
+// 2. Récupère les props passées dans getStaticPaths
+const {projet} = Astro.props;
+const {Content} = await render(projet);
+---
+
+<Layout title={projet.data.title}>
+    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
+
+    <h1>{projet.data.title}</h1>
+    <p>{projet.data.description}</p>
+    <small>{projet.data.pubDate.toDateString()}</small>
+
+    <article>
+        <Content/>
+    </article>
+</Layout>

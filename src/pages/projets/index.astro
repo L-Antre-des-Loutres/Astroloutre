@@ -2,6 +2,7 @@
 import {getCollection} from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
+import {slugify} from "../../formater/JoueurFormater";
 
 const articles = await getCollection('blog');
 
@@ -14,7 +15,7 @@ articles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
     <ul>
         {articles.map((article) => (
                 <li>
-                    <a href={`/projets/${article.slug}`}>{article.data.title}</a>
+                    <a href={`/projets/${slugify(article.data.title)}`}>{article.data.title}</a>
                     <p>{article.data.description}</p>
                     <small>{article.data.pubDate.toDateString()}</small>
                 </li>
