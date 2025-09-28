@@ -18,15 +18,85 @@ export async function getStaticPaths() {
 const {projet} = Astro.props;
 const {Content} = await render(projet);
 ---
-
 <Layout title={projet.data.title}>
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
 
-    <h1>{projet.data.title}</h1>
-    <p>{projet.data.description}</p>
-    <small>{projet.data.pubDate.toDateString()}</small>
+    <div class="project-container">
+        <h1 class="project-title">{projet.data.title}</h1>
+        <p class="project-description">{projet.data.description}</p>
+        <small class="project-date">{projet.data.pubDate.toDateString()}</small>
+        <h4 class="project-tags">Tags : {projet.data.tags}</h4>
 
-    <article>
-        <Content/>
-    </article>
+        <article class="project-content">
+            <Content/>
+        </article>
+    </div>
 </Layout>
+
+<style>
+    .project-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .project-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+    }
+
+    .project-description {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #4a4a4a;
+        margin-bottom: 1rem;
+    }
+
+    .project-date {
+        display: block;
+        color: #666;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    .project-tags {
+        color: #007acc;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    .project-content {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        line-height: 1.8;
+    }
+
+    .project-content :global(h2) {
+        color: #2c3e50;
+        margin: 2rem 0 1rem;
+    }
+
+    .project-content :global(p) {
+        margin-bottom: 1.5rem;
+    }
+
+    .project-content :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+        margin: 1.5rem 0;
+    }
+
+    .project-content :global(a) {
+        color: #007acc;
+        text-decoration: none;
+    }
+
+    .project-content :global(a:hover) {
+        text-decoration: underline;
+    }
+</style>

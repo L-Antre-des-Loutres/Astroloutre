@@ -1,18 +1,32 @@
 ---
-import {getCollection} from 'astro:content';
-import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
-import {slugify} from "../../formater/JoueurFormater";
+import {getCollection} from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Banner from "../../../components/Banner.astro";
+import {slugify} from "../../../formater/JoueurFormater";
 
-const tag = Astro.url.searchParams.get('tag');
-const articles = await getCollection('blog');
+export async function getStaticPaths() {
+    const articles = await getCollection("blog");
 
-// Tri par date de publication décroissante et filtre par tag si un tag est spécifié
-const filteredArticles = tag
-    ? articles.filter(article => article.data.tags?.includes(tag))
-    : articles;
-filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+    // Récupère la liste de tous les tags uniques
+    const tags = new Set(
+        articles.flatMap((article) => article.data.tags ?? [])
+    );
+
+    return Array.from(tags).map((tag) => ({
+        params: {tag},
+        props: {tag},
+    }));
+}
+
+const {tag} = Astro.props;
+const articles = await getCollection("blog");
+
+// Filtre par le tag donné dans l'URL
+const filteredArticles = articles
+    .filter((article) => article.data.tags?.includes(tag))
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
+
 <Layout title="Projets">
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
     <h1 class="page-title">Nos Projets</h1>
