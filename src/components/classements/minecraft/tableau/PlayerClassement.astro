@@ -35,7 +35,10 @@ const serversListPartner        = makeServersMap(partnerServers);
 
 // Fetch des statistiques de joueurs depuis l’API, on stocke le tableau de résultats bruts dans "playersRaw".
 const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/minimum");
-const playersRaw = (await resStats.json()).data ?? [];
+let playersRaw = (await resStats.json()).data ?? [];
+
+// Supression des statistiques de Arisoutre sur le serveur 1
+playersRaw = playersRaw.filter(p => !(p.playername === "Arisoutre" && p.serveur_id === 1));
 
 // Regroupement des statistiques par serveur
 const groupedStats: Record<string, PlayerStats[]> = {};
