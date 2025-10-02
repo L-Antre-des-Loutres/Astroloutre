@@ -5,10 +5,12 @@ import Banner from "../../components/Banner.astro";
 import AreaTitle from "../../components/AreaTitle.astro";
 import Title2 from "../../assets/titles/top-joueurs.png";
 import Title1 from "../../assets/titles/classement-joueurs.png";
+import Void from "../../components/Void.astro";
 ---
 <Layout>
     <Banner bannerUrl=`/panoramas/minecraft/Tortilune.webp`/>
     <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
+    <Void/>
     <AreaTitle titleImage={Title1} backgroundColor="#333"/>
     <div class="classement-container">
         <UserClassement/>
