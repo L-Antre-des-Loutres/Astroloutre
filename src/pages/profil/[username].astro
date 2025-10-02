@@ -89,10 +89,11 @@ if (joueur && joueur.pseudo_discord && voyelles.includes(joueur.pseudo_discord[0
 
 let profilLink
 let profilText
-if (joueur.discord_id !== null) {
+if (!(joueur) || joueur.discord_id !== null) {
     // Le compte joueur est lié à un profil discord
-    // TODO : Le récupéré pour rediriger correctement vers le profil discord
-    profilLink = `/profil/${joueur.discord_id}`
+    if (joueur) {
+        profilLink = `/profil/${joueur.discord_id}`
+    }
     profilText = "Profil Discord"
 } else {
     profilLink = `#`
@@ -101,8 +102,10 @@ if (joueur.discord_id !== null) {
 
 // Vérifie le nombre de message des joueurs
 let messageFormat = "message"
-if (joueur.nb_message === null) {
-    joueur.nb_message = 0
+if (!(joueur) || joueur.nb_message === null) {
+    if (joueur) {
+        joueur.nb_message = 0
+    }
 } else if (joueur.nb_message > 1) {
     messageFormat = "messages"
 }
@@ -110,9 +113,9 @@ if (joueur.nb_message === null) {
 ---
 
 <Layout
-        ogImage={`${joueur.avatar_url}`}
-        ogTitle={`Profil Discord de ${joueur.pseudo_discord}`}
-        ogDescription={`Voici le profil Discord de ${joueur.pseudo_discord} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
+        ogImage={joueur?.avatar_url}
+        ogTitle={`Profil Discord de ${joueur?.pseudo_discord}`}
+        ogDescription={`Voici le profil Discord de ${joueur?.pseudo_discord} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
 >
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
@@ -352,7 +355,7 @@ if (joueur.nb_message === null) {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background-color: #white;
+            background-color: white;
             color: #000;
             padding: 0.5rem 1rem;
             margin: 0.25rem;
