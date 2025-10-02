@@ -258,6 +258,8 @@ const PlayerClassement: React.FC<Props> = ({
                                                 );
                                             } else if (key === "tmps_jeu") {
                                                 return <div>{formatDecimalHoursToString(player[key])}</div>;
+                                            } else if (key === "nb_mort" || key === "nb_kills" || key === "nb_pal_catch" || key === "nb_boss_kill" || key === "nb_tower_win") {
+                                                return <div>Pas encore implémenté</div>;
                                             } else {
                                                 return player[key] ?? "-";
                                             }
