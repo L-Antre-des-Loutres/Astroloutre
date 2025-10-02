@@ -90,20 +90,20 @@ if (joueur && joueur.playername && voyelles.includes(joueur.playername[0].toLowe
 
 let profilLink
 let profilText
-if (joueur.utilisateur_id !== null) {
+if (!joueur || !joueur.utilisateur_id) {
+    profilLink = "#"
+    profilText = "Lier ce profil"
+} else {
     // Le compte joueur est lié à un profil discord
     profilLink = `/profil/${joueur.tag_discord}`
     profilText = "Profil Discord"
-} else {
-    profilLink = `#`
-    profilText = "Lier ce profil"
 }
 
 
 let playtime = 0;
 
 try {
-    const totalRes = await fetch(`https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats-uid/${joueur.compte_id}`);
+    const totalRes = await fetch(`https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats-uid/${joueur?.compte_id}`);
     const totalJson = await totalRes.json();
     const totalData = totalJson?.data?.[0];
 
@@ -118,9 +118,9 @@ try {
 ---
 
 <Layout
-        ogImage={`https://mc-heads.net/avatar/${joueur.playername}/64`}
-        ogTitle={`Profil de ${joueur.playername}`}
-        ogDescription={`Voici le profil du joueur Minecraft ${joueur.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
+        ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`}
+        ogTitle={`Profil de ${joueur?.playername}`}
+        ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
 >
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
     <div class="page-title">
@@ -215,7 +215,7 @@ try {
                         <span>Copier UUID</span>
                     </button>
                     <a class="button-namemc" href={`https://fr.namemc.com/profile/${joueur.playername}`} target="_blank" rel="noopener noreferrer">
-                        <img src="https://s.namemc.com/img/favicon-30.png" alt="NameMC" />
+                        <img src="/icons/namemc.png" alt="NameMC"/>
                         Profil NameMC
                     </a>
                     {profilLink !== "#" && (
