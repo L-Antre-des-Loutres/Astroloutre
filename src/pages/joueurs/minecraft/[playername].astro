@@ -10,6 +10,7 @@ import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/BadgeList.astro";
 import AreaTitle from "../../../components/AreaTitle.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
+import PokemonTeams from "../../../components/joueurs/PokemonTeams.astro";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
@@ -238,6 +239,7 @@ try {
                 {' '} obtenus
             </h1>
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
+            <PokemonTeams uuid={joueur.compte_id}/>
 
         </div>
     )}

@@ -1,0 +1,124 @@
+---
+import {formatPokemonName} from "../../formater/PokemonNameFormater.ts";
+
+// Type PokemonTeam
+type PokemonTeam = {
+    id: number,
+    serveur_id: number,
+    joueur_uuid: string,
+    pkmn1: string,
+    pkmn1_form: string,
+    pkmn2: string,
+    pkmn2_form: string,
+    pkmn3: string,
+    pkmn3_form: string,
+    pkmn4: string,
+    pkmn4_form: string,
+    pkmn5: string,
+    pkmn5_form: string,
+    pkmn6: string,
+    pkmn6_form: string,
+}
+
+const {uuid} = Astro.props;
+
+// Récupération des données des équipes Pokémon  
+const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`);
+const json = await res.json();
+
+if (!json.success) {
+    throw new Error('Failed to fetch Pokemon teams data');
+}
+
+const pokemonTeams: PokemonTeam[] = json.data ?? [];
+---
+{pokemonTeams.length > 0 ? (
+<div class="grid-container">
+    {pokemonTeams.map((team) => (
+                    <div class="card">
+                        <div class="pokemon-grid">
+                            {[team.pkmn1, team.pkmn2, team.pkmn3, team.pkmn4, team.pkmn5, team.pkmn6].map((pokemon) => (
+                                    <div class="card-image">
+                                        <img
+                                                src={`https://play.pokemonshowdown.com/sprites/home/${formatPokemonName(pokemon)}.png`}
+                                                alt={formatPokemonName(pokemon)}
+                                                class="pokemon-image"
+                                        />
+                                    </div>
+                            ))}
+                        </div>
+                    </div>
+        )
+    )}
+</div>
+    ) : (
+<p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
+    )}
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    .card {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .pokemon-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    .card-image {
+        background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pokemon-image {
+        width: 100%;
+        height: auto;
+        max-width: 100px;
+        object-fit: contain;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover .pokemon-image {
+        transform: scale(1.1);
+    }
+
+    .no-team {
+        padding: 5em;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .pokemon-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
