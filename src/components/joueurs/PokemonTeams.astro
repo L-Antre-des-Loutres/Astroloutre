@@ -75,97 +75,75 @@ try {
     ) : (
 <p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
     )}
+
 <style>
     .grid-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
+        gap: 2.5rem;
+        padding: 2.5rem;
+        max-width: 1200px;
         margin: 0 auto;
-        gap: 1.5rem;
-        padding: 1rem;
     }
 
     .card {
-        background: #333;
+        background: white;
         border-radius: 1.2rem;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         overflow: hidden;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        transition: transform 0.2s ease-in-out;
         width: 100%;
     }
 
     .card:hover {
-        transform: scale(1.01);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
+        transform: translateY(-8px);
     }
 
     .server-title {
         text-align: center;
         padding: 1rem;
-        background: #222;
+        background: #f8f8f8;
         margin: 0;
+        border-bottom: 2px solid #eee;
         font-size: 1.5rem;
-        font-weight: bold;
-        background: linear-gradient(90deg, white, #7d4202);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        color: #333;
     }
 
     .pokemon-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.8rem;
         padding: 1.5rem;
     }
 
     .card-image {
-        background: linear-gradient(to bottom right, #fdfdfd, #ececec);
-        border-radius: 1rem;
+        background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
         padding: 1.2rem;
         display: flex;
         justify-content: center;
         align-items: center;
         aspect-ratio: 1;
-        transition: box-shadow 0.3s ease;
-    }
-
-    .card-image:hover {
-        box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
     }
 
     .pokemon-image {
         width: 100%;
         height: 100%;
-        max-width: 140px;
+        max-width: 150px;
         object-fit: contain;
-        transition: transform 0.25s ease-in-out;
-    }
-
-    .pokemon-image:hover {
-        transform: scale(1.1) rotate(3deg);
+        transition: transform 0.2s ease-in-out;
     }
 
     .no-team {
         padding: 6em;
         text-align: center;
-        color: #888;
+        color: #666;
         font-size: 1.4rem;
         font-style: italic;
     }
 
-    @media (min-width: 768px) {
-        .pokemon-grid {
-            grid-template-columns: repeat(6, 1fr);
-        }
-    }
-
-    @media (max-width: 1200px) {
+    @media (max-width: 1024px) {
         .grid-container {
             padding: 1.5rem;
-        }
-        .pokemon-grid {
-            grid-template-columns: repeat(3, 1fr);
         }
     }
 
@@ -175,9 +153,11 @@ try {
             gap: 0.6rem;
             padding: 1rem;
         }
+
         .card-image {
             padding: 0.8rem;
         }
+
         .server-title {
             font-size: 1.2rem;
             padding: 0.8rem;
@@ -188,13 +168,16 @@ try {
         .grid-container {
             padding: 1rem;
         }
+
         .pokemon-image {
             max-width: 120px;
         }
+
         .no-team {
             padding: 3em;
             font-size: 1.2rem;
         }
+
         .server-title {
             font-size: 1rem;
             padding: 0.6rem;
