@@ -75,49 +75,47 @@ try {
     ) : (
 <p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
     )}
-
 <style>
     .grid-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: 2.5rem;
-        padding: 2.5rem;
-        max-width: 1200px;
         margin: 0 auto;
+        gap: 1.5rem;
+        padding: 1rem;
     }
 
     .card {
-        background: white;
+        background: #333;
         border-radius: 1.2rem;
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         overflow: hidden;
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.2s ease;
         width: 100%;
     }
 
     .card:hover {
-        transform: translateY(-8px);
+        transform: scale(1.02);
     }
 
     .server-title {
         text-align: center;
         padding: 1rem;
-        background: #f8f8f8;
+        background: #333;
         margin: 0;
-        border-bottom: 2px solid #eee;
         font-size: 1.5rem;
-        color: #333;
+        color: white;
     }
 
     .pokemon-grid {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 0.8rem;
         padding: 1.5rem;
     }
 
     .card-image {
         background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+        border-radius: 0.8rem;
         padding: 1.2rem;
         display: flex;
         justify-content: center;
@@ -141,9 +139,19 @@ try {
         font-style: italic;
     }
 
-    @media (max-width: 1024px) {
+    @media (min-width: 768px) {
+        .pokemon-grid {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+
+    @media (max-width: 1200px) {
         .grid-container {
             padding: 1.5rem;
+        }
+
+        .pokemon-grid {
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 
