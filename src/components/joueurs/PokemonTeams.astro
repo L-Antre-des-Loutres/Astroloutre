@@ -6,6 +6,7 @@ import {showdownApiGetPkmArt} from "../../utils/showdownApiGetPkmArt.ts";
 type PokemonTeam = {
     id: number,
     serveur_id: number,
+    serveur_nom: number,
     joueur_uuid: string,
     pkmn1: string,
     pkmn1_form: string,
@@ -48,6 +49,7 @@ try {
 <div class="grid-container">
     {pokemonTeams.map((team) => (
             <div class="card">
+                <h2 class="server-title">{team.serveur_nom}</h2>
                         <div class="pokemon-grid">
                             {[
                                 {pokemon: team.pkmn1, form: team.pkmn1_form, shiny: team.pkmn1_shiny},
@@ -97,9 +99,19 @@ try {
         transform: translateY(-8px);
     }
 
+    .server-title {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f8f8;
+        margin: 0;
+        border-bottom: 2px solid #eee;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
     .pokemon-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         gap: 0.8rem;
         padding: 1.5rem;
     }
@@ -145,6 +157,11 @@ try {
         .card-image {
             padding: 0.8rem;
         }
+
+        .server-title {
+            font-size: 1.2rem;
+            padding: 0.8rem;
+        }
     }
 
     @media (max-width: 480px) {
@@ -159,6 +176,11 @@ try {
         .no-team {
             padding: 3em;
             font-size: 1.2rem;
+        }
+
+        .server-title {
+            font-size: 1rem;
+            padding: 0.6rem;
         }
     }
 </style>
