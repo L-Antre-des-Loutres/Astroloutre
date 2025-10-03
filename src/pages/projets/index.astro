@@ -13,7 +13,7 @@ const filteredArticles = tag
     : articles;
 filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
-<Layout title="Projets">
+<Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
     <h1 class="page-title">Nos Projets</h1>
     <div class="projects-container">
