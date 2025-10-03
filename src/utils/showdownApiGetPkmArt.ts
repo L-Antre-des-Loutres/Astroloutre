@@ -6,6 +6,9 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
 
     // Préparation de la variable pokemonArt
     let pokemonArt: string
+    if (pokemonName.toLowerCase() === "flammiko") {
+        return pokemonArt = "/pokemon/rlm/flammiko.webp"
+    }
 
     if (shiny) {
         pokemonArt = `${apiUrlShiny}${pokemonName}.png`
