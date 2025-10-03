@@ -1,0 +1,131 @@
+---
+import {getCollection, render} from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/Banner.astro";
+import {slugify} from "../../formater/JoueurFormater";
+
+// 1. Génère un nouveau chemin pour chaque projet
+export async function getStaticPaths() {
+    const projets = await getCollection("blog");
+
+    return projets.map((projet) => ({
+        params: {title: slugify(projet.data.title)},
+        props: {projet},
+    }));
+}
+
+// 2. Récupère les props passées dans getStaticPaths
+const {projet} = Astro.props;
+const {Content} = await render(projet);
+---
+<Layout title={projet.data.title}>
+    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
+
+    <div class="project-container">
+        <h1 class="project-title">{projet.data.title}</h1>
+        <p class="project-description">{projet.data.description}</p>
+        <small class="project-date">{projet.data.pubDate.toDateString()}</small>
+        <h4 class="project-tags">Tags : {projet.data.tags}</h4>
+
+        <article class="project-content">
+            <Content/>
+        </article>
+    </div>
+</Layout>
+
+<style>
+    .project-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .project-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1a1a1a;
+        margin-bottom: 1rem;
+    }
+
+    .project-description {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #4a4a4a;
+        margin-bottom: 1rem;
+    }
+
+    .project-date {
+        display: block;
+        color: #666;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    .project-tags {
+        color: #007acc;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    .project-content {
+        background: #fff;
+        border-radius: 8px;
+        line-height: 1.8;
+    }
+
+    .project-content :global(h2) {
+        color: #2c3e50;
+        margin: 2rem 0 1rem;
+    }
+
+    .project-content :global(p) {
+        margin-bottom: 1.5rem;
+    }
+
+    .project-content :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+        margin: 1.5rem 0;
+    }
+
+    .project-content :global(a) {
+        color: #007acc;
+        text-decoration: none;
+    }
+
+    .project-content :global(a:hover) {
+        text-decoration: underline;
+    }
+
+    .project-content :global(h1) {
+        font-size: 2rem;
+        margin: 2.5rem 0 1.5rem;
+        color: #1a1a1a;
+        font-weight: bold;
+    }
+
+    .project-content :global(h2) {
+        font-size: 1.75rem;
+        margin: 2rem 0 1rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .project-content :global(h3) {
+        font-size: 1.5rem;
+        margin: 1.5rem 0 1rem;
+        color: #34495e;
+        font-weight: 500;
+    }
+
+    .project-content :global(h4),
+    .project-content :global(h5),
+    .project-content :global(h6) {
+        font-size: 1.25rem;
+        margin: 1rem 0 0.75rem;
+        color: #555;
+        font-weight: 500;
+    }
+
+</style>
