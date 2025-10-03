@@ -87,54 +87,69 @@ try {
     .card {
         background: #333;
         border-radius: 1.2rem;
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
         overflow: hidden;
-        transition: transform 0.2s ease;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
         width: 100%;
     }
 
     .card:hover {
-        transform: scale(1.02);
+        transform: scale(1.01);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
     }
 
     .server-title {
         text-align: center;
         padding: 1rem;
-        background: #333;
+        background: #222;
         margin: 0;
         font-size: 1.5rem;
-        color: white;
+        font-weight: bold;
+        background: linear-gradient(90deg, white, #7d4202);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 2px;
     }
 
     .pokemon-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 0.8rem;
+        gap: 1rem;
         padding: 1.5rem;
     }
 
     .card-image {
-        background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
-        border-radius: 0.8rem;
+        background: linear-gradient(to bottom right, #fdfdfd, #ececec);
+        border-radius: 1rem;
         padding: 1.2rem;
         display: flex;
         justify-content: center;
         align-items: center;
         aspect-ratio: 1;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card-image:hover {
+        box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
     }
 
     .pokemon-image {
         width: 100%;
         height: 100%;
-        max-width: 150px;
+        max-width: 140px;
         object-fit: contain;
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.25s ease-in-out;
+    }
+
+    .pokemon-image:hover {
+        transform: scale(1.1) rotate(3deg);
     }
 
     .no-team {
         padding: 6em;
         text-align: center;
-        color: #666;
+        color: #888;
         font-size: 1.4rem;
         font-style: italic;
     }
@@ -149,7 +164,6 @@ try {
         .grid-container {
             padding: 1.5rem;
         }
-
         .pokemon-grid {
             grid-template-columns: repeat(3, 1fr);
         }
@@ -161,11 +175,9 @@ try {
             gap: 0.6rem;
             padding: 1rem;
         }
-
         .card-image {
             padding: 0.8rem;
         }
-
         .server-title {
             font-size: 1.2rem;
             padding: 0.8rem;
@@ -176,16 +188,13 @@ try {
         .grid-container {
             padding: 1rem;
         }
-
         .pokemon-image {
             max-width: 120px;
         }
-
         .no-team {
             padding: 3em;
             font-size: 1.2rem;
         }
-
         .server-title {
             font-size: 1rem;
             padding: 0.6rem;
