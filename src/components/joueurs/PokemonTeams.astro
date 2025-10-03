@@ -1,5 +1,6 @@
 ---
 import {formatPokemonName} from "../../formater/PokemonNameFormater.ts";
+import {showdownApiGetPkmArt} from "../../utils/showdownApiGetPkmArt.ts";
 
 // Type PokemonTeam
 type PokemonTeam = {
@@ -18,6 +19,12 @@ type PokemonTeam = {
     pkmn5_form: string,
     pkmn6: string,
     pkmn6_form: string,
+    pkmn6_shiny: boolean,
+    pkmn5_shiny: boolean,
+    pkmn4_shiny: boolean,
+    pkmn3_shiny: boolean,
+    pkmn2_shiny: boolean,
+    pkmn1_shiny: boolean
 }
 
 const {uuid} = Astro.props;
@@ -42,10 +49,17 @@ try {
     {pokemonTeams.map((team) => (
             <div class="card">
                         <div class="pokemon-grid">
-                            {[team.pkmn1, team.pkmn2, team.pkmn3, team.pkmn4, team.pkmn5, team.pkmn6].map((pokemon) => (
+                            {[
+                                {pokemon: team.pkmn1, form: team.pkmn1_form, shiny: team.pkmn1_shiny},
+                                {pokemon: team.pkmn2, form: team.pkmn2_form, shiny: team.pkmn2_shiny},
+                                {pokemon: team.pkmn3, form: team.pkmn3_form, shiny: team.pkmn3_shiny},
+                                {pokemon: team.pkmn4, form: team.pkmn4_form, shiny: team.pkmn4_shiny},
+                                {pokemon: team.pkmn5, form: team.pkmn5_form, shiny: team.pkmn5_shiny},
+                                {pokemon: team.pkmn6, form: team.pkmn6_form, shiny: team.pkmn6_shiny},
+                            ].map(async ({pokemon, form, shiny}) => (
                                     <div class="card-image">
                                         <img
-                                                src={`https://play.pokemonshowdown.com/sprites/home/${formatPokemonName(pokemon)}.png`}
+                                                src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
                                                 alt={formatPokemonName(pokemon)}
                                                 class="pokemon-image"
                                         />

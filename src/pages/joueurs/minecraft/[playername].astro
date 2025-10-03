@@ -61,7 +61,7 @@ export async function getStaticPaths() {
     const utilisateurs: UtilisateurDiscord[] = jsonDiscord.data ?? [];
 
     return joueurs
-        .filter(joueur => typeof joueur.playername === 'string' && joueur.playername.trim() !== '')
+        .filter(joueur => joueur.playername.trim() !== '')
         .map(joueur => {
             // Associer le discord_tag si utilisateur_id est présent
             const utilisateur = utilisateurs.find(u => u.id === joueur.utilisateur_id);
@@ -239,6 +239,9 @@ try {
                 {' '} obtenus
             </h1>
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
+            <h1>
+                Pokémon {prefixe}<span class="playername">{joueur.playername}</span>
+            </h1>
             <PokemonTeams uuid={joueur.compte_id}/>
 
         </div>
