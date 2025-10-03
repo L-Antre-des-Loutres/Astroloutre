@@ -80,10 +80,9 @@ try {
     .grid-container {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: 2.5rem;
-        padding: 2.5rem;
-        max-width: 1200px;
         margin: 0 auto;
+        gap: 1.5rem;
+        padding: 1rem;
     }
 
     .card {
@@ -147,7 +146,7 @@ try {
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         .pokemon-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 0.6rem;
