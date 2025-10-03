@@ -21,21 +21,26 @@ type PokemonTeam = {
 }
 
 const {uuid} = Astro.props;
-
 // Récupération des données des équipes Pokémon  
-const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`);
-const json = await res.json();
+let pokemonTeams: PokemonTeam[] = [];
+try {
+    const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`);
+    const json = await res.json();
 
-if (!json.success) {
-    throw new Error('Failed to fetch Pokemon teams data');
+    if (!json.success) {
+        throw new Error('Failed to fetch Pokemon teams data');
+    }
+
+    pokemonTeams = json.data ?? [];
+} catch (error) {
+    console.error('Error fetching Pokemon teams data:', error);
+    throw error;
 }
-
-const pokemonTeams: PokemonTeam[] = json.data ?? [];
 ---
 {pokemonTeams.length > 0 ? (
 <div class="grid-container">
     {pokemonTeams.map((team) => (
-                    <div class="card">
+            <div class="card">
                         <div class="pokemon-grid">
                             {[team.pkmn1, team.pkmn2, team.pkmn3, team.pkmn4, team.pkmn5, team.pkmn6].map((pokemon) => (
                                     <div class="card-image">
