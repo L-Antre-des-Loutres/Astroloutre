@@ -15,10 +15,17 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
 
     // Gestion des exceptions
     if (pokemonName.toLowerCase() === "flammiko") {
-        return pokemonArt = "/pokemon/rlm/sprites/flammiko.webp"
+        return pokemonArt = "/pokemon/rlm/sprites/normal/flammiko.webp"
+    }
+    if (pokemonName.toLowerCase() === "flammiko" && shiny) {
+        return pokemonArt = "/pokemon/rlm/sprites/shiny/flammiko.webp"
     }
     if (forme.toLowerCase() === "rlm") {
-        return pokemonArt = "/pokemon/rlm/sprites/forme/" + pokemonName.toLowerCase() + ".webp"
+        return pokemonArt = "/pokemon/rlm/sprites/normal/forme/" + pokemonName.toLowerCase() + ".webp"
+    }
+
+    if (forme.toLowerCase() === "rlm" && shiny) {
+        return pokemonArt = "/pokemon/rlm/sprites/shiny/forme/" + pokemonName.toLowerCase() + ".webp"
     }
     // FIN de gestion des exceptions
 
