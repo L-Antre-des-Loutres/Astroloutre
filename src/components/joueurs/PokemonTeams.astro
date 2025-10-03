@@ -1,0 +1,185 @@
+---
+import {formatPokemonName} from "../../formater/PokemonNameFormater.ts";
+import {showdownApiGetPkmArt} from "../../utils/showdownApiGetPkmArt.ts";
+
+// Type PokemonTeam
+type PokemonTeam = {
+    id: number,
+    serveur_id: number,
+    serveur_nom: number,
+    joueur_uuid: string,
+    pkmn1: string,
+    pkmn1_form: string,
+    pkmn2: string,
+    pkmn2_form: string,
+    pkmn3: string,
+    pkmn3_form: string,
+    pkmn4: string,
+    pkmn4_form: string,
+    pkmn5: string,
+    pkmn5_form: string,
+    pkmn6: string,
+    pkmn6_form: string,
+    pkmn6_shiny: boolean,
+    pkmn5_shiny: boolean,
+    pkmn4_shiny: boolean,
+    pkmn3_shiny: boolean,
+    pkmn2_shiny: boolean,
+    pkmn1_shiny: boolean
+}
+
+const {uuid} = Astro.props;
+// Récupération des données des équipes Pokémon  
+let pokemonTeams: PokemonTeam[] = [];
+try {
+    const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`);
+    const json = await res.json();
+
+    if (!json?.success) {
+        throw new Error('Erreur lors de la récupération des données');
+    }
+
+    pokemonTeams = json.data ?? [];
+} catch (error) {
+    console.error('Error fetching Pokemon teams data:', error);
+    throw error;
+}
+---
+{pokemonTeams.length > 0 ? (
+<div class="grid-container">
+    {pokemonTeams.map((team) => (
+            <div class="card">
+                <h2 class="server-title">{team.serveur_nom}</h2>
+                        <div class="pokemon-grid">
+                            {[
+                                {pokemon: team.pkmn1, form: team.pkmn1_form, shiny: team.pkmn1_shiny},
+                                {pokemon: team.pkmn2, form: team.pkmn2_form, shiny: team.pkmn2_shiny},
+                                {pokemon: team.pkmn3, form: team.pkmn3_form, shiny: team.pkmn3_shiny},
+                                {pokemon: team.pkmn4, form: team.pkmn4_form, shiny: team.pkmn4_shiny},
+                                {pokemon: team.pkmn5, form: team.pkmn5_form, shiny: team.pkmn5_shiny},
+                                {pokemon: team.pkmn6, form: team.pkmn6_form, shiny: team.pkmn6_shiny},
+                            ].map(async ({pokemon, form, shiny}) => (
+                                    <div class="card-image">
+                                        <img
+                                                src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
+                                                alt={formatPokemonName(pokemon)}
+                                                class="pokemon-image"
+                                        />
+                                    </div>
+                            ))}
+                        </div>
+                    </div>
+        )
+    )}
+</div>
+    ) : (
+<p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
+    )}
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        margin: 0 auto;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .card {
+        background: white;
+        border-radius: 1.2rem;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+    }
+
+    .server-title {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f8f8;
+        margin: 0;
+        border-bottom: 2px solid #eee;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .pokemon-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.8rem;
+        padding: 1.5rem;
+    }
+
+    .card-image {
+        background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+        padding: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: 1;
+    }
+
+    .pokemon-image {
+        width: 100%;
+        height: 100%;
+        max-width: 150px;
+        object-fit: contain;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .no-team {
+        padding: 6em;
+        text-align: center;
+        color: #666;
+        font-size: 1.4rem;
+        font-style: italic;
+    }
+
+    @media (max-width: 1024px) {
+        .grid-container {
+            padding: 1.5rem;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .pokemon-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+            padding: 1rem;
+        }
+
+        .card-image {
+            padding: 0.8rem;
+        }
+
+        .server-title {
+            font-size: 1.2rem;
+            padding: 0.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .grid-container {
+            padding: 1rem;
+        }
+
+        .pokemon-image {
+            max-width: 120px;
+        }
+
+        .no-team {
+            padding: 3em;
+            font-size: 1.2rem;
+        }
+
+        .server-title {
+            font-size: 1rem;
+            padding: 0.6rem;
+        }
+    }
+</style>
