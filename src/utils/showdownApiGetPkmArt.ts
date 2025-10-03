@@ -1,5 +1,5 @@
-const apiUrl = "https://play.pokemonshowdown.com/sprites/home/"
-const apiUrlShiny = "https://play.pokemonshowdown.com/sprites/home-shiny/"
+const apiUrl = "https://play.pokemonshowdown.com/sprites/gen5/"
+const apiUrlShiny = "https://play.pokemonshowdown.com/sprites/gen5-shiny/"
 const defaultPokemonArt = "https://play.pokemonshowdown.com/sprites/substitutes/gen5/substitute.png"
 
 export async function showdownApiGetPkmArt(pokemonName: string, forme: string = "normal", shiny: boolean = false): Promise<string> {
@@ -15,10 +15,10 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
 
     // Gestion des exceptions
     if (pokemonName.toLowerCase() === "flammiko") {
-        return pokemonArt = "/pokemon/rlm/flammiko.webp"
+        return pokemonArt = "/pokemon/rlm/sprites/flammiko.webp"
     }
     if (forme.toLowerCase() === "rlm") {
-        return pokemonArt = "/pokemon/rlm/forme/" + pokemonName.toLowerCase() + ".webp"
+        return pokemonArt = "/pokemon/rlm/sprites/forme/" + pokemonName.toLowerCase() + ".webp"
     }
     // FIN de gestion des exceptions
 

@@ -34,8 +34,8 @@ try {
     const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`);
     const json = await res.json();
 
-    if (!json.success) {
-        throw new Error('Failed to fetch Pokemon teams data');
+    if (!json?.success) {
+        throw new Error('Erreur lors de la récupération des données');
     }
 
     pokemonTeams = json.data ?? [];
@@ -77,67 +77,88 @@ try {
 <style>
     .grid-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2rem;
-        padding: 2rem;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2.5rem;
+        padding: 2.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .card {
         background: white;
-        border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 1.2rem;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         overflow: hidden;
         transition: transform 0.2s ease-in-out;
+        width: 100%;
     }
 
     .card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
     }
 
     .pokemon-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-        padding: 1rem;
+        gap: 0.8rem;
+        padding: 1.5rem;
     }
 
     .card-image {
         background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
-        padding: 1rem;
+        padding: 1.2rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        aspect-ratio: 1;
     }
 
     .pokemon-image {
         width: 100%;
-        height: auto;
-        max-width: 100px;
+        height: 100%;
+        max-width: 150px;
         object-fit: contain;
         transition: transform 0.2s ease-in-out;
     }
 
-    .card:hover .pokemon-image {
-        transform: scale(1.1);
-    }
-
     .no-team {
-        padding: 5em;
+        padding: 6em;
         text-align: center;
         color: #666;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-style: italic;
+    }
+
+    @media (max-width: 1024px) {
+        .grid-container {
+            padding: 1.5rem;
+        }
     }
 
     @media (max-width: 768px) {
         .pokemon-grid {
             grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+            padding: 1rem;
+        }
+
+        .card-image {
+            padding: 0.8rem;
         }
     }
 
     @media (max-width: 480px) {
         .grid-container {
-            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+
+        .pokemon-image {
+            max-width: 120px;
+        }
+
+        .no-team {
+            padding: 3em;
+            font-size: 1.2rem;
         }
     }
 </style>
