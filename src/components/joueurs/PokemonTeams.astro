@@ -4,12 +4,13 @@ import {showdownApiGetPkmArt} from "../../utils/showdownApiGetPkmArt.ts";
 import {fixEncoding} from "../../utils/fixEncoder";
 import {UUIDToPseudo} from "../../utils/UUIDToPseudo";
 import {CapitalLetter} from "../../formater/CapitalLetter";
+import {slugify} from "../../formater/JoueurFormater";
 
 // Type PokemonTeam
 type PokemonTeam = {
     id: number,
     serveur_id: number,
-    serveur_nom: number,
+    serveur_nom: string,
     joueur_uuid: string,
     pkmn1: string,
     pkmn1_form: string,
@@ -76,7 +77,8 @@ try {
     {pokemonTeams.length > 0 ? pokemonTeams.map((team) => (
             <div class="card">
                 <h2 class="server-title">
-                    {team.serveur_nom}
+                    <a class="link-title"
+                       href={"/serveurs/minecraft/" + slugify(team.serveur_nom)}>{team.serveur_nom}</a>
                     <button class="dropdown-toggle" aria-expanded="true">
                         <svg viewBox="0 0 24 24" width="28" height="28">
                             <path d="M7 10l5 5 5-5H7z" fill="currentColor"/>
@@ -152,11 +154,14 @@ try {
                             <div class="pokemon-meta">
                                 <strong>{nickname ? fixEncoding(nickname) : formatPokemonName(pokemon).charAt(0).toUpperCase() + formatPokemonName(pokemon).slice(1).toLowerCase()}</strong><br/>
                                 Level: {level}<br/>
-                                Forme: {form && CapitalLetter(form)}<br/>
+
 
                             </div>
                             <div class="extra-details collapse">
-                                <p>DO: {do_uuid && await UUIDToPseudo(do_uuid)}</p>
+                                <p>Forme: {form && CapitalLetter(form)}<br/></p>
+                                <p>DO: <a class="link"
+                                          href={"/joueurs/minecraft/" + slugify(await UUIDToPseudo(do_uuid))}>{do_uuid && await UUIDToPseudo(do_uuid)}</a>
+                                </p>
                                 <p>Genre: {genre && CapitalLetter(genre)}</p>
                                 </div>
                             </div>
@@ -252,13 +257,13 @@ try {
     /* --- Pokémon individuel --- */
     .card-image {
         position: relative;
-        background: linear-gradient(to bottom right, #E8E8E8, #FFFFFF);
         border-radius: 0.8rem;
         padding: 1rem;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
+
 
     .pokemon-image {
         width: 100%;
@@ -303,5 +308,15 @@ try {
         color: #666;
         font-size: 1.4rem;
         font-style: italic;
+    }
+
+    .link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .link-title:hover {
+        text-decoration: underline;
+        transition: all 0.3s ease;
     }
 </style>
