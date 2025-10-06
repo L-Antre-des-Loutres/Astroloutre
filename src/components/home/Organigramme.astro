@@ -52,7 +52,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 
 <style>
     /* Sections */
-    .fondateurs-section, .investisseurs-section {
+    .fondateurs-section, .investisseurs-section, .partenaires-section {
         margin-bottom: 2.5rem;
         text-align: center;
     }
@@ -68,6 +68,13 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         font-size: 1.5rem;
         font-weight: 600;
         color: #047857; /* emerald-600 */
+        margin-bottom: 1rem;
+    }
+
+    .partenaires-section h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1f2937; /* gray-800 */
         margin-bottom: 1rem;
     }
 
@@ -138,6 +145,15 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         transform: scale(1.05);
     }
 
+    .partenaire-border {
+        border: 2px solid #1f2937;
+        transition: all 0.2s;
+    }
+
+    .partenaire-border:hover {
+        transform: scale(1.05);
+    }
+
     .user-card.investisseur .user-avatar {
         border-color: #29e694;
     }
@@ -184,7 +200,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 </style>
 
 <!-- Organigramme -->
-<div class="organigramme w-full bg-white p-6">
+<div class="organigramme w-full bg-white px-6 py-2">
 
     <!-- Section Fondateurs -->
     <section class="fondateurs-section">
@@ -227,6 +243,27 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
                         </a>
                     </li>
             ))}
+        </ul>
+    </section>
+
+    <!-- Section partenaires -->
+    <section class="partenaires-section">
+        <h3>Nos partenaires</h3>
+        <ul class="user-list">
+            <li class="user-card">
+                <a href="https://discord.gg/eJxb9fXUgZ" class="user-link">
+                    <div class="user-content">
+                        <img
+                                src="/logo/cripie_club_logo.webp"
+                                alt="Logo cripie club"
+                                class="user-avatar partenaire-border"
+                        >
+                        <div class="user-name">Cripie Club</div>
+                        <div class="user-tag">cripie333</div>
+                    </div>
+
+                </a>
+            </li>
         </ul>
     </section>
 </div>
