@@ -73,7 +73,7 @@ try {
 }
 ---
 <div class="grid-container">
-    {pokemonTeams.map((team) => (
+    {pokemonTeams.length > 0 ? pokemonTeams.map((team) => (
             <div class="card">
                 <h2 class="server-title">
                     {team.serveur_nom}
@@ -142,27 +142,32 @@ try {
                             genre: team.pkmn6_gender,
                         },
                     ].map(async ({pokemon, form, shiny, nickname, level, do_uuid, genre}) => (
-                            <div class="card-image">
-                                <img
-                                        src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
-                                        alt={formatPokemonName(pokemon)}
-                                        class="pokemon-image"
-                                />
-                                <div class="pokemon-meta">
-                                    <strong>{nickname ? fixEncoding(nickname) : formatPokemonName(pokemon).charAt(0).toUpperCase() + formatPokemonName(pokemon).slice(1).toLowerCase()}</strong><br/>
-                                    Level: {level}<br/>
-                                    Forme: {CapitalLetter(form)}<br/>
+                        pokemon &&
+                        <div class="card-image">
+                            <img
+                                    src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
+                                    alt={formatPokemonName(pokemon)}
+                                    class="pokemon-image"
+                            />
+                            <div class="pokemon-meta">
+                                <strong>{nickname ? fixEncoding(nickname) : formatPokemonName(pokemon).charAt(0).toUpperCase() + formatPokemonName(pokemon).slice(1).toLowerCase()}</strong><br/>
+                                Level: {level}<br/>
+                                Forme: {form && CapitalLetter(form)}<br/>
 
-                                </div>
-                                <div class="extra-details collapse">
-                                    <p>DO: {await UUIDToPseudo(do_uuid)}</p>
-                                    <p>Genre: {CapitalLetter(genre)}</p>
+                            </div>
+                            <div class="extra-details collapse">
+                                <p>DO: {do_uuid && await UUIDToPseudo(do_uuid)}</p>
+                                <p>Genre: {genre && CapitalLetter(genre)}</p>
                                 </div>
                             </div>
                     ))}
                 </div>
             </div>
-    ))}
+    )) : (
+            <div class="card">
+                <p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
+            </div>
+    )}
 </div>
 
 <script>
@@ -290,5 +295,13 @@ try {
     .extra-details.collapse {
         max-height: 0;
         opacity: 0;
+    }
+
+    .no-team {
+        padding: 6em;
+        text-align: center;
+        color: #666;
+        font-size: 1.4rem;
+        font-style: italic;
     }
 </style>
