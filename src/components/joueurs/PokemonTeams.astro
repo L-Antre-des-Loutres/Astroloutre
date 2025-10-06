@@ -3,6 +3,7 @@ import {formatPokemonName} from "../../formater/PokemonNameFormater.ts";
 import {showdownApiGetPkmArt} from "../../utils/showdownApiGetPkmArt.ts";
 import {fixEncoding} from "../../utils/fixEncoder";
 import {UUIDToPseudo} from "../../utils/UUIDToPseudo";
+import {CapitalLetter} from "../../formater/CapitalLetter";
 
 // Type PokemonTeam
 type PokemonTeam = {
@@ -46,6 +47,12 @@ type PokemonTeam = {
     pkmn4_do_uuid: string,
     pkmn5_do_uuid: string,
     pkmn6_do_uuid: string,
+    pkmn1_gender: string,
+    pkmn2_gender: string,
+    pkmn3_gender: string,
+    pkmn4_gender: string,
+    pkmn5_gender: string,
+    pkmn6_gender: string,
 }
 
 const {uuid} = Astro.props;
@@ -86,7 +93,8 @@ try {
                             shiny: team.pkmn1_shiny,
                             nickname: team.pkmn1_nickname,
                             level: team.pkmn1_level,
-                            do_uuid: team.pkmn1_do_uuid
+                            do_uuid: team.pkmn1_do_uuid,
+                            genre: team.pkmn1_gender,
                         },
                         {
                             pokemon: team.pkmn2,
@@ -94,7 +102,8 @@ try {
                             shiny: team.pkmn2_shiny,
                             nickname: team.pkmn2_nickname,
                             level: team.pkmn2_level,
-                            do_uuid: team.pkmn2_do_uuid
+                            do_uuid: team.pkmn2_do_uuid,
+                            genre: team.pkmn2_gender,
                         },
                         {
                             pokemon: team.pkmn3,
@@ -102,7 +111,8 @@ try {
                             shiny: team.pkmn3_shiny,
                             nickname: team.pkmn3_nickname,
                             level: team.pkmn3_level,
-                            do_uuid: team.pkmn3_do_uuid
+                            do_uuid: team.pkmn3_do_uuid,
+                            genre: team.pkmn3_gender,
                         },
                         {
                             pokemon: team.pkmn4,
@@ -110,7 +120,8 @@ try {
                             shiny: team.pkmn4_shiny,
                             nickname: team.pkmn4_nickname,
                             level: team.pkmn4_level,
-                            do_uuid: team.pkmn4_do_uuid
+                            do_uuid: team.pkmn4_do_uuid,
+                            genre: team.pkmn4_gender,
                         },
                         {
                             pokemon: team.pkmn5,
@@ -118,7 +129,8 @@ try {
                             shiny: team.pkmn5_shiny,
                             nickname: team.pkmn5_nickname,
                             level: team.pkmn5_level,
-                            do_uuid: team.pkmn5_do_uuid
+                            do_uuid: team.pkmn5_do_uuid,
+                            genre: team.pkmn5_gender,
                         },
                         {
                             pokemon: team.pkmn6,
@@ -126,9 +138,10 @@ try {
                             shiny: team.pkmn6_shiny,
                             nickname: team.pkmn6_nickname,
                             level: team.pkmn6_level,
-                            do_uuid: team.pkmn6_do_uuid
+                            do_uuid: team.pkmn6_do_uuid,
+                            genre: team.pkmn6_gender,
                         },
-                    ].map(async ({pokemon, form, shiny, nickname, level, do_uuid}) => (
+                    ].map(async ({pokemon, form, shiny, nickname, level, do_uuid, genre}) => (
                             <div class="card-image">
                                 <img
                                         src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
@@ -138,12 +151,12 @@ try {
                                 <div class="pokemon-meta">
                                     <strong>{nickname ? fixEncoding(nickname) : formatPokemonName(pokemon).charAt(0).toUpperCase() + formatPokemonName(pokemon).slice(1).toLowerCase()}</strong><br/>
                                     Level: {level}<br/>
-                                    DO: {await UUIDToPseudo(do_uuid)}
+                                    Forme: {CapitalLetter(form)}<br/>
+
                                 </div>
                                 <div class="extra-details collapse">
-                                    <p>Nature: ??</p>
-                                    <p>Capacités: ??</p>
-                                    <p>Stats: ??</p>
+                                    <p>DO: {await UUIDToPseudo(do_uuid)}</p>
+                                    <p>Genre: {CapitalLetter(genre)}</p>
                                 </div>
                             </div>
                     ))}
