@@ -1,6 +1,9 @@
 ---
 import {formatPokemonName} from "../../formater/PokemonNameFormater.ts";
 import {showdownApiGetPkmArt} from "../../utils/showdownApiGetPkmArt.ts";
+import {fixEncoding} from "../../utils/fixEncoder";
+import {UUIDToPseudo} from "../../utils/UUIDToPseudo";
+import {CapitalLetter} from "../../formater/CapitalLetter";
 
 // Type PokemonTeam
 type PokemonTeam = {
@@ -26,6 +29,30 @@ type PokemonTeam = {
     pkmn3_shiny: boolean,
     pkmn2_shiny: boolean,
     pkmn1_shiny: boolean
+    pkmn1_nickname: string,
+    pkmn2_nickname: string,
+    pkmn3_nickname: string,
+    pkmn4_nickname: string,
+    pkmn5_nickname: string,
+    pkmn6_nickname: string,
+    pkmn1_level: number,
+    pkmn2_level: number,
+    pkmn3_level: number,
+    pkmn4_level: number,
+    pkmn5_level: number,
+    pkmn6_level: number,
+    pkmn1_do_uuid: string,
+    pkmn2_do_uuid: string,
+    pkmn3_do_uuid: string,
+    pkmn4_do_uuid: string,
+    pkmn5_do_uuid: string,
+    pkmn6_do_uuid: string,
+    pkmn1_gender: string,
+    pkmn2_gender: string,
+    pkmn3_gender: string,
+    pkmn4_gender: string,
+    pkmn5_gender: string,
+    pkmn6_gender: string,
 }
 
 const {uuid} = Astro.props;
@@ -45,91 +72,229 @@ try {
     throw error;
 }
 ---
-{pokemonTeams.length > 0 ? (
 <div class="grid-container">
-    {pokemonTeams.map((team) => (
+    {pokemonTeams.length > 0 ? pokemonTeams.map((team) => (
             <div class="card">
-                <h2 class="server-title">{team.serveur_nom}</h2>
-                        <div class="pokemon-grid">
-                            {[
-                                {pokemon: team.pkmn1, form: team.pkmn1_form, shiny: team.pkmn1_shiny},
-                                {pokemon: team.pkmn2, form: team.pkmn2_form, shiny: team.pkmn2_shiny},
-                                {pokemon: team.pkmn3, form: team.pkmn3_form, shiny: team.pkmn3_shiny},
-                                {pokemon: team.pkmn4, form: team.pkmn4_form, shiny: team.pkmn4_shiny},
-                                {pokemon: team.pkmn5, form: team.pkmn5_form, shiny: team.pkmn5_shiny},
-                                {pokemon: team.pkmn6, form: team.pkmn6_form, shiny: team.pkmn6_shiny},
-                            ].map(async ({pokemon, form, shiny}) => (
-                                    <div class="card-image">
-                                        <img
-                                                src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
-                                                alt={formatPokemonName(pokemon)}
-                                                class="pokemon-image"
-                                        />
-                                    </div>
-                            ))}
-                        </div>
-                    </div>
-        )
+                <h2 class="server-title">
+                    {team.serveur_nom}
+                    <button class="dropdown-toggle" aria-expanded="true">
+                        <svg viewBox="0 0 24 24" width="28" height="28">
+                            <path d="M7 10l5 5 5-5H7z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </h2>
+
+                <!-- 🔹 Par défaut ouvert (pas de .collapse) -->
+                <div class="pokemon-grid">
+                    {[
+                        {
+                            pokemon: team.pkmn1,
+                            form: team.pkmn1_form,
+                            shiny: team.pkmn1_shiny,
+                            nickname: team.pkmn1_nickname,
+                            level: team.pkmn1_level,
+                            do_uuid: team.pkmn1_do_uuid,
+                            genre: team.pkmn1_gender,
+                        },
+                        {
+                            pokemon: team.pkmn2,
+                            form: team.pkmn2_form,
+                            shiny: team.pkmn2_shiny,
+                            nickname: team.pkmn2_nickname,
+                            level: team.pkmn2_level,
+                            do_uuid: team.pkmn2_do_uuid,
+                            genre: team.pkmn2_gender,
+                        },
+                        {
+                            pokemon: team.pkmn3,
+                            form: team.pkmn3_form,
+                            shiny: team.pkmn3_shiny,
+                            nickname: team.pkmn3_nickname,
+                            level: team.pkmn3_level,
+                            do_uuid: team.pkmn3_do_uuid,
+                            genre: team.pkmn3_gender,
+                        },
+                        {
+                            pokemon: team.pkmn4,
+                            form: team.pkmn4_form,
+                            shiny: team.pkmn4_shiny,
+                            nickname: team.pkmn4_nickname,
+                            level: team.pkmn4_level,
+                            do_uuid: team.pkmn4_do_uuid,
+                            genre: team.pkmn4_gender,
+                        },
+                        {
+                            pokemon: team.pkmn5,
+                            form: team.pkmn5_form,
+                            shiny: team.pkmn5_shiny,
+                            nickname: team.pkmn5_nickname,
+                            level: team.pkmn5_level,
+                            do_uuid: team.pkmn5_do_uuid,
+                            genre: team.pkmn5_gender,
+                        },
+                        {
+                            pokemon: team.pkmn6,
+                            form: team.pkmn6_form,
+                            shiny: team.pkmn6_shiny,
+                            nickname: team.pkmn6_nickname,
+                            level: team.pkmn6_level,
+                            do_uuid: team.pkmn6_do_uuid,
+                            genre: team.pkmn6_gender,
+                        },
+                    ].map(async ({pokemon, form, shiny, nickname, level, do_uuid, genre}) => (
+                        pokemon &&
+                        <div class="card-image">
+                            <img
+                                    src={await showdownApiGetPkmArt(formatPokemonName(pokemon), form, shiny)}
+                                    alt={formatPokemonName(pokemon)}
+                                    class="pokemon-image"
+                            />
+                            <div class="pokemon-meta">
+                                <strong>{nickname ? fixEncoding(nickname) : formatPokemonName(pokemon).charAt(0).toUpperCase() + formatPokemonName(pokemon).slice(1).toLowerCase()}</strong><br/>
+                                Level: {level}<br/>
+                                Forme: {form && CapitalLetter(form)}<br/>
+
+                            </div>
+                            <div class="extra-details collapse">
+                                <p>DO: {do_uuid && await UUIDToPseudo(do_uuid)}</p>
+                                <p>Genre: {genre && CapitalLetter(genre)}</p>
+                                </div>
+                            </div>
+                    ))}
+                </div>
+            </div>
+    )) : (
+            <div class="card">
+                <p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
+            </div>
     )}
 </div>
-    ) : (
-<p class="no-team">Ce joueur n'a pas d'équipe Pokémon.</p>
-    )}
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggles = document.querySelectorAll('.server-title');
+        toggles.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.card');
+                const grid = card.querySelector('.pokemon-grid');
+                const expanded = grid.classList.toggle('compact'); // toggle compact view
+
+                // rotation de la flèche
+                btn.querySelector('svg').style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
+
+                // Toggle des détails supplémentaires
+                const extraDetails = card.querySelectorAll('.extra-details');
+                extraDetails.forEach(detail => {
+                    detail.classList.toggle('collapse', !expanded);
+                });
+            });
+        });
+
+        const detailsToggles = document.querySelectorAll('.details-toggle');
+        detailsToggles.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const details = btn.nextElementSibling;
+                const isOpen = details.classList.toggle('collapse');
+            });
+        });
+    });
+</script>
 
 <style>
-    .grid-container {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        margin: 0 auto;
-        gap: 1.5rem;
-        padding: 1rem;
-    }
-
-    .card {
-        background: white;
-        border-radius: 1.2rem;
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-        transition: transform 0.2s ease-in-out;
-        width: 100%;
-    }
-
-    .card:hover {
-        transform: translateY(-8px);
-    }
-
+    /* --- Structure principale --- */
     .server-title {
-        text-align: center;
-        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background: #f8f8f8;
+        padding: 1rem;
+        font-size: 1.4rem;
         margin: 0;
         border-bottom: 2px solid #eee;
-        font-size: 1.5rem;
-        color: #333;
     }
 
+    .dropdown-toggle {
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropdown-toggle svg {
+        transition: transform 0.2s ease;
+        transform: rotate(0deg);
+    }
+
+    /* --- Pokémon grid --- */
     .pokemon-grid {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
-        gap: 0.8rem;
-        padding: 1.5rem;
+        gap: 1rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
     }
 
+    /* Quand on clique -> passe en 2 colonnes */
+    .pokemon-grid.compact {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Media queries pour le responsive */
+    @media (max-width: 1200px) {
+        .pokemon-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* --- Pokémon individuel --- */
     .card-image {
-        background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
-        padding: 1.2rem;
+        position: relative;
+        background: linear-gradient(to bottom right, #E8E8E8, #FFFFFF);
+        border-radius: 0.8rem;
+        padding: 1rem;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        aspect-ratio: 1;
     }
 
     .pokemon-image {
         width: 100%;
-        height: 100%;
-        max-width: 150px;
-        object-fit: contain;
-        transition: transform 0.2s ease-in-out;
+        height: auto;
+        max-width: 120px;
+    }
+
+    .pokemon-meta {
+        text-align: center;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+
+    .details-toggle {
+        margin-top: 0.5rem;
+        padding: 0.3rem 0.8rem;
+        border: none;
+        background: #f8f8f8;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+    }
+
+    .extra-details {
+        margin-top: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+        overflow: hidden;
+        max-height: 200px;
+        opacity: 1;
+    }
+
+    .extra-details.collapse {
+        max-height: 0;
+        opacity: 0;
     }
 
     .no-team {
@@ -138,48 +303,5 @@ try {
         color: #666;
         font-size: 1.4rem;
         font-style: italic;
-    }
-
-    @media (max-width: 1024px) {
-        .grid-container {
-            padding: 1.5rem;
-        }
-    }
-
-    @media (max-width: 1024px) {
-        .pokemon-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.6rem;
-            padding: 1rem;
-        }
-
-        .card-image {
-            padding: 0.8rem;
-        }
-
-        .server-title {
-            font-size: 1.2rem;
-            padding: 0.8rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .grid-container {
-            padding: 1rem;
-        }
-
-        .pokemon-image {
-            max-width: 120px;
-        }
-
-        .no-team {
-            padding: 3em;
-            font-size: 1.2rem;
-        }
-
-        .server-title {
-            font-size: 1rem;
-            padding: 0.6rem;
-        }
     }
 </style>
