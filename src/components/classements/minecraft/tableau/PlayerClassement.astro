@@ -38,7 +38,7 @@ const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs/
 let playersRaw = (await resStats.json()).data ?? [];
 
 // Supression des statistiques de Arisoutre sur le serveur 1
-playersRaw = playersRaw.filter(p => !(p.playername === "Arisoutre" && p.serveur_id === 1));
+playersRaw = playersRaw.filter(p => !(p.playername === "Arisoutre" && serversListActiveGlobal[p.serveur_id]?.modpack === "Minecraft Vanilla"));
 
 // Regroupement des statistiques par serveur
 const groupedStats: Record<string, PlayerStats[]> = {};
@@ -64,7 +64,7 @@ playersRaw.forEach((entry: any) => {
     // Si ce serveur n’a pas encore de tableau de joueurs, on l’initialise
     if (!groupedStats[serverId]) groupedStats[serverId] = [];
 
-    // Ajoutdu joueur dans le tableau du serveur correspondant
+    // Ajout du joueur dans le tableau du serveur correspondant
     groupedStats[serverId].push(playerStats);
 });
 

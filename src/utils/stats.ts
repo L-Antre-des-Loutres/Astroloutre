@@ -7,6 +7,7 @@ export type Server = {
     actif: number;
     global: number;
     type?: string;
+    modpack: string;
 };
 
 export type PlayerStats = {
@@ -26,7 +27,7 @@ export type PlayerStats = {
 
 // --- Helpers ---
 export const makeServersMap = (list: Server[]) =>
-    Object.fromEntries(list.map(s => [s.id.toString(), { nom: s.nom, description: s.description }]));
+    Object.fromEntries(list.map(s => [s.id.toString(), {nom: s.nom, description: s.description, modpack: s.modpack}]));
 
 export const aggregatePlayers = (raw: PlayerStats[]) => {
     const map = new Map<string, PlayerStats>();
