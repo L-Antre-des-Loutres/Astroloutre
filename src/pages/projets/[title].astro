@@ -21,11 +21,21 @@ const {Content} = await render(projet);
 <Layout title={projet.data.title}>
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
 
+    <button
+            onclick="history.back()"
+            class="back-button mt-8 mx-8 mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center gap-2 transition-colors"
+    >
+        <span>←</span> Retour
+    </button>
     <div class="project-container">
         <h1 class="project-title">{projet.data.title}</h1>
         <p class="project-description">{projet.data.description}</p>
-        <small class="project-date">{projet.data.pubDate.toDateString()}</small>
-        <h4 class="project-tags">Tags : {projet.data.tags}</h4>
+        <small class="project-date">{new Date(projet.data.pubDate).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        })}</small>
+        <h4 class="project-tags">Tags : {projet.data.tags.map((tag) => tag).join(', ')}</h4>
 
         <article class="project-content">
             <Content/>
@@ -34,6 +44,12 @@ const {Content} = await render(projet);
 </Layout>
 
 <style>
+    .back-button {
+        cursor: pointer;
+        border: none;
+        font-size: 1rem;
+    }
+
     .project-container {
         max-width: 1000px;
         margin: 0 auto;
