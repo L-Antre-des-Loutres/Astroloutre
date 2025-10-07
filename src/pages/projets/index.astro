@@ -29,7 +29,11 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
                         <a href={`/projets/${slugify(article.data.title)}`}
                            class="project-title">{article.data.title}</a>
                         <p class="project-description">{article.data.description}</p>
-                        <small class="project-date">{article.data.pubDate.toDateString()}</small>
+                        <small class="project-date">{new Date(article.data.pubDate).toLocaleDateString('fr-FR', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        })}</small>
                     </li>
             ))}
         </ul>

@@ -24,8 +24,12 @@ const {Content} = await render(projet);
     <div class="project-container">
         <h1 class="project-title">{projet.data.title}</h1>
         <p class="project-description">{projet.data.description}</p>
-        <small class="project-date">{projet.data.pubDate.toDateString()}</small>
-        <h4 class="project-tags">Tags : {projet.data.tags}</h4>
+        <small class="project-date">{new Date(projet.data.pubDate).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        })}</small>
+        <h4 class="project-tags">Tags : {projet.data.tags.map((tag) => tag).join(', ')}</h4>
 
         <article class="project-content">
             <Content/>
