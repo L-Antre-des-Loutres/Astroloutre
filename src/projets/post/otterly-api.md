@@ -1,10 +1,10 @@
 ---
 title: "Otterly API"
-description: "Description courte"
+description: "Otterly API est une API RESTful."
 pubDate: 2025-09-27
 tags: [ "Back-end", "API" ]
-author: "RereBleue & TheAzertor"
-image: "/panoramas/minecraft/Tortilune.webp"
+author: "RereBleue"
+image: "https://raw.githubusercontent.com/L-Antre-des-Loutres/OtterlyApi/master/otterlyapi.png"
 ---
 
 ![Logo Otterly](https://raw.githubusercontent.com/L-Antre-des-Loutres/OtterlyApi/master/otterlyapi.png)
