@@ -1,8 +1,8 @@
 ---
-title: "Cobblemon RLM"
+title: "Otternel"
 description: "Description courte"
 pubDate: 2025-09-27
-tags: [ "Minecraft" ]
+tags: [ "Back-end" ]
 author: "RereBleue & TheAzertor"
 image: "/panoramas/minecraft/Tortilune.webp"
 ---
