@@ -201,15 +201,27 @@ if (!(joueur) || joueur.nb_message === null) {
 
                     <h2>Comptes Liés</h2>
                     {accountLink &&
-                            <a href={`/joueurs/minecraft/${slugify(accountLink.playername)}`} class="block w-full">
-                                <button
-                                        class="button-copy w-full"
-                                        data-uuid={accountLink.playername}>
-                                    <Image src={`https://mc-heads.net/avatar/${accountLink.playername}/128`} alt="Copier UUID" width={50} height={50} loading="eager" />
-                                    <span>{accountLink.playername} (Minecraft)</span>
-                                </button>
-                            </a>
+                        <a href={`/joueurs/minecraft/${slugify(accountLink.playername)}`} class="block w-full">
+                            <button
+                                    class="button-copy w-full"
+                                    data-uuid={accountLink.playername}>
+                                <Image src={`https://mc-heads.net/avatar/${accountLink.playername}/128`} alt="Copier UUID" width={50} height={50} loading="eager" />
+                                <span>{accountLink.playername} (Minecraft)</span>
+                            </button>
+                        </a>
                     }
+                    <form class="w-full form-inline">
+                        <input
+                                type="text"
+                                name="code"
+                                placeholder="Entrez un code"
+                                class="code-input"
+                                required
+                        />
+                        <button type="submit" class="button-copy" style="margin: 0">
+                            <span>Valider</span>
+                        </button>
+                    </form>
                 </div>
             </div>
             <h1>
@@ -382,6 +394,30 @@ if (!(joueur) || joueur.nb_message === null) {
             color: #fff;
             border: 2px solid #333;
             animation: colorShift 3s ease-in-out infinite;
+        }
+
+        .form-inline {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        .code-input {
+            flex-grow: 1;
+
+            padding: 0.5rem 1rem;
+            margin: 0;
+            border: 2px solid #000;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .form-inline .button-copy {
+            flex-shrink: 0;
         }
     </style>
 </Layout>
