@@ -1,0 +1,16 @@
+:root {
+    --component-transition-background-color: var(--color-gray-deep);
+    --component-transition-outline-color: var(--color-gray);
+    --component-transition-text-color: var(--color-white);
+
+    --colorGradientShift-1: var(--color-gold_light);
+    --colorGradientShift-2: var(--color-gold);
+    --colorGradientShift-3: var(--color-gold_deep);
+}
+
+@keyframes colorGradientShift {
+    0%   { color: var(--colorGradientShift-1); }
+    33%  { color: var(--colorGradientShift-2); }
+    66%  { color: var(--colorGradientShift-3); }
+    100% { color: var(--colorGradientShift-1); }
+}
