@@ -21,7 +21,7 @@ if (responsePalworld.ok) {
 }
 ---
 
-<div class="total-hours">
+<div class="total-hours-container">
     <p>
         Un total de plus de <span class="textColorGradientShift textAnimatedUnderlineGradient">{totalHours} heures</span> joué sur nos
         <span class="inline-image">
@@ -53,7 +53,7 @@ if (responsePalworld.ok) {
     /* ============================
         PRINCIPAL
     ============================ */
-    .total-hours {
+    .total-hours-container {
         display: flex;
         padding: 1rem;
 
@@ -72,21 +72,20 @@ if (responsePalworld.ok) {
     }
 
     @media (max-width: 500px) {
-        .total-hours {
+        .total-hours-container {
             height: var(--height-sm);
         }
     }
 
     @media (max-width: 300px) {
-        .total-hours {
+        .total-hours-container {
             height: var(--height-xs);
         }
     }
 
-    .total-hours p {
+    .total-hours-container p {
         position: relative;
         z-index: 1;
-        color: var(--color-text);
         font-size: var(--font-size-main);
     }
 
@@ -96,7 +95,7 @@ if (responsePalworld.ok) {
 
 
 
-    .inline-image img {
+    .total-hours-container .inline-image img {
         display: inline;
         height: 1.1em;
         width: auto;
