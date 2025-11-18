@@ -62,7 +62,7 @@
 
     padding: 1rem;
 
-    min-height: 5em;
+    min-height: 4em;
     max-height: 50em;
 
     color: var(--component-transition-text-color);
