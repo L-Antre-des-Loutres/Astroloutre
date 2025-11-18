@@ -9,7 +9,7 @@ import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/BadgeList.astro";
 import AreaTitle from "../../../components/AreaTitle.astro";
-import DefaultWaves from "../../../components/transitions/DefaultWaves.astro";
+import DefaultBanner from "../../../components/transitions/DefaultBanner.js";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
 import PokemonTeams from "../../../components/joueurs/PokemonTeams.astro";
 
@@ -152,7 +152,7 @@ try {
     {joueur && (
         <div class="profile-container">
 
-            <DefaultWaves
+            <DefaultBanner
                     title={`Information du compte ${prefixe} #${joueur.playername}#`}
             />
 
@@ -232,19 +232,19 @@ try {
                 </div>
             </div>
 
-            <DefaultWaves
+            <DefaultBanner
                     title={`Statistiques ${prefixe} #${joueur.playername}#`}
             />
 
             <PlayerStats uuid={joueur.compte_id} />
 
-            <DefaultWaves
+            <DefaultBanner
                     title={`Badges ![minecrat-logo.svg] optenus`}
             />
 
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
 
-            <DefaultWaves
+            <DefaultBanner
                     title={`Pokemon ${prefixe} #${joueur.playername}#`}
             />
 
