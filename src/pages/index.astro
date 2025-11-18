@@ -1,19 +1,39 @@
 ---
 import Welcome from '../components/Welcome.astro';
-import TotalHoursPlayed from '../components/transitions/TotalHoursPlayed.astro';
 import Layout from '../layouts/Layout.astro';
 import QuiSommesNous from "../components/home/QuiSommesNous.astro";
 import BotsLineup from "../components/home/BotsLineup.astro";
 import BotsDescription from "../components/home/BotsDescription.astro";
 import MobileNav from "../components/home/MobileNav.astro";
+import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
+import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
+import LargeBanner from "../components/transitions/LargeBanner.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Total of player playtime
+let totalHours: Promise<number> | number = 0;
+
+// Minecraft playtime
+const response = await fetch('https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime');
+if (response.ok) {
+    const json = await response.json();
+    totalHours = formatMinecraftPlayTime(Number(json?.data?.[0]?.total_hours || 0));
+}
+
+// Palworld playtime
+const responsePalworld = await fetch('https://otterlyapi.antredesloutres.fr/api/palworld/stats/total-hours');
+if (responsePalworld.ok) {
+    const json = await responsePalworld.json();
+    totalHours += await formatDecimalHours(json?.data?.[0]?.total_hours) || 0;
+}
 ---
 
 <Layout>
 	<Welcome />
-	<TotalHoursPlayed />
+
+    <LargeBanner
+    	title=`Un total de plus de #${totalHours} heures# joué sur nos ![serveurs.webp] !`
+    />
+
 	<QuiSommesNous/>
     <MobileNav/>
 	<BotsLineup />

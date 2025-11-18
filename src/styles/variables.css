@@ -11,7 +11,16 @@
     --color-gold_deep: #FF8C42;
 
     /* Text */
+    --font-size-main: 1.2rem;
+    --font-size-title: 1.5rem;
+    --font-size-biggest-title: 2rem;
 
+    --font-weight-main: normal;
+    --font-weight-title: bold;
+
+    --underline-height: 0.1em;
+
+    /* Other variables */
 }
 
 /* Fonts */

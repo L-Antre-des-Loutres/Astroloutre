@@ -2,13 +2,14 @@
 import Banner from "../../../components/Banner.astro";
 import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
 import {Image} from 'astro:assets';
-import Title from "../../../assets/titles/profil-joueur.webp"
+import Title from "../../../../public/images/titles/profil-joueur.webp"
 import {slugify} from "../../../formater/JoueurFormater";
 import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/BadgeList.astro";
 import AreaTitle from "../../../components/AreaTitle.astro";
+import DefaultWaves from "../../../components/transitions/DefaultWaves.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
 import PokemonTeams from "../../../components/joueurs/PokemonTeams.astro";
 
@@ -150,7 +151,10 @@ try {
 
     {joueur && (
         <div class="profile-container">
-            <h1>Information du compte {prefixe}<span class="playername">{joueur.playername}</span></h1>
+
+            <DefaultWaves
+                    title={`Information du compte ${prefixe} #${joueur.playername}#`}
+            />
 
             <div class="profile-details">
                 <div class="avatar">
@@ -228,20 +232,22 @@ try {
                 </div>
             </div>
 
-            <h1>Statistiques {prefixe}<span class="playername">{joueur.playername}</span></h1>
+            <DefaultWaves
+                    title={`Statistiques ${prefixe} #${joueur.playername}#`}
+            />
+
             <PlayerStats uuid={joueur.compte_id} />
 
-            <h1>
-                Badges {' '}
-                <span class="inline-image">
-                    <Image src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg" alt="Minecraft" width={1000} height={50} />
-                </span>
-                {' '} obtenus
-            </h1>
+            <DefaultWaves
+                    title={`Badges ![minecrat-logo.svg] optenus`}
+            />
+
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
-            <h1>
-                Pokemon {prefixe}<span class="playername">{joueur.playername}</span>
-            </h1>
+
+            <DefaultWaves
+                    title={`Pokemon ${prefixe} #${joueur.playername}#`}
+            />
+
             <PokemonTeams uuid={joueur.compte_id}/>
 
         </div>
@@ -255,34 +261,6 @@ try {
             color: #9f3f02;
         }
 
-        .inline-image {
-            display: inline-block;
-            vertical-align: baseline;
-            line-height: 1;
-        }
-
-        .inline-image img {
-            display: inline;
-            height: 1.1em;
-            width: auto;
-            vertical-align: middle;
-            transform: translateY(-5px);
-        }
-
-        .page-title {
-            margin-top: 50px;
-            margin-bottom: 50px;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        @media (max-width: 768px) {
-            .page-title {
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
-        }
-
         .profile-container {
             background: rgba(255 255 255 / 0.1);
             border-radius: 10px;
@@ -290,34 +268,10 @@ try {
             font-family: Arial, sans-serif;
         }
 
-        .profile-container h1 {
-            background-color: #333;
-            color: white;
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        @media (max-width: 350px) {
-            .profile-container h1 {
-                font-size: 1.25rem;
-            }
-        }
-
         h2 {
             font-size: 1.2rem;
             font-weight: bold;
             text-align: center;
-        }
-
-        .playername {
-            animation: colorShift 3s ease-in-out infinite;
-        }
-        @keyframes colorShift {
-            0%   { color: #FFDDA0; }
-            33%  { color: #FFB347; }
-            66%  { color: #FF8C42; }
-            100% { color: #FFDDA0; }
         }
 
         .profile-details {
