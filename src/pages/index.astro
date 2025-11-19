@@ -1,13 +1,15 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+
+import Welcome from '../components/Welcome.astro';
+import LargeBanner from "../components/transitions/LargeBanner.astro";
 import QuiSommesNous from "../components/home/QuiSommesNous.astro";
 import BotsLineup from "../components/home/BotsLineup.astro";
 import BotsDescription from "../components/home/BotsDescription.astro";
 import MobileNav from "../components/home/MobileNav.astro";
+
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
 import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
-import LargeBanner from "../components/transitions/LargeBanner.astro";
 
 // Total of player playtime
 let totalHours: Promise<number> | number = 0;

@@ -5,18 +5,29 @@
     --color-gray-light: #666;
     --color-gray: #444;
     --color-gray-deep: #222;
+    --color-gray-deeper: #191919;
 
-    --color-gold_light: #FFDDA0;
+    --color-gold-light: #FFDDA0;
     --color-gold: #FFB347;
-    --color-gold_deep: #FF8C42;
+    --color-gold-deep: #FF8C42;
+
+    --color-green-light: #0fa077;
+    --color-green: #047857;
+    --color-green-deep: #055941;
+
+    /* Bots colors */
+    --color-mineotter: #9adeba;
 
     /* Text */
     --font-size-main: 1.2rem;
-    --font-size-title: 1.4rem;
-    --font-size-biggest-title: 2rem;
+    --font-size-title: 1.8rem;
+    --font-size-biggest-title: 2.4rem;
+    --font-size-button: 1.2rem;
 
     --font-weight-main: normal;
     --font-weight-title: bold;
+    --font-weight-biggest-title: bolder;
+    --font-weight-button: bold;
 
     --underline-height: 0.1em;
 

@@ -1,16 +1,41 @@
 :root {
+    /* Transitions */
     --component-transition-background-color: var(--color-gray-deep);
     --component-transition-outline-color: var(--color-gray);
     --component-transition-text-color: var(--color-white);
 
-    --colorGradientShift-1: var(--color-gold_light);
-    --colorGradientShift-2: var(--color-gold);
-    --colorGradientShift-3: var(--color-gold_deep);
+    /* Text : Titles */
+    --h1TitleColor: var(--color-gold-deep);
+    --h2TitleColor: var(--color-gray-deep);
+    --pTextColor: var(--color-gray-deep);
+
+    /* Text : Paragraphs */
+    --primary-button-color: var(--color-green);
+    --primary-button-color-hover: var(--color-white);
+    --primary-button-background-color: none;
+    --primary-button-background-color-hover: var(--color-green);
+    --primary-button-outline-color: var(--color-green);
+    --primary-button-outline-color-hover: var(--color-green);
+
+    /* Buttons */
+    --gray-button-color: var(--color-gray-deep);
+    --gray-button-color-hover: var(--color-gray-deeper);
+    --golden-button-secondary-color: var(--color-gold-deep);
+
+
+    /* Gradient */
+    --goldenGradientShift-1: var(--color-gold-light);
+    --goldenGradientShift-2: var(--color-gold);
+    --goldenGradientShift-3: var(--color-gold-deep);
+
+    --blueGradientShift-1: var(--color-gold-light);
+    --blueGradientShift-2: var(--color-gold);
+    --blueGradientShift-3: var(--color-gold-deep);
 }
 
 @keyframes colorGradientShift {
-    0%   { color: var(--colorGradientShift-1); }
-    33%  { color: var(--colorGradientShift-2); }
-    66%  { color: var(--colorGradientShift-3); }
-    100% { color: var(--colorGradientShift-1); }
+    0%   { color: var(--goldenGradientShift-1); }
+    33%  { color: var(--goldenGradientShift-2); }
+    66%  { color: var(--goldenGradientShift-3); }
+    100% { color: var(--goldenGradientShift-1); }
 }

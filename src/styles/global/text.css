@@ -1,0 +1,62 @@
+/* CSS files for buttons styles */
+
+/* TEXT TITLES */
+
+.default-h2 {
+    color: var(--h2TitleColor);
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-title);
+}
+
+.default-p {
+    color: var(--pTextColor);
+    font-size: var(--font-size-main);
+    font-weight: var(--font-weight-main);
+}
+
+/* TEXT GRADIENT SHIFT */
+
+.textColorGradientShift {
+    animation: colorGradientShift 3s ease-in-out infinite;
+    font-weight: bolder;
+    position: relative;
+}
+
+/* TEXT ANIMATED GRADIENT UNDERLINE */
+
+.textAnimatedUnderlineGradient::before {
+    content: attr(data-players);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    font-size: var(--watermark-size);
+    font-weight: bold;
+    color: var(--color-watermark);
+    white-space: nowrap;
+    transform: translateY(-50%);
+    animation: slideLeftToRight 20s linear infinite;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+}
+
+.textAnimatedUnderlineGradient::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: var(--underline-height);
+    width: 0;
+    background: linear-gradient(90deg, var(--colorGradientShift-1), var(--colorGradientShift-2), var(--colorGradientShift-3));
+    border-radius: 2px;
+    animation: underlineExpandOnce 3s ease forwards;
+}
+
+@keyframes underlineExpandOnce {
+    to { width: 100%; }
+}
+
+@keyframes slideLeftToRight {
+    from { transform: translateX(0%); }
+    to   { transform: translateX(-100%); }
+}

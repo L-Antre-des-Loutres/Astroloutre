@@ -1,0 +1,36 @@
+/* CSS files for containers styles */
+
+.default-transition-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+
+    min-height: 4em;
+    max-height: 50em;
+
+    color: var(--component-transition-text-color);
+    background-color: var(--component-transition-background-color);
+    border: 2px solid var(--component-transition-outline-color);
+
+    text-align: center;
+
+    overflow: hidden;
+}
+
+.default-transition-container h1 {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-title);
+
+    position: relative;
+    z-index: 1;
+}
+
+.default-transition-container .inline-image img {
+    display: inline;
+    height: 1.1em;
+    width: auto;
+    vertical-align: middle;
+    transform: translateY(-5px);
+}
