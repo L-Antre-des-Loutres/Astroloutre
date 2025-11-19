@@ -23,9 +23,9 @@
     --golden-button-secondary-color: var(--color-gold-deep);
 
     /* Organigramme colors */
-    --founders-color: var(--color-gold-deep);
-    --investors-color: var(--color-green-deep);
-    --partners-color: var(--color-green-light);
+    --founders-color: var(--color-gold-deeper);
+    --investors-color: var(--color-green);
+    --partners-color: var(--color-blue);
 
     /* Gradient */
     --goldenGradientShift-1: var(--color-gold-light);

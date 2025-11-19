@@ -13,10 +13,15 @@
     --color-gold-light: #FFDDA0;
     --color-gold: #FFB347;
     --color-gold-deep: #FF8C42;
+    --color-gold-deeper: #a85926;
 
     --color-green-light: #0fa077;
     --color-green: #047857;
     --color-green-deep: #055941;
+
+    --color-blue-light: #38a8d8;
+    --color-blue: #297da1;
+    --color-blue-deep: #054059;
 
     /* Bots colors */
     --color-mineotter: #9adeba;

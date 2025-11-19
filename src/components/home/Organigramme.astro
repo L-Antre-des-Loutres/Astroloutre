@@ -16,14 +16,14 @@ type DiscordUserType = {
 
 const discordFondateur: discordID[] = [
     { DiscordId: "518780404057112580" },
-    {DiscordId: "383676607434457088"},
+    { DiscordId: "383676607434457088" },
 ];
 
 const discordInvestisseur: discordID[] = [
-    {DiscordId: "556501819468152832"},
-    {DiscordId: "432541622065168385"},
-    {DiscordId: "442285755113668609"},
-    {DiscordId: "334269770809606154"},
+    { DiscordId: "556501819468152832" },
+    { DiscordId: "432541622065168385" },
+    { DiscordId: "442285755113668609" },
+    { DiscordId: "334269770809606154" },
 ];
 
 const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
@@ -45,174 +45,24 @@ const fondateurs = utilisateurs.filter(u => idsFondateurs.includes(u.discord_id)
 const idsInvestisseurs = discordInvestisseur.map(i => i.DiscordId);
 const investisseurs = utilisateurs.filter(u => idsInvestisseurs.includes(u.discord_id));
 
-// Vérifie si un utilisateur apparait plusieurs fois si c'est le cas on ne prend que le premier pour les fondateurs et les investisseurs
+// Check if a user appears multiple times
 const uniqueFondateurs = [...new Set(fondateurs.map(u => u.discord_id))].map(id => fondateurs.find(u => u.discord_id === id)!);
 const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].map(id => investisseurs.find(u => u.discord_id === id)!);
 ---
 
-<style>
-    /* Sections */
-    .fondateurs-section, .investisseurs-section, .partenaires-section {
-        margin-bottom: 2.5rem;
-        text-align: center;
-    }
+<div class="organigramme">
 
-    .fondateurs-section h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #b45309; /* amber-800 */
-        margin-bottom: 1rem;
-    }
-
-    .investisseurs-section h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #047857; /* emerald-600 */
-        margin-bottom: 1rem;
-    }
-
-    .partenaires-section h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #1f2937; /* gray-800 */
-        margin-bottom: 1rem;
-    }
-
-    /* Liste */
-    .user-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1.5rem; /* espace entre les cases */
-        padding: 0;
-        margin: 0;
-        list-style: none;
-    }
-
-    /* Carte utilisateur */
-    .user-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        transition: transform 0.2s;
-    }
-
-    .user-card:hover {
-        transform: scale(1.05);
-    }
-
-    /* Lien */
-    .user-link {
-        width: 100%;
-        text-decoration: none;
-    }
-
-    /* Contenu interne */
-    .user-content {
-        border-radius: 0.75rem;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: all 0.2s;
-    }
-
-    /* Avatar */
-    .user-avatar {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 50%;
-        margin-bottom: 0.75rem;
-    }
-
-    .fondateur-border {
-        border: 2px solid #b45309;
-        transition: all 0.2s;
-    }
-
-    .fondateur-border:hover {
-        transform: scale(1.05);
-    }
-
-    .investisseur-border {
-        border: 2px solid #047857;
-        transition: all 0.2s;
-    }
-
-    .investisseur-border:hover {
-        transform: scale(1.05);
-    }
-
-    .partenaire-border {
-        border: 2px solid #1f2937;
-        transition: all 0.2s;
-    }
-
-    .partenaire-border:hover {
-        transform: scale(1.05);
-    }
-
-    .user-card.investisseur .user-avatar {
-        border-color: #29e694;
-    }
-
-    .user-card:hover .user-avatar {
-        filter: brightness(1.05);
-    }
-
-    /* Pseudo et tag */
-    .user-name {
-        font-weight: 500;
-        color: #1f2937;
-        font-size: 0.875rem;
-        word-break: break-word;
-    }
-
-    .user-tag {
-        font-size: 0.75rem;
-        color: #6b7280;
-        word-break: break-word;
-    }
-
-    /* Responsive : 2 éléments par ligne sur petit écran */
-    @media (max-width: 640px) {
-        .user-card {
-            width: 50%;
-        }
-    }
-
-    /* Responsive : 3 éléments par ligne sur écran moyen */
-    @media (min-width: 641px) and (max-width: 1024px) {
-        .user-card {
-            width: 33.33%;
-        }
-    }
-
-    /* Responsive : 4 éléments par ligne sur grand écran */
-    @media (min-width: 1025px) {
-        .user-card {
-            width: 10rem;
-        }
-    }
-
-</style>
-
-<!-- Organigramme -->
-<div class="organigramme w-full bg-white px-6 py-2">
-
-    <!-- Section Fondateurs -->
-    <section class="fondateurs-section">
+    <section class="org-section fondateurs">
         <h3>Fondateurs</h3>
         <ul class="user-list">
             {uniqueFondateurs.map((user) => (
-                    <li key={user.tag_discord} className="user-card fondateur">
+                    <li key={user.tag_discord} className="user-card">
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
                             <div class="user-content">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
-                                        class="user-avatar fondateur-border"
+                                        class="user-avatar"
                                 />
                                 <div class="user-name">{user.pseudo_discord}</div>
                                 <div class="user-tag">{user.tag_discord}</div>
@@ -223,18 +73,17 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         </ul>
     </section>
 
-    <!-- Section Investisseurs -->
-    <section class="investisseurs-section">
+    <section class="org-section investisseurs">
         <h3>Nos investisseurs</h3>
         <ul class="user-list">
             {uniqueInvestisseurs.map((user) => (
-                    <li key={user.tag_discord} className="user-card investisseur">
+                    <li key={user.tag_discord} className="user-card">
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
                             <div class="user-content">
                                 <img
                                         src={user.avatar_url}
                                         alt={`Avatar de ${user.pseudo_discord}`}
-                                        class="user-avatar investisseur-border"
+                                        class="user-avatar"
                                 />
                                 <div class="user-name">{user.pseudo_discord}</div>
                                 <div class="user-tag">{user.tag_discord}</div>
@@ -245,8 +94,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         </ul>
     </section>
 
-    <!-- Section partenaires -->
-    <section class="partenaires-section">
+    <section class="org-section partenaires" style="margin: 0;">
         <h3>Nos partenaires</h3>
         <ul class="user-list">
             <li class="user-card">
@@ -255,15 +103,99 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
                         <img
                                 src="/logo/cripie_club_logo.webp"
                                 alt="Logo cripie club"
-                                class="user-avatar partenaire-border"
-                        >
+                                class="user-avatar"
+                        />
                         <div class="user-name">Cripie Club</div>
                         <div class="user-tag">cripie333</div>
                     </div>
-
                 </a>
             </li>
         </ul>
     </section>
 </div>
 
+<style>
+    /* Configuration des couleurs par section via variables locales */
+    .org-section.fondateurs { --theme-color: var(--founders-color, #92400e); }
+    .org-section.investisseurs { --theme-color: var(--investors-color, #059669); }
+    .org-section.partenaires { --theme-color: var(--partners-color, #1f2937); }
+
+    /* Styles globaux de section */
+    .org-section {
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .org-section h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--theme-color); /* Utilise la couleur définie plus haut */
+        margin-bottom: 1.5rem;
+    }
+
+    /* Liste Flexbox : gère le centrage et le responsive automatiquement */
+    .user-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centre les éléments horizontalement */
+        gap: 1.5rem;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Carte Utilisateur */
+    .user-card {
+        /* Largeur fixe : permet au flex-wrap de savoir quand passer à la ligne */
+        width: 10rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .user-card:hover {
+        transform: translateY(-5px); /* Animation plus moderne que le scale global */
+    }
+
+    .user-link {
+        text-decoration: none;
+        display: block;
+    }
+
+    /* Contenu */
+    .user-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+    }
+
+    /* Avatar */
+    .user-avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        margin-bottom: 0.75rem;
+        object-fit: cover;
+
+        /* Gestion de la bordure via la variable locale */
+        border: 2px solid var(--theme-color);
+        padding: 2px; /* Espace entre l'image et la bordure (optionnel, esthétique) */
+        transition: filter 0.2s;
+    }
+
+    .user-card:hover .user-avatar {
+        filter: brightness(1.1);
+    }
+
+    /* Typographie */
+    .user-name {
+        font-weight: 500;
+        color: var(--color-blueish-gray-deep, #374151);
+        font-size: 0.875rem;
+        line-height: 1.2;
+        margin-bottom: 0.25rem;
+    }
+
+    .user-tag {
+        font-size: 0.75rem;
+        color: var(--color-blueish-gray-light, #9ca3af);
+    }
+</style>
