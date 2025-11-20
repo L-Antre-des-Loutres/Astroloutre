@@ -40,6 +40,7 @@
     --underline-height: 0.1em;
 
     /* Other variables */
+    --component-paperthin-transition: 8px;
 }
 
 /* Fonts */
