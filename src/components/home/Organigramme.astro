@@ -56,7 +56,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         <h3>Fondateurs</h3>
         <ul class="user-list">
             {uniqueFondateurs.map((user) => (
-                    <li key={user.tag_discord} className="user-card">
+                    <li class="user-card" key={user.tag_discord}>
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
                             <div class="user-content">
                                 <img
@@ -77,7 +77,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         <h3>Nos investisseurs</h3>
         <ul class="user-list">
             {uniqueInvestisseurs.map((user) => (
-                    <li key={user.tag_discord} className="user-card">
+                    <li class="user-card" key={user.tag_discord} >
                         <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
                             <div class="user-content">
                                 <img
@@ -115,12 +115,11 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 </div>
 
 <style>
-    /* Configuration des couleurs par section via variables locales */
+    /* Colors configuration */
     .org-section.fondateurs { --theme-color: var(--founders-color, #92400e); }
     .org-section.investisseurs { --theme-color: var(--investors-color, #059669); }
     .org-section.partenaires { --theme-color: var(--partners-color, #1f2937); }
 
-    /* Styles globaux de section */
     .org-section {
         margin-bottom: 2.5rem;
         text-align: center;
@@ -129,29 +128,26 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
     .org-section h3 {
         font-size: 1.5rem;
         font-weight: 600;
-        color: var(--theme-color); /* Utilise la couleur définie plus haut */
+        color: var(--theme-color); /
         margin-bottom: 1.5rem;
     }
 
-    /* Liste Flexbox : gère le centrage et le responsive automatiquement */
     .user-list {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center; /* Centre les éléments horizontalement */
-        gap: 1.5rem;
+        justify-content: center;
+        gap: 0.5rem;
         padding: 0;
         list-style: none;
     }
 
-    /* Carte Utilisateur */
     .user-card {
-        /* Largeur fixe : permet au flex-wrap de savoir quand passer à la ligne */
         width: 10rem;
         transition: transform 0.2s ease-in-out;
     }
 
     .user-card:hover {
-        transform: translateY(-5px); /* Animation plus moderne que le scale global */
+        transform: translateY(-5px);
     }
 
     .user-link {
@@ -159,7 +155,6 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         display: block;
     }
 
-    /* Contenu */
     .user-content {
         display: flex;
         flex-direction: column;
@@ -175,17 +170,11 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         margin-bottom: 0.75rem;
         object-fit: cover;
 
-        /* Gestion de la bordure via la variable locale */
         border: 2px solid var(--theme-color);
-        padding: 2px; /* Espace entre l'image et la bordure (optionnel, esthétique) */
+        padding: 2px;
         transition: filter 0.2s;
     }
 
-    .user-card:hover .user-avatar {
-        filter: brightness(1.1);
-    }
-
-    /* Typographie */
     .user-name {
         font-weight: 500;
         color: var(--color-blueish-gray-deep, #374151);
