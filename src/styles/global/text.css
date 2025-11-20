@@ -29,9 +29,9 @@
     position: absolute;
     top: 50%;
     left: 0;
-    font-size: var(--watermark-size);
+    font-size: var(--underline-height);
     font-weight: bold;
-    color: var(--color-watermark);
+    color: var(--goldenGradientShift-1);
     white-space: nowrap;
     transform: translateY(-50%);
     animation: slideLeftToRight 20s linear infinite;
@@ -47,7 +47,7 @@
     bottom: -4px;
     height: var(--underline-height);
     width: 0;
-    background: linear-gradient(90deg, var(--colorGradientShift-1), var(--colorGradientShift-2), var(--colorGradientShift-3));
+    background: linear-gradient(90deg, var(--goldenGradientShift-1), var(--goldenGradientShift-2), var(--goldenGradientShift-3));
     border-radius: 2px;
     animation: underlineExpandOnce 3s ease forwards;
 }

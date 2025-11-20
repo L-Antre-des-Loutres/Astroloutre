@@ -1,37 +1,9 @@
 ---
-// Component: src/components/Composant.astro
-// Component used to separate different sections of a page, with an enhanced title.
-// The title accepts special codes:
-//
-//  #text#
-//      → inserts a <span> containing "text"
-//        classes: textColorGradientShift textAnimatedUnderlineGradient
-//
-//  ![image_name]
-//      → inserts an image located at ../../assets/titles/image_name.webp
-//        class: inline-image
-//
-
+import { parseTitle } from "../../utils/prettyloutre.ts";
 import { Image } from 'astro:assets';
 
 interface Props {
     title: string;
-}
-
-function parseTitle(text: string = ""): string {
-    return text
-        // #text#
-        .replace(
-            /#([^#]+)#/g,
-            '<span class="textColorGradientShift textAnimatedUnderlineGradient">$1</span>'
-        )
-
-        // ![image]
-        .replace(
-            /!\[([^\]]+)]/g,
-            (_, name) =>
-                `<span class="inline-image"><img src="/images/titles/${name}" alt="${name}" /></span>`
-        );
 }
 
 const parsedTitle = parseTitle(Astro.props.title ?? "");
