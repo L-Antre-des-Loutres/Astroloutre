@@ -1,10 +1,16 @@
 ---
+/* Global stuff & variables */
 import "../styles/variables.css";
-import "../styles/themes/classic.css";
+import "../styles/global.css"; // Only tailwind, to delete when done with tailwind
+
+/* Specialized stylesheets */
 import "../styles/global/text.css";
+import "../styles/global/cards.css";
 import "../styles/global/containers.css";
 import "../styles/global/buttons.css";
-import "../styles/global.css"; // Only tailwind, to delete when done with tailwind
+
+/* Theme */
+import "../styles/themes/classic.css";
 
 import Header from '../components/Header.astro';
 import adl_logo from "../assets/adl_small_logo.png";

@@ -10,6 +10,7 @@ import MobileNav from "../components/home/MobileNav.astro";
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
 import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
 import DefaultBanner from "../components/transitions/DefaultBanner.astro";
+import BotCards from "../components/home/BotCards.astro";
 
 // Total of player playtime
 let totalHours: Promise<number> | number = 0;
@@ -41,6 +42,23 @@ if (responsePalworld.ok) {
 
     <DefaultBanner title="Des ![bots.webp] codés par nos soins ![nos-soins.webp] !"/>
 
+    <BotCards
+        image="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
+        image_alt="Logo Mateloutre"
+        title="#Mateloutre#, la peluche de notre #catégorie Pokémon#"
+        paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
+        card_link="https://github.com/L-Antre-des-Loutres/Mateloutre"
+    />
+    <BotCards
+            image="https://github.com/Corentin-cott/Mineotter/blob/main/src/app/imgs/logo-text.png?raw=true"
+            image_alt="Logo Mineotter"
+            title="#Mineotter#, le bots de nos #serveurs Minecraft#"
+            paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
+            card_link="https://github.com/Corentin-cott/Mineotter"
+    />
+
+    <DefaultBanner title="Des ![bots.webp] codés par nos soins ![nos-soins.webp] !"/>
+
 	<BotsDescription
 		imageSrc="https://github.com/L-Antre-des-Loutres/Arisoutre/blob/main/arisoutre-logo.png?raw=true"
 		imageAlt="Logo Arisoutre"
@@ -49,25 +67,11 @@ if (responsePalworld.ok) {
 		paragraph="Arisoutre gère tout ce qui est récupération des données Discord, ainsi que la modération. C'est aussi elle qui dit bienvenue lorsqu'il y a des nouveaux !"
 	/>
 	<BotsDescription
-		imageSrc="https://github.com/Corentin-cott/Mineotter-Bot/blob/main/imgs/logo-text.png?raw=true"
-		imageAlt="Logo Mineotter"
-		title="Mineotter, le bots de nos serveurs Minecraft"
-		link="https://github.com/Corentin-cott/Mineotter-Bot"
-		paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
-	/>
-	<BotsDescription
 		imageSrc="https://github.com/L-Antre-des-Loutres/MultiLoutre/blob/main/multiloutre-logo.png?raw=true"
 		imageAlt="Logo Multiloutre"
 		title="Multiloutre, le bots de tous nos autres serveurs"
 		link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
 		paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
-	/>
-	<BotsDescription
-		imageSrc="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
-		imageAlt="Logo Mateloutre"
-		title="Mateloutre, la peluche de notre catégorie Pokémon"
-		link="https://github.com/L-Antre-des-Loutres/Mateloutre"
-		paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
 	/>
 	<BotsDescription
 		imageSrc="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
