@@ -1,5 +1,26 @@
 /* CSS files for containers styles */
 
+/* CSS for cards containers (ex: bots card on home page) */
+.cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 600px));
+    gap: 2rem;
+    padding: 1.5em 0em;
+    width: 100%;
+    max-width: 1870px;
+    margin: 0 auto;
+    justify-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 400px) {
+    .cards-wrapper {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
+/* CSS for transitions container */
 .default-transition-container {
     display: flex;
     justify-content: center;

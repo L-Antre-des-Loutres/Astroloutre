@@ -78,26 +78,10 @@ if (responsePalworld.ok) {
                 card_link="https://github.com/matheo-1712/Citlali"
         />
     </div>
+
+
+    <DefaultBanner title="Les #joueurs# avec le plus d'heure cette semaine"/>
 </Layout>
 
 <style>
-    .cards-wrapper {
-        display: grid;
-        /* Crée autant de colonnes que possible, avec une largeur min de 350px et max de 1fr */
-        grid-template-columns: repeat(auto-fit, minmax(350px, 600px));
-        gap: 2rem; /* Espace entre les cartes */
-        padding: 1.5em 0em;
-        width: 100%;
-        max-width: 1870px; /* Largeur max du groupe de cartes */
-        margin: 0 auto; /* Centre le conteneur sur la page */
-        justify-items: center; /* Centre les cartes dans leurs cellules de grille */
-    }
-
-    /* Ajustement pour mobile très petit */
-    @media (max-width: 400px) {
-        .cards-wrapper {
-            grid-template-columns: 1fr; /* Une seule colonne sur tout petit écran */
-            padding: 1rem;
-        }
-    }
 </style>
