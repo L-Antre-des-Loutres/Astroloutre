@@ -7,45 +7,10 @@ import Title2 from "../../../public/images/titles/top-joueurs.png";
 import Title1 from "../../../public/images/titles/classement-joueurs.png";
 import PlayerClassement from "../../components/classements/palworld/tableau/PlayerClassement.astro"
 import Void from "../../components/Void.astro";
+import LargeBanner from "../../components/transitions/LargeBanner.astro";
 ---
 <Layout>
-    <Banner bannerUrl=`/panoramas/palworld/palworld_usine.webp`/>
-    <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
-    <Void/>
-    <AreaTitle titleImage={Title1} backgroundColor="#333"/>
-    <div class="classement-container">
-        <PlayerClassement jeu="palworld"/>
-    </div>
+    <Banner bannerUrl=`https://image.api.playstation.com/vulcan/ap/rnd/202405/2108/d976f5d6313a7174e5341d3a5e3f21559f56f86f40a71d2f.png`/>
+    <LargeBanner title="%Classement% #Palworld#" invertedBackground/>
+    <PlayerClassement jeu="palworld"/>
 </Layout>
-
-<style>
-    .page-title {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .page-title-bg {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-
-        background-color: #333;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .page-title-bg {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-    }
-</style>

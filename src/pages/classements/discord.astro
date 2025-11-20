@@ -2,49 +2,11 @@
 import UserClassement from "../../components/classements/discord/tableau/UserClassement.astro";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
-import AreaTitle from "../../components/AreaTitle.astro";
-import Title2 from "../../../public/images/titles/top-joueurs.png";
-import Title1 from "../../../public/images/titles/classement-joueurs.png";
-import Void from "../../components/Void.astro";
+import LargeBanner from "../../components/transitions/LargeBanner.astro";
 ---
+
 <Layout>
     <Banner/>
-    <AreaTitle titleImage={Title2} backgroundColor="transparent"/>
-    <Void/>
-    <AreaTitle titleImage={Title1} backgroundColor="#333"/>
-    <div class="classement-container">
-        <UserClassement/>
-    </div>
+    <LargeBanner title="%Classement% #Discord#" invertedBackground/>
+    <UserClassement/>
 </Layout>
-
-<style>
-    .page-title {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .page-title-bg {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-
-        background-color: #333;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .page-title-bg {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-    }
-</style>

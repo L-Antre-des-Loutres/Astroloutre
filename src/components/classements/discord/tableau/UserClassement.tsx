@@ -83,7 +83,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
 
     /* Front */
     return (
-        <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
+        <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0">
             {/* Tableau des joueurs */}
             <div className="w-1/1 overflow-x-auto shadow-lg rounded-xl bg-white">
                 <table className="w-full text-base text-left overflow-hidden rounded-xl">
