@@ -18,6 +18,12 @@ export function parseTitle(text: string = ""): string {// Component: src/compone
     console.log("INPUT TITLE =", text);
 
     return text
+        // %text%
+        .replace(
+            /%\s*([^%]+?)\s*%/g,
+            '<span class="special-font-titles">$1</span>'
+        )
+
         // #_text_#
         .replace(
             /#_\s*([^_]+?)\s*_#/g,
@@ -34,6 +40,6 @@ export function parseTitle(text: string = ""): string {// Component: src/compone
         .replace(
             /!\[([^\]]+)]/g,
             (_, name) =>
-                `<span class="inline-image"><img src="/images/titles/${name}" alt="${name}" /></span>`
+                `<span class="inline-image"><img src="${name}" alt="${name}" /></span>`
         );
 }

@@ -55,3 +55,9 @@
     vertical-align: middle;
     transform: translateY(-5px);
 }
+
+.no-background-transition-container {
+    background: none;
+    border: none;
+    color: var(--component-transition-background-color);
+}
