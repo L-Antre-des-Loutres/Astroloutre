@@ -4,7 +4,6 @@ import Layout from '../layouts/Layout.astro';
 import Welcome from '../components/Welcome.astro';
 import LargeBanner from "../components/transitions/LargeBanner.astro";
 import QuiSommesNous from "../components/home/QuiSommesNous.astro";
-import BotsDescription from "../components/home/BotsDescription.astro";
 import MobileNav from "../components/home/MobileNav.astro";
 
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
@@ -42,42 +41,63 @@ if (responsePalworld.ok) {
 
     <DefaultBanner title="Des ![bots.webp] codés par nos soins ![nos-soins.webp] !"/>
 
-    <BotCards
-        image="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
-        image_alt="Logo Mateloutre"
-        title="#Mateloutre#, la peluche de notre #catégorie Pokémon#"
-        paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
-        card_link="https://github.com/L-Antre-des-Loutres/Mateloutre"
-    />
-    <BotCards
-            image="https://github.com/Corentin-cott/Mineotter/blob/main/src/app/imgs/logo-text.png?raw=true"
-            image_alt="Logo Mineotter"
-            title="#Mineotter#, le bots de nos #serveurs Minecraft#"
-            paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
-            card_link="https://github.com/Corentin-cott/Mineotter"
-    />
-
-    <DefaultBanner title="Des ![bots.webp] codés par nos soins ![nos-soins.webp] !"/>
-
-	<BotsDescription
-		imageSrc="https://github.com/L-Antre-des-Loutres/Arisoutre/blob/main/arisoutre-logo.png?raw=true"
-		imageAlt="Logo Arisoutre"
-		title="Arisoutre, elle c'est la patronne"
-		link="https://github.com/L-Antre-des-Loutres/Arisoutre"
-		paragraph="Arisoutre gère tout ce qui est récupération des données Discord, ainsi que la modération. C'est aussi elle qui dit bienvenue lorsqu'il y a des nouveaux !"
-	/>
-	<BotsDescription
-		imageSrc="https://github.com/L-Antre-des-Loutres/MultiLoutre/blob/main/multiloutre-logo.png?raw=true"
-		imageAlt="Logo Multiloutre"
-		title="Multiloutre, le bots de tous nos autres serveurs"
-		link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
-		paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
-	/>
-	<BotsDescription
-		imageSrc="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
-		imageAlt="Logo Citlaloutre"
-		title="Citlaloutre, Elle qui n'est pas une loutre"
-		link="https://github.com/matheo-1712/Citlali"
-		paragraph="Citlaloutre (Citlali) et le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
-	/>
+    <div class="cards-wrapper">
+        <BotCards
+                image="https://github.com/L-Antre-des-Loutres/Arisoutre/blob/v1.0.0/arisoutre-logo.png?raw=true"
+                image_alt="Logo Arisoutre"
+                title="#Arisoutre#, elle c'est la #patronne#"
+                paragraph="Arisoutre gère tout ce qui est récupération des données Discord, ainsi que la modération. C'est aussi elle qui dit bienvenue lorsqu'il y a des nouveaux !"
+                card_link="https://github.com/L-Antre-des-Loutres/Arisoutre"
+        />
+        <BotCards
+                image="https://github.com/Corentin-cott/Mineotter/blob/main/src/app/imgs/logo-text.png?raw=true"
+                image_alt="Logo Mineotter"
+                title="#Mineotter#, le bots de nos #serveurs Minecraft#"
+                paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
+                card_link="https://github.com/Corentin-cott/Mineotter"
+        />
+        <BotCards
+                image="https://github.com/L-Antre-des-Loutres/MultiLoutre/blob/main/multiloutre-logo.png?raw=true"
+                image_alt="Logo Multiloutre"
+                title="#Multiloutre#, le bots de tous #nos autres serveurs#"
+                paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
+                card_link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
+        />
+        <BotCards
+                image="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
+                image_alt="Logo Mateloutre"
+                title="#Mateloutre#, la peluche de notre #catégorie Pokémon#"
+                paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
+                card_link="https://github.com/L-Antre-des-Loutres/Mateloutre"
+        />
+        <BotCards
+                image="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
+                image_alt="Logo Citlali"
+                title="#Citlaloutre#, clle qui n'est pas une vraiment une #loutre#"
+                paragraph="Citlaloutre (Citlali de son vrai nom) et le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
+                card_link="https://github.com/matheo-1712/Citlali"
+        />
+    </div>
 </Layout>
+
+<style>
+    .cards-wrapper {
+        display: grid;
+        /* Crée autant de colonnes que possible, avec une largeur min de 350px et max de 1fr */
+        grid-template-columns: repeat(auto-fit, minmax(350px, 600px));
+        gap: 2rem; /* Espace entre les cartes */
+        padding: 1.5em 0em;
+        width: 100%;
+        max-width: 1870px; /* Largeur max du groupe de cartes */
+        margin: 0 auto; /* Centre le conteneur sur la page */
+        justify-items: center; /* Centre les cartes dans leurs cellules de grille */
+    }
+
+    /* Ajustement pour mobile très petit */
+    @media (max-width: 400px) {
+        .cards-wrapper {
+            grid-template-columns: 1fr; /* Une seule colonne sur tout petit écran */
+            padding: 1rem;
+        }
+    }
+</style>
