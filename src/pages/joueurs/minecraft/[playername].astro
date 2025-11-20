@@ -2,16 +2,16 @@
 import Banner from "../../../components/Banner.astro";
 import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
 import {Image} from 'astro:assets';
-import Title from "../../../../public/images/titles/profil-joueur.webp"
 import {slugify} from "../../../formater/JoueurFormater";
 import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/BadgeList.astro";
-import AreaTitle from "../../../components/AreaTitle.astro";
 import DefaultBanner from "../../../components/transitions/DefaultBanner.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
 import PokemonTeams from "../../../components/joueurs/PokemonTeams.astro";
+import LargeBanner from "../../../components/transitions/LargeBanner.astro";
+import PaneBanner from "../../../components/transitions/PaneBanner.astro";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
@@ -121,13 +121,12 @@ try {
 
 <Layout
         ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`}
-        ogTitle={`Profil de ${joueur?.playername}`}
         ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
 >
     <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
-    <div class="page-title">
-        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-    </div>
+
+    <LargeBanner title=`Profil ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ${prefixe} #${joueur.playername}#` invertedBackground/>
+    <PaneBanner/>
 
     <script is:inline>
         document.addEventListener("DOMContentLoaded", () => {
@@ -151,11 +150,6 @@ try {
 
     {joueur && (
         <div class="profile-container">
-
-            <DefaultBanner
-                    title={`Information du compte ${prefixe} #${joueur.playername}#`}
-            />
-
             <div class="profile-details">
                 <div class="avatar">
                     <img src={`https://mc-heads.net/body/${joueur.playername}/128`} alt={`Avatar de ${joueur.playername}`} style="display: inline;" />
@@ -232,14 +226,12 @@ try {
                 </div>
             </div>
 
-            <DefaultBanner
-                    title={`Statistiques ${prefixe} #${joueur.playername}#`}
-            />
+            <DefaultBanner title={`%Statistiques% ${prefixe} #${joueur.playername}#`}/>
 
             <PlayerStats uuid={joueur.compte_id} />
 
             <DefaultBanner
-                    title={`Badges ![minecrat-logo.svg] optenus`}
+                    title={`Badges ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] optenus`}
             />
 
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />

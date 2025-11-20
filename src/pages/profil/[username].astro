@@ -1,13 +1,14 @@
 ---
 import {Image} from 'astro:assets';
-import Title from "../../../public/images/titles/profil_discord.webp"
 import {slugify} from "../../formater/JoueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import {formatDate} from "../../formater/DateFormater";
 import BadgeList from "../../components/BadgeList.astro";
 import {vocalTimeFormater} from "../../formater/VocalTimeFormater";
-import AreaTitle from "../../components/AreaTitle.astro";
+import LargeBanner from "../../components/transitions/LargeBanner.astro";
+import PaneBanner from "../../components/transitions/PaneBanner.astro";
+import DefaultBanner from "../../components/transitions/DefaultBanner.astro";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -117,15 +118,13 @@ if (!(joueur) || joueur.nb_message === null) {
         ogTitle={`Profil Discord de ${joueur?.pseudo_discord}`}
         ogDescription={`Voici le profil Discord de ${joueur?.pseudo_discord} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
 >
-    <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
-    <div class="page-title">
-        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-    </div>
+    <Banner/>
+
+    <LargeBanner title=`Profil #Discord# ${prefixe} #${joueur.pseudo_discord}#` invertedBackground/>
+    <PaneBanner/>
 
     {joueur && (
         <div class="profile-container">
-            <h1>Information du compte {prefixe}<span class="playername">{joueur.pseudo_discord}</span></h1>
-
             <div class="profile-details">
                 <div class="h-full rounded-2xl flex items-center">
                     <Image
@@ -224,11 +223,10 @@ if (!(joueur) || joueur.nb_message === null) {
                     </form>
                 </div>
             </div>
-            <h1>
-                Badges
-            </h1>
-                <BadgeList PlayerOrUser="User" userId={joueur.id} categoryId=1 />
-            </div>
+            <DefaultBanner title=`%Badges% de l'utilisateur #${joueur.pseudo_discord}#`/>
+
+            <BadgeList PlayerOrUser="User" userId={joueur.id} categoryId=1 />
+        </div>
     )}
 
     <style>
@@ -253,39 +251,11 @@ if (!(joueur) || joueur.nb_message === null) {
             transform: translateY(-5px);
         }
 
-        .page-title {
-            margin-top: 50px;
-            margin-bottom: 50px;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        @media (max-width: 768px) {
-            .page-title {
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
-        }
-
         .profile-container {
             background: rgba(255 255 255 / 0.1);
             border-radius: 10px;
             text-align: center;
             font-family: Arial, sans-serif;
-        }
-
-        .profile-container h1 {
-            background-color: #333;
-            color: white;
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        @media (max-width: 350px) {
-            .profile-container h1 {
-                font-size: 1.25rem;
-            }
         }
 
         h2 {
