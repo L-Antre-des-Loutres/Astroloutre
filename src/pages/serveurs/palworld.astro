@@ -2,30 +2,15 @@
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import ServeurVignette from "../../components/serveurs/ServeurVignette.astro";
-import Title from "../../../public/images/titles/nos-serveurs.webp"
-import AreaTitle from "../../components/AreaTitle.astro";
+import LargeBanner from "../../components/transitions/LargeBanner.astro";
 ---
 
 <Layout>
-    <Banner bannerUrl="/banner/palworld/palworld_endgame.webp"/>
-    <div class="page-title">
-        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-    </div>
-    <ServeurVignette apiUrl="https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/palworld" jeu="palworld"/>
-</Layout>
 
-<style>
-    .page-title {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-    }
-    @media (max-width: 768px) {
-        .page-title {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-    }
-</style>
+<Banner bannerUrl="https://image.api.playstation.com/vulcan/ap/rnd/202405/2108/d976f5d6313a7174e5341d3a5e3f21559f56f86f40a71d2f.png"/>
+
+<LargeBanner title="%Nos serveurs% #Palworld#" invertedBackground/>
+
+<ServeurVignette apiUrl="https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/palworld" jeu="palworld"/>
+
+</Layout>

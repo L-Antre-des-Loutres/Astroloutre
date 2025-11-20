@@ -1,49 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Banner from "../components/Banner.astro";
-import Title from "../../public/images/titles/erreur500.png"
-import AreaTitle from "../components/AreaTitle.astro";
+import LargeBanner from "../components/transitions/LargeBanner.astro";
 
 interface Props {
     error: unknown;
 }
-const { error } = Astro.props; // Si jamais on veut afficher l'erreur, c'est dans cette props
+const { error = 500 } = Astro.props;
 ---
 
-<Layout title="Erreur 500">
-    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
-    <div class="page-content">
-        <div class="page-title">
-            <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-        </div>
+<Layout title="Erreur 404">
+    <Banner/>
+    <div class="error-page-content">
+        <LargeBanner title=`Erreur %#${error}#% !` invertedBackground/>
         <p>
-            Une erreur est arrivée de notre côté... Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
+            Une erreur… Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
         </p>
     </div>
 </Layout>
 
 <style>
-    :global(body) {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    :global(main) {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .page-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
     a {
         color: #3572b5;
         text-decoration: none;
@@ -51,6 +27,8 @@ const { error } = Astro.props; // Si jamais on veut afficher l'erreur, c'est dan
     a:hover {
         text-decoration: underline;
     }
+
+    p {
+        text-align: center;
+    }
 </style>
-
-
