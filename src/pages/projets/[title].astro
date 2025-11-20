@@ -3,6 +3,7 @@ import {getCollection, render} from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
 import {slugify} from "../../formater/JoueurFormater";
+import LargeBanner from "../../components/transitions/LargeBanner.astro";
 
 // 1. Génère un nouveau chemin pour chaque projet
 export async function getStaticPaths() {
@@ -19,7 +20,7 @@ const {projet} = Astro.props;
 const {Content} = await render(projet);
 ---
 <Layout title={projet.data.title}>
-    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
+    <Banner/>
 
     <button
             onclick="history.back()"
@@ -28,7 +29,7 @@ const {Content} = await render(projet);
         <span>←</span> Retour
     </button>
     <div class="project-container">
-        <h1 class="project-title">{projet.data.title}</h1>
+        <LargeBanner title=`#${projet.data.title}#` invertedBackground/>
         <p class="project-description">{projet.data.description}</p>
         <small class="project-date">{new Date(projet.data.pubDate).toLocaleDateString('fr-FR', {
             day: 'numeric',

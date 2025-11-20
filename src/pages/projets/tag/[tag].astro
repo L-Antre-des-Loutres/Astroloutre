@@ -4,7 +4,6 @@ import Layout from "../../../layouts/Layout.astro";
 import Title from "../../../../public/images/titles/nos-projet.webp"
 import Banner from "../../../components/Banner.astro";
 import {slugify} from "../../../formater/JoueurFormater";
-import AreaTitle from "../../../components/AreaTitle.astro";
 
 export async function getStaticPaths() {
     const articles = await getCollection("blog");
@@ -30,10 +29,7 @@ const filteredArticles = articles
 ---
 
 <Layout title="Projets">
-    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
-    <div class="page-title">
-        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-    </div>
+    <Banner/>
 
     <div class="projects-container">
         <ul class="projects-list">
