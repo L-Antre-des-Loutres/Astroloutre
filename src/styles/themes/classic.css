@@ -7,15 +7,23 @@
     /* Text : Titles */
     --h1TitleColor: var(--color-gold-deep);
     --h2TitleColor: var(--color-gray-deep);
-    --pTextColor: var(--color-gray-deep);
+    --markdown-h1-default-color: var(--color-gray-deep);
+    --markdown-h2-default-color: var(--color-gray-deep);
+    --markdown-h3-default-color: var(--color-gray-deep);
 
     /* Text : Paragraphs */
+    --pTextColor: var(--color-gray-deep);
+    --p-deep-text-color: var(--color-gray-deep);
+    --p-mid-text-color: var(--color-gray);
+    --p-light-text-color: var(--color-gray-light);
+    --pill-label-text-color: var(--color-blueish-gray-lightest);
     --primary-button-color: var(--color-green);
     --primary-button-color-hover: var(--color-white);
     --primary-button-background-color: none;
     --primary-button-background-color-hover: var(--color-green);
     --primary-button-outline-color: var(--color-green);
     --primary-button-outline-color-hover: var(--color-green);
+    --markdown-default-color: var(--color-gray-deep);
 
     /* Buttons */
     --gray-button-color: var(--color-gray-deep);

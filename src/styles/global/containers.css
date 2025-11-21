@@ -67,3 +67,9 @@
     padding: 0;
     margin: 0;
 }
+
+.tag-pill-labels-list-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}

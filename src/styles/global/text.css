@@ -14,6 +14,33 @@
     font-weight: var(--font-weight-main);
 }
 
+/* TEXT STYLES */
+
+.vignette-date {
+    color: var(--p-light-text-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.note-description {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--p-mid-text-color);
+    border-left: 4px solid var(--component-transition-background-color);
+    font-style: italic;
+    padding-left: 1rem;
+}
+
+.tag-pill-labels {
+    background: var(--pill-label-text-color);
+    padding: 0.3em 0.8em;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--p-deep-text-color);
+}
+
 /* TEXT GRADIENT SHIFT */
 
 .textColorGradientShift {
