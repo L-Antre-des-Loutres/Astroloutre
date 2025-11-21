@@ -7,8 +7,6 @@ author: "RereBleue"
 image: "https://raw.githubusercontent.com/L-Antre-des-Loutres/OtterlyApi/master/otterlyapi.png"
 ---
 
-![Logo Otterly](https://raw.githubusercontent.com/L-Antre-des-Loutres/OtterlyApi/master/otterlyapi.png)
-
 # Otterly API - Api Serveur
 
 ![GitHub all releases](https://img.shields.io/github/downloads/matheo-1712/OtterlyAPI/total)

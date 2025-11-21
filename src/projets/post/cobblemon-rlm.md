@@ -2,9 +2,9 @@
 title: "Cobblemon RLM"
 description: "Description courte"
 pubDate: 2025-09-27
-tags: [ "Minecraft" ]
+tags: [ "Minecraft", "Datapack", "Pokemon", "RLM" ]
 author: "RereBleue & TheAzertor"
-image: "/panoramas/minecraft/Tortilune.webp"
+image: "https://github.com/L-Antre-des-Loutres/Cobblemon-RLM/blob/main/assets/logos/CobblemonRLM-big.png?raw=true"
 ---
 
 ## 🦦 What it "Cobblemon RLM" ?
