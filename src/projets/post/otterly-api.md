@@ -1,6 +1,6 @@
 ---
 title: "Otterly API"
-description: "Otterly API est une API RESTful."
+description: "Une API permettant la gestion de serveurs de jeu. Elle permet d'afficher l'ensemble des informations les concernant, de les installer, de les démarrer et de les arrêter via une requête."
 pubDate: 2025-09-27
 tags: [ "Back-end", "API" ]
 author: "RereBleue"

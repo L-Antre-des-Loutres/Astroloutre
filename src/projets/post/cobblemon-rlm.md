@@ -1,6 +1,6 @@
 ---
 title: "Cobblemon RLM"
-description: "Description courte"
+description: "Cobblemon Royaume de Loutre Mer est un datapack Cobblemon qui ajoute des Fakemon d'un projet abandonné de l'Antre des loutres."
 pubDate: 2025-09-27
 tags: [ "Minecraft", "Datapack", "Pokemon", "RLM" ]
 author: "RereBleue & TheAzertor"
