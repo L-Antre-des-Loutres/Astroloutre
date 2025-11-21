@@ -84,6 +84,6 @@
     }
 
     .front-content .universe-sliding-card-image-container {
-        margin: 0 2em;
+        margin: var(--sliding-cards-small-screens-margin);
     }
 }

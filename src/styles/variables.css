@@ -43,6 +43,7 @@
     --component-paperthin-transition: 8px;
 
     --sliding-cards-margin: 4em;
+    --sliding-cards-small-screens-margin: 0.2em;
     --sliding-cards-hover-transform: translateX(20%) translateY(0);
 }
 

@@ -15,6 +15,7 @@ const filteredArticles = tag
     : articles;
 filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
+
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
     <Banner/>
     <LargeBanner title="Nos %super projets% !" invertedBackground/>
@@ -22,7 +23,7 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
     <div class="projects-container">
         <ul class="projects-list">
             {filteredArticles.map((article) => (
-                <SlidingVignette image={article.data.image} image_alt={article.data.title} title={article.data.title} paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0px" transform_anim={false}/>
+                <SlidingVignette image={article.data.image} image_alt={article.data.title} title=`#${article.data.title}#` paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0px" transform_anim={false}/>
             ))}
         </ul>
     </div>
@@ -32,15 +33,41 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
 <style>
     .projects-container {
         margin: 0 auto;
-        padding-left: 10rem;
-        padding-right: 10rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 1400px;
+        width: 100%;
     }
 
     .projects-list {
         display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
         list-style: none;
         padding: 0;
+        margin: 0 auto;
+        width: 100%;
+
+        justify-items: center;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .projects-container {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .projects-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .projects-list {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
     }
 </style>
