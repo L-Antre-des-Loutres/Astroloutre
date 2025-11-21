@@ -9,12 +9,12 @@ interface Props {
 const { error = 500 } = Astro.props;
 ---
 
-<Layout title="Erreur 404">
+<Layout title="Erreur 500">
     <Banner/>
     <div class="error-page-content">
         <LargeBanner title=`Erreur %#${error}#% !` invertedBackground/>
-        <p>
-            Une erreur… Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
+        <p style="text-align: center;">
+            Une erreur est survenue… Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
         </p>
     </div>
 </Layout>
@@ -26,9 +26,5 @@ const { error = 500 } = Astro.props;
     }
     a:hover {
         text-decoration: underline;
-    }
-
-    p {
-        text-align: center;
     }
 </style>

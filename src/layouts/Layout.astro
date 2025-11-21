@@ -18,11 +18,17 @@ import Footer from "../components/Footer.astro";
 
 // On définit des props optionnelles pour le layout
 const {
-    title = "Antre des Loutres",
     ogImage ="https://antredesloutres.fr/_astro/adl_small_logo.D-nH0BMB.png",
     ogTitle = "Antre des Loutres",
     ogDescription = "Bienvenue dans l'Antre des loutres 🦦 — un lieu de partage, d'amitié et de bonne humeur !"
 } = Astro.props;
+let {
+    title = "Antre des Loutres"
+} = Astro.props;
+
+if (title !== "Antre des Loutres") {
+    title = "ADL | " + title;
+}
 ---
 <!doctype html>
 <html lang="fr">
