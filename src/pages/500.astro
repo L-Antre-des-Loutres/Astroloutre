@@ -14,17 +14,17 @@ const { error = 500 } = Astro.props;
     <div class="error-page-content">
         <LargeBanner title=`Erreur %#${error}#% !` invertedBackground/>
         <p style="text-align: center;">
-            Une erreur est survenue… Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
+            Une erreur est survenue… Vaut mieux <a class="link" href="/">retourner en lieu sûr</a>, pas vrai ?
         </p>
     </div>
 </Layout>
 
 <style>
-    a {
+    .link {
         color: #3572b5;
         text-decoration: none;
     }
-    a:hover {
+    .link:hover {
         text-decoration: underline;
     }
 </style>
