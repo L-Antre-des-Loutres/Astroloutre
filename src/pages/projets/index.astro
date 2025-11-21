@@ -2,6 +2,7 @@
 import {getCollection} from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
+import SlidingVignette from "../../components/vignettes/SlidingVignette.astro";
 import {slugify} from "../../formater/JoueurFormater";
 import LargeBanner from "../../components/transitions/LargeBanner.astro";
 
@@ -21,17 +22,7 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
     <div class="projects-container">
         <ul class="projects-list">
             {filteredArticles.map((article) => (
-                    <li class="project-card">
-                        <img src={article.data.image} alt={article.data.title} class="featured-image"/>
-                        <a href={`/projets/${slugify(article.data.title)}`}
-                           class="project-title">{article.data.title}</a>
-                        <p class="project-description">{article.data.description}</p>
-                        <small class="project-date">{new Date(article.data.pubDate).toLocaleDateString('fr-FR', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        })}</small>
-                    </li>
+                <SlidingVignette image={article.data.image} image_alt={article.data.title} title={article.data.title} paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0px" transform_anim={false}/>
             ))}
         </ul>
     </div>
@@ -52,65 +43,4 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
         list-style: none;
         padding: 0;
     }
-
-    .project-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 1.25rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        border: 1px solid #eee;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .project-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-    }
-
-    .featured-image {
-        width: 100%;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-    }
-
-    .project-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #1a1a1a;
-        text-decoration: none;
-        margin-bottom: 0.5rem;
-        display: block;
-    }
-
-    .project-title:hover {
-        animation: colorShift 3s ease-in-out infinite;
-    }
-
-    .project-description {
-        color: #555;
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-        line-height: 1.5;
-    }
-
-    .project-date {
-        color: #888;
-        font-size: 1rem;
-    }
-
-    @media (max-width: 768px) {
-        .projects-container {
-            padding: 1rem;
-        }
-    }
-
-    @keyframes colorShift {
-        0%   { color: #FFDDA0; }
-        33%  { color: #FFB347; }
-        66%  { color: #FF8C42; }
-        100% { color: #FFDDA0; }
-    }
-
 </style>

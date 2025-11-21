@@ -36,7 +36,7 @@
     --blueGradientShift-2: var(--color-gold);
     --blueGradientShift-3: var(--color-gold-deep);
 
-    /* Cards colors */
+    /* Vignettes colors */
     --sliding-cards-gradient-color-1: var(--color-gray-deep);
     --sliding-cards-gradient-color-2: var(--color-gray-deep);
 }

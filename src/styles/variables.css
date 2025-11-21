@@ -41,6 +41,9 @@
 
     /* Other variables */
     --component-paperthin-transition: 8px;
+
+    --sliding-cards-margin: 4em;
+    --sliding-cards-hover-transform: translateX(20%) translateY(0);
 }
 
 /* Fonts */

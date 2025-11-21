@@ -29,7 +29,7 @@
 }
 
 .front-content .universe-sliding-card-image-container {
-    margin: 4em;
+    margin: var(--sliding-cards-margin);
 }
 
 .universe-sliding-card-image-container img {
@@ -71,7 +71,7 @@
 }
 
 .universe-sliding-card:hover .front-content {
-    transform: translateX(20%) translateY(0);
+    transform: var(--sliding-cards-hover-transform);
 }
 
 .universe-sliding-card:hover .front-content p {

@@ -7,19 +7,35 @@ interface Props {
     title: string;
     paragraph: string;
     card_link: string;
+    margin?: string;
+    transform_anim?: boolean;
 }
 
-const { image, image_alt, title, paragraph, card_link } = Astro.props;
+const {
+    image,
+    image_alt,
+    title,
+    paragraph,
+    card_link,
+    margin = "4em",
+    transform_anim = true
+} = Astro.props;
 
 const parsedTitle = parseTitle(title ?? "");
+
+// Overide CSS variables if defined
+const cssVars = {
+    '--sliding-cards-margin': `${margin}`,
+    '--sliding-cards-hover-transform': transform_anim ? 'translateX(20%) translateY(0)' : 'none'
+};
 ---
 
-<div class="universe-sliding-card-container">
+<div class="universe-sliding-card-container" style={cssVars}>
     <a href={card_link}>
         <div class="universe-sliding-card">
             <div class="front-content">
                 <div class="universe-sliding-card-image-container">
-                    <img class="" src={image} alt={image_alt}/>
+                    <img src={image} alt={image_alt}/>
                 </div>
             </div>
             <div class="content">
