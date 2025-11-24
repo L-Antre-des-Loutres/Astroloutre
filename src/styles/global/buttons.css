@@ -15,7 +15,6 @@
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     z-index: 1;
     border: 2px solid transparent;
