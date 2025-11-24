@@ -1,33 +1,112 @@
 ---
 
 ---
-<footer class="w-full bg-[#222] text-white py-12">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 text-center md:text-left">
+<footer class="footer">
+    <div class="footer-container">
 
-        <div class="flex flex-col gap-2">
-            <h4 class="text-lg font-semibold mb-2">L'Antre des Loutres</h4>
-            <p class="text-sm text-gray-300">
+        <div class="footer-column">
+            <h4 class="footer-title">L'Antre des Loutres</h4>
+            <p class="footer-text text-light">
                 Communauté de joueurs passionnés, serveurs privés, entraide et bonne ambiance.
             </p>
         </div>
 
-        <div class="flex flex-col gap-2">
-            <h4 class="text-lg font-semibold mb-2">Liens utiles</h4>
-            <ul class="text-sm space-y-2">
-                <li><a href="/" class="hover:underline">Accueil</a></li>
-                <li><a href="/donnees" class="hover:underline">Données</a></li>
-                <li><a href="https://discord.gg/k4ZBFVdntp" class="hover:underline">Notre Discord</a></li>
+        <div class="footer-column">
+            <h4 class="footer-title">Liens utiles</h4>
+            <ul class="footer-links">
+                <li><a href="/" class="footer-link">Accueil</a></li>
+                <li><a href="/donnees" class="footer-link">Données</a></li>
+                <li><a href="https://discord.gg/k4ZBFVdntp" class="footer-link">Notre Discord</a></li>
             </ul>
         </div>
 
-        <div class="flex flex-col gap-2">
-            <h4 class="text-lg font-semibold mb-2">Contact</h4>
-            <p class="text-sm text-gray-300">arisoutre@gmail.com</p>
-            <p class="text-sm text-gray-300">© {new Date().getFullYear()} L'Antre des Loutres</p>
+        <div class="footer-column">
+            <h4 class="footer-title">Contact</h4>
+            <p class="footer-text">arisoutre@gmail.com</p>
+            <p class="footer-text">© {new Date().getFullYear()} L'Antre des Loutres</p>
         </div>
-
     </div>
 </footer>
 
+<style>
+    .footer {
+        width: 100%;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        background-color: var(--footer-background-color);
+        border-top: 2px solid var(--footer-outline-color);
+    }
 
+    .footer-container {
+        max-width: 80rem;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
 
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 3rem;
+        column-gap: 2rem;
+        text-align: center;
+    }
+
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        margin-top: 0;
+        color: var(--footer-text-color);
+    }
+
+    .footer-text {
+        font-size: 0.875rem;
+        margin: 0;
+        color: var(--footer-text-color);
+    }
+
+    .text-light {
+        color: var(--footer-alt-text-color);
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 0.875rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        color: var(--footer-link-color);
+    }
+
+    .footer-link {
+        color: inherit;
+        text-decoration: none;
+        transition: text-decoration 0.2s;
+    }
+
+    .footer-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (min-width: 640px) {
+        .footer-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* md:grid-cols-3 et md:text-left (Bureaux > 768px) */
+    @media (min-width: 768px) {
+        .footer-container {
+            grid-template-columns: repeat(3, 1fr);
+            text-align: left;
+        }
+    }
+</style>
