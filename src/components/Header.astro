@@ -64,13 +64,14 @@ import adl_logo from "../assets/adl_small_logo.png";
 		justify-content: center;
 		z-index: 1000;
 		pointer-events: none;
+        color: var(--header-text-color);
 	}
 
 	.header-inner {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		background-color: rgba(255, 255, 255, 0.48);
+		background-color: var(--header-background-color);
 		transition: background-color 0.3s ease;
 		padding: 1rem 2rem;
 		margin: 1rem auto;
@@ -82,7 +83,7 @@ import adl_logo from "../assets/adl_small_logo.png";
 	}
 
 	.header-inner.scrolled {
-		background-color: rgba(255, 255, 255, 0.92);
+		background-color: var(--header-scrolled-background-color);
 	}
 
 	#left {
@@ -172,6 +173,7 @@ import adl_logo from "../assets/adl_small_logo.png";
 
 	.dropdown-arrow {
 		transition: transform 0.2s ease;
+        fill: var(--header-text-color);
 	}
 	.dropdown:hover .dropdown-arrow {
 		transform: rotate(180deg);
@@ -181,7 +183,6 @@ import adl_logo from "../assets/adl_small_logo.png";
 		position: absolute;
 		top: 100%;
 		min-width: 220px;
-		background-color: rgba(255, 255, 255, 0.9);
 		border-radius: 1rem;
 		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 		padding: 1rem;
@@ -190,6 +191,7 @@ import adl_logo from "../assets/adl_small_logo.png";
 		gap: 1rem;
 		white-space: nowrap;
 		z-index: 1001;
+        background-color: var(--header-dropdown-background-color);
 	}
 
 	.dropdown-content::before {
@@ -200,7 +202,7 @@ import adl_logo from "../assets/adl_small_logo.png";
 		transform: translateX(-50%);
 		border-left: 10px solid transparent;
 		border-right: 10px solid transparent;
-		border-bottom: 10px solid white;
+		border-bottom: 10px solid var(--header-dropdown-background-color);
 	}
 
 	.dropdown:hover .dropdown-content {
@@ -209,14 +211,14 @@ import adl_logo from "../assets/adl_small_logo.png";
 
 	.dropdown-content a {
 		text-decoration: none;
-		color: #222;
 		font-size: 1.05rem;
 		font-weight: 500;
 		transition: all 0.2s ease;
+        color: var(--header-dropdown-link-color);
 	}
 	.dropdown-content a:hover {
-		color: #555;
 		transform: translateX(5px);
+        color: var(--header-dropdown-link-hover-color);
 	}
 </style>
 
