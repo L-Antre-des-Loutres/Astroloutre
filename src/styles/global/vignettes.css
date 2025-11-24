@@ -175,6 +175,16 @@
     color: var(--server-cards-badge-text-color-2);
 }
 
+.server-card-badge.active {
+    background-color: var(--server-cards-badge-background-color-3-active);
+    color: var(--server-cards-badge-text-color-3-active);
+}
+
+.server-card-badge.unactive {
+    background-color: var(--server-cards-badge-background-color-3-unactive);
+    color: var(--server-cards-badge-text-color-3-unactive);
+}
+
 @media (max-width: 800px) {
     .server-card-footer {
         display: none;
