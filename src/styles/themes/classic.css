@@ -20,6 +20,7 @@
     --component-transition-background-color: var(--color-gray-deep);
     --component-transition-outline-color: var(--color-gray);
     --component-transition-text-color: var(--color-white);
+    --component-inverted-transition-text-color: var(--color-black);
 
     /* Text : Titles */
     --h1TitleColor: var(--color-gold-deep);
@@ -69,6 +70,10 @@
     --server-cards-badge-text-color-1: var(--color-white);
     --server-cards-badge-background-color-2: var(--color-purple);
     --server-cards-badge-text-color-2: var(--color-white);
+    --server-cards-badge-background-color-3-active: var(--color-green);
+    --server-cards-badge-text-color-3-active: var(--color-white);
+    --server-cards-badge-background-color-3-unactive: var(--color-red);
+    --server-cards-badge-text-color-3-unactive: var(--color-white);
 
     /* Other containers */
     /* Server players vignettes */
