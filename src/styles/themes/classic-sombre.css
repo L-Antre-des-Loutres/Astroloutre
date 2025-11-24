@@ -23,7 +23,7 @@
 
     /* Text : Titles */
     --h1TitleColor: var(--color-gold-deep);
-    --h2TitleColor: var(--color-blueish-gray-light);
+    --h2TitleColor: var(--color-blueish-gray-lightest);
     --markdown-h1-default-color: var(--color-blueish-gray-light);
     --markdown-h2-default-color: var(--color-blueish-gray-light);
     --markdown-h3-default-color: var(--color-blueish-gray-light);
@@ -69,6 +69,12 @@
     --server-cards-badge-text-color-1: var(--color-white);
     --server-cards-badge-background-color-2: var(--color-purple);
     --server-cards-badge-text-color-2: var(--color-white);
+
+    /* Other containers */
+    /* Server players vignettes */
+    --server-player-vignette-background-color: var(--color-black);
+    --server-player-vignette-outline-color: var(--color-gray);
+    --server-player-vignette-playername-color: var(--color-white);
 }
 
 @keyframes colorGradientShift {

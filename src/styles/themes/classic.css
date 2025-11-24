@@ -69,6 +69,12 @@
     --server-cards-badge-text-color-1: var(--color-white);
     --server-cards-badge-background-color-2: var(--color-purple);
     --server-cards-badge-text-color-2: var(--color-white);
+
+    /* Other containers */
+    /* Server players vignettes */
+    --server-player-vignette-background-color: var(--color-white);
+    --server-player-vignette-outline-color: var(--color-gray);
+    --server-player-vignette-playername-color: var(--color-gray-deeper);
 }
 
 @keyframes colorGradientShift {
