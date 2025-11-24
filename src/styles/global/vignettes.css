@@ -51,23 +51,25 @@
     justify-content: center;
     text-align: center;
     gap: 10px;
-    background: linear-gradient(-45deg, var(--sliding-cards-gradient-color-1) 0%, var(--sliding-cards-gradient-color-2) 100% );
-    color: #e8e8e8;
+    background-color: var(--sliding-cards-gradient-color);
+    color: var(--sliding-cards-default-text-color);
     padding: 20px;
     line-height: 1.5;
     border-radius: 5px;
     pointer-events: none;
     transform: translateX(96%) translateY(0);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.320, 1),
+                background-color 0.5s ease;
+}
+
+.universe-sliding-card:hover .content {
+    background-color: var(--sliding-cards-gradient-hover-color);
+    transform: translateX(0);
 }
 
 .universe-sliding-card .content .heading {
     font-size: 32px;
     font-weight: 700;
-}
-
-.universe-sliding-card:hover .content {
-    transform: translateX(0);
 }
 
 .universe-sliding-card:hover .front-content {
