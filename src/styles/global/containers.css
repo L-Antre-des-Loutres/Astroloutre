@@ -60,7 +60,7 @@
 .no-background-transition-container {
     background: none;
     border: none;
-    color: var(--component-transition-background-color);
+    color: var(--component-transition-text-color);
 }
 
 .paperthin-transition-container {
