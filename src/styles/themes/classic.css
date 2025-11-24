@@ -34,12 +34,6 @@
     --p-mid-text-color: var(--color-gray);
     --p-light-text-color: var(--color-gray-light);
     --pill-label-text-color: var(--color-blueish-gray-lightest);
-    --primary-button-color: var(--color-green);
-    --primary-button-color-hover: var(--color-white);
-    --primary-button-background-color: none;
-    --primary-button-background-color-hover: var(--color-green);
-    --primary-button-outline-color: var(--color-green);
-    --primary-button-outline-color-hover: var(--color-green);
     --markdown-default-color: var(--color-gray-deep);
 
     /* Buttons */
@@ -65,6 +59,16 @@
     --sliding-cards-gradient-color: var(--color-gray-deep);
     --sliding-cards-gradient-hover-color: var(--color-gray-deep);
     --sliding-cards-default-text-color: var(--color-white);
+
+    --server-cards-background-color: var(--color-white);
+    --server-cards-transition-color: var(--color-blueish-gray-deep);
+    --server-cards-title-color: var(--color-blueish-gray-deep);
+    --server-cards-text-color: var(--color-gray-deep);
+    --server-cards-desc-text-color: var(--color-gray-deep);
+    --server-cards-badge-background-color-1: var(--color-gray-deep);
+    --server-cards-badge-text-color-1: var(--color-white);
+    --server-cards-badge-background-color-2: var(--color-purple);
+    --server-cards-badge-text-color-2: var(--color-white);
 }
 
 @keyframes colorGradientShift {

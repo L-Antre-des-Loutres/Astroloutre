@@ -1,9 +1,6 @@
 :root {
     --background-color: var(--color-gray-deepest);
 
-    /* NEWLY ADDED !!!!! */
-    /* END OF NEWLY ADDED !!!!! */
-
     /* Header */
     --header-background-color: var(--highly-transparent-color-black);
     --header-scrolled-background-color: var(--tiny-transparent-color-black);
@@ -62,6 +59,16 @@
     --sliding-cards-gradient-color: var(--color-gray-deep);
     --sliding-cards-gradient-hover-color: var(--color-black);
     --sliding-cards-default-text-color: var(--color-white);
+
+    --server-cards-background-color: var(--color-black);
+    --server-cards-transition-color: var(--color-blueish-gray-light);
+    --server-cards-title-color: var(--color-white);
+    --server-cards-text-color: var(--color-white);
+    --server-cards-desc-text-color: var(--color-white);
+    --server-cards-badge-background-color-1: var(--color-gray-deep);
+    --server-cards-badge-text-color-1: var(--color-white);
+    --server-cards-badge-background-color-2: var(--color-purple);
+    --server-cards-badge-text-color-2: var(--color-white);
 }
 
 @keyframes colorGradientShift {
