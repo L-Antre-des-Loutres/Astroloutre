@@ -16,6 +16,21 @@ const reponse = await fetch(
 const json = await reponse.json();
 const playerDataList: Player[] = json.data ?? [];
 ---
+<div class="player-grid">
+    {playerDataList.map((player) => (
+            <a href=`/joueurs/minecraft/${slugify(player.playername)}`>
+                <div class="player-card">
+                    <img
+                            class="player-avatar"
+                            src={`https://mc-heads.net/avatar/${formatUUID(player.compte_id)}/64`}
+                            alt={`Avatar de ${player.playername}`}
+                    />
+                    <div class="player-name">{player.playername}</div>
+                </div>
+            </a>
+    ))}
+</div>
+
 
 <style>
     .player-grid {
@@ -26,8 +41,8 @@ const playerDataList: Player[] = json.data ?? [];
     }
 
     .player-card {
-        background-color: #f9fafb;
-        border: 1px solid #e5e7eb;
+        background-color: var(--server-player-vignette-background-color);
+        border: 2px solid var(--server-player-vignette-outline-color);
         border-radius: 0.5rem;
         text-align: center;
         padding: 1rem;
@@ -47,23 +62,8 @@ const playerDataList: Player[] = json.data ?? [];
 
     .player-name {
         font-weight: 600;
-        color: #374151;
-        font-size: 0.80rem;
+        color: var(--server-player-vignette-playername-color);
+        font-size: 0.9rem;
         word-break: break-word;
     }
 </style>
-
-<div class="player-grid">
-    {playerDataList.map((player) => (
-            <a href=`/joueurs/minecraft/${slugify(player.playername)}`>
-                <div class="player-card">
-                    <img
-                            class="player-avatar"
-                            src={`https://mc-heads.net/avatar/${formatUUID(player.compte_id)}/64`}
-                            alt={`Avatar de ${player.playername}`}
-                    />
-                    <div class="player-name">{player.playername}</div>
-                </div>
-            </a>
-    ))}
-</div>
