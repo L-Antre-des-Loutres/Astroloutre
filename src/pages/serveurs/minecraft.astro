@@ -6,16 +6,22 @@ import type {ServeurType} from "../../types/ServeurType.ts";
 import {slugify} from "../../formater/JoueurFormater.ts";
 import ServerCard from "../../components/vignettes/ServerCard.astro";
 
-const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/minecraft';
+const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs';
 const jeu = 'minecraft';
 
 // Récupération des données depuis l'API
-let data
+let data = []; // Initialisation à vide par sécurité
+
 if (apiUrl) {
     const res = await fetch(apiUrl);
     const json = await res.json();
+
     if (json.success && Array.isArray(json.data)) {
-        data = json.data;
+        data = json.data
+            // On garde uniquement les serveurs Minecraft
+            .filter((item: ServeurType) => item.jeu.toLowerCase() === 'minecraft')
+            // Les actifs (1) passent avant les inactifs (0)
+            .sort((a: ServeurType, b: ServeurType) => b.actif - a.actif);
     }
 }
 ---
@@ -28,9 +34,9 @@ if (apiUrl) {
 
 <div class="grid-container">
     {data.map((item: ServeurType) => (
-            <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
-                <ServerCard image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type}/>
-            </a>
+        <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
+            <ServerCard image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type} actif={item.actif}/>
+        </a>
     ))}
 </div>
 
