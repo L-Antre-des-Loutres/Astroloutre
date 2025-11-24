@@ -1,4 +1,21 @@
 :root {
+    --background-color: var(--color-white);
+
+    /* Header */
+    --header-background-color: var(--highly-transparent-color-white);
+    --header-scrolled-background-color: var(--tiny-transparent-color-white);
+    --header-text-color: var(--color-gray-deeper);
+    --header-dropdown-background-color: var(--tiny-transparent-color-white);
+    --header-dropdown-link-color: var(--color-gray-deeper);
+    --header-dropdown-link-hover-color: var(--goldenGradientShift-3);
+
+    /* Footer (kinda same color as transitions */
+    --footer-background-color: var(--color-black);
+    --footer-outline-color: var(--color-gray);
+    --footer-text-color: var(--color-white);
+    --footer-alt-text-color: var(--color-white);
+    --footer-link-color: var(--color-gold-light);
+
     /* Transitions */
     --component-transition-background-color: var(--color-gray-deep);
     --component-transition-outline-color: var(--color-gray);
@@ -45,8 +62,9 @@
     --blueGradientShift-3: var(--color-gold-deep);
 
     /* Vignettes colors */
-    --sliding-cards-gradient-color-1: var(--color-gray-deep);
-    --sliding-cards-gradient-color-2: var(--color-gray-deep);
+    --sliding-cards-gradient-color: var(--color-gray-deep);
+    --sliding-cards-gradient-hover-color: var(--color-gray-deep);
+    --sliding-cards-default-text-color: var(--color-white);
 }
 
 @keyframes colorGradientShift {

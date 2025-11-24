@@ -1,0 +1,72 @@
+:root {
+    --background-color: var(--color-gray-deepest);
+
+    /* NEWLY ADDED !!!!! */
+    /* END OF NEWLY ADDED !!!!! */
+
+    /* Header */
+    --header-background-color: var(--highly-transparent-color-black);
+    --header-scrolled-background-color: var(--tiny-transparent-color-black);
+    --header-text-color: var(--color-white);
+    --header-dropdown-background-color: var(--color-gray-deep);
+    --header-dropdown-link-color: var(--color-white);
+    --header-dropdown-link-hover-color: var(--goldenGradientShift-1);
+
+    /* Footer (kinda same color as transitions */
+    --footer-background-color: var(--color-black);
+    --footer-outline-color: var(--color-gray);
+    --footer-text-color: var(--color-white);
+    --footer-alt-text-color: var(--color-white);
+    --footer-link-color: var(--color-gold-light);
+
+    /* Transitions */
+    --component-transition-background-color: var(--color-black);
+    --component-transition-outline-color: var(--color-gray);
+    --component-transition-text-color: var(--color-white);
+
+    /* Text : Titles */
+    --h1TitleColor: var(--color-gold-deep);
+    --h2TitleColor: var(--color-blueish-gray-light);
+    --markdown-h1-default-color: var(--color-blueish-gray-light);
+    --markdown-h2-default-color: var(--color-blueish-gray-light);
+    --markdown-h3-default-color: var(--color-blueish-gray-light);
+
+    /* Text : Paragraphs */
+    --pTextColor: var(--color-white);
+    --p-deep-text-color: var(--color-blueish-gray-light);
+    --p-mid-text-color: var(--color-blueish-gray-lightest);
+    --p-light-text-color: var(--color-blueish-gray-lightest);
+    --pill-label-text-color: var(--color-white);
+    --markdown-default-color: var(--color-white);
+
+    /* Buttons */
+    --gray-button-color: var(--color-gray-deepest);
+    --gray-button-color-hover: var(--color-black);
+    --golden-button-secondary-color: var(--color-gold-deep);
+
+    /* Organigramme colors */
+    --founders-color: var(--color-gold-deeper);
+    --investors-color: var(--color-green);
+    --partners-color: var(--color-blue);
+
+    /* Gradient */
+    --goldenGradientShift-1: var(--color-gold-light);
+    --goldenGradientShift-2: var(--color-gold);
+    --goldenGradientShift-3: var(--color-gold-deep);
+
+    --blueGradientShift-1: var(--color-gold-light);
+    --blueGradientShift-2: var(--color-gold);
+    --blueGradientShift-3: var(--color-gold-deep);
+
+    /* Vignettes colors */
+    --sliding-cards-gradient-color: var(--color-gray-deep);
+    --sliding-cards-gradient-hover-color: var(--color-black);
+    --sliding-cards-default-text-color: var(--color-white);
+}
+
+@keyframes colorGradientShift {
+    0%   { color: var(--goldenGradientShift-1); }
+    33%  { color: var(--goldenGradientShift-2); }
+    66%  { color: var(--goldenGradientShift-3); }
+    100% { color: var(--goldenGradientShift-1); }
+}

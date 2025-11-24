@@ -1,11 +1,17 @@
 :root {
     /* Colors */
     --color-white: #fff;
+    --highly-transparent-color-white: rgba(255, 255, 255, 0.48);
+    --tiny-transparent-color-white: rgba(255, 255, 255, 0.92);
+    --color-black: #000;
+    --highly-transparent-color-black: rgba(0, 0, 0, 0.48);
+    --tiny-transparent-color-black: rgba(0, 0, 0, 0.92);
 
     --color-gray-light: #666;
     --color-gray: #444;
     --color-gray-deep: #222;
     --color-gray-deeper: #191919;
+    --color-gray-deepest: #080808;
 
     --color-blueish-gray-lightest: #b9bec6;
     --color-blueish-gray-light: #6b7280;
