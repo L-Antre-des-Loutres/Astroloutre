@@ -1,0 +1,33 @@
+---
+interface Props {
+    image: string;
+    image_alt: string;
+    title: string;
+    paragraph: string;
+    version: string;
+    jeu: string;
+    type: string;
+}
+
+const { image, image_alt, title, paragraph, version, jeu, type } = Astro.props;
+
+// Calcul de l'IP pour simplifier le template
+const ipAddress = jeu === "palworld" ? "antredesloutres.fr:8211" : type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr";
+---
+
+<div class="server-card">
+    <div class="server-card-image">
+        {image && <img src={image} alt={image_alt ?? 'Image'}/>}
+        <div class="overlay"></div>
+    </div>
+
+    <div class="server-card-content">
+        <h3>{title ?? 'Sans titre'}</h3>
+        <p class="server-card-description">{paragraph ?? 'Aucune description.'}</p>
+
+        <div class="server-card-footer">
+            <span class="server-card-badge version">Version {version}</span>
+            <span class="server-card-badge ip">{ipAddress}</span>
+        </div>
+    </div>
+</div>
