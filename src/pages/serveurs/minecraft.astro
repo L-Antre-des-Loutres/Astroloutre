@@ -1,8 +1,23 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/Banner.astro";
-import ServeurVignette from "../../components/serveurs/ServeurVignette.astro";
 import LargeBanner from "../../components/transitions/LargeBanner.astro";
+import type {ServeurType} from "../../types/ServeurType.ts";
+import {slugify} from "../../formater/JoueurFormater.ts";
+import ServerCard from "../../components/vignettes/ServerCard.astro";
+
+const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/minecraft';
+const jeu = 'minecraft';
+
+// Récupération des données depuis l'API
+let data
+if (apiUrl) {
+    const res = await fetch(apiUrl);
+    const json = await res.json();
+    if (json.success && Array.isArray(json.data)) {
+        data = json.data;
+    }
+}
 ---
 
 <Layout>
@@ -11,6 +26,34 @@ import LargeBanner from "../../components/transitions/LargeBanner.astro";
 
 <LargeBanner title="%Nos serveurs% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
 
-<ServeurVignette apiUrl="https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/minecraft" jeu="minecraft"/>
+<div class="grid-container">
+    {data.map((item: ServeurType) => (
+            <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
+                <ServerCard image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type}/>
+            </a>
+    ))}
+</div>
 
 </Layout>
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem 1rem 2.5rem;
+        margin: 0 1rem;
+    }
+
+    @media (min-width: 950px) {
+        .grid-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1500px) {
+        .grid-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
