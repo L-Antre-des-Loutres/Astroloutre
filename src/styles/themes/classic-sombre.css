@@ -83,6 +83,13 @@
     --server-player-vignette-background-color: var(--color-black);
     --server-player-vignette-outline-color: var(--color-gray);
     --server-player-vignette-playername-color: var(--color-white);
+
+    /* Server screens */
+    --server-screen-color-bg-card: var(--color-gray-deepest);
+    --server-screen-color-border: var(--color-gray);
+    --server-screen-color-text-main: var(--color-gold-light);
+    --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
+    --server-screen-color-accent: var(--color-gold-deep);
 }
 
 @keyframes colorGradientShift {

@@ -10,7 +10,7 @@
     --header-dropdown-link-hover-color: var(--goldenGradientShift-3);
 
     /* Footer (kinda same color as transitions */
-    --footer-background-color: var(--color-black);
+    --footer-background-color: var(--color-gray-deep);
     --footer-outline-color: var(--color-gray);
     --footer-text-color: var(--color-white);
     --footer-alt-text-color: var(--color-white);
@@ -83,6 +83,13 @@
     --server-player-vignette-background-color: var(--color-white);
     --server-player-vignette-outline-color: var(--color-gray);
     --server-player-vignette-playername-color: var(--color-gray-deeper);
+
+    /* Server screens */
+    --server-screen-color-bg-card: var(--color-white);
+    --server-screen-color-border: var(--color-gray);
+    --server-screen-color-text-main: var(--color-gold-deeper);
+    --server-screen-color-text-muted: var(--color-blueish-gray-deep);
+    --server-screen-color-accent: var(--color-gold-deep);
 }
 
 @keyframes colorGradientShift {

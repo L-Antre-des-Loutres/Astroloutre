@@ -4,7 +4,6 @@ import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/Banner.astro";
 
 import PlayerList from "../../../components/serveurs/PlayerList.astro";
-import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
 import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
 import DefaultBanner from "../../../components/transitions/DefaultBanner.astro";
 
@@ -46,8 +45,6 @@ type ScreenType = {
 
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
-const playTime: number | undefined = Astro.props.playTime;
-const statutServeur: string | undefined = Astro.props.statutServeur;
 
 export async function getScreenList(): Promise<ScreenType[]> {
     const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/astroloutre/images';
@@ -148,9 +145,9 @@ export async function getStaticPaths() {
         <div class="profile-details">
             <div class="avatar">
                 <img
-                        src={serveur.image}
-                        alt={`Image du serveur`}
-                        class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
+                    src={serveur.image}
+                    alt={`Image du serveur`}
+                    class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
                 />
             </div>
 
@@ -208,23 +205,6 @@ export async function getStaticPaths() {
     </div>
 
     <style>
-        .icon {
-            display: inline;
-            vertical-align: middle;
-            margin-right: 6px;
-            filter: brightness(80%);
-        }
-
-        .modpack-link {
-            font-weight: bold;
-            transition: color 0.3s ease;
-            filter: brightness(80%);
-        }
-
-        .modpack-link:hover {
-            filter: brightness(50%);
-        }
-
         .profile-container {
             border-radius: 10px;
             text-align: center;
@@ -253,16 +233,6 @@ export async function getStaticPaths() {
             width: 100%;
         }
 
-        @media (max-width: 768px) {
-            .profile-details {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .info-grid {
-                text-align: center;
-            }
-        }
-
         .avatar img {
             border-radius: 8px;
         }
@@ -282,10 +252,15 @@ export async function getStaticPaths() {
             align-self: center;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 990px) {
+            .profile-details {
+                grid-template-columns: 1fr;
+            }
+            .info-grid {
+                text-align: center;
+            }
             button {
                 width: 100%;
-
             }
         }
     </style>
