@@ -148,15 +148,6 @@
     flex-grow: 1;
 }
 
-.server-card-footer {
-    margin-top: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding-top: 1rem;
-    border-top: 1px solid var(--server-cards-transition-color);
-}
-
 .server-card-badge {
     font-size: 0.75rem;
     padding: 4px 8px;
@@ -185,8 +176,11 @@
     color: var(--server-cards-badge-text-color-3-unactive);
 }
 
-@media (max-width: 800px) {
-    .server-card-footer {
-        display: none;
-    }
+.server-card-badge.modpack {
+    background-color: var(--server-cards-badge-background-color-4);
+    color: var(--server-cards-badge-text-color-4);
+}
+
+.server-card-badge.modpack a:hover {
+    color: var(--server-cards-badge-text-color-4-hover);
 }

@@ -74,6 +74,9 @@
     --server-cards-badge-text-color-3-active: var(--color-white);
     --server-cards-badge-background-color-3-unactive: var(--color-red);
     --server-cards-badge-text-color-3-unactive: var(--color-white);
+    --server-cards-badge-background-color-4: var(--color-blueish-gray-deep);
+    --server-cards-badge-text-color-4: var(--color-white);
+    --server-cards-badge-text-color-4-hover: var(--color-blueish-gray-lightest);
 
     /* Other containers */
     /* Server players vignettes */
