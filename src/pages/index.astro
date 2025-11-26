@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-import CarrouselContainer from '../components/sections/home/CarrouselContainer.astro';
+import CarrouselContainer from '../components/sections/home/Carrousel.astro';
 import LargeTransitionSection from "../components/sections/common/transitions/LargeTransitionSection.astro";
 import PresentationSection from "../components/sections/home/PresentationSection.astro";
 import MobileNav from "../components/sections/home/MobileNav.astro";
@@ -39,7 +39,7 @@ if (responsePalworld.ok) {
 	<PresentationSection/>
     <MobileNav/>
 
-    <TransitionSection title="Des #bots# codés par nos soins %nos soins% !"/>
+    <TransitionSection title="Des #bots# codés par %nos soins% !"/>
 
     <div class="cards-wrapper">
         <SlidingVignette
