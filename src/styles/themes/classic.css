@@ -90,6 +90,13 @@
     --server-screen-color-text-main: var(--color-gold-deeper);
     --server-screen-color-text-muted: var(--color-blueish-gray-deep);
     --server-screen-color-accent: var(--color-gold-deep);
+
+    /* Badge list */
+    --badge-list-color-bg-card: var(--color-white);
+    --badge-list-color-border: var(--color-gray);
+    --badge-list-color-accent: var(--color-gold-deep);
+    --badge-list-color-text-main: var(--color-gold-deeper);
+    --badge-list-color-text-muted: var(--color-blueish-gray-deep);
 }
 
 @keyframes colorGradientShift {

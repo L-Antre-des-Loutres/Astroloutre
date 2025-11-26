@@ -45,106 +45,203 @@ const activeBadges = badgesWithStatus.filter(badge =>
 
 // Formatage de dates
 const formatDate = (dateString: string | null) =>
-    dateString ? new Date(dateString).toLocaleDateString("fr-FR") : null;
+    dateString ? new Date(dateString).toLocaleDateString("fr-FR") : "Non obtenu";
+
+const hasBadges = activeBadges.length > 0;
 ---
 
-<div class="badge-grid">
-    {activeBadges.map((badge) => (
-            <div class={`badge-card ${!badge.date_recu ? "badge-not-obtained" : ""}`}>
-                <Image class="badge-image" src={badge.image_url} alt={badge.nom} width={100} height={100} />
-                <div class="badge-name">{badge.nom}</div>
+<div class="gallery-container">
+    {hasBadges ? (
+            <div class="serveur-screen">
+                {activeBadges.map((badge) => (
+                        <div class={`screen-item ${!badge.date_recu ? "badge-not-obtained" : ""}`}>
+                            <div class="image-wrapper">
+                                <Image
+                                        src={badge.image_url}
+                                        alt={badge.nom}
+                                        width={100}
+                                        height={100}
+                                        class="badge-img"
+                                />
+                            </div>
+                            <div class="info-wrapper">
+                                <p class="author">{badge.nom}</p>
 
-                <div class="badge-info">
-                    <div class="badge-desc">{badge.description}</div>
-                    <div class="badge-obtention">{badge.obtention}</div>
-                </div>
+                                <div class="badge-text-container">
+                                    <p class="description">{badge.description}</p>
+                                    <p class="obtention">{badge.obtention}</p>
+                                </div>
 
-                <div class="badge-date">
-                    <p>{badge.date_recu ? formatDate(badge.date_recu) : "Non obtenu"}</p>
-                </div>
+                                <span class="label">
+                            {badge.date_recu ? `Obtenu le ${formatDate(badge.date_recu)}` : "Non obtenu"}
+                        </span>
+                            </div>
+                        </div>
+                ))}
             </div>
-    ))}
+    ) : (
+            <div class="empty-state">
+                <p>Aucun badge disponible dans cette catégorie !</p>
+            </div>
+    )}
 </div>
 
 <style>
-    .badge-grid {
+    /* --- VARIABLES --- */
+    :root {
+        --badge-list-shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        --badge-list-shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --badge-list-radius-card: 0.75rem;
+    }
+
+    .gallery-container {
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* --- GRILLE --- */
+    .serveur-screen {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
         gap: 1.5rem;
         padding: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); /* Adapté pour les badges */
     }
+
     @media (max-width: 535px) {
-        .badge-grid {
-            display: inline-grid;
+        .serveur-screen {
+            grid-template-columns: 1fr;
         }
     }
 
-    .badge-card {
-        background: #f9fafb;
-        border: 1px solid #93969c;
-        border-radius: 0.5rem;
-        text-align: center;
-        padding: 0.4rem;
-        transition: transform 0.2s ease;
-        cursor: pointer;
-        width: 15rem;
-        height: 15rem;
+    /* --- CARTE --- */
+    .screen-item {
+        background-color: var(--badge-list-color-bg-card);
+        border: 2px solid var(--badge-list-color-border);
+        border-radius: var(--badge-list-radius-card);
+        overflow: hidden;
+        box-shadow: var(--badge-list-shadow-sm);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        cursor: default;
     }
-    .badge-card:hover { transform: scale(1.05); }
 
-    .badge-name {
-        font-weight: 600;
-        color: #374151;
-        font-size: 0.8rem;
-        height: 2rem;
+    .screen-item:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--badge-list-shadow-hover);
+        border-color: var(--badge-list-color-accent);
+    }
+
+    /* --- IMAGE --- */
+    .image-wrapper {
+        height: 140px; /* Moins haut que pour les screenshots */
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        padding: 0 0.5rem;
+        padding: 1rem;
+        background: none;
     }
 
-    .badge-info {
-        height: 6.7rem;
+    /* Note: on utilise :global car le composant <Image /> d'Astro peut encapsuler l'img */
+    .screen-item :global(img.badge-img) {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.5s ease;
+    }
+
+    .screen-item:hover :global(img.badge-img) {
+        transform: scale(1.15);
+    }
+
+    /* Grayscale pour les non obtenus */
+    .badge-not-obtained .image-wrapper {
+        filter: grayscale(100%);
+        opacity: 0.7;
+    }
+
+    /* --- INFOS --- */
+    .info-wrapper {
+        background-color: var(--badge-list-color-bg-card);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .author {
+        font-size: 1rem;
+        color: var(--badge-list-color-text-main);
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .badge-text-container {
+        font-size: 0.85rem;
+        color: var(--badge-list-color-text-main);
+        min-height: 4.5em;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
-        overflow: hidden;
-        padding: 0 0.5rem;
     }
 
-    .badge-desc,
-    .badge-obtention {
-        font-size: 0.8rem;
-        color: #6b7280;
-        line-height: 1rem;
+    /* Logique de switch Description / Obtention */
+    .description {
         display: -webkit-box;
-        -webkit-line-clamp: 5;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        margin: 0;
     }
 
-    .badge-obtention { display: none; }
-    .badge-card:hover .badge-desc { display: none; }
-    .badge-card:hover .badge-obtention { display: -webkit-box; }
-
-    .badge-image {
-        width: 64px;
-        height: 64px;
-        margin: 0 auto 0.5rem;
-        border-radius: 0.25rem;
-        object-fit: cover;
-    }
-    .badge-not-obtained .badge-image {
-        filter: grayscale(100%);
-        opacity: 0.6;
+    .obtention {
+        display: none;
+        font-style: italic;
+        margin: 0;
+        color: var(--badge-list-color-text-muted);
     }
 
-    .badge-date {
-        font-size: 0.8rem;
-        color: #6e7581;
+    .screen-item:hover .description { display: none; }
+    .screen-item:hover .obtention { display: block; animation: fadeIn 0.3s ease; }
+
+    .label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--badge-list-color-text-muted);
+        font-weight: 600;
+        margin-top: auto; /* Pousse la date vers le bas */
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* --- EMPTY STATE --- */
+    .empty-state {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        background: none;
+        border-radius: var(--badge-list-radius-card);
+        border: 2px dashed var(--badge-list-color-border);
+        margin: 1rem;
+    }
+
+    .empty-state p {
+        font-size: 1.25rem;
+        color: var(--badge-list-color-text-muted);
+        font-weight: 500;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 </style>
