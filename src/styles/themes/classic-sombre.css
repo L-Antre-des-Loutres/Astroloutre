@@ -1,41 +1,82 @@
 :root {
-    --background-color: var(--color-gray-deepest);
+    /* ================================================== */
+    /* == Variables not linked to a specific component == */
+    /* ================================================== */
 
-    /* Header */
+    /* Layout background color */
+    --background-color: var(--color-gray-deepest);
+    /* Global text colors */
+    --default-text-color: var(--color-white);
+    --deep-text-color: var(--color-blueish-gray-light);
+    --light-text-color: var(--color-blueish-gray-lightest);
+    --p-light-text-color: var(--color-blueish-gray-lightest);
+    --h1-title-color: var(--color-gold-deep);
+    --h2-title-color: var(--color-blueish-gray-lightest);
+    /* Gradient color */
+    --goldenGradientShift-1: var(--color-gold-light);
+    --goldenGradientShift-2: var(--color-gold);
+    --goldenGradientShift-3: var(--color-gold-deep);
+    @keyframes colorGradientShift {
+        0%   { color: var(--goldenGradientShift-1); }
+        33%  { color: var(--goldenGradientShift-2); }
+        66%  { color: var(--goldenGradientShift-3); }
+        100% { color: var(--goldenGradientShift-1); }
+    }
+
+    /* ====================== */
+    /* == Header Variables == */
+    /* ====================== */
+
+    /* Header background colors */
     --header-background-color: var(--highly-transparent-color-black);
     --header-scrolled-background-color: var(--tiny-transparent-color-black);
-    --header-text-color: var(--color-white);
     --header-dropdown-background-color: var(--color-gray-deep);
+    /* Header text colors */
+    --header-text-color: var(--color-white);
     --header-dropdown-link-color: var(--color-white);
     --header-dropdown-link-hover-color: var(--goldenGradientShift-1);
 
-    /* Footer (kinda same color as transitions */
+    /* ====================== */
+    /* == Footer Variables == */
+    /* ====================== */
+
+    /* Footer background color */
     --footer-background-color: var(--color-black);
+    /* Footer outline color */
     --footer-outline-color: var(--color-gray);
+    /* Footer text colors */
     --footer-text-color: var(--color-white);
     --footer-alt-text-color: var(--color-white);
     --footer-link-color: var(--color-gold-light);
 
-    /* Transitions */
+    /* ========================== */
+    /* == Transition Variables == */
+    /* ========================== */
+
+    /* Transitions background color */
     --component-transition-background-color: var(--color-black);
+    /* Transitions outline color */
     --component-transition-outline-color: var(--color-gray);
+    /* Transitions text colors */
     --component-transition-text-color: var(--color-white);
     --component-inverted-transition-text-color: var(--color-white);
 
-    /* Text : Titles */
-    --h1TitleColor: var(--color-gold-deep);
-    --h2TitleColor: var(--color-blueish-gray-lightest);
+    /* ================================= */
+    /* == Markdown sections Variables == */
+    /* ================================= */
+
+    /* Markdown sections text colors */
+    --markdown-default-color: var(--color-white);
     --markdown-h1-default-color: var(--color-blueish-gray-light);
     --markdown-h2-default-color: var(--color-blueish-gray-light);
     --markdown-h3-default-color: var(--color-blueish-gray-light);
 
-    /* Text : Paragraphs */
-    --pTextColor: var(--color-white);
-    --p-deep-text-color: var(--color-blueish-gray-light);
-    --p-mid-text-color: var(--color-blueish-gray-lightest);
-    --p-light-text-color: var(--color-blueish-gray-lightest);
+
+
+
     --pill-label-text-color: var(--color-white);
-    --markdown-default-color: var(--color-white);
+
+
 
     /* Buttons */
     --gray-button-color: var(--color-gray-deepest);
@@ -47,14 +88,6 @@
     --investors-color: var(--color-green);
     --partners-color: var(--color-blue);
 
-    /* Gradient */
-    --goldenGradientShift-1: var(--color-gold-light);
-    --goldenGradientShift-2: var(--color-gold);
-    --goldenGradientShift-3: var(--color-gold-deep);
-
-    --blueGradientShift-1: var(--color-gold-light);
-    --blueGradientShift-2: var(--color-gold);
-    --blueGradientShift-3: var(--color-gold-deep);
 
     /* Vignettes colors */
     --sliding-cards-gradient-color: var(--color-gray-deep);
@@ -97,11 +130,4 @@
     --badge-list-color-accent: var(--color-gold-deep);
     --badge-list-color-text-main: var(--color-gold-light);
     --badge-list-color-text-muted: var(--color-blueish-gray-lightest);
-}
-
-@keyframes colorGradientShift {
-    0%   { color: var(--goldenGradientShift-1); }
-    33%  { color: var(--goldenGradientShift-2); }
-    66%  { color: var(--goldenGradientShift-3); }
-    100% { color: var(--goldenGradientShift-1); }
 }
