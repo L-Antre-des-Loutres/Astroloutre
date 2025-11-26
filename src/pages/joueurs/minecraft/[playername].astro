@@ -1,17 +1,15 @@
 ---
-import Banner from "../../../components/Banner.astro";
-import PlayerStats from "../../../components/joueurs/PlayerStatsData.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
+import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
 import {Image} from 'astro:assets';
 import {slugify} from "../../../formater/JoueurFormater";
 import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
-import BadgeList from "../../../components/BadgeList.astro";
-import DefaultBanner from "../../../components/transitions/DefaultBanner.astro";
+import BadgeList from "../../../components/sections/badges/BadgeList.astro";
+import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
-import PokemonTeams from "../../../components/joueurs/PokemonTeams.astro";
-import LargeBanner from "../../../components/transitions/LargeBanner.astro";
-import PaneBanner from "../../../components/transitions/PaneBanner.astro";
+import PokemonTeams from "../../../components/sections/joueurs/PokemonTeams.astro";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
@@ -119,34 +117,10 @@ try {
 
 ---
 
-<Layout
-        ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`}
-        ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}
->
-    <Banner  bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
+<Layout ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}>
+    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
 
-    <LargeBanner title=`Profil ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ${prefixe} #${joueur.playername}#` invertedBackground/>
-    <PaneBanner/>
-
-    <script is:inline>
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".button-copy");
-
-            buttons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    const uuid = button.getAttribute("data-uuid");
-                    navigator.clipboard.writeText(uuid).then(() => {
-                        const span = button.querySelector("span");
-                        const originalText = span.textContent;
-                        span.textContent = "UUID copié !";
-                        setTimeout(() => {
-                            span.textContent = originalText;
-                        }, 2000);
-                    });
-                });
-            });
-        });
-    </script>
+    <TransitionSection title=`Profil ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ${prefixe} #${joueur.playername}#`/>
 
     {joueur && (
         <div class="profile-container">
@@ -218,6 +192,14 @@ try {
                         Profil NameMC
                     </a>
                     {profilLink !== "#" && (
+                            <a href={`/joueurs/minecraft/${slugify(joueur.playername)}`} class="w-full">
+                                <button class="super-button golden-outline w-full" style="border-radius: 5px">
+                                <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                                    <Image src={`https://mc-heads.net/avatar/${joueur.playername}/32`} alt="Head" width={24} height={24} class="rounded-sm"/>
+                                    {joueur.playername}
+                                </span>
+                                </button>
+                            </a>
                         <a class="button-namemc" href={`${profilLink}`}>
                             <Image src={DiscordIcon} alt="Discord" />
                             {profilText}
@@ -226,17 +208,17 @@ try {
                 </div>
             </div>
 
-            <DefaultBanner title={`%Statistiques% ${prefixe} #${joueur.playername}#`}/>
+            <TransitionSection title={`%Statistiques% ${prefixe} #${joueur.playername}#`}/>
 
             <PlayerStats uuid={joueur.compte_id} />
 
-            <DefaultBanner
+            <TransitionSection
                     title={`Badges ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] optenus`}
             />
 
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
 
-            <DefaultBanner
+            <TransitionSection
                     title={`Pokemon ${prefixe} #${joueur.playername}#`}
             />
 
@@ -254,7 +236,6 @@ try {
         }
 
         .profile-container {
-            background: rgba(255 255 255 / 0.1);
             border-radius: 10px;
             text-align: center;
             font-family: Arial, sans-serif;
@@ -273,7 +254,7 @@ try {
             align-items: flex-start;
             justify-items: center;
             padding: 2rem;
-            background-color: snow;
+            color: var(--pTextColor);
         }
 
         .avatar, .info-grid {
@@ -329,7 +310,6 @@ try {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background-color: #white;
             color: #000;
             padding: 0.5rem 1rem;
             margin: 0.25rem;
@@ -358,4 +338,24 @@ try {
             animation: colorShift 3s ease-in-out infinite;
         }
     </style>
+
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".button-copy");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const uuid = button.getAttribute("data-uuid");
+                    navigator.clipboard.writeText(uuid).then(() => {
+                        const span = button.querySelector("span");
+                        const originalText = span.textContent;
+                        span.textContent = "UUID copié !";
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
 </Layout>

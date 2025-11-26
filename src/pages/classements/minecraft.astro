@@ -1,13 +1,13 @@
 ---
 // page minecraft.astro
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
 import PlayerClassement from "../../components/classements/minecraft/tableau/PlayerClassement.astro"
-import LargeBanner from "../../components/transitions/LargeBanner.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
 ---
 
 <Layout>
     <Banner  bannerUrl=`/banner/minecraft/la_vanilla.webp`/>
-    <LargeBanner title="%Classement% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
+    <LargeTransitionSection title="%Classement% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
     <PlayerClassement jeu="minecraft" />
 </Layout>

@@ -1,10 +1,10 @@
 ---
 import {getCollection} from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
-import SlidingVignette from "../../components/vignettes/SlidingVignette.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
+import SlidingVignette from "../../components/ui/vignettes/SlidingVignette.astro";
 import {slugify} from "../../formater/JoueurFormater";
-import LargeBanner from "../../components/transitions/LargeBanner.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
 
 const tag = Astro.url.searchParams.get('tag');
 const articles = await getCollection('blog');
@@ -18,7 +18,7 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
 
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
     <Banner/>
-    <LargeBanner title="Nos %super projets% !" invertedBackground/>
+    <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 
     <div class="projects-container">
         <ul class="projects-list">

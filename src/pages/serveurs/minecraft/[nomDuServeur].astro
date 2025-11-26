@@ -1,11 +1,11 @@
 ---
 import {slugify} from "../../../formater/ServeurFormater";
 import Layout from "../../../layouts/Layout.astro";
-import Banner from "../../../components/Banner.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
 
-import PlayerList from "../../../components/serveurs/PlayerList.astro";
-import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
-import DefaultBanner from "../../../components/transitions/DefaultBanner.astro";
+import PlayerList from "../../../components/sections/serveurs/PlayerList.astro";
+import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.astro";
+import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 
 // Type du serveur
 type ServeurType = {
@@ -141,7 +141,7 @@ export async function getStaticPaths() {
 <Layout title={serveur.nom} ogDescription=`Description du serveur ${serveur.nom}`>
     <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
     <div class="profile-container">
-        <DefaultBanner title=`Informations du serveur #${serveur.nom}#`/>
+        <TransitionSection title=`Informations du serveur #${serveur.nom}#`/>
         <div class="profile-details">
             <div class="avatar">
                 <img
@@ -197,10 +197,10 @@ export async function getStaticPaths() {
             </div>
         </div>
 
-        <DefaultBanner title=`Joueurs ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ayant rejoint #${serveur.nom}#`></DefaultBanner>
+        <TransitionSection title=`Joueurs ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ayant rejoint #${serveur.nom}#`></TransitionSection>
         <PlayerList serveurId={serveur.id}/>
 
-        <DefaultBanner title=`%Screenshots% des joueurs sur le serveur #${serveur.nom}#`></DefaultBanner>
+        <TransitionSection title=`%Screenshots% des joueurs sur le serveur #${serveur.nom}#`></TransitionSection>
         <ServeurScreen screenList={serveur.screens}/>
     </div>
 

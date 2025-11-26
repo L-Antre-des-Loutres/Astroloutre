@@ -1,10 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
-import LargeBanner from "../../components/transitions/LargeBanner.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
 import type {ServeurType} from "../../types/ServeurType.ts";
 import {slugify} from "../../formater/JoueurFormater.ts";
-import ServerCard from "../../components/vignettes/ServerCard.astro";
+import GameServerVignette from "../../components/ui/vignettes/GameServerVignette.astro";
 
 const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs';
 const jeu = 'minecraft';
@@ -30,12 +30,12 @@ if (apiUrl) {
 
 <Banner bannerUrl="/banner/minecraft/nos_serveurs.webp"/>
 
-<LargeBanner title="%Nos serveurs% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
+<LargeTransitionSection title="%Nos serveurs% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
 
 <div class="grid-container">
     {data.map((item: ServeurType) => (
         <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
-            <ServerCard image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type} actif={item.actif}/>
+            <GameServerVignette image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type} actif={item.actif}/>
         </a>
     ))}
 </div>

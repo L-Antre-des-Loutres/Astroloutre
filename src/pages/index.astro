@@ -1,15 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-import Welcome from '../components/home/Welcome.astro';
-import LargeBanner from "../components/transitions/LargeBanner.astro";
-import QuiSommesNous from "../components/home/QuiSommesNous.astro";
-import MobileNav from "../components/home/MobileNav.astro";
+import CarrouselContainer from '../components/sections/home/CarrouselContainer.astro';
+import LargeTransitionSection from "../components/sections/common/transitions/LargeTransitionSection.astro";
+import PresentationSection from "../components/sections/home/PresentationSection.astro";
+import MobileNav from "../components/sections/home/MobileNav.astro";
 
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
 import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
-import DefaultBanner from "../components/transitions/DefaultBanner.astro";
-import SlidingVignette from "../components/vignettes/SlidingVignette.astro";
+import TransitionSection from "../components/sections/common/transitions/TransitionSection.astro";
+import SlidingVignette from "../components/ui/vignettes/SlidingVignette.astro";
 
 // Total of player playtime
 let totalHours: Promise<number> | number = 0;
@@ -30,16 +30,16 @@ if (responsePalworld.ok) {
 ---
 
 <Layout>
-	<Welcome />
+	<CarrouselContainer />
 
-    <LargeBanner
+    <LargeTransitionSection
             title={`Un total de plus de #_${totalHours} heures_# joué sur nos %serveurs%</span> !`}
     />
 
-	<QuiSommesNous/>
+	<PresentationSection/>
     <MobileNav/>
 
-    <DefaultBanner title="Des #bots# codés par nos soins %nos soins% !"/>
+    <TransitionSection title="Des #bots# codés par nos soins %nos soins% !"/>
 
     <div class="cards-wrapper">
         <SlidingVignette

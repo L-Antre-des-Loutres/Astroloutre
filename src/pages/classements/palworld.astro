@@ -1,11 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
 import PlayerClassement from "../../components/classements/palworld/tableau/PlayerClassement.astro"
-import LargeBanner from "../../components/transitions/LargeBanner.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
 ---
 <Layout>
     <Banner bannerUrl=`https://image.api.playstation.com/vulcan/ap/rnd/202405/2108/d976f5d6313a7174e5341d3a5e3f21559f56f86f40a71d2f.png`/>
-    <LargeBanner title="%Classement% #Palworld#" invertedBackground/>
+    <LargeTransitionSection title="%Classement% #Palworld#" invertedBackground/>
     <PlayerClassement jeu="palworld"/>
 </Layout>

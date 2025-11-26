@@ -42,7 +42,7 @@
     --gray-button-color-hover: var(--color-black);
     --golden-button-secondary-color: var(--color-gold-deep);
 
-    /* Organigramme colors */
+    /* OrganizationalChart colors */
     --founders-color: var(--color-gold-deeper);
     --investors-color: var(--color-green);
     --partners-color: var(--color-blue);

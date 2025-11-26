@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Banner from "../components/Banner.astro";
-import LargeBanner from "../components/transitions/LargeBanner.astro";
+import Banner from "../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../components/sections/common/transitions/LargeTransitionSection.astro";
 
 interface Props {
     error: unknown;
@@ -12,7 +12,7 @@ const { error = 500 } = Astro.props;
 <Layout title="Erreur 500">
     <Banner/>
     <div class="error-page-content">
-        <LargeBanner title=`Erreur %#${error}#% !` invertedBackground/>
+        <LargeTransitionSection title=`Erreur %#${error}#% !` invertedBackground/>
         <p style="text-align: center;">
             Une erreur est survenue… Vaut mieux <a class="link" href="/">retourner en lieu sûr</a>, pas vrai ?
         </p>

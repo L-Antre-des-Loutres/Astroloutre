@@ -1,13 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Banner from "../components/Banner.astro";
-import LargeBanner from "../components/transitions/LargeBanner.astro";
+import Banner from "../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../components/sections/common/transitions/LargeTransitionSection.astro";
 ---
 
 <Layout title="Erreur 404">
     <Banner/>
     <div class="error-page-content">
-        <LargeBanner title="%#404#% Page non trouvé !" invertedBackground/>
+        <LargeTransitionSection title="%#404#% Page non trouvé !" invertedBackground/>
         <p>
             Cette page n'existe pas, ou plus… Vaut mieux <a href="/">retourner en lieu sûr</a>, pas vrai ?
         </p>

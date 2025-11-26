@@ -1,10 +1,10 @@
 ---
 import {getCollection, render} from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
 import {slugify} from "../../formater/JoueurFormater";
-import LargeBanner from "../../components/transitions/LargeBanner.astro";
-import SlidingVignette from "../../components/vignettes/SlidingVignette.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import SlidingVignette from "../../components/ui/vignettes/SlidingVignette.astro";
 
 export async function getStaticPaths() {
     const projets = await getCollection("blog");
@@ -31,7 +31,7 @@ const filteredArticles = articles
 
 <Layout title={projet.data.title}>
     <Banner/>
-    <LargeBanner title={`#${projet.data.title}#`} invertedBackground/>
+    <LargeTransitionSection title={`#${projet.data.title}#`} invertedBackground/>
 
     <div class="project-layout">
 

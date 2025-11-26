@@ -2,11 +2,11 @@
 import {Image} from 'astro:assets';
 import {slugify} from "../../formater/JoueurFormater";
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
 import {formatDate} from "../../formater/DateFormater";
-import BadgeList from "../../components/BadgeList.astro";
+import BadgeList from "../../components/sections/badges/BadgeList.astro";
 import {vocalTimeFormater} from "../../formater/VocalTimeFormater";
-import DefaultBanner from "../../components/transitions/DefaultBanner.astro";
+import TransitionSection from "../../components/sections/common/transitions/TransitionSection.astro";
 
 // Type des données joueur
 type DiscordUserType = {
@@ -102,7 +102,7 @@ if (!(joueur) || joueur.nb_message === null) {
     <Banner/>
 
     <div class="profile-container">
-        <DefaultBanner title=`Profil #Discord# ${prefixe}#${joueur.pseudo_discord}#`/>
+        <TransitionSection title=`Profil #Discord# ${prefixe}#${joueur.pseudo_discord}#`/>
 
         <div class="profile-details">
 
@@ -209,7 +209,7 @@ if (!(joueur) || joueur.nb_message === null) {
             </div>
         </div>
 
-        <DefaultBanner title=`%Badges% de l'utilisateur #${joueur.pseudo_discord}#`/>
+        <TransitionSection title=`%Badges% de l'utilisateur #${joueur.pseudo_discord}#`/>
         <BadgeList PlayerOrUser="User" userId={joueur.id} categoryId=1 />
     </div>
 
