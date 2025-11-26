@@ -1,7 +1,7 @@
 /* CSS files for containers styles */
 
 /* CSS for cards containers (ex: bots card on home page) */
-.cards-wrapper {
+.sliding-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 600px));
     gap: 2rem;
@@ -14,7 +14,7 @@
 }
 
 @media (max-width: 400px) {
-    .cards-wrapper {
+    .sliding-cards-container {
         grid-template-columns: 1fr;
         padding: 1rem;
     }
