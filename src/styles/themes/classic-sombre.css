@@ -9,9 +9,9 @@
     --default-text-color: var(--color-white);
     --deep-text-color: var(--color-blueish-gray-light);
     --light-text-color: var(--color-blueish-gray-lightest);
-    --p-light-text-color: var(--color-blueish-gray-lightest);
     --h1-title-color: var(--color-gold-deep);
     --h2-title-color: var(--color-blueish-gray-lightest);
+    --h3-title-color: var(--color-blueish-gray-lightest);
     /* Gradient color */
     --goldenGradientShift-1: var(--color-gold-light);
     --goldenGradientShift-2: var(--color-gold);
@@ -71,25 +71,18 @@
     --markdown-h2-default-color: var(--color-blueish-gray-light);
     --markdown-h3-default-color: var(--color-blueish-gray-light);
 
+    /* ========================================== */
+    /* == OrganizationalChart colors Variables == */
+    /* ========================================== */
 
-
-
-    --pill-label-text-color: var(--color-white);
-
-
-
-    /* Buttons */
-    --gray-button-color: var(--color-gray-deepest);
-    --gray-button-color-hover: var(--color-black);
-    --golden-button-secondary-color: var(--color-gold-deep);
-
-    /* OrganizationalChart colors */
     --founders-color: var(--color-gold-deeper);
     --investors-color: var(--color-green);
     --partners-color: var(--color-blue);
 
+    /* ================================ */
+    /* == Vignettes colors Variables == */
+    /* ================================ */
 
-    /* Vignettes colors */
     --sliding-cards-gradient-color: var(--color-gray-deep);
     --sliding-cards-gradient-hover-color: var(--color-black);
     --sliding-cards-default-text-color: var(--color-white);
@@ -111,11 +104,32 @@
     --server-cards-badge-text-color-4: var(--color-white);
     --server-cards-badge-text-color-4-hover: var(--color-blueish-gray-lightest);
 
-    /* Other containers */
     /* Server players vignettes */
     --server-player-vignette-background-color: var(--color-black);
     --server-player-vignette-outline-color: var(--color-gray);
     --server-player-vignette-playername-color: var(--color-white);
+
+    /* Badge vignette colors */
+    --badge-list-color-bg-card: var(--color-gray-deepest);
+    --badge-list-color-border: var(--color-gray);
+    --badge-list-color-accent: var(--color-gold-deep);
+    --badge-list-color-text-main: var(--color-gold-light);
+    --badge-list-color-text-muted: var(--color-blueish-gray-lightest);
+
+    /* ============================== */
+    /* == Buttons colors variables == */
+    /* ============================== */
+
+    /* Golden buttons colors */
+    --gray-button-color: var(--color-gray-deepest);
+    --gray-button-color-hover: var(--color-black);
+    --golden-button-secondary-color: var(--color-gold-deep);
+
+    /* =================================== */
+    /* == Other variables yet to filter == */
+    /* =================================== */
+
+    --pill-label-text-color: var(--color-white);
 
     /* Server screens */
     --server-screen-color-bg-card: var(--color-gray-deepest);
@@ -123,11 +137,4 @@
     --server-screen-color-text-main: var(--color-gold-light);
     --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
     --server-screen-color-accent: var(--color-gold-deep);
-
-    /* Badge list */
-    --badge-list-color-bg-card: var(--color-gray-deepest);
-    --badge-list-color-border: var(--color-gray);
-    --badge-list-color-accent: var(--color-gold-deep);
-    --badge-list-color-text-main: var(--color-gold-light);
-    --badge-list-color-text-muted: var(--color-blueish-gray-lightest);
 }
