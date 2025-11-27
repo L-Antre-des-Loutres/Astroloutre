@@ -116,9 +116,9 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 
 <style>
     /* Colors configuration */
-    .org-section.fondateurs { --theme-color: var(--founders-color, #92400e); }
-    .org-section.investisseurs { --theme-color: var(--investors-color, #059669); }
-    .org-section.partenaires { --theme-color: var(--partners-color, #1f2937); }
+    .org-section.fondateurs { --theme-color: var(--founders-color); }
+    .org-section.investisseurs { --theme-color: var(--investors-color); }
+    .org-section.partenaires { --theme-color: var(--partners-color); }
 
     .org-section {
         margin-bottom: 2.5rem;
@@ -177,7 +177,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 
     .user-name {
         font-weight: 500;
-        color: var(--p-deep-text-color, #374151);
+        color: var(--default-text-color);
         font-size: 0.875rem;
         line-height: 1.2;
         margin-bottom: 0.25rem;
@@ -185,6 +185,6 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 
     .user-tag {
         font-size: 0.75rem;
-        color: var(--p-light-text-color, #9ca3af);
+        color: var(--light-text-color);
     }
 </style>
