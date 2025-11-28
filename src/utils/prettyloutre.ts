@@ -27,13 +27,13 @@ export function parseTitle(text: string = ""): string {// Component: src/compone
         // #_text_#
         .replace(
             /#_\s*([^_]+?)\s*_#/g,
-            '<span class="textColorGradientShift textAnimatedUnderlineGradient">$1</span>'
+            '<span class="text-color-gradient-animated text-animated-underline-gradient">$1</span>'
         )
 
         // #text#
         .replace(
             /#([^#]+)#/g,
-            '<span class="textColorGradientShift">$1</span>'
+            '<span class="text-color-gradient-animated">$1</span>'
         )
 
         // ![image]

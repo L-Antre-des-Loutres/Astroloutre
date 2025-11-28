@@ -16,11 +16,11 @@
     --golden-gradient-shift-1: var(--color-gold-light);
     --golden-gradient-shift-2: var(--color-gold);
     --golden-gradient-shift-3: var(--color-gold-deep);
-    @keyframes colorGradientShift {
-        0%   { color: var(--golden-gradient-shift-1); }
-        33%  { color: var(--golden-gradient-shift-2); }
-        66%  { color: var(--golden-gradient-shift-3); }
-        100% { color: var(--golden-gradient-shift-1); }
+    @keyframes color-gradient-shift {
+        0%   { color: var(--golden-gradient-shift-1, #FEE140); }
+        33%  { color: var(--golden-gradient-shift-2, #FEE140); }
+        66%  { color: var(--golden-gradient-shift-3, #FEE140); }
+        100% { color: var(--golden-gradient-shift-1, #FEE140); }
     }
 
     /* ====================== */
