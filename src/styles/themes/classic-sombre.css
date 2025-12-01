@@ -12,27 +12,16 @@
     --h1-title-color: var(--color-gold-deep);
     --h2-title-color: var(--color-blueish-gray-lightest);
     --h3-title-color: var(--color-blueish-gray-lightest);
+  
     /* Gradient color */
-    --goldenGradientShift-1: var(--color-gold-light);
-    --goldenGradientShift-2: var(--color-gold);
-    --goldenGradientShift-3: var(--color-gold-deep);
-
-    @keyframes colorGradientShift {
-        0% {
-            color: var(--goldenGradientShift-1);
-        }
-
-        33% {
-            color: var(--goldenGradientShift-2);
-        }
-
-        66% {
-            color: var(--goldenGradientShift-3);
-        }
-
-        100% {
-            color: var(--goldenGradientShift-1);
-        }
+    --golden-gradient-shift-1: var(--color-gold-light);
+    --golden-gradient-shift-2: var(--color-gold);
+    --golden-gradient-shift-3: var(--color-gold-deep);
+    @keyframes color-gradient-shift {
+        0%   { color: var(--golden-gradient-shift-1, #FEE140); }
+        33%  { color: var(--golden-gradient-shift-2, #FEE140); }
+        66%  { color: var(--golden-gradient-shift-3, #FEE140); }
+        100% { color: var(--golden-gradient-shift-1, #FEE140); }
     }
 
     /* ====================== */
@@ -133,9 +122,10 @@
     /* ============================== */
 
     /* Golden buttons colors */
-    --gray-button-color: var(--color-gray-deepest);
-    --gray-button-color-hover: var(--color-black);
-    --golden-button-secondary-color: var(--color-gold-deep);
+    --goldenbutton-background-color: var(--color-gray-deepest);
+    --goldenbutton-background-color-hover: var(--color-black);
+    --goldenbutton-icon-color: var(--color-gold-deep);
+    --goldenbutton-text-color: var(--color-white);
 
     /* =================================== */
     /* == Other variables yet to filter == */

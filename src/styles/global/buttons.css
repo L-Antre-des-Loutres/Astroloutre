@@ -8,9 +8,9 @@
     justify-content: center;
     gap: 12px;
     padding: 14px 28px;
-    background-color: var(--gray-button-color);
+    background-color: var(--goldenbutton-background-color);
+    color: var(--goldenbutton-text-color);
     border-radius: 100px;
-    color: #fff;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -24,13 +24,13 @@
     content: "";
     position: absolute;
     inset: 2px;
-    background-color: var(--gray-button-color);
+    background-color: var(--goldenbutton-background-color);
     border-radius: inherit;
     z-index: -1;
 }
 
 .super-button:hover::after {
-    background-color: var(--gray-button-color-hover);
+    background-color: var(--goldenbutton-background-color-hover);
 }
 
 /* Super buttons outline colors */
@@ -41,11 +41,11 @@
     inset: -2px;
     border-radius: inherit;
     background: conic-gradient(
-            var(--goldenGradientShift-1),
-            var(--goldenGradientShift-2),
-            var(--goldenGradientShift-3),
-            var(--goldenGradientShift-2),
-            var(--goldenGradientShift-1)
+            var(--golden-gradient-shift-1),
+            var(--golden-gradient-shift-2),
+            var(--golden-gradient-shift-3),
+            var(--golden-gradient-shift-2),
+            var(--golden-gradient-shift-1)
     );
     z-index: -2;
 }
@@ -54,7 +54,7 @@
     width: 22px;
     height: 22px;
     transition: transform 0.3s ease-in-out;
-    color: var(--golden-button-secondary-color);
+    color: var(--goldenbutton-icon-color);
 }
 
 /* Super buttons SVG animations */

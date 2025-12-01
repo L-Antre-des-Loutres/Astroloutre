@@ -3,13 +3,13 @@
 /* TEXT TITLES */
 
 .default-h2 {
-    color: var(--h2TitleColor);
+    color: var(--h2-title-color);
     font-size: var(--font-size-title);
     font-weight: var(--font-weight-title);
 }
 
 .default-p {
-    color: var(--pTextColor);
+    color: var(--default-text-color);
     font-size: var(--font-size-main);
     font-weight: var(--font-weight-main);
 }
@@ -17,7 +17,7 @@
 /* TEXT STYLES */
 
 .vignette-date {
-    color: var(--p-light-text-color);
+    color: var(--light-text-color);
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -27,7 +27,7 @@
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.6;
-    color: var(--p-mid-text-color);
+    color: var(--default-text-color);
     border-left: 4px solid var(--component-transition-background-color);
     font-style: italic;
     padding-left: 1rem;
@@ -38,27 +38,27 @@
     padding: 0.3em 0.8em;
     border-radius: 20px;
     font-size: 0.8rem;
-    color: var(--p-deep-text-color);
+    color: var(--deep-text-color);
 }
 
 /* TEXT GRADIENT SHIFT */
 
-.textColorGradientShift {
-    animation: colorGradientShift 3s ease-in-out infinite;
+.text-color-gradient-animated {
+    animation: color-gradient-shift 3s ease-in-out infinite;
     font-weight: bolder;
     position: relative;
 }
 
 /* TEXT ANIMATED GRADIENT UNDERLINE */
 
-.textAnimatedUnderlineGradient::before {
+.text-animated-underline-gradient::before {
     content: attr(data-players);
     position: absolute;
     top: 50%;
     left: 0;
     font-size: var(--underline-height);
     font-weight: bold;
-    color: var(--goldenGradientShift-1);
+    color: var(--golden-gradient-shift-1);
     white-space: nowrap;
     transform: translateY(-50%);
     animation: slideLeftToRight 20s linear infinite;
@@ -67,14 +67,14 @@
     z-index: 0;
 }
 
-.textAnimatedUnderlineGradient::after {
+.text-animated-underline-gradient::after {
     content: "";
     position: absolute;
     left: 0;
     bottom: -4px;
     height: var(--underline-height);
     width: 0;
-    background: linear-gradient(90deg, var(--goldenGradientShift-1), var(--goldenGradientShift-2), var(--goldenGradientShift-3));
+    background: linear-gradient(90deg, var(--golden-gradient-shift-1), var(--golden-gradient-shift-2), var(--golden-gradient-shift-3));
     border-radius: 2px;
     animation: underlineExpandOnce 3s ease forwards;
 }
