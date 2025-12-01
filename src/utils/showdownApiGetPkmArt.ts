@@ -13,6 +13,10 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
         return ""
     }
 
+    if (forme.toLowerCase() !== "normal" && forme.toLowerCase() !== "rlm") {
+        pokemonName = pokemonName + "-" + forme.toLowerCase()
+    }
+
     // Gestion des exceptions
     if (pokemonName.toLowerCase() === "flammiko") {
         return pokemonArt = "/pokemon/rlm/sprites/normal/flammiko.webp"
@@ -36,14 +40,29 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
     }
 
     // On vérifie que l'image existe
-    return fetch(pokemonArt).then(res => {
-        if (res.ok) {
-            return pokemonArt
-        } else {
-            // On renvoie une image de clone
-            return defaultPokemonArt
-        }
-    }).catch(() => {
-        return defaultPokemonArt
-    })
+    // Test 1 : avec la forme
+    return fetch(pokemonArt)
+        .then(res => {
+            if (res.ok) {
+                return pokemonArt;
+            }
+
+            // Sinon on retire la forme (ex: pikachu-mega -> pikachu)
+            const baseName = pokemonName.replace(/-.*/, "");
+            const pokemonArtBase = `${apiUrl}${baseName}.png`;
+
+            // Test 2 : sans la forme
+            return fetch(pokemonArtBase).then(res2 => {
+                if (res2.ok) {
+                    return pokemonArtBase;
+                }
+
+                // Rien trouvé → fallback
+                return defaultPokemonArt;
+            });
+        })
+        .catch(() => {
+            // En cas d'erreur réseau
+            return defaultPokemonArt;
+        });
 }
