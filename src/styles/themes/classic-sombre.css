@@ -12,6 +12,7 @@
     --h1-title-color: var(--color-gold-deep);
     --h2-title-color: var(--color-blueish-gray-lightest);
     --h3-title-color: var(--color-blueish-gray-lightest);
+  
     /* Gradient color */
     --golden-gradient-shift-1: var(--color-gold-light);
     --golden-gradient-shift-2: var(--color-gold);
@@ -138,4 +139,17 @@
     --server-screen-color-text-main: var(--color-gold-light);
     --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
     --server-screen-color-accent: var(--color-gold-deep);
+
+    /* ==================================== */
+    /* == Player Profile Page Variables == */
+    /* ==================================== */
+    --player-profile-card-bg: var(--color-gray-deeper);
+    --player-profile-border: var(--color-gray);
+    --player-profile-text-primary: var(--color-blueish-gray-lightest);
+    --player-profile-text-secondary: var(--color-blueish-gray-light);
+    --player-profile-icon-color: var(--color-gold-light);
+    --player-profile-input-bg: var(--color-gray-deep);
+
+    /* Missing variables */
+    --pTextColor: var(--color-blueish-gray-lightest);
 }

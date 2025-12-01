@@ -97,11 +97,32 @@
     --badge-list-color-accent: var(--color-gold-deep);
     --badge-list-color-text-main: var(--color-gold-deeper);
     --badge-list-color-text-muted: var(--color-blueish-gray-deep);
+
+    /* ==================================== */
+    /* == Player Profile Page Variables == */
+    /* ==================================== */
+    --player-profile-card-bg: rgba(0, 0, 0, 0.03);
+    --player-profile-border: var(--color-blueish-gray-lightest);
+    --player-profile-text-primary: var(--color-gray-deep);
+    --player-profile-text-secondary: var(--color-gray);
+    --player-profile-icon-color: var(--color-gray-deep);
+    --player-profile-input-bg: var(--color-white);
 }
 
 @keyframes colorGradientShift {
-    0%   { color: var(--goldenGradientShift-1); }
-    33%  { color: var(--goldenGradientShift-2); }
-    66%  { color: var(--goldenGradientShift-3); }
-    100% { color: var(--goldenGradientShift-1); }
+    0% {
+        color: var(--goldenGradientShift-1);
+    }
+
+    33% {
+        color: var(--goldenGradientShift-2);
+    }
+
+    66% {
+        color: var(--goldenGradientShift-3);
+    }
+
+    100% {
+        color: var(--goldenGradientShift-1);
+    }
 }
