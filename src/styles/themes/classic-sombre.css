@@ -16,11 +16,23 @@
     --goldenGradientShift-1: var(--color-gold-light);
     --goldenGradientShift-2: var(--color-gold);
     --goldenGradientShift-3: var(--color-gold-deep);
+
     @keyframes colorGradientShift {
-        0%   { color: var(--goldenGradientShift-1); }
-        33%  { color: var(--goldenGradientShift-2); }
-        66%  { color: var(--goldenGradientShift-3); }
-        100% { color: var(--goldenGradientShift-1); }
+        0% {
+            color: var(--goldenGradientShift-1);
+        }
+
+        33% {
+            color: var(--goldenGradientShift-2);
+        }
+
+        66% {
+            color: var(--goldenGradientShift-3);
+        }
+
+        100% {
+            color: var(--goldenGradientShift-1);
+        }
     }
 
     /* ====================== */
@@ -137,4 +149,17 @@
     --server-screen-color-text-main: var(--color-gold-light);
     --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
     --server-screen-color-accent: var(--color-gold-deep);
+
+    /* ==================================== */
+    /* == Player Profile Page Variables == */
+    /* ==================================== */
+    --player-profile-card-bg: var(--color-gray-deeper);
+    --player-profile-border: var(--color-gray);
+    --player-profile-text-primary: var(--color-blueish-gray-lightest);
+    --player-profile-text-secondary: var(--color-blueish-gray-light);
+    --player-profile-icon-color: var(--color-gold-light);
+    --player-profile-input-bg: var(--color-gray-deep);
+
+    /* Missing variables */
+    --pTextColor: var(--color-blueish-gray-lightest);
 }

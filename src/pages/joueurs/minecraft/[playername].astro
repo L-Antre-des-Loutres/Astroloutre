@@ -155,7 +155,7 @@ try {
                                     value={joueur.compte_id}
                                     readonly
                                     onclick="this.select()"
-                                    style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: monospace;"
+                                    style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid var(--player-profile-border); background-color: var(--player-profile-input-bg); color: var(--player-profile-text-primary); border-radius: 4px; font-family: monospace;"
                             />
                         </div>
                         <div class="stats-row">
@@ -202,11 +202,12 @@ try {
                 {/* Colonne 3 : Actions */}
                 <div class="info-grid">
                     <h2>Action</h2>
-                    <button
-                            class="button-copy super-button golden-outline"
+                    <button class="button-copy super-button golden-outline"
                             data-uuid={joueur.compte_id}>
+                        <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
                         <img src={`https://mc-heads.net/avatar/${joueur.playername}/32`} alt="Copier UUID"/>
                         <span>Copier UUID</span>
+                            </span>
                     </button>
                     <a class="super-button golden-outline" href={`https://fr.namemc.com/profile/${joueur.playername}`}
                        target="_blank" rel="noopener noreferrer">
@@ -269,11 +270,11 @@ try {
             font-size: 1.2rem;
             font-weight: bold;
             text-align: center;
-            color: var(--h2TitleColor);
+            color: var(--player-profile-text-primary);
         }
 
         .profile-details {
-            color: var(--pTextColor);
+            color: var(--player-profile-text-primary);
             display: grid;
             grid-template-columns: 0.6fr 1fr 0.6fr;
             gap: 1rem;
@@ -309,7 +310,7 @@ try {
         .stats-row {
             display: flex;
             flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.03); /* Petit fond gris optionnel pour bien voir la grille */
+            background-color: var(--player-profile-card-bg);
             padding: 0.8rem;
             border-radius: 8px;
             text-align: left; /* Ou center selon votre préférence */
@@ -331,7 +332,7 @@ try {
             display: inline;
             vertical-align: text-bottom;
             margin-right: 6px;
-            color: var(--h2TitleColor); /* Utilisation de la variable globale ou fallback */
+            color: var(--player-profile-icon-color);
         }
 
         button.super-button {
