@@ -37,7 +37,7 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
     // 3. Formes alternatives (océan / volcan / ciel)
     const formesAlt = ["ocean", "volcan", "ciel"];
     if (formesAlt.includes(f)) {
-        return pokemonArt = `/pokemon/rlm/alternative/${f}/sprites/${shiny ? "shiny" : "normal"}/${p}.png`;
+        return pokemonArt = `/pokemon/rlm/alternative/${f}/sprites/${shiny ? "shiny" : "normal"}/${p}.webp`;
     }
 
     // FIN de gestion des exceptions
