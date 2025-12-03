@@ -19,8 +19,16 @@ type DiscordUserType = {
     last_activity: string
     nb_message: number
     vocal_time: number
-    avatar_url: string
-};
+    avatar_url: string,
+    roles: Roles[] | null;
+    delete_date: string | null;
+}
+
+type Roles = {
+    id: string
+    name: string
+    color: string
+}
 
 // Type des données des joueurs
 type LinkAccount = {
@@ -125,7 +133,23 @@ if (!(joueur) || joueur.nb_message === null) {
                 {/* Badges style */}
                 <div class="server-card-footer">
                     <span class="server-card-badge version">{joueur.tag_discord}</span>
-                    <span class="server-card-badge modpack">Utilisateur</span>
+                    {joueur.roles?.map(role => {
+                        const isFounder = role.id === "1112707976273338470";
+                        const isInvesti = role.id === "1113865928086655037";
+
+                        let badgeClass = "server-card-badge modpack";
+                        if (isFounder) badgeClass += " founder-role-badge";
+                        else if (isInvesti) badgeClass += " special-role-badge";
+
+                        return (
+                                <span
+                                        class={badgeClass}
+                                        style={(isFounder || isInvesti) ? `--role-color: ${role.color};` : ''}
+                                >
+                                {role.name.replace(/\p{Extended_Pictographic}/gu, '').trim()}
+                            </span>
+                        )
+                    })}
                 </div>
 
                 <div class="server-desc-container">
