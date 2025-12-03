@@ -13,26 +13,34 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
         return ""
     }
 
-    if (forme.toLowerCase() !== "normal" && forme.toLowerCase() !== "rlm") {
-        pokemonName = pokemonName + "-" + forme.toLowerCase()
+    // Normalisation
+    const f = forme.toLowerCase();
+    const p = pokemonName.toLowerCase();
+
+    // Si forme spéciale → suffixe au nom
+    const formesSpeciales = ["normal", "rlm", "ocean", "volcan", "ciel"];
+    if (!formesSpeciales.includes(f)) {
+        pokemonName = `${p}-${f}`;
     }
 
     // Gestion des exceptions
-    if (pokemonName.toLowerCase() === "flammiko") {
-        return pokemonArt = "/pokemon/rlm/sprites/normal/flammiko.webp"
-    }
-    if (pokemonName.toLowerCase() === "flammiko" && shiny) {
-        return pokemonArt = "/pokemon/rlm/sprites/shiny/flammiko.webp"
-    }
-    if (forme.toLowerCase() === "rlm") {
-        return pokemonArt = "/pokemon/rlm/sprites/normal/forme/" + pokemonName.toLowerCase() + ".webp"
+    // 1. Exception absolue : Flammiko
+    if (p === "flammiko") {
+        return pokemonArt = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/flammiko.webp`;
     }
 
-    if (forme.toLowerCase() === "rlm" && shiny) {
-        return pokemonArt = "/pokemon/rlm/sprites/shiny/forme/" + pokemonName.toLowerCase() + ".webp"
+    // 2. Forme RLM
+    if (f === "rlm") {
+        return pokemonArt = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
     }
+
+    // 3. Formes alternatives (océan / volcan / ciel)
+    const formesAlt = ["ocean", "volcan", "ciel"];
+    if (formesAlt.includes(f)) {
+        return pokemonArt = `/pokemon/rlm/alternative/${f}/sprites/${shiny ? "shiny" : "normal"}/${p}.png`;
+    }
+
     // FIN de gestion des exceptions
-
     if (shiny) {
         pokemonArt = `${apiUrlShiny}${pokemonName}.png`
     } else {

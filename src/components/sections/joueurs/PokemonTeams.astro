@@ -191,7 +191,16 @@ try {
                                 async ({ p, f, s, n, l, d, g }) =>
                                     p && (
                                         <div
-                                                class={`pokemon-card ${s ? "is-shiny" : ""} ${f && f.toLowerCase() === "rlm" ? "is-rlm" : ""}`}
+                                                class={`pokemon-card ${s ? "is-shiny" : ""} ${
+                                                    (f &&
+                                                        f.toLowerCase() ===
+                                                        "rlm") ||
+                                                    f.toLowerCase() === "ocean" ||
+                                                    f.toLowerCase() === "volcan" ||
+                                                    f.toLowerCase() === "ciel"
+                                                        ? "is-rlm"
+                                                        : ""
+                                                }`}
                                         >
                                             <div class="card-inner">
                                                 <div class="pokemon-visual">
@@ -242,9 +251,17 @@ try {
                                                             </span>
                                                         )}
                                                         {f &&
-                                                            f.toLowerCase() ===
-                                                            "rlm" && (
-                                                                        <span class="rlm-tag">
+                                                            (f.toLowerCase() ===
+                                                                "rlm" ||
+                                                                f.toLowerCase() ===
+                                                                "ocean" ||
+                                                                f.toLowerCase() ===
+                                                                "volcan" ||
+                                                                f.toLowerCase() ===
+                                                                "ciel") && (
+                                                                        <span
+                                                                                class={`rlm-tag ${s ? "is-shiny" : ""}`}
+                                                                        >
                                                                     RLM
                                                                 </span>
                                                             )}
@@ -843,6 +860,11 @@ try {
         font-weight: 800;
         letter-spacing: 1px;
         box-shadow: 0 0 10px color-mix(in srgb, var(--color-blue), transparent 60%);
+    }
+
+    .rlm-tag.is-shiny {
+        background: linear-gradient(90deg, var(--color-purple), #6a0dad);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--color-purple), transparent 60%);
     }
 
     /* --- EXPANDABLE DETAILS --- */
