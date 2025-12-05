@@ -72,6 +72,7 @@ import Banner from "../components/sections/layout/Banner.astro";
                             Discord
                         </li>
                         <li>Votre nombre de messages sur le serveur Discord</li>
+                        <li>Votre nombre d'heures en vocal sur le serveur Discord</li>
                         <li>Votre image de profil</li>
                     </ul>
                 </div>
@@ -95,13 +96,13 @@ import Banner from "../components/sections/layout/Banner.astro";
 
                 <div class="sub-section">
                     <h3>Données de joueur Palworld</h3>
-                    <p>
-                        Nous ne récoltons, pour le moment, aucune donnée sur les
-                        joueurs Palworld. <em
-                    >(Cette politique pourrait évoluer selon les
-                        fonctionnalités futures de nos serveurs)</em
-                    >.
-                    </p>
+                    <ul>
+                        <li>
+                            Vos statistiques sur chacun de nos serveurs <em
+                        >(temps de jeu, distance
+                            parcourue, etc...)</em>
+                        </li>
+                    </ul>
                 </div>
             </article>
 
@@ -289,13 +290,6 @@ import Banner from "../components/sections/layout/Banner.astro";
             box-shadow 0.2s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
             0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .data-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            border-color: var(--golden-gradient-shift-2);
         }
 
         .data-card h2 {

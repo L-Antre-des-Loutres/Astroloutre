@@ -1,4 +1,4 @@
-:root {
+:root.light-theme {
     --background-color: var(--color-white);
 
     /* Header */
@@ -25,12 +25,18 @@
     /* Text : Titles */
     --h1TitleColor: var(--color-gold-deep);
     --h2TitleColor: var(--color-gray-deep);
+    --h1-title-color: var(--color-gold-deep);
+    --h2-title-color: var(--color-gray-deep);
+    --h3-title-color: var(--color-gray-deep);
     --markdown-h1-default-color: var(--color-gray-deep);
     --markdown-h2-default-color: var(--color-gray-deep);
     --markdown-h3-default-color: var(--color-gray-deep);
 
     /* Text : Paragraphs */
     --pTextColor: var(--color-gray-deep);
+    --default-text-color: var(--color-gray-deep);
+    --deep-text-color: var(--color-gray);
+    --light-text-color: var(--color-gray-light);
     --p-deep-text-color: var(--color-gray-deep);
     --p-mid-text-color: var(--color-gray);
     --p-light-text-color: var(--color-gray-light);
@@ -51,6 +57,9 @@
     --goldenGradientShift-1: var(--color-gold-light);
     --goldenGradientShift-2: var(--color-gold);
     --goldenGradientShift-3: var(--color-gold-deep);
+    --golden-gradient-shift-1: var(--color-gold-light);
+    --golden-gradient-shift-2: var(--color-gold);
+    --golden-gradient-shift-3: var(--color-gold-deep);
 
     --blueGradientShift-1: var(--color-gold-light);
     --blueGradientShift-2: var(--color-gold);

@@ -10,10 +10,12 @@ import "../styles/global/containers.css";
 import "../styles/global/buttons.css";
 
 import "../styles/themes/classic-sombre.css"; /* Theme */
+import "../styles/themes/classic.css"; /* Light Theme */
 
 import Header from "../components/sections/layout/Header.astro";
 import adl_logo from "../assets/adl_small_logo.png";
 import Footer from "../components/sections/layout/Footer.astro";
+import ThemeToggle from "../components/ui/ThemeToggle.astro";
 
 // On définit des props optionnelles pour le layout
 const {
@@ -64,5 +66,6 @@ if (title !== "Antre des Loutres") {
             <slot />
         </main>
         <Footer />
+        <ThemeToggle/>
     </body>
 </html>

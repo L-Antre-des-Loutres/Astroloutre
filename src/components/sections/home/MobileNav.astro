@@ -1,13 +1,8 @@
 ---
 
 ---
-<style>
-    :root {
-        --boutons: #222;
-        --boutons-hover: #222;
-        --fond: #fff;
-    }
 
+<style>
     .nav-menu {
         padding: 1rem 0;
         display: flex;
@@ -15,7 +10,7 @@
 
         text-align: center;
 
-        border-top: 2px solid var(--boutons-hover);
+        border-top: 2px solid var(--goldenbutton-background-color-hover);
         border-radius: 0.8rem;
 
         gap: 1rem;
@@ -32,18 +27,18 @@
 
         font-size: 1.125rem;
         font-weight: 600;
-        color: var(--boutons);
+        color: var(--goldenbutton-background-color);
         text-decoration: none;
 
-        border: 1.5px solid var(--boutons);
+        border: 1.5px solid var(--goldenbutton-background-color);
         border-radius: 0.5rem;
 
         transition: background-color 0.3s ease;
     }
 
     .nav-button:hover {
-        color: var(--fond);
-        background-color: var(--boutons-hover);
+        color: var(--goldenbutton-text-color);
+        background-color: var(--goldenbutton-background-color-hover);
     }
 
     @media (min-width: 768px) {
@@ -53,11 +48,8 @@
     }
 </style>
 
-
 <div class="nav-menu">
-    <a href="./classements/discord" class="nav-button">
-        Classement Discord
-    </a>
+    <a href="./classements/discord" class="nav-button"> Classement Discord </a>
     <a href="./classements/minecraft" class="nav-button">
         Classement Minecraft
     </a>
