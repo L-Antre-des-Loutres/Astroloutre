@@ -56,6 +56,12 @@ if (title !== "Antre des Loutres") {
             href="https://fonts.googleapis.com/css2?family=Festive&display=swap"
             rel="stylesheet"
         />
+        <script is:inline>
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") {
+                document.documentElement.classList.add("light-theme");
+            }
+        </script>
     </head>
     <body
         class="flex flex-col min-h-screen overflow-x-hidden"

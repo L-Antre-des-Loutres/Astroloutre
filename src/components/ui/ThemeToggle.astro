@@ -59,12 +59,6 @@
     const themeToggle = document.getElementById("theme-toggle");
     const htmlElement = document.documentElement;
 
-    // Check for saved user preference, if any, on load of the website
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light") {
-        htmlElement.classList.add("light-theme");
-    }
-
     themeToggle?.addEventListener("click", () => {
         if (htmlElement.classList.contains("light-theme")) {
             htmlElement.classList.remove("light-theme");
