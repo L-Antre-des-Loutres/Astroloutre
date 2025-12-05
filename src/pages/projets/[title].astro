@@ -15,40 +15,55 @@ export async function getStaticPaths() {
     }));
 }
 
-const { projet} = Astro.props;
-const { Content} = await render(projet);
+const {projet} = Astro.props;
+const {Content} = await render(projet);
 
 // Fetch other articles
-const tag = Astro.url.searchParams.get('tag');
-const articles = await getCollection('blog');
+const tag = Astro.url.searchParams.get("tag");
+const articles = await getCollection("blog");
 
 // Filter acticles (Exclure le projet courant pour ne pas le voir à droite)
 const filteredArticles = articles
-    .filter(article => article.id !== projet.id) // On exclut le projet actuel
-    .filter(article => tag ? article.data.tags?.includes(tag) : true)
+    .filter((article) => article.id !== projet.id) // On exclut le projet actuel
+    .filter((article) => (tag ? article.data.tags?.includes(tag) : true))
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <Layout title={projet.data.title}>
     <Banner/>
-    <LargeTransitionSection title={`#${projet.data.title}#`} invertedBackground/>
+    <LargeTransitionSection
+            title={`#${projet.data.title}#`}
+            invertedBackground
+    />
 
     <div class="project-layout">
-
         <main class="project-content">
             <div class="project-header">
-                <img src={projet.data.image} alt={projet.data.title} class="main-image"/>
+                <img
+                        src={projet.data.image}
+                        alt={projet.data.title}
+                        class="main-image"
+                />
 
                 <div class="meta-info">
                     <small class="vignette-date">
-                        {new Date(projet.data.pubDate).toLocaleDateString('fr-FR', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        })}
+                        {
+                            new Date(projet.data.pubDate).toLocaleDateString(
+                                "fr-FR",
+                                {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                },
+                            )
+                        }
                     </small>
                     <div class="tag-pill-labels-list-container">
-                        {projet.data.tags.map((tag) => <span class="tag-pill-labels">{tag}</span>)}
+                        {
+                            projet.data.tags.map((tag) => (
+                                    <span class="tag-pill-labels">{tag}</span>
+                            ))
+                        }
                     </div>
                 </div>
 
@@ -63,8 +78,9 @@ const filteredArticles = articles
         <aside class="project-sidebar">
             <h2 class="default-h2">Autres projets</h2>
             <div class="sidebar-list">
-                {filteredArticles.map((article) => (
-                    <SlidingVignette
+                {
+                    filteredArticles.map((article) => (
+                            <SlidingVignette
                             image={article.data.image}
                             image_alt={article.data.title}
                             title={`#${article.data.title}#`}
@@ -75,17 +91,26 @@ const filteredArticles = articles
                             }
                             card_link={`/projets/${slugify(article.data.title)}`}
                             margin="0.8em"
-                    />
-                ))}
+                            />
+                    ))
+                }
             </div>
             <button class="super-button golden-outline">
                 <a href="/projets">Retour à la liste</a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="right-slide-anim bi bi-caret-right-fill" viewBox="0 0 16 16">
-                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="right-slide-anim bi bi-caret-right-fill"
+                        viewBox="0 0 16 16"
+                >
+                    <path
+                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                    ></path>
                 </svg>
             </button>
         </aside>
-
     </div>
 </Layout>
 
@@ -109,9 +134,15 @@ const filteredArticles = articles
     }
 
     .main-image {
-        width: 100%;
+        max-width: 100%;
+        width: auto;
         height: auto;
+        max-height: 200px;
         margin-bottom: 1.5rem;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: contain;
     }
 
     .meta-info {
@@ -130,12 +161,41 @@ const filteredArticles = articles
     }
 
     /* Style for markdown */
-    .markdown-body :global(h1) { margin-top: 2em; font-size: 2rem; font-weight: bolder; color: var(--markdown-h1-default-color) }
-    .markdown-body :global(h2) { margin-top: 2em; font-size: 1.8rem; font-weight: bolder; color: var(--markdown-h2-default-color) }
-    .markdown-body :global(h3) { margin-top: 1.5em; font-size: 1.4rem; font-weight: bold; color: var(--markdown-h3-default-color) }
-    .markdown-body :global(p) { margin-bottom: 1.5em; }
-    .markdown-body :global(ul) { padding-left: 1.5em; margin-bottom: 1.5em; }
-    .markdown-body :global(img) { max-width: 100%; height: auto; border-radius: 8px; }
+    .markdown-body :global(h1) {
+        margin-top: 2em;
+        font-size: 2rem;
+        font-weight: bolder;
+        color: var(--markdown-h1-default-color);
+    }
+
+    .markdown-body :global(h2) {
+        margin-top: 2em;
+        font-size: 1.8rem;
+        font-weight: bolder;
+        color: var(--markdown-h2-default-color);
+    }
+
+    .markdown-body :global(h3) {
+        margin-top: 1.5em;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: var(--markdown-h3-default-color);
+    }
+
+    .markdown-body :global(p) {
+        margin-bottom: 1.5em;
+    }
+
+    .markdown-body :global(ul) {
+        padding-left: 1.5em;
+        margin-bottom: 1.5em;
+    }
+
+    .markdown-body :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
 
     .markdown-body :global(pre) /* Code blocs */ {
         padding: 1em 1.5em;

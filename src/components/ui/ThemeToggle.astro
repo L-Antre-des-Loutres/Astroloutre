@@ -55,19 +55,21 @@
     </span>
 </button>
 
-<script>
-    const themeToggle = document.getElementById("theme-toggle");
-    const htmlElement = document.documentElement;
+<script is:inline>
+    (() => {
+        const themeToggle = document.getElementById("theme-toggle");
+        const htmlElement = document.documentElement;
 
-    themeToggle?.addEventListener("click", () => {
-        if (htmlElement.classList.contains("light-theme")) {
-            htmlElement.classList.remove("light-theme");
-            localStorage.setItem("theme", "dark");
-        } else {
-            htmlElement.classList.add("light-theme");
-            localStorage.setItem("theme", "light");
-        }
-    });
+        themeToggle?.addEventListener("click", () => {
+            if (htmlElement.classList.contains("light-theme")) {
+                htmlElement.classList.remove("light-theme");
+                localStorage.setItem("theme", "dark");
+            } else {
+                htmlElement.classList.add("light-theme");
+                localStorage.setItem("theme", "light");
+            }
+        });
+    })();
 </script>
 
 <style>
