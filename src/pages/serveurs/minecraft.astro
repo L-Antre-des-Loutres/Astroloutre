@@ -1,31 +1,65 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
-import ServeurVignette from "../../components/serveurs/ServeurVignette.astro";
-import Title from "../../assets/titles/nos-serveurs.webp"
-import AreaTitle from "../../components/AreaTitle.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import type {ServeurType} from "../../types/ServeurType.ts";
+import {slugify} from "../../formater/JoueurFormater.ts";
+import GameServerVignette from "../../components/ui/vignettes/GameServerVignette.astro";
+
+const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs';
+const jeu = 'minecraft';
+
+// Récupération des données depuis l'API
+let data = []; // Initialisation à vide par sécurité
+
+if (apiUrl) {
+    const res = await fetch(apiUrl);
+    const json = await res.json();
+
+    if (json.success && Array.isArray(json.data)) {
+        data = json.data
+            // On garde uniquement les serveurs Minecraft
+            .filter((item: ServeurType) => item.jeu.toLowerCase() === 'minecraft')
+            // Les actifs (1) passent avant les inactifs (0)
+            .sort((a: ServeurType, b: ServeurType) => b.actif - a.actif);
+    }
+}
 ---
 
 <Layout>
+
 <Banner bannerUrl="/banner/minecraft/nos_serveurs.webp"/>
-    <div class="page-title">
-        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-    </div>
-<ServeurVignette apiUrl="https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/minecraft" jeu="minecraft"/>
+
+<LargeTransitionSection title="%Nos serveurs% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
+
+<div class="grid-container">
+    {data.map((item: ServeurType) => (
+        <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
+            <GameServerVignette image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type} actif={item.actif}/>
+        </a>
+    ))}
+</div>
+
 </Layout>
 
 <style>
-    .page-title {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem 1rem 2.5rem;
+        margin: 0 1rem;
     }
-    @media (max-width: 768px) {
-        .page-title {
-            margin-top: 15px;
-            margin-bottom: 15px;
+
+    @media (min-width: 950px) {
+        .grid-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1500px) {
+        .grid-container {
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 </style>

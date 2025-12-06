@@ -1,0 +1,190 @@
+---
+// Enregistrement du type de tableau Discord ID
+import {slugify} from "../../../formater/JoueurFormater.ts";
+
+type discordID = {
+    DiscordId: string;
+};
+
+type DiscordUserType = {
+    id: number;
+    discord_id: string;
+    tag_discord: string;
+    pseudo_discord: string;
+    avatar_url: string;
+};
+
+const discordFondateur: discordID[] = [
+    { DiscordId: "518780404057112580" },
+    { DiscordId: "383676607434457088" },
+];
+
+const discordInvestisseur: discordID[] = [
+    { DiscordId: "556501819468152832" },
+    { DiscordId: "432541622065168385" },
+    { DiscordId: "442285755113668609" },
+    { DiscordId: "334269770809606154" },
+];
+
+const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
+const response = await fetch(apiUrl);
+if (!response.ok) {
+    throw new Error(`Erreur API joueurs: ${response.status}`);
+}
+const json = await response.json();
+if (!json.success || !Array.isArray(json.data)) {
+    throw new Error('Données API invalides');
+}
+const utilisateurs: DiscordUserType[] = json.data;
+
+// Filtrer fondateurs
+const idsFondateurs = discordFondateur.map(f => f.DiscordId);
+const fondateurs = utilisateurs.filter(u => idsFondateurs.includes(u.discord_id));
+
+// Filtrer investisseurs
+const idsInvestisseurs = discordInvestisseur.map(i => i.DiscordId);
+const investisseurs = utilisateurs.filter(u => idsInvestisseurs.includes(u.discord_id));
+
+// Check if a user appears multiple times
+const uniqueFondateurs = [...new Set(fondateurs.map(u => u.discord_id))].map(id => fondateurs.find(u => u.discord_id === id)!);
+const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].map(id => investisseurs.find(u => u.discord_id === id)!);
+---
+
+<div class="organigramme">
+
+    <section class="org-section fondateurs">
+        <h3>Fondateurs</h3>
+        <ul class="user-list">
+            {uniqueFondateurs.map((user) => (
+                    <li class="user-card" key={user.tag_discord}>
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
+                            <div class="user-content">
+                                <img
+                                        src={user.avatar_url}
+                                        alt={`Avatar de ${user.pseudo_discord}`}
+                                        class="user-avatar"
+                                />
+                                <div class="user-name">{user.pseudo_discord}</div>
+                                <div class="user-tag">{user.tag_discord}</div>
+                            </div>
+                        </a>
+                    </li>
+            ))}
+        </ul>
+    </section>
+
+    <section class="org-section investisseurs">
+        <h3>Nos investisseurs</h3>
+        <ul class="user-list">
+            {uniqueInvestisseurs.map((user) => (
+                    <li class="user-card" key={user.tag_discord} >
+                        <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
+                            <div class="user-content">
+                                <img
+                                        src={user.avatar_url}
+                                        alt={`Avatar de ${user.pseudo_discord}`}
+                                        class="user-avatar"
+                                />
+                                <div class="user-name">{user.pseudo_discord}</div>
+                                <div class="user-tag">{user.tag_discord}</div>
+                            </div>
+                        </a>
+                    </li>
+            ))}
+        </ul>
+    </section>
+
+    <section class="org-section partenaires" style="margin: 0;">
+        <h3>Nos partenaires</h3>
+        <ul class="user-list">
+            <li class="user-card">
+                <a href="https://discord.gg/eJxb9fXUgZ" class="user-link">
+                    <div class="user-content">
+                        <img
+                                src="/logo/cripie_club_logo.webp"
+                                alt="Logo cripie club"
+                                class="user-avatar"
+                        />
+                        <div class="user-name">Cripie Club</div>
+                        <div class="user-tag">cripie333</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<style>
+    /* Colors configuration */
+    .org-section.fondateurs { --theme-color: var(--founders-color); }
+    .org-section.investisseurs { --theme-color: var(--investors-color); }
+    .org-section.partenaires { --theme-color: var(--partners-color); }
+
+    .org-section {
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .org-section h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--theme-color); /
+        margin-bottom: 1.5rem;
+    }
+
+    .user-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0;
+        list-style: none;
+    }
+
+    .user-card {
+        width: 10rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .user-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .user-link {
+        text-decoration: none;
+        display: block;
+    }
+
+    .user-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+    }
+
+    /* Avatar */
+    .user-avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        margin-bottom: 0.75rem;
+        object-fit: cover;
+
+        border: 2px solid var(--theme-color);
+        padding: 2px;
+        transition: filter 0.2s;
+    }
+
+    .user-name {
+        font-weight: 500;
+        color: var(--default-text-color);
+        font-size: 0.875rem;
+        line-height: 1.2;
+        margin-bottom: 0.25rem;
+    }
+
+    .user-tag {
+        font-size: 0.75rem;
+        color: var(--light-text-color);
+    }
+</style>

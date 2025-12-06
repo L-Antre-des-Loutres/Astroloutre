@@ -86,7 +86,7 @@ const PlayerClassement: React.FC<Props> = ({
 
     /* Front */
     return (
-        <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0 sm:py-8">
+        <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0">
             {/* Total tous les serveurs */}
             <div className="mb-4">
                 <button

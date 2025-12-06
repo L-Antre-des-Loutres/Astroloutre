@@ -1,0 +1,25 @@
+---
+import { parseTitle } from "../../../../utils/prettyloutre.ts";
+
+interface Props {
+    title: string;
+    invertedBackground?: boolean;
+}
+
+const parsedTitle = parseTitle(Astro.props.title ?? "");
+const { invertedBackground = false } = Astro.props;
+---
+
+<div class={`default-transition-container ${invertedBackground ? "no-background-transition-container" : ""}`} id="large-banner">
+    <h1 set:html={parsedTitle}></h1>
+    <slot />
+</div>
+
+<style>
+    #large-banner {
+        min-height: 10em;
+    }
+    #large-banner h1 {
+        font-size: var(--font-size-biggest-title);
+    }
+</style>

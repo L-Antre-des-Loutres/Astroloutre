@@ -1,0 +1,68 @@
+/* CSS files for buttons styles */
+
+/* Original "super-button" by jawad_8494 on https://uiverse.io/jawad_8494/hungry-treefrog-23 */
+.super-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background-color: var(--goldenbutton-background-color);
+    color: var(--goldenbutton-text-color);
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    z-index: 1;
+    border: 2px solid transparent;
+}
+
+.super-button::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background-color: var(--goldenbutton-background-color);
+    border-radius: inherit;
+    z-index: -1;
+}
+
+.super-button:hover::after {
+    background-color: var(--goldenbutton-background-color-hover);
+}
+
+/* Super buttons outline colors */
+
+.super-button.golden-outline::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: conic-gradient(
+            var(--golden-gradient-shift-1),
+            var(--golden-gradient-shift-2),
+            var(--golden-gradient-shift-3),
+            var(--golden-gradient-shift-2),
+            var(--golden-gradient-shift-1)
+    );
+    z-index: -2;
+}
+
+.super-button.golden-outline svg {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s ease-in-out;
+    color: var(--goldenbutton-icon-color);
+}
+
+/* Super buttons SVG animations */
+
+.super-button:hover svg.right-slide-anim {
+    transform: translateX(6px);
+}
+
+.super-button:hover svg.scale-up-anim {
+    transform: scale(1.1);
+}

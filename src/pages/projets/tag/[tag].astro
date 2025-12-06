@@ -1,10 +1,11 @@
 ---
 import {getCollection} from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
-import Title from "../../../assets/titles/nos-projet.webp"
-import Banner from "../../../components/Banner.astro";
+import Title from "../../../../public/images/titles/nos-projet.webp"
+import Banner from "../../../components/sections/layout/Banner.astro";
 import {slugify} from "../../../formater/JoueurFormater";
-import AreaTitle from "../../../components/AreaTitle.astro";
+import SlidingVignette from "../../../components/ui/vignettes/SlidingVignette.astro";
+import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
 
 export async function getStaticPaths() {
     const articles = await getCollection("blog");
@@ -29,121 +30,61 @@ const filteredArticles = articles
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
-<Layout title="Projets">
-    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
-    <div class="page-title">
-        <AreaTitle titleImage={Title} backgroundColor="#fffff"/>
-    </div>
+<Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
+    <Banner/>
+    <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 
     <div class="projects-container">
         <ul class="projects-list">
             {filteredArticles.map((article) => (
-                    <li class="project-card">
-                        <img src={article.data.image} alt={article.data.title} class="featured-image"/>
-                        <a href={`/projets/${slugify(article.data.title)}`}
-                           class="project-title">{article.data.title}</a>
-                        <p class="project-description">{article.data.description}</p>
-                        <small class="project-date">{new Date(article.data.pubDate).toLocaleDateString('fr-FR', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        })}</small>
-                    </li>
+                    <SlidingVignette image={article.data.image} image_alt={article.data.title}
+                                     title=`#${article.data.title}#` paragraph={article.data.description}
+                                     card_link={`/projets/${slugify(article.data.title)}`} margin="0.8em"/>
             ))}
         </ul>
     </div>
+
 </Layout>
 
-
 <style>
-    .page-title {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-    }
-
     .projects-container {
         margin: 0 auto;
-        padding-left: 10rem;
-        padding-right: 10rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-bottom: 2rem;
+        max-width: 1400px;
+        width: 100%;
     }
 
     .projects-list {
         display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
         list-style: none;
         padding: 0;
-    }
-
-    .project-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 1.25rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        border: 1px solid #eee;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .project-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-    }
-
-    .featured-image {
+        margin: 0 auto;
         width: 100%;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
+
+        justify-items: center;
+        align-items: start;
     }
 
-    .project-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #1a1a1a;
-        text-decoration: none;
-        margin-bottom: 0.5rem;
-        display: block;
-    }
-
-    .project-title:hover {
-        animation: colorShift 3s ease-in-out infinite;
-    }
-
-    .project-description {
-        color: #555;
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-        line-height: 1.5;
-    }
-
-    .project-date {
-        color: #888;
-        font-size: 1rem;
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
         .projects-container {
-            padding: 1rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
         }
     }
 
-    @keyframes colorShift {
-        0% {
-            color: #FFDDA0;
+    @media (max-width: 500px) {
+        .projects-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
-        33% {
-            color: #FFB347;
-        }
-        66% {
-            color: #FF8C42;
-        }
-        100% {
-            color: #FFDDA0;
+
+        .projects-list {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
         }
     }
-
 </style>

@@ -1,0 +1,112 @@
+/* CSS files for containers styles */
+
+/* CSS for cards containers (ex: bots card on home page) */
+.sliding-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 600px));
+    gap: 2rem;
+    padding: 1.5em 0em;
+    width: 100%;
+    max-width: 1870px;
+    margin: 0 auto;
+    justify-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 400px) {
+    .sliding-cards-container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
+/* CSS for transitions container */
+.default-transition-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+
+    min-height: 4em;
+    max-height: 50em;
+
+    color: var(--component-transition-text-color);
+    background-color: var(--component-transition-background-color);
+    border-top: 2px solid var(--component-transition-outline-color);
+    border-bottom: 2px solid var(--component-transition-outline-color);
+
+    text-align: center;
+
+    overflow: hidden;
+}
+
+.default-transition-container h1 {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-title);
+
+    position: relative;
+    z-index: 1;
+}
+
+.default-transition-container .inline-image img {
+    display: inline;
+    height: 1.1em;
+    width: auto;
+    vertical-align: middle;
+    transform: translateY(-5px);
+}
+
+.no-background-transition-container {
+    background: none;
+    border: none;
+    color: var(--component-inverted-transition-text-color);
+}
+
+.paperthin-transition-container {
+    min-height: var(--component-paperthin-transition);
+    padding: 0;
+    margin: 0;
+}
+
+.tag-pill-labels-list-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Other containers */
+
+.server-boutons-container {
+    justify-content: center;
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 1rem;
+    border-top: 1px solid var(--server-cards-transition-color);
+}
+
+.server-desc-container {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+    padding-top: 1rem;
+    font-size: 1.15rem;
+    border-top: 1px solid var(--server-cards-transition-color);
+}
+
+.server-card-footer {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 1rem;
+    border-top: 1px solid var(--server-cards-transition-color);
+}
+
+@media (max-width: 800px) {
+    .server-card-footer {
+        display: none;
+    }
+}

@@ -1,12 +1,12 @@
 ---
 import {slugify} from "../../../formater/ServeurFormater";
 import Layout from "../../../layouts/Layout.astro";
-import Banner from "../../../components/Banner.astro";
-import {Image} from 'astro:assets';
-import Void from "../../../components/Void.astro";
-import ServeurScreen from "../../../components/serveurs/ServeurScreen.astro";
-import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
-import {formatDecimalHoursToString} from "../../../formater/DecimalHoursFormater";
+import Banner from "../../../components/sections/layout/Banner.astro";
+
+import PlayerList from "../../../components/sections/serveurs/PlayerList.astro";
+import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.astro";
+import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
+import Void from "../../../components/sections/common/Void.astro";
 
 // Type du serveur
 type ServeurType = {
@@ -24,8 +24,8 @@ type ServeurType = {
     description: string,
     contenaire: string,
     type: string,
-    ip: string,
-    screens: ScreenType[],
+    ip: string
+    screens: ScreenType[]
 };
 
 type PlayTimeType = {
@@ -46,8 +46,6 @@ type ScreenType = {
 
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
-const playTime: number | undefined = Astro.props.playTime;
-const statutServeur: string | undefined = Astro.props.statutServeur;
 
 export async function getScreenList(): Promise<ScreenType[]> {
     const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/astroloutre/images';
@@ -66,7 +64,7 @@ export async function getScreenList(): Promise<ScreenType[]> {
 export async function getStaticPaths() {
 
     // On récupère la liste des serveurs
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/palworld';
+    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/';
     const response = await fetch(apiUrl);
 
     if (!response.ok) {
@@ -85,34 +83,27 @@ export async function getStaticPaths() {
         throw new Error("Serveurs is not an array");
     }
 
-    // Récupération des statistiques de Palworld
-    const apiUrlPlayTime = "https://otterlyapi.antredesloutres.fr/api/palworld/stats";
-    const responsePlayTime = await fetch(apiUrlPlayTime);
-    if (!responsePlayTime.ok) throw new Error(`Failed to fetch playtime: ${responsePlayTime.status}`);
-    const jsonPlayTime = await responsePlayTime.json();
-    if (!jsonPlayTime.success) return;
+    // On récupère le temps de jeu pour chaque serveur
+    const apiUrlPlayTimePerServeur = "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime-per-server"
+    const responsePlayTimePerServeur = await fetch(apiUrlPlayTimePerServeur);
 
-    // Calcul du temps de jeu total par serveur
-    const playTimes: PlayTimeType[] = [];
-    const rawData: typeof jsonPlayTime.data = jsonPlayTime.data;
+    if (!responsePlayTimePerServeur.ok) {
+        throw new Error(`Failed to fetch servers: ${response.status}`);
+    }
 
-    // On parcourt chaque enregistrement et on ajoute le temps de jeu au serveur correspondant
-    rawData.forEach(record => {
-        const existing = playTimes.find(pt => pt.serveur_id === record.serveur_id);
-        if (existing) {
-            existing.total_hours += record.tmps_jeux; // addition du temps de jeu
-        } else {
-            playTimes.push({
-                serveur_id: record.serveur_id,
-                total_hours: record.tmps_jeux
-            });
-        }
-    });
+    const jsonPlayTimePerServeur = await responsePlayTimePerServeur.json();
 
-    const screenList: ScreenType[] = await getScreenList();
+    // On vérifie si la requête est un succès
+    if (!jsonPlayTimePerServeur.success) return
 
-    return serveurs.map((serveur) => {        let ip: string;
-        if (serveur.jeu === "Palworld") {
+    const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
+
+    // On récupére la liste des images
+    const screenList = await getScreenList();
+
+    return serveurs.map((serveur) => {
+        let ip: string;
+        if (serveur.jeu === "palworld") {
             ip = "antredesloutres.fr:8211"
         } else if (serveur.type === "primary") {
             ip = "antredesloutres.fr"
@@ -121,7 +112,9 @@ export async function getStaticPaths() {
         }
         serveur.ip = ip
 
+        // Associe le playtime au serveur (par ID, nom ou autre clé logique)
         const playTime = playTimes.find(pt => pt.serveur_id === serveur.id);
+
         // On associe la liste des screen à chaque serveur
         serveur.screens = screenList.filter(screen => screen.origine === serveur.id);
 
@@ -138,266 +131,116 @@ export async function getStaticPaths() {
             props: {
                 serveur,
                 statutServeur,
-                playTime: playTime ? playTime.total_hours : "0h",
+                playTime: playTime ? playTime.total_hours : undefined,
             },
         };
     });
 }
 ---
-<Layout>
-    <script is:inline>
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll(".button-copy");
-
-            buttons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    const ip = button.getAttribute("data-ip");
-                    navigator.clipboard.writeText(ip).then(() => {
-                        const span = button.querySelector("span");
-                        const originalText = span.textContent;
-                        span.textContent = "IP copié !";
-                        setTimeout(() => {
-                            span.textContent = originalText;
-                        }, 2000);
-                    });
-                });
-            });
-        });
-    </script>
-
-    {!serveur && <h1>Serveur introuvable</h1>}
-    {serveur && (
-        <Banner bannerUrl=`/banner/palworld/${slugify(serveur.nom)}.webp`/>
-        <div class="profile-container">
-            <div class="page-title">
-                <p>{serveur.nom}</p>
+{!serveur && <h1>Serveur introuvable</h1>}
+{serveur && (
+<Layout title={serveur.nom} title={serveur.nom} ogDescription=`Description du serveur ${serveur.nom}`>
+    <Banner bannerUrl=`/banner/palworld/${slugify(serveur.nom)}.webp`/>
+    <div class="profile-container">
+        <TransitionSection title=`Informations du serveur #${serveur.nom}#`/>
+        <div class="profile-details">
+            <div class="avatar">
                 <img
-                    src="https://cdn2.steamgriddb.com/logo/4b097c4acf20a16a88d18dd1aa5c8a69.png"
-                    alt="minecraft logo"
-                    class="h-25 inline-block mt-1 max-w-full"
-                    style="transform: translateY(-20px);"
+                        src={serveur.image}
+                        alt={`Image du serveur`}
+                        class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
                 />
             </div>
 
-            <h1>Information du serveur <span class="golden">{serveur.nom}</span></h1>
-            <div class="profile-details">
-                <div class="avatar">
-                    <img
-                            src={serveur.image}
-                            alt={`Image du serveur`}
-                            class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
-                    />
+            <div class="info-grid">
+                <h2>Informations</h2>
+                <div class="server-card-footer">
+                    <span class="server-card-badge version">Version {serveur.version}</span>
+                    <span class="server-card-badge modpack"><a href={serveur.modpack_url} target="_blank" rel="noopener noreferrer">
+                        {serveur.modpack}
+                    </a></span>
+                    <span class="server-card-badge ip">{serveur.ip}</span>
+                    {serveur.actif ? (
+                            <span class="server-card-badge active">Activé</span>
+                    ) : (
+                            <span class="server-card-badge unactive">Désactivé</span>
+                    )}
                 </div>
 
-                <div class="info-grid">
-                    <h2>Informations</h2>
-                    <div>
-                        <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
-                            {/* Icône ID */}
-                            <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                            IP du serveur :
-                        </label>
-                        <input
-                            type="text"
-                            value={serveur.ip}
-                            readonly
-                            onclick="this.select()"
-                            style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid #ccc; border-radius: 4px; font-family: monospace;"
-                        />
-                    </div>
-
-                    <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        Modpack :
-                    </div>
-                    <p>
-                        <a
-                                href={serveur.modpack_url}
-                                target="_blank"
-                                rel="noreferrer"
-                                class="modpack-link"
-                                style={{ color: serveur.embed_color }}
-                        >
-                            {serveur.modpack}
-                        </a>
-                    </p>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" style={{color: serveur.embed_color}}
-                             class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        Heures de jeux :
-                    </div>
-                    <p>{formatDecimalHoursToString(playTime)} de jeux sur ce serveur</p>
-
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" style={{ color: serveur.embed_color }} class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 00.6-9.95A7 7 0 003 13.5V15z" />
-                        </svg>
-                        {statutServeur}
-                    </div>
-
-                </div>
-
-                <div class="info-grid">
-                    <h2>Action</h2>
-                    <button
-                        class="button-copy"
-                        data-ip={serveur.ip}>
-                        <img src="https://paldex.io/cdn-cgi/image/format=auto,width=300/images/pal-icons/T_ChickenPal_icon_normal.png" alt="Copier IP" />
-                        <span>Copier l'IP</span>
-                    </button>
-                    <a class="button-namemc" href={serveur.modpack_url} target="_blank" rel="noreferrer">
-                        <img src="https://oyster.ignimgs.com/mediawiki/apis.ign.com/palworld/8/80/T_NegativeKoala_icon_normal.png" alt="PalworldOffi" />
-                        Télécharger le jeu/modpack
-                    </a>
-                    <a class="button-namemc" href="https://www.pocketpair.jp/palworld" target="_blank" rel="noreferrer">
-                        <img src="https://media.pcgamesinsider.biz/2024/1/125206/palworld-r225x225.jpg" alt="PalworldOffi" />
-                        Site officiel de Palworld
-                    </a>
-                    <a class="button-namemc" href="https://palworld.gg/" target="_blank" rel="noreferrer">
-                        <img src="https://palworld.gg/favicon-32x32.png" alt="PalworldOffi" />
-                        Palworld.gg
-                    </a>
+                <div class="server-desc-container">
+                    <p>{serveur.description}</p>
                 </div>
             </div>
 
-            <h1>
-                Joueurs {' '}
-                <span class="inline-image">
-                    <Image src="https://cdn2.steamgriddb.com/logo/4b097c4acf20a16a88d18dd1aa5c8a69.png" alt="Palword" width={2000} height={1000} />
-                </span>
-                {' '} ayant rejoint le serveur
-            </h1>
-            <Void />
-
-            <h1>Screenshot des joueurs sur le serveur <span class="golden">{serveur.nom}</span></h1>
-            <ServeurScreen screenList={serveur.screens}/>
-
+            <div class="info-grid">
+                <h2>Action</h2>
+                <div class="server-boutons-container">
+                    <button class="super-button golden-outline js-copy-btn">
+                        <span class="button-copy" data-ip={serveur.ip}>Copier l'IP</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="scale-up-anim     bi bi-clipboard2-fill" viewBox="0 0 16 16">
+                            <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
+                            <path d="M3.5 1h.585A1.5 1.5 0 0 0 4 1.5V2a1.5 1.5 0 0 0 1.5 1.5h5A1.5 1.5 0 0 0 12 2v-.5q-.001-.264-.085-.5h.585A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1"/>
+                        </svg>
+                    </button>
+                    <button class="super-button golden-outline">
+                        <a href={serveur.modpack_url}>Modpack</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="scale-up-anim bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0"/>
+                        </svg>
+                    </button>
+                    <button class="super-button golden-outline">
+                        <a href="https://palworld.gg/" type="_blank">Palworld.gg</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="scale-up-anim bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+                            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                        </svg>
+                    </button>
+                    <button class="super-button golden-outline">
+                        <a href="/classements/palworld/">Classement</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="scale-up-anim bi bi-emoji-sunglasses-fill" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M2.31 5.243A1 1 0 0 1 3.28 4H6a1 1 0 0 1 1 1v.116A4.2 4.2 0 0 1 8 5c.35 0 .69.04 1 .116V5a1 1 0 0 1 1-1h2.72a1 1 0 0 1 .97 1.243l-.311 1.242A2 2 0 0 1 11.439 8H11a2 2 0 0 1-1.994-1.839A3 3 0 0 0 8 6c-.393 0-.74.064-1.006.161A2 2 0 0 1 5 8h-.438a2 2 0 0 1-1.94-1.515zM4.969 9.75A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .866-.5z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
-    )}
+
+        <TransitionSection title=`Joueurs #Palworld# ayant rejoint #${serveur.nom}#`></TransitionSection>
+        <Void/>
+
+        <TransitionSection title=`%Screenshots% des joueurs sur le serveur #${serveur.nom}#`></TransitionSection>
+        <ServeurScreen screenList={serveur.screens}/>
+    </div>
 
     <style>
-        .icon {
-            display: inline;
-            vertical-align: middle;
-            margin-right: 6px;
-            filter: brightness(80%);
-        }
-
-        .modpack-link {
-            font-weight: bold;
-            transition: color 0.3s ease;
-            filter: brightness(80%);
-        }
-
-        .modpack-link:hover {
-            filter: brightness(50%);
-        }
-
         .profile-container {
-            background: rgba(255 255 255 / 0.1);
             border-radius: 10px;
             text-align: center;
             font-family: Arial, sans-serif;
-        }
-
-        .profile-container h1 {
-            background-color: #333;
-            color: white;
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-        @media (max-width: 350px) {
-            .profile-container h1 {
-                font-size: 1.25rem;
-            }
         }
 
         h2 {
             font-size: 1.2rem;
             font-weight: bold;
             text-align: center;
+            color: var(--h2TitleColor);
         }
 
-        .inline-image {
-            display: inline-block;
-            vertical-align: baseline;
-            line-height: 1;
+        .profile-details {
+            color: var(--pTextColor);
+            display: grid;
+            grid-template-columns: 1fr 1fr 0.6fr;
+            gap: 1rem;
+            align-items: flex-start;
+            justify-items: center;
+            padding: 2rem;
         }
 
-        .inline-image img {
-            display: inline;
-            height: 1.2em;
-            width: auto;
-            vertical-align: middle;
-            transform: translateY(-5px);
-        }
-
-        .page-title {
-            margin-top: 50px;
-            margin-bottom: 50px;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        .page-title {
-            font-weight: bolder;
-            font-size: 2.5rem;
-        }
-        @media (max-width: 768px) {
-            .page-title {
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
-        }
-
-        .golden  {
-            animation: colorShift 3s ease-in-out infinite;
-        }
-        @keyframes colorShift {
-            0%   { color: #FFDDA0; }
-            33%  { color: #FFB347; }
-            66%  { color: #FF8C42; }
-            100% { color: #FFDDA0; }
-        }.profile-details {
-             display: grid;
-             grid-template-columns: 1fr 0.8fr 0.8fr;
-             gap: 1rem;
-             align-items: flex-start;
-             justify-items: center;
-             padding: 2rem;
-             background-color: snow;
-         }
-
-        .avatar, .info-grid {
+        .avatar,
+        .info-grid {
             width: 100%;
-        }
-        @media (max-width: 768px) {
-            .profile-details {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .info-grid {
-                text-align: center;
-            }
-        }
-
-        .avatar {
-            margin-bottom: 1rem;
         }
 
         .avatar img {
-            max-height: 100%;
-            height: 20%;
             border-radius: 8px;
         }
 
@@ -409,53 +252,52 @@ export async function getStaticPaths() {
             text-align: left;
         }
 
-        .back-link {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            text-align: center;
+        button {
+            width: 20em;
+            font-size: 1em;
+            justify-self: center;
+            align-self: center;
         }
 
-        .back-link a {
-            color: #1e40af;
-            text-decoration: none;
-        }
-
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-
-        .button-copy,
-        .button-namemc {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: #white;
-            color: #000;
-            padding: 0.5rem 1rem;
-            margin: 0.25rem;
-            border: 2px solid #000;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .button-copy img,
-        .button-namemc img {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-        }
-
-        .button-copy:hover,
-        .button-namemc:hover {
-            background-color: #000;
-            color: #fff;
-            border: 2px solid #333;
-            animation: colorShift 3s ease-in-out infinite;
+        @media (max-width: 990px) {
+            .profile-details {
+                grid-template-columns: 1fr;
+            }
+            .info-grid {
+                text-align: center;
+            }
+            button {
+                width: 100%;
+            }
         }
     </style>
+
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".js-copy-btn");
+
+            const checkIconPaths = `
+            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+            `;
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const span = button.querySelector(".button-copy");
+                    const svg = button.querySelector("svg");
+                    const ip = span.getAttribute("data-ip");
+
+                    navigator.clipboard.writeText(ip).then(() => {
+                        const originalIconContent = svg.innerHTML;
+
+                        svg.innerHTML = checkIconPaths;
+
+                        setTimeout(() => {
+                            svg.innerHTML = originalIconContent;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
 </Layout>
+    )}

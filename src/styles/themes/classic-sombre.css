@@ -1,0 +1,155 @@
+:root {
+    /* ================================================== */
+    /* == Variables not linked to a specific component == */
+    /* ================================================== */
+
+    /* Layout background color */
+    --background-color: var(--color-gray-deepest);
+    /* Global text colors */
+    --default-text-color: var(--color-white);
+    --deep-text-color: var(--color-blueish-gray-light);
+    --light-text-color: var(--color-blueish-gray-lightest);
+    --h1-title-color: var(--color-gold-deep);
+    --h2-title-color: var(--color-blueish-gray-lightest);
+    --h3-title-color: var(--color-blueish-gray-lightest);
+  
+    /* Gradient color */
+    --golden-gradient-shift-1: var(--color-gold-light);
+    --golden-gradient-shift-2: var(--color-gold);
+    --golden-gradient-shift-3: var(--color-gold-deep);
+    @keyframes color-gradient-shift {
+        0%   { color: var(--golden-gradient-shift-1, #FEE140); }
+        33%  { color: var(--golden-gradient-shift-2, #FEE140); }
+        66%  { color: var(--golden-gradient-shift-3, #FEE140); }
+        100% { color: var(--golden-gradient-shift-1, #FEE140); }
+    }
+
+    /* ====================== */
+    /* == Header Variables == */
+    /* ====================== */
+
+    /* Header background colors */
+    --header-background-color: var(--highly-transparent-color-black);
+    --header-scrolled-background-color: var(--tiny-transparent-color-black);
+    --header-dropdown-background-color: var(--color-gray-deep);
+    /* Header text colors */
+    --header-text-color: var(--color-white);
+    --header-dropdown-link-color: var(--color-white);
+    --header-dropdown-link-hover-color: var(--goldenGradientShift-1);
+
+    /* ====================== */
+    /* == Footer Variables == */
+    /* ====================== */
+
+    /* Footer background color */
+    --footer-background-color: var(--color-black);
+    /* Footer outline color */
+    --footer-outline-color: var(--color-gray);
+    /* Footer text colors */
+    --footer-text-color: var(--color-white);
+    --footer-alt-text-color: var(--color-white);
+    --footer-link-color: var(--color-gold-light);
+
+    /* ========================== */
+    /* == Transition Variables == */
+    /* ========================== */
+
+    /* Transitions background color */
+    --component-transition-background-color: var(--color-black);
+    /* Transitions outline color */
+    --component-transition-outline-color: var(--color-gray);
+    /* Transitions text colors */
+    --component-transition-text-color: var(--color-white);
+    --component-inverted-transition-text-color: var(--color-white);
+
+    /* ================================= */
+    /* == Markdown sections Variables == */
+    /* ================================= */
+
+    /* Markdown sections text colors */
+    --markdown-default-color: var(--color-white);
+    --markdown-h1-default-color: var(--color-blueish-gray-light);
+    --markdown-h2-default-color: var(--color-blueish-gray-light);
+    --markdown-h3-default-color: var(--color-blueish-gray-light);
+
+    /* ========================================== */
+    /* == OrganizationalChart colors Variables == */
+    /* ========================================== */
+
+    --founders-color: var(--color-gold-deeper);
+    --investors-color: var(--color-green);
+    --partners-color: var(--color-blue);
+
+    /* ================================ */
+    /* == Vignettes colors Variables == */
+    /* ================================ */
+
+    --sliding-cards-gradient-color: var(--color-gray-deep);
+    --sliding-cards-gradient-hover-color: var(--color-black);
+    --sliding-cards-default-text-color: var(--color-white);
+
+    --server-cards-background-color: var(--color-black);
+    --server-cards-transition-color: var(--color-blueish-gray-light);
+    --server-cards-title-color: var(--color-white);
+    --server-cards-text-color: var(--color-white);
+    --server-cards-desc-text-color: var(--color-white);
+    --server-cards-badge-background-color-1: var(--color-gray-deep);
+    --server-cards-badge-text-color-1: var(--color-white);
+    --server-cards-badge-background-color-2: var(--color-purple);
+    --server-cards-badge-text-color-2: var(--color-white);
+    --server-cards-badge-background-color-3-active: var(--color-green);
+    --server-cards-badge-text-color-3-active: var(--color-white);
+    --server-cards-badge-background-color-3-unactive: var(--color-red);
+    --server-cards-badge-text-color-3-unactive: var(--color-white);
+    --server-cards-badge-background-color-4: var(--color-blueish-gray-deep);
+    --server-cards-badge-text-color-4: var(--color-white);
+    --server-cards-badge-text-color-4-hover: var(--color-blueish-gray-lightest);
+
+    /* Server players vignettes */
+    --server-player-vignette-background-color: var(--color-black);
+    --server-player-vignette-outline-color: var(--color-gray);
+    --server-player-vignette-playername-color: var(--color-white);
+
+    /* Badge vignette colors */
+    --badge-list-color-bg-card: var(--color-gray-deepest);
+    --badge-list-color-border: var(--color-gray);
+    --badge-list-color-accent: var(--color-gold-deep);
+    --badge-list-color-text-main: var(--color-gold-light);
+    --badge-list-color-text-muted: var(--color-blueish-gray-lightest);
+
+    /* ============================== */
+    /* == Buttons colors variables == */
+    /* ============================== */
+
+    /* Golden buttons colors */
+    --goldenbutton-background-color: var(--color-gray-deepest);
+    --goldenbutton-background-color-hover: var(--color-black);
+    --goldenbutton-icon-color: var(--color-gold-deep);
+    --goldenbutton-text-color: var(--color-white);
+
+    /* =================================== */
+    /* == Other variables yet to filter == */
+    /* =================================== */
+
+    --pill-label-text-color: var(--color-white);
+
+    /* Server screens */
+    --server-screen-color-bg-card: var(--color-gray-deepest);
+    --server-screen-color-border: var(--color-gray);
+    --server-screen-color-text-main: var(--color-gold-light);
+    --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
+    --server-screen-color-accent: var(--color-gold-deep);
+
+    /* ==================================== */
+    /* == Player Profile Page Variables == */
+    /* ==================================== */
+    --player-profile-card-bg: var(--color-gray-deeper);
+    --player-profile-border: var(--color-gray);
+    --player-profile-text-primary: var(--color-blueish-gray-lightest);
+    --player-profile-text-secondary: var(--color-blueish-gray-light);
+    --player-profile-icon-color: var(--color-gold-light);
+    --player-profile-input-bg: var(--color-gray-deep);
+
+    /* Missing variables */
+    --pTextColor: var(--color-blueish-gray-lightest);
+}

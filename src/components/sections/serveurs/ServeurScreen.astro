@@ -1,0 +1,150 @@
+---
+// Props interface
+interface Props {
+    screenList?: {
+        nom: string;
+        auteur_pseudo: string;
+        path: string;
+    }[];
+}
+
+const { screenList = [] } = Astro.props; // Valeur par défaut pour éviter les erreurs
+const hasScreens = screenList.length > 0;
+---
+
+<div class="gallery-container">
+    {hasScreens ? (
+            <div class="serveur-screen">
+                {screenList.map((screen) => (
+                        <div class="screen-item">
+                            <div class="image-wrapper">
+                                <img src={screen.path} alt={screen.nom} loading="lazy" />
+                            </div>
+                            <div class="info-wrapper">
+                                <p class="author"><span class="label">Posté par </span>{screen.auteur_pseudo || "Inconnu"}</p>
+                            </div>
+                        </div>
+                ))}
+            </div>
+    ) : (
+            <div class="empty-state">
+                <p>Aucun screens pour le moment !</p>
+            </div>
+    )}
+</div>
+
+<style>
+    /* --- VARIABLES --- */
+    :root {
+        --server-screen-shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        --server-screen-shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --server-screen-radius-card: 0.75rem;
+    }
+
+    .gallery-container {
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* --- GRILLE --- */
+    .serveur-screen {
+        display: grid;
+        gap: 1.5rem;
+        padding: 1rem;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+        .serveur-screen {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 750px) {
+        .serveur-screen {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* --- CARTE --- */
+    .screen-item {
+        background-color: var(--server-screen-color-bg-card);
+        border: 2px solid var(--server-screen-color-border);
+        border-radius: var(--server-screen-radius-card);
+        overflow: hidden;
+        box-shadow: var(--server-screen-shadow-sm);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .screen-item:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--server-screen-shadow-hover);
+        border-color: var(--server-screen-color-accent);
+    }
+
+    /* --- IMAGE --- */
+    .image-wrapper {
+        height: 250px;
+        overflow: hidden;
+        border-bottom: 1px solid var(--server-screen-color-border);
+    }
+
+    .screen-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .screen-item:hover img {
+        transform: scale(1.08);
+    }
+
+    /* --- INFOS --- */
+    .info-wrapper {
+        background-color: var(--server-screen-color-bg-card);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--server-screen-color-text-muted);
+        font-weight: 600;
+    }
+
+    .author {
+        font-size: 1rem;
+        color: var(--server-screen-color-text-main);
+        font-weight: 500;
+        margin: 0;
+    }
+
+    /* --- EMPTY STATE --- */
+    .empty-state {
+        flex-grow: 1; /* Prend tout l'espace restant */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        background: none;
+        border-radius: var(--server-screen-radius-card);
+        border: 2px dashed var(--server-screen-color-border);
+        margin: 1rem;
+    }
+
+    .empty-state p {
+        font-size: 1.25rem;
+        color: var(--server-screen-color-text-muted);
+        font-weight: 500;
+    }
+</style>

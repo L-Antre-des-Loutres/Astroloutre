@@ -1,55 +1,87 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import TotalHours from '../components/home/TotalHours.astro';
-import Layout from '../layouts/Layout.astro';
-import QuiSommesNous from "../components/home/QuiSommesNous.astro";
-import BotsLineup from "../components/home/BotsLineup.astro";
-import BotsDescription from "../components/home/BotsDescription.astro";
-import MobileNav from "../components/home/MobileNav.astro";
+// Layout import
+import Layout from "../layouts/Layout.astro";
+// Components import
+import Carrousel from "../components/sections/home/Carrousel.astro";
+import LargeTransitionSection from "../components/sections/common/transitions/LargeTransitionSection.astro";
+import PresentationSection from "../components/sections/home/PresentationSection.astro";
+import MobileNav from "../components/sections/home/MobileNav.astro";
+import TransitionSection from "../components/sections/common/transitions/TransitionSection.astro";
+import SlidingVignette from "../components/ui/vignettes/SlidingVignette.astro";
+// Other imports
+import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
+import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Declaration of total playtime variable
+let totalHours: Promise<number> | number = 0;
+// Minecraft playtime
+const response = await fetch(
+    "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime",
+);
+if (response.ok) {
+    const json = await response.json();
+    totalHours = formatMinecraftPlayTime(
+        Number(json?.data?.[0]?.total_hours || 0),
+    ); // We add Minecraft playtime to total
+}
+// Palworld playtime
+const responsePalworld = await fetch(
+    "https://otterlyapi.antredesloutres.fr/api/palworld/stats/total-hours",
+);
+if (responsePalworld.ok) {
+    const json = await responsePalworld.json();
+    totalHours += (await formatDecimalHours(json?.data?.[0]?.total_hours)) || 0; // We add Palworld playtime to total
+}
 ---
 
 <Layout>
-	<Welcome />
-	<TotalHours />
-	<QuiSommesNous/>
+    <Carrousel/>
+
+    <LargeTransitionSection
+            title={`Un total de plus de #_${totalHours} heures_# jouées sur nos %serveurs%</span> !`}
+    />
+
+    <PresentationSection/>
+
     <MobileNav/>
-	<BotsLineup />
-	<BotsDescription
-		imageSrc="https://github.com/L-Antre-des-Loutres/Arisoutre/blob/main/arisoutre-logo.png?raw=true"
-		imageAlt="Logo Arisoutre"
-		title="Arisoutre, elle c'est la patronne"
-		link="https://github.com/L-Antre-des-Loutres/Arisoutre"
-		paragraph="Arisoutre gère tout ce qui est récupération des données Discord, ainsi que la modération. C'est aussi elle qui dit bienvenue lorsqu'il y a des nouveaux !"
-	/>
-	<BotsDescription
-		imageSrc="https://github.com/Corentin-cott/Mineotter-Bot/blob/main/imgs/logo-text.png?raw=true"
-		imageAlt="Logo Mineotter"
-		title="Mineotter, le bots de nos serveurs Minecraft"
-		link="https://github.com/Corentin-cott/Mineotter-Bot"
-		paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
-	/>
-	<BotsDescription
-		imageSrc="https://github.com/L-Antre-des-Loutres/MultiLoutre/blob/main/multiloutre-logo.png?raw=true"
-		imageAlt="Logo Multiloutre"
-		title="Multiloutre, le bots de tous nos autres serveurs"
-		link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
-		paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
-	/>
-	<BotsDescription
-		imageSrc="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
-		imageAlt="Logo Mateloutre"
-		title="Mateloutre, la peluche de notre catégorie Pokémon"
-		link="https://github.com/L-Antre-des-Loutres/Mateloutre"
-		paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
-	/>
-	<BotsDescription
-		imageSrc="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
-		imageAlt="Logo Citlaloutre"
-		title="Citlaloutre, Elle qui n'est pas une loutre"
-		link="https://github.com/matheo-1712/Citlali"
-		paragraph="Citlaloutre (Citlali) et le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
-	/>
+
+    <TransitionSection title="Des #bots# codés par %nos soins% !"/>
+
+    <div class="sliding-cards-container">
+        <SlidingVignette
+            image="https://github.com/L-Antre-des-Loutres/Arisoutre/blob/v1.0.0/arisoutre-logo.png?raw=true"
+            image_alt="Logo Arisoutre"
+            title="#Arisoutre#, elle c'est la #patronne#"
+            paragraph="Arisoutre gère tout ce qui est récupération des données Discord, ainsi que la modération. C'est aussi elle qui dit bienvenue lorsqu'il y a des nouveaux !"
+            card_link="https://github.com/L-Antre-des-Loutres/Arisoutre"
+        />
+        <SlidingVignette
+            image="https://github.com/Corentin-cott/Mineotter/blob/main/src/app/imgs/logo-text.png?raw=true"
+            image_alt="Logo Mineotter"
+            title="#Mineotter#, le bot de nos #serveurs Minecraft#"
+            paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
+            card_link="https://github.com/Corentin-cott/Mineotter"
+        />
+        <SlidingVignette
+            image="https://github.com/L-Antre-des-Loutres/MultiLoutre/blob/main/multiloutre-logo.png?raw=true"
+            image_alt="Logo Multiloutre"
+            title="#Multiloutre#, le bot de tous #nos autres serveurs#"
+            paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
+            card_link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
+        />
+        <SlidingVignette
+            image="https://images-ext-1.discordapp.net/external/UOv-DRMsbOfJ8iGiHnCm4Ntsr0aXveza_lfPH_T1yc4/https/raw.githubusercontent.com/L-Antre-des-Loutres/Mateloutre/refs/heads/main/imgs/MateloutreLogo1.png?format=webp&quality=lossless"
+            image_alt="Logo Mateloutre"
+            title="#Mateloutre#, la peluche de notre #catégorie Pokémon#"
+            paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
+            card_link="https://github.com/L-Antre-des-Loutres/Mateloutre"
+        />
+        <SlidingVignette
+            image="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
+            image_alt="Logo Citlali"
+            title="#Citlaloutre#, celle qui n'est pas vraiment une #loutre#"
+            paragraph="Citlaloutre (Citlali de son vrai nom) est le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
+            card_link="https://github.com/matheo-1712/Citlali"
+        />
+    </div>
 </Layout>

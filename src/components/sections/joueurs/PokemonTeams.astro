@@ -1,0 +1,993 @@
+---
+import { formatPokemonName } from "../../../formater/PokemonNameFormater.ts";
+import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt.ts";
+import { fixEncoding } from "../../../utils/fixEncoder.ts";
+import { UUIDToPseudo } from "../../../utils/UUIDToPseudo.ts";
+import { CapitalLetter } from "../../../formater/CapitalLetter.ts";
+import { slugify } from "../../../formater/JoueurFormater.ts";
+
+// Type PokemonTeam
+type PokemonTeam = {
+    id: number;
+    serveur_id: number;
+    serveur_nom: string;
+    joueur_uuid: string;
+    pkmn1: string;
+    pkmn1_form: string;
+    pkmn2: string;
+    pkmn2_form: string;
+    pkmn3: string;
+    pkmn3_form: string;
+    pkmn4: string;
+    pkmn4_form: string;
+    pkmn5: string;
+    pkmn5_form: string;
+    pkmn6: string;
+    pkmn6_form: string;
+    pkmn6_shiny: boolean;
+    pkmn5_shiny: boolean;
+    pkmn4_shiny: boolean;
+    pkmn3_shiny: boolean;
+    pkmn2_shiny: boolean;
+    pkmn1_shiny: boolean;
+    pkmn1_nickname: string;
+    pkmn2_nickname: string;
+    pkmn3_nickname: string;
+    pkmn4_nickname: string;
+    pkmn5_nickname: string;
+    pkmn6_nickname: string;
+    pkmn1_level: number;
+    pkmn2_level: number;
+    pkmn3_level: number;
+    pkmn4_level: number;
+    pkmn5_level: number;
+    pkmn6_level: number;
+    pkmn1_do_uuid: string;
+    pkmn2_do_uuid: string;
+    pkmn3_do_uuid: string;
+    pkmn4_do_uuid: string;
+    pkmn5_do_uuid: string;
+    pkmn6_do_uuid: string;
+    pkmn1_gender: string;
+    pkmn2_gender: string;
+    pkmn3_gender: string;
+    pkmn4_gender: string;
+    pkmn5_gender: string;
+    pkmn6_gender: string;
+};
+
+const { uuid } = Astro.props;
+// Récupération des données des équipes Pokémon
+let pokemonTeams: PokemonTeam[] = [];
+try {
+    const res = await fetch(
+        `https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`,
+    );
+    const json = await res.json();
+
+    if (!json?.success) {
+        throw new Error("Erreur lors de la récupération des données");
+    }
+
+    pokemonTeams = json.data ?? [];
+} catch (error) {
+    console.error("Error fetching Pokemon teams data:", error);
+    throw error;
+}
+---
+
+<div class="pokemon-teams-wrapper">
+    <!-- Background ambient glow -->
+    <div class="ambient-glow"></div>
+
+    {
+        pokemonTeams.length > 0 ? (
+            pokemonTeams.map((team) => (
+                <div class="team-card glass-panel">
+                    <div class="team-header">
+                        <div class="header-content">
+                            <h3 class="team-server-name">
+                                <span class="server-label">Serveur</span>
+                                <a
+                                    href={
+                                        "/serveurs/minecraft/" +
+                                        slugify(team.serveur_nom)
+                                    }
+                                    class="server-link"
+                                >
+                                    {team.serveur_nom}
+                                </a>
+                            </h3>
+                            <div class="team-badges">
+                                <span class="badge-count">
+                                    {
+                                        [
+                                            team.pkmn1,
+                                            team.pkmn2,
+                                            team.pkmn3,
+                                            team.pkmn4,
+                                            team.pkmn5,
+                                            team.pkmn6,
+                                        ].filter(Boolean).length
+                                    }{" "}
+                                    / 6
+                                </span>
+                            </div>
+                        </div>
+                        <button
+                            class="team-toggle"
+                            aria-label="Toggle team details"
+                        >
+                            <span class="toggle-text">Voir l'équipe</span>
+                            <div class="icon-circle">
+                                <svg viewBox="0 0 24 24" width="24" height="24">
+                                    <path
+                                        d="M7 10l5 5 5-5H7z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="pokemon-grid-container">
+                        <div class="pokemon-grid">
+                            {[
+                                {
+                                    p: team.pkmn1,
+                                    f: team.pkmn1_form,
+                                    s: !!team.pkmn1_shiny,
+                                    n: team.pkmn1_nickname,
+                                    l: team.pkmn1_level,
+                                    d: team.pkmn1_do_uuid,
+                                    g: team.pkmn1_gender,
+                                },
+                                {
+                                    p: team.pkmn2,
+                                    f: team.pkmn2_form,
+                                    s: !!team.pkmn2_shiny,
+                                    n: team.pkmn2_nickname,
+                                    l: team.pkmn2_level,
+                                    d: team.pkmn2_do_uuid,
+                                    g: team.pkmn2_gender,
+                                },
+                                {
+                                    p: team.pkmn3,
+                                    f: team.pkmn3_form,
+                                    s: !!team.pkmn3_shiny,
+                                    n: team.pkmn3_nickname,
+                                    l: team.pkmn3_level,
+                                    d: team.pkmn3_do_uuid,
+                                    g: team.pkmn3_gender,
+                                },
+                                {
+                                    p: team.pkmn4,
+                                    f: team.pkmn4_form,
+                                    s: !!team.pkmn4_shiny,
+                                    n: team.pkmn4_nickname,
+                                    l: team.pkmn4_level,
+                                    d: team.pkmn4_do_uuid,
+                                    g: team.pkmn4_gender,
+                                },
+                                {
+                                    p: team.pkmn5,
+                                    f: team.pkmn5_form,
+                                    s: !!team.pkmn5_shiny,
+                                    n: team.pkmn5_nickname,
+                                    l: team.pkmn5_level,
+                                    d: team.pkmn5_do_uuid,
+                                    g: team.pkmn5_gender,
+                                },
+                                {
+                                    p: team.pkmn6,
+                                    f: team.pkmn6_form,
+                                    s: !!team.pkmn6_shiny,
+                                    n: team.pkmn6_nickname,
+                                    l: team.pkmn6_level,
+                                    d: team.pkmn6_do_uuid,
+                                    g: team.pkmn6_gender,
+                                },
+                            ].map(
+                                async ({ p, f, s, n, l, d, g }) =>
+                                    p && (
+                                        <div
+                                                class={`pokemon-card ${s ? "is-shiny" : ""} ${
+                                                    (f &&
+                                                        f.toLowerCase() ===
+                                                        "rlm") ||
+                                                    f.toLowerCase() === "ocean" ||
+                                                    f.toLowerCase() === "volcan" ||
+                                                    f.toLowerCase() === "ciel"
+                                                        ? "is-rlm"
+                                                        : ""
+                                                }`}
+                                        >
+                                            <div class="card-inner">
+                                                <div class="pokemon-visual">
+                                                    <div class="visual-bg" />
+                                                    <img
+                                                        src={await showdownApiGetPkmArt(
+                                                            formatPokemonName(
+                                                                p,
+                                                            ),
+                                                            f,
+                                                            s,
+                                                        )}
+                                                        alt={formatPokemonName(
+                                                            p,
+                                                        )}
+                                                        class="pokemon-image floating-anim"
+                                                        loading="lazy"
+                                                    />
+                                                    {s && (
+                                                        <div class="shiny-sparkles" />
+                                                    )}
+                                                    {l > 0 && (
+                                                        <div class="level-badge">
+                                                            Lvl {l}
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div class="pokemon-info">
+                                                    <div class="name-container">
+                                                        <strong class="pokemon-name">
+                                                            {n
+                                                                ? fixEncoding(n)
+                                                                : formatPokemonName(
+                                                                      p,
+                                                                  )
+                                                                      .charAt(0)
+                                                                      .toUpperCase() +
+                                                                  formatPokemonName(
+                                                                      p,
+                                                                  )
+                                                                      .slice(1)
+                                                                      .toLowerCase()}
+                                                        </strong>
+                                                        {s && (
+                                                            <span class="shiny-tag">
+                                                                SHINY
+                                                            </span>
+                                                        )}
+                                                        {f &&
+                                                            (f.toLowerCase() ===
+                                                                "rlm" ||
+                                                                f.toLowerCase() ===
+                                                                "ocean" ||
+                                                                f.toLowerCase() ===
+                                                                "volcan" ||
+                                                                f.toLowerCase() ===
+                                                                "ciel") && (
+                                                                        <span
+                                                                                class={`rlm-tag ${s ? "is-shiny" : ""}`}
+                                                                        >
+                                                                    RLM
+                                                                </span>
+                                                            )}
+                                                    </div>
+
+                                                    <div class="pokemon-details collapsed">
+                                                        <div class="details-grid">
+                                                            {f && (
+                                                                <div class="detail-pill">
+                                                                    <span class="label">
+                                                                        Forme
+                                                                    </span>
+                                                                    <span class="value">
+                                                                        {CapitalLetter(
+                                                                            f,
+                                                                        )}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                            {g && (
+                                                                <div class="detail-pill">
+                                                                    <span class="label">
+                                                                        Genre
+                                                                    </span>
+                                                                    <span class="value">
+                                                                        {CapitalLetter(
+                                                                            g,
+                                                                        )}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                            {d && (
+                                                                <div class="detail-pill do-pill">
+                                                                    <span class="label">
+                                                                        DO
+                                                                    </span>
+                                                                    <a
+                                                                        class="value link"
+                                                                        href={
+                                                                            "/joueurs/minecraft/" +
+                                                                            slugify(
+                                                                                await UUIDToPseudo(
+                                                                                    d,
+                                                                                ),
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        {await UUIDToPseudo(
+                                                                            d,
+                                                                        )}
+                                                                    </a>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ),
+                            )}
+                        </div>
+                    </div>
+                </div>
+            ))
+        ) : (
+            <div class="no-teams-message glass-panel">
+                <div class="empty-state-icon">🦦</div>
+                <p>Ce joueur n'a pas encore constitué d'équipe Pokémon.</p>
+            </div>
+        )
+    }
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const teamHeaders = document.querySelectorAll(".team-header");
+
+        teamHeaders.forEach((header) => {
+            header.addEventListener("click", () => {
+                const teamCard = header.closest(".team-card");
+                if (!teamCard) return;
+
+                const pokemonGrid = teamCard.querySelector(".pokemon-grid");
+                const toggleButton = header.querySelector(".team-toggle");
+                const toggleIcon = header.querySelector(".icon-circle svg");
+                const toggleText = header.querySelector(".toggle-text");
+                const allDetails =
+                    teamCard.querySelectorAll(".pokemon-details");
+
+                if (!pokemonGrid || !toggleButton) return;
+
+                // Toggle grid layout
+                const isExpanded =
+                    pokemonGrid.classList.toggle("expanded-view");
+
+                // Toggle details visibility with staggered animation
+                allDetails.forEach((detail, index) => {
+                    if (isExpanded) {
+                        setTimeout(
+                            () => detail.classList.remove("collapsed"),
+                            index * 50,
+                        );
+                    } else {
+                        detail.classList.add("collapsed");
+                    }
+                });
+
+                // Update UI state
+                if (isExpanded) {
+                    teamCard.classList.add("active");
+                    (toggleIcon as HTMLElement).style.transform =
+                        "rotate(180deg)";
+                    if (toggleText) toggleText.textContent = "Masquer détails";
+                } else {
+                    teamCard.classList.remove("active");
+                    (toggleIcon as HTMLElement).style.transform =
+                        "rotate(0deg)";
+                    if (toggleText) toggleText.textContent = "Voir l'équipe";
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    /* --- VARIABLES & THEME --- */
+    /* On utilise les variables du thème global pour les couleurs de base */
+    /* Et on ajoute de la transparence pour l'effet glassmorphism */
+    .pokemon-teams-wrapper {
+        /* Fond : légèrement plus opaque pour détacher du fond blanc en mode clair */
+        --glass-bg: color-mix(
+            in srgb,
+            var(--server-cards-background-color, #1a1a1a),
+            transparent 10%
+        );
+
+        /* Bordure : plus visible (moins transparente) pour bien délimiter la carte */
+        --glass-border: color-mix(
+            in srgb,
+            var(--server-cards-text-color, #fff),
+            transparent 85%
+        );
+
+        /* Highlight : reflet plus marqué */
+        --glass-highlight: color-mix(
+            in srgb,
+            var(--server-cards-text-color, #fff),
+            transparent 80%
+        );
+
+        --card-radius: 16px;
+        --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* Couleurs dérivées du thème */
+        --text-main: var(--server-cards-text-color, #fff);
+        --text-muted: var(--server-cards-transition-color, #ccc);
+        --accent-color: var(--color-gold, #ffb347);
+    }
+
+    /* --- CONTAINER & AMBIANCE --- */
+    .pokemon-teams-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        padding: 2rem 0;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .ambient-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        /* Glow un peu plus visible (95% transparent au lieu de 97%) */
+        background: radial-gradient(
+            circle at center,
+            color-mix(in srgb, var(--accent-color), transparent 95%) 0%,
+            transparent 70%
+        );
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    /* --- GLASS PANEL (TEAM CARD) --- */
+    .team-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid var(--badge-list-color-border);
+        border-radius: var(--card-radius);
+        overflow: hidden;
+        transition: all 0.4s var(--transition-smooth);
+        /* Ombre adaptative : utilise la couleur du texte (sombre en light mode, clair en dark mode) */
+        box-shadow: 0 8px 32px
+            color-mix(
+                in srgb,
+                var(--server-cards-text-color, #000),
+                transparent 90%
+            );
+    }
+
+    .team-card:hover {
+        border-color: var(--badge-list-color-accent);
+        box-shadow:
+            0 12px 40px
+                color-mix(
+                    in srgb,
+                    var(--server-cards-text-color, #000),
+                    transparent 85%
+                ),
+            0 0 0 1px color-mix(in srgb, var(--accent-color), transparent 90%);
+        transform: translateY(-2px);
+    }
+
+    .team-card.active {
+        background: color-mix(
+            in srgb,
+            var(--server-cards-background-color, #1a1a1a),
+            transparent 5%
+        );
+        border-color: var(--badge-list-color-accent);
+    }
+
+    /* --- HEADER --- */
+    .team-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        background: linear-gradient(
+            90deg,
+            color-mix(in srgb, var(--server-cards-text-color), transparent 97%)
+                0%,
+            transparent 100%
+        );
+        border-bottom: 1px solid var(--glass-border);
+        cursor: pointer;
+    }
+
+    .header-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .server-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        font-weight: 700;
+    }
+
+    .team-server-name {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--server-cards-title-color);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .server-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .badge-count {
+        font-size: 0.85rem;
+        color: var(--accent-color);
+        font-weight: 600;
+        background: color-mix(in srgb, var(--accent-color), transparent 90%);
+        padding: 2px 8px;
+        border-radius: 12px;
+        display: inline-block;
+        margin-top: 0.5rem;
+    }
+
+    /* --- TOGGLE BUTTON --- */
+    .team-toggle {
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        group: toggle;
+    }
+
+    .toggle-text {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        transition: color 0.3s;
+    }
+
+    .team-toggle:hover .toggle-text {
+        color: var(--text-main);
+    }
+
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: color-mix(
+            in srgb,
+            var(--server-cards-text-color),
+            transparent 95%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-main);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .team-toggle:hover .icon-circle {
+        background: var(--accent-color);
+        color: var(--server-cards-background-color);
+        transform: scale(1.1);
+    }
+
+    .icon-circle svg {
+        transition: transform 0.4s ease;
+    }
+
+    /* --- POKEMON GRID --- */
+    .pokemon-grid-container {
+        padding: 2rem;
+    }
+
+    .pokemon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.5rem;
+        transition: all 0.5s var(--transition-smooth);
+    }
+
+    /* Expanded view: 3 columns per line */
+    .pokemon-grid.expanded-view {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* --- POKEMON CARD --- */
+    .pokemon-card {
+        position: relative;
+        perspective: 1000px;
+        height: 100%;
+    }
+
+    .card-inner {
+        position: relative;
+        background: color-mix(
+            in srgb,
+            var(--server-cards-background-color),
+            transparent 40%
+        );
+        border-radius: 12px;
+        padding: 1rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .pokemon-card:hover .card-inner {
+        transform: translateY(-5px) scale(1.02);
+        background: color-mix(
+            in srgb,
+            var(--server-cards-background-color),
+            transparent 20%
+        );
+        border-color: var(--glass-highlight);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* --- SHINY SPECIAL EFFECTS --- */
+    .pokemon-card.is-shiny .card-inner {
+        background: linear-gradient(
+            135deg,
+            color-mix(
+                    in srgb,
+                    var(--server-cards-background-color),
+                    transparent 10%
+                )
+                0%,
+            color-mix(in srgb, var(--accent-color), transparent 80%) 100%
+        );
+        border: 1px solid
+            color-mix(in srgb, var(--accent-color), transparent 70%);
+    }
+
+    .pokemon-card.is-shiny:hover .card-inner {
+        box-shadow:
+            0 0 20px color-mix(in srgb, var(--accent-color), transparent 80%),
+            inset 0 0 15px
+                color-mix(in srgb, var(--accent-color), transparent 90%);
+    }
+
+    /* --- RLM SPECIAL EFFECTS --- */
+    .pokemon-card.is-rlm .card-inner {
+        background: linear-gradient(
+                135deg,
+                color-mix(
+                        in srgb,
+                        var(--server-cards-background-color),
+                        transparent 10%
+                ) 0%,
+                color-mix(in srgb, var(--color-blue), transparent 80%) 100%
+        );
+    }
+
+    .pokemon-card.is-rlm:hover .card-inner {
+        box-shadow: 0 0 20px color-mix(in srgb, var(--color-blue), transparent 80%),
+        inset 0 0 15px color-mix(in srgb, var(--color-blue), transparent 90%);
+    }
+
+    /* --- RLM SHINY SPECIAL EFFECTS --- */
+    .pokemon-card.is-rlm.is-shiny .card-inner {
+        background: linear-gradient(
+                135deg,
+                color-mix(
+                        in srgb,
+                        var(--server-cards-background-color),
+                        transparent 10%
+                ) 0%,
+                color-mix(in srgb, var(--color-purple), transparent 80%) 100%
+        );
+        border: 1px solid color-mix(in srgb, var(--color-purple), transparent 70%);
+    }
+
+    .pokemon-card.is-rlm.is-shiny:hover .card-inner {
+        box-shadow: 0 0 20px color-mix(in srgb, var(--color-purple), transparent 80%),
+        inset 0 0 15px color-mix(in srgb, var(--color-purple), transparent 90%);
+    }
+
+    .shiny-sparkles {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+                circle at 50% 50%,
+                var(--text-main) 1px,
+                transparent 1px
+            ),
+            radial-gradient(
+                circle at 20% 30%,
+                var(--accent-color) 1px,
+                transparent 1px
+            );
+        background-size: 40px 40px;
+        opacity: 0.3;
+        animation: sparkle-anim 4s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes sparkle-anim {
+        0% {
+            transform: translateY(0);
+            opacity: 0.3;
+        }
+        50% {
+            opacity: 0.6;
+        }
+        100% {
+            transform: translateY(-20px);
+            opacity: 0.3;
+        }
+    }
+
+    /* --- VISUALS --- */
+    .pokemon-visual {
+        position: relative;
+        width: 100%;
+        height: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .visual-bg {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(
+            circle,
+            color-mix(in srgb, var(--text-main), transparent 90%) 0%,
+            transparent 70%
+        );
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+    }
+
+    .pokemon-card:hover .visual-bg {
+        width: 140px;
+        height: 140px;
+        background: radial-gradient(
+            circle,
+            color-mix(in srgb, var(--text-main), transparent 85%) 0%,
+            transparent 70%
+        );
+    }
+
+    .pokemon-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 2;
+        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+        transition: transform 0.3s ease;
+    }
+
+    .floating-anim {
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
+    .level-badge {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* --- INFO & DETAILS --- */
+    .pokemon-info {
+        width: 100%;
+        text-align: center;
+    }
+
+    .name-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .pokemon-name {
+        font-size: 1.1rem;
+        color: var(--text-main);
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .shiny-tag {
+        font-size: 0.6rem;
+        background: linear-gradient(
+            90deg,
+            var(--accent-color),
+            var(--color-gold-deep)
+        );
+        color: #000;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        box-shadow: 0 0 10px
+            color-mix(in srgb, var(--accent-color), transparent 60%);
+    }
+
+    .rlm-tag {
+        font-size: 0.6rem;
+        background: linear-gradient(90deg, var(--color-blue), #0056b3);
+        color: #fff;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        box-shadow: 0 0 10px color-mix(in srgb, var(--color-blue), transparent 60%);
+    }
+
+    .rlm-tag.is-shiny {
+        background: linear-gradient(90deg, var(--color-purple), #6a0dad);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--color-purple), transparent 60%);
+    }
+
+    /* --- EXPANDABLE DETAILS --- */
+    .pokemon-details {
+        width: 100%;
+        max-height: 200px;
+        opacity: 1;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 0.5rem;
+        border-top: 1px solid var(--glass-border);
+        padding-top: 0.75rem;
+    }
+
+    .pokemon-details.collapsed {
+        max-height: 0;
+        opacity: 0;
+        margin-top: 0;
+        padding-top: 0;
+        border-top-color: transparent;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .detail-pill {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: color-mix(
+            in srgb,
+            var(--server-cards-text-color),
+            transparent 95%
+        );
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+    }
+
+    .detail-pill .label {
+        color: var(--text-muted);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+    }
+
+    .detail-pill .value {
+        color: var(--text-main);
+        font-weight: 600;
+    }
+
+    .detail-pill.do-pill {
+        background: color-mix(in srgb, var(--accent-color), transparent 95%);
+        border: 1px solid
+            color-mix(in srgb, var(--accent-color), transparent 90%);
+    }
+
+    .detail-pill .link {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .detail-pill .link:hover {
+        color: var(--text-main);
+        text-decoration: underline;
+    }
+
+    /* --- EMPTY STATE --- */
+    .no-teams-message {
+        text-align: center;
+        padding: 4rem;
+        color: var(--text-muted);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        .pokemon-grid.expanded-view {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .team-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .team-toggle {
+            width: 100%;
+            justify-content: space-between;
+            background: color-mix(
+                in srgb,
+                var(--server-cards-text-color),
+                transparent 95%
+            );
+            border-radius: 8px;
+        }
+
+        .pokemon-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .pokemon-grid.expanded-view {
+            grid-template-columns: 1fr;
+        }
+
+        .pokemon-grid-container {
+            padding: 1rem;
+        }
+    }
+</style>

@@ -1,10 +1,11 @@
 ---
 import {getCollection, render} from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Banner from "../../components/Banner.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
 import {slugify} from "../../formater/JoueurFormater";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import SlidingVignette from "../../components/ui/vignettes/SlidingVignette.astro";
 
-// 1. Génère un nouveau chemin pour chaque projet
 export async function getStaticPaths() {
     const projets = await getCollection("blog");
 
@@ -14,134 +15,228 @@ export async function getStaticPaths() {
     }));
 }
 
-// 2. Récupère les props passées dans getStaticPaths
 const {projet} = Astro.props;
 const {Content} = await render(projet);
+
+// Fetch other articles
+const tag = Astro.url.searchParams.get("tag");
+const articles = await getCollection("blog");
+
+// Filter acticles (Exclure le projet courant pour ne pas le voir à droite)
+const filteredArticles = articles
+    .filter((article) => article.id !== projet.id) // On exclut le projet actuel
+    .filter((article) => (tag ? article.data.tags?.includes(tag) : true))
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
+
 <Layout title={projet.data.title}>
-    <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`}/>
+    <Banner/>
+    <LargeTransitionSection
+            title={`#${projet.data.title}#`}
+            invertedBackground
+    />
 
-    <button
-            onclick="history.back()"
-            class="back-button mt-8 mx-8 mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center gap-2 transition-colors"
-    >
-        <span>←</span> Retour
-    </button>
-    <div class="project-container">
-        <h1 class="project-title">{projet.data.title}</h1>
-        <p class="project-description">{projet.data.description}</p>
-        <small class="project-date">{new Date(projet.data.pubDate).toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        })}</small>
-        <h4 class="project-tags">Tags : {projet.data.tags.map((tag) => tag).join(', ')}</h4>
+    <div class="project-layout">
+        <main class="project-content">
+            <div class="project-header">
+                <img
+                        src={projet.data.image}
+                        alt={projet.data.title}
+                        class="main-image"
+                />
 
-        <article class="project-content">
-            <Content/>
-        </article>
+                <div class="meta-info">
+                    <small class="vignette-date">
+                        {
+                            new Date(projet.data.pubDate).toLocaleDateString(
+                                "fr-FR",
+                                {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                },
+                            )
+                        }
+                    </small>
+                    <div class="tag-pill-labels-list-container">
+                        {
+                            projet.data.tags.map((tag) => (
+                                    <span class="tag-pill-labels">{tag}</span>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <p class="note-description">{projet.data.description}</p>
+            </div>
+
+            <article class="markdown-body">
+                <Content/>
+            </article>
+        </main>
+
+        <aside class="project-sidebar">
+            <h2 class="default-h2">Autres projets</h2>
+            <div class="sidebar-list">
+                {
+                    filteredArticles.map((article) => (
+                            <SlidingVignette
+                            image={article.data.image}
+                            image_alt={article.data.title}
+                            title={`#${article.data.title}#`}
+                            paragraph={
+                                article.data.description.length > 100
+                                    ? `${article.data.description.slice(0, 100)}...`
+                                    : article.data.description
+                            }
+                            card_link={`/projets/${slugify(article.data.title)}`}
+                            margin="0.8em"
+                            />
+                    ))
+                }
+            </div>
+            <button class="super-button golden-outline">
+                <a href="/projets">Retour à la liste</a>
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="right-slide-anim bi bi-caret-right-fill"
+                        viewBox="0 0 16 16"
+                >
+                    <path
+                            d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                    ></path>
+                </svg>
+            </button>
+        </aside>
     </div>
 </Layout>
 
 <style>
-    .back-button {
-        cursor: pointer;
-        border: none;
-        font-size: 1rem;
-    }
-
-    .project-container {
-        max-width: 1000px;
+    .project-layout {
+        max-width: 1400px;
         margin: 0 auto;
-        padding: 2rem;
+        padding: 4rem 2rem;
+        padding-top: 0;
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 4rem;
+        align-items: start;
     }
 
-    .project-title {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #1a1a1a;
-        margin-bottom: 1rem;
-    }
-
-    .project-description {
-        font-size: 1.2rem;
-        line-height: 1.6;
-        color: #4a4a4a;
-        margin-bottom: 1rem;
-    }
-
-    .project-date {
-        display: block;
-        color: #666;
-        margin-bottom: 1rem;
-        font-style: italic;
-    }
-
-    .project-tags {
-        color: #007acc;
-        margin-bottom: 2rem;
-        font-weight: 500;
-    }
-
+    /* Style for main content column */
     .project-content {
-        background: #fff;
-        border-radius: 8px;
-        line-height: 1.8;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
     }
 
-    .project-content :global(h2) {
-        color: #2c3e50;
-        margin: 2rem 0 1rem;
-    }
-
-    .project-content :global(p) {
+    .main-image {
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        max-height: 200px;
         margin-bottom: 1.5rem;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: contain;
     }
 
-    .project-content :global(img) {
+    .meta-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .markdown-body {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--markdown-default-color);
+    }
+
+    /* Style for markdown */
+    .markdown-body :global(h1) {
+        margin-top: 2em;
+        font-size: 2rem;
+        font-weight: bolder;
+        color: var(--markdown-h1-default-color);
+    }
+
+    .markdown-body :global(h2) {
+        margin-top: 2em;
+        font-size: 1.8rem;
+        font-weight: bolder;
+        color: var(--markdown-h2-default-color);
+    }
+
+    .markdown-body :global(h3) {
+        margin-top: 1.5em;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: var(--markdown-h3-default-color);
+    }
+
+    .markdown-body :global(p) {
+        margin-bottom: 1.5em;
+    }
+
+    .markdown-body :global(ul) {
+        padding-left: 1.5em;
+        margin-bottom: 1.5em;
+    }
+
+    .markdown-body :global(img) {
         max-width: 100%;
         height: auto;
-        border-radius: 4px;
-        margin: 1.5rem 0;
+        border-radius: 8px;
     }
 
-    .project-content :global(a) {
-        color: #007acc;
-        text-decoration: none;
+    .markdown-body :global(pre) /* Code blocs */ {
+        padding: 1em 1.5em;
+        border-radius: 8px;
+        margin-bottom: 1.5em;
+        overflow-x: auto;
+        line-height: 1.6;
     }
 
-    .project-content :global(a:hover) {
-        text-decoration: underline;
+    /* Style for sticky sidebar column */
+    .project-sidebar {
+        position: sticky;
+        top: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
-    .project-content :global(h1) {
-        font-size: 2rem;
-        margin: 2.5rem 0 1.5rem;
-        color: #1a1a1a;
-        font-weight: bold;
+    .sidebar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
     }
 
-    .project-content :global(h2) {
-        font-size: 1.75rem;
-        margin: 2rem 0 1rem;
-        color: #2c3e50;
-        font-weight: 600;
-    }
+    @media (max-width: 900px) {
+        .project-layout {
+            grid-template-columns: 1fr;
+            padding: 2rem 1rem;
+            gap: 3rem;
+        }
 
-    .project-content :global(h3) {
-        font-size: 1.5rem;
-        margin: 1.5rem 0 1rem;
-        color: #34495e;
-        font-weight: 500;
-    }
+        .project-sidebar {
+            position: static; /* No sticky on mobile & small screens */
+            order: 2;
+        }
 
-    .project-content :global(h4),
-    .project-content :global(h5),
-    .project-content :global(h6) {
-        font-size: 1.25rem;
-        margin: 1rem 0 0.75rem;
-        color: #555;
-        font-weight: 500;
+        .sidebar-list {
+            /* Grid project cards */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
     }
-
 </style>

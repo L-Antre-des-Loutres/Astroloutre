@@ -1,63 +1,64 @@
 ---
 title: "Cobblemon RLM"
-description: "Description courte"
+description: "Cobblemon Royaume de Loutre Mer est un datapack Cobblemon qui ajoute des Fakemon d'un projet abandonné de l'Antre des loutres."
 pubDate: 2025-09-27
-tags: [ "Minecraft" ]
+tags: [ "Minecraft", "Datapack", "Pokemon", "RLM" ]
 author: "RereBleue & TheAzertor"
-image: "/panoramas/minecraft/Tortilune.webp"
+image: "https://github.com/L-Antre-des-Loutres/Cobblemon-RLM/blob/main/assets/logos/CobblemonRLM-big.png?raw=true"
 ---
 
-## 🦦 What it "Cobblemon RLM" ?
+### 🦦 Qu'est-ce que "Cobblemon RLM" ?
 
-Cobblemon RLM is a datapack that adds Fakemon from another project of Antre des loutres. It can include forms of
-existing Pokémon but also entirely new one.
+**Cobblemon RLM** est un datapack pour le mod **Cobblemon** qui intègre des Fakemons et des formes régionales issus de
+l'univers de l'**Antre des Loutres** (Royaume de Loutre Mer). Il ajoute de nouvelles créatures uniques ainsi que des
+variantes de Pokémon existants.
 
-### List of Fakemon added :
+### 📋 Liste des Ajouts
 
-- Meganium RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [TheAzertor](https://github.com/Corentin-cott)*
-  - Bayleef RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***# Cobblemon RLM
+#### Formes Régionales & Fakemons
 
-## 🦦 What it "Cobblemon RLM" ?
+* **Meganium** (Plante / Acier) & **Macronium** (Plante)
+* **Tortank** (Eau / Vol) & **Carabaffe** (Eau)
+* **Pingoléon** (Eau / Électrik) & **Prinplouf** (Eau)
+* **Goupelin** (Feu / Fée) & **Roussil** (Feu)
+* **Pharamp**, **Lainergie**, **Wattouat** (Électrik / Spectre)
+* **Tarinorme** & **Tarinor** (Roche / Fée)
+* **Spiritomb** (Feu / Ténèbres)
+* **Héliatronc** (Forme Ciel : Plante / Vol, Forme Océan : Plante / Eau, Forme Volcan : Plante / Feu)
+* **Flammiko** (Feu / Électrik)
 
-Cobblemon RLM is a datapack that adds Fakemon from another project of Antre des loutres. It can include forms of
-existing Pokémon but also entirely new one.
+### 🚧 À Venir (Mise à jour 1.3)
 
-### List of Fakemon added :
+* **Nirondelle** & **Hélédelle** (Formes RLM)
+* **Tylton** & **Altaria** (Formes RLM)
+* **Togetic** & **Togekiss** (Formes RLM)
+* **Chrysapile** & **Lucanon** (Formes RLM)
+* **Luxray** (Forme RLM)
 
-- Meganium RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [TheAzertor](https://github.com/Corentin-cott)*
-- Bayleef RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [RereBleue](https://github.com/matheo-1712)*
-- Empoleon RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [TheAzertor](https://github.com/Corentin-cott)*
-- Prinplup RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [RereBleue](https://github.com/matheo-1712)*
-- Blastoise RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [TheAzertor](https://github.com/Corentin-cott)*
-- Wartortle RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [RereBleue](https://github.com/matheo-1712)*
-- Delphox RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [TheAzertor](https://github.com/Corentin-cott)*
-- Braixen RLM-Form
-  *- Cobblemon Model & Texture by : **Cobblemon***
-  *- Design and modifications by : [RereBleue](https://github.com/matheo-1712)*
-- Flammiko
-  *- Cobblemon animations (Spinda) by : **Cobblemon***
-  *- Design and modifications by : [TheAzertor](https://github.com/Corentin-cott)*
+### 📝 Autres Projets (WIP)
 
-## 🦦 How to install it ?
+* **Topspinox**
+* **Apheos**
+* **Aphelis**
+* **Rhinecaille**
 
-You just need this pack on your mods folder.
+### 🎵 Musiques Personnalisées
 
-[Modinth](https://modrinth.com/datapack/cobblemon-rlm)
+Le pack ajoute **22 disques de musique** reprenant des thèmes emblématiques de Pokémon.
 
+* **Commande pour les obtenir :** `/function dp_music:give_disc`
+
+### 📥 Installation
+
+1. Téléchargez le fichier `.jar`.
+2. Placez-le dans votre dossier `mods`.
+3. Nécessite **Cobblemon**.
+
+---
+
+### 👥 Crédits
+
+* **Cobblemon** : Modèles et textures de base
+* **Antre des Loutres** : Concept, Design et Modifications
+
+---
