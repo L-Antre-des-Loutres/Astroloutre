@@ -12,17 +12,11 @@
     --h1-title-color: var(--color-gold-deep);
     --h2-title-color: var(--color-blueish-gray-lightest);
     --h3-title-color: var(--color-blueish-gray-lightest);
-  
+
     /* Gradient color */
     --golden-gradient-shift-1: var(--color-gold-light);
     --golden-gradient-shift-2: var(--color-gold);
     --golden-gradient-shift-3: var(--color-gold-deep);
-    @keyframes color-gradient-shift {
-        0%   { color: var(--golden-gradient-shift-1, #FEE140); }
-        33%  { color: var(--golden-gradient-shift-2, #FEE140); }
-        66%  { color: var(--golden-gradient-shift-3, #FEE140); }
-        100% { color: var(--golden-gradient-shift-1, #FEE140); }
-    }
 
     /* ====================== */
     /* == Header Variables == */
