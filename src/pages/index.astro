@@ -1,8 +1,8 @@
 ---
 // Layout import
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 // Components import
-import Carrousel from '../components/sections/home/Carrousel.astro';
+import Carrousel from "../components/sections/home/Carrousel.astro";
 import LargeTransitionSection from "../components/sections/common/transitions/LargeTransitionSection.astro";
 import PresentationSection from "../components/sections/home/PresentationSection.astro";
 import MobileNav from "../components/sections/home/MobileNav.astro";
@@ -15,24 +15,33 @@ import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
 // Declaration of total playtime variable
 let totalHours: Promise<number> | number = 0;
 // Minecraft playtime
-const response = await fetch('https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime');
+const response = await fetch(
+    "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime",
+);
 if (response.ok) {
     const json = await response.json();
-    totalHours = formatMinecraftPlayTime(Number(json?.data?.[0]?.total_hours || 0)); // We add Minecraft playtime to total
+    totalHours = formatMinecraftPlayTime(
+        Number(json?.data?.[0]?.total_hours || 0),
+    ); // We add Minecraft playtime to total
 }
 // Palworld playtime
-const responsePalworld = await fetch('https://otterlyapi.antredesloutres.fr/api/palworld/stats/total-hours');
+const responsePalworld = await fetch(
+    "https://otterlyapi.antredesloutres.fr/api/palworld/stats/total-hours",
+);
 if (responsePalworld.ok) {
     const json = await responsePalworld.json();
-    totalHours += await formatDecimalHours(json?.data?.[0]?.total_hours) || 0; // We add Palworld playtime to total
+    totalHours += (await formatDecimalHours(json?.data?.[0]?.total_hours)) || 0; // We add Palworld playtime to total
 }
 ---
+
 <Layout>
-	<Carrousel/>
+    <Carrousel/>
 
-    <LargeTransitionSection title={`Un total de plus de #_${totalHours} heures_# joué sur nos %serveurs%</span> !`}/>
+    <LargeTransitionSection
+            title={`Un total de plus de #_${totalHours} heures_# jouées sur nos %serveurs%</span> !`}
+    />
 
-	<PresentationSection/>
+    <PresentationSection/>
 
     <MobileNav/>
 
@@ -49,14 +58,14 @@ if (responsePalworld.ok) {
         <SlidingVignette
             image="https://github.com/Corentin-cott/Mineotter/blob/main/src/app/imgs/logo-text.png?raw=true"
             image_alt="Logo Mineotter"
-            title="#Mineotter#, le bots de nos #serveurs Minecraft#"
+            title="#Mineotter#, le bot de nos #serveurs Minecraft#"
             paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
             card_link="https://github.com/Corentin-cott/Mineotter"
         />
         <SlidingVignette
             image="https://github.com/L-Antre-des-Loutres/MultiLoutre/blob/main/multiloutre-logo.png?raw=true"
             image_alt="Logo Multiloutre"
-            title="#Multiloutre#, le bots de tous #nos autres serveurs#"
+            title="#Multiloutre#, le bot de tous #nos autres serveurs#"
             paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
             card_link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
         />
@@ -70,8 +79,8 @@ if (responsePalworld.ok) {
         <SlidingVignette
             image="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
             image_alt="Logo Citlali"
-            title="#Citlaloutre#, clle qui n'est pas une vraiment une #loutre#"
-            paragraph="Citlaloutre (Citlali de son vrai nom) et le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
+            title="#Citlaloutre#, celle qui n'est pas vraiment une #loutre#"
+            paragraph="Citlaloutre (Citlali de son vrai nom) est le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
             card_link="https://github.com/matheo-1712/Citlali"
         />
     </div>

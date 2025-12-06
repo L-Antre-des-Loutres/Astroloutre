@@ -3,7 +3,7 @@
 ---
 
 <button id="theme-toggle" class="theme-toggle" aria-label="Changer de thème">
-    <span class="icon sun-icon">
+    <span class="theme-toggle-icon sun-icon">
         <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -38,7 +38,7 @@
                 y2="4.22"></line></svg
         >
     </span>
-    <span class="icon moon-icon">
+    <span class="theme-toggle-icon moon-icon">
         <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -77,12 +77,12 @@
         position: fixed;
         bottom: 2rem;
         right: 2rem;
-        background-color: var(--goldenbutton-background-color);
-        color: var(--goldenbutton-icon-color);
-        border: 1px solid var(--goldenbutton-icon-color);
-        border-radius: 50%;
-        width: 3.5rem;
-        height: 3.5rem;
+        background-color: var(--goldenbutton-background-color) !important;
+        color: var(--goldenbutton-icon-color) !important;
+        border: 1px solid var(--goldenbutton-icon-color) !important;
+        border-radius: 50% !important;
+        width: 3.5rem !important;
+        height: 3.5rem !important;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -98,7 +98,7 @@
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
     }
 
-    .icon {
+    .theme-toggle-icon {
         display: none;
     }
 
