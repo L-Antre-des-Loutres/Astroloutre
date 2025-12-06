@@ -116,6 +116,14 @@
     --player-profile-text-secondary: var(--color-gray);
     --player-profile-icon-color: var(--color-gray-deep);
     --player-profile-input-bg: var(--color-white);
+
+    /* Mobile Nav */
+    --mobile-nav-container-border: var(--color-gray-deep);
+    --mobile-nav-button-text: var(--color-gray-deep);
+    --mobile-nav-button-border: var(--color-gray-deep);
+    --mobile-nav-button-bg-hover: var(--color-gray-deep);
+    --mobile-nav-button-text-hover: var(--color-white);
+
 }
 
 @keyframes colorGradientShift {

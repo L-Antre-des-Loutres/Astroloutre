@@ -134,6 +134,14 @@
     --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
     --server-screen-color-accent: var(--color-gold-deep);
 
+    /* Mobile Nav */
+    --mobile-nav-container-border: var(--color-gold-light);
+    --mobile-nav-button-text: var(--color-gold-light);
+    --mobile-nav-button-border: var(--color-gold-light);
+    --mobile-nav-button-bg-hover: var(--color-gold-light);
+    --mobile-nav-button-text-hover: var(--color-black);
+
+
     /* ==================================== */
     /* == Player Profile Page Variables == */
     /* ==================================== */
