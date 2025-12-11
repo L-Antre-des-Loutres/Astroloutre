@@ -85,14 +85,9 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0">
             {/* Tableau des joueurs */}
-            <div className="w-1/1 overflow-x-auto shadow-lg rounded-xl bg-white">
-                <table className="w-full text-base text-left overflow-hidden rounded-xl">
-                    <thead
-                        style={{
-                            background: "linear-gradient(to right, #333, #333, #5a1a00)",
-                        }}
-                        className="text-white text-base"
-                    >
+            <div className="ranking-table-container">
+                <table className="ranking-table">
+                    <thead className="ranking-thead">
                     <tr>
                         {Object.entries(userStats).map(([key, label]) => {
                             const isActive = sortConfig?.key === key;
@@ -106,7 +101,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                         }
                                         setSortConfig({key, direction});
                                     }}
-                                    className="px-6 py-4 font-semibold cursor-pointer select-none"
+                                    className="ranking-th"
                                     style={{minWidth: columnWidths[key]}}
                                 >
                                     {label} {isActive ? (sortConfig.direction === "asc" ? "▲" : "▼") : ""}
@@ -120,18 +115,18 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                         <tr>
                             <td
                                 colSpan={Object.keys(userStats).length}
-                                className="text-center px-6 py-8 text-gray-500 bg-white"
+                                className="text-center px-6 py-8 ranking-td ranking-tr-even"
                             >
                                 Pas de données discord.
                             </td>
                         </tr>
                     ) : (
                         sortedPlayers.map((player, idx) => (
-                            <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                            <tr key={idx} className={idx % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
                                 {Object.keys(userStats).map((key) => (
                                     <td
                                         key={key}
-                                        className="px-6 py-4 whitespace-nowrap"
+                                        className="ranking-td"
                                         style={{minWidth: columnWidths[key]}}
                                     >
                                         {(() => {
@@ -147,9 +142,9 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                                                         />
                                                         <a
                                                             href={`/profil/${slugify(player.tag_discord)}`}
-                                                            className="text-[#101550] underline hover:text-[#101550] transition"
+                                                            className="ranking-link"
                                                         >
-                                                        <span>{player[key] ?? "-"}</span>
+                                                            <span>{player[key] ?? "-"}</span>
                                                         </a>
                                                     </div>
                                                 );
@@ -179,27 +174,27 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
             </div>
 
             {/* Infos */}
-            <div className="hidden sm:block text-center">
+            <div className="hidden sm:block text-center ranking-info-text">
                 <p className="mt-2 sm:mt-4">
                     Ces données sont mises à jour quotidiennement et ne reflètent pas les changements en temps réel.
                 </p>
                 <p className="mt-2">
                     Pour faire supprimer vos données, vous pouvez nous contacter sur Discord ou par e-mail à{" "}
-                    <a href="mailto:arisoutre@gmail.com" style={{textDecoration: "underline", color: "#101550"}}>
+                    <a href="mailto:arisoutre@gmail.com" className="ranking-link">
                         arisoutre@gmail.com
                     </a>
                     .
                 </p>
                 <p>
-                    <a href="/donnees" style={{textDecoration: "underline", color: "#101550"}}>
+                    <a href="/donnees" className="ranking-link">
                         En savoir plus sur la suppression de mes données
                     </a>
                 </p>
             </div>
 
-            <div className="block sm:hidden text-center mt-4 mb-4">
+            <div className="block sm:hidden text-center mt-4 mb-4 ranking-info-text">
                 <p>
-                    <a href="https://perdu.com" style={{textDecoration: "underline", color: "#101550"}}>
+                    <a href="https://perdu.com" className="ranking-link">
                         En savoir plus sur l'utilisation de mes données
                     </a>
                 </p>

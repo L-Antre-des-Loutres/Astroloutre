@@ -4,7 +4,7 @@ description: "Cobblemon Royaume de Loutre Mer est un datapack Cobblemon qui ajou
 pubDate: 2025-09-27
 tags: [ "Minecraft", "Datapack", "Pokemon", "RLM" ]
 author: "RereBleue & TheAzertor"
-image: "https://github.com/L-Antre-des-Loutres/Cobblemon-RLM/blob/main/assets/logos/CobblemonRLM-big.png?raw=true"
+image: "https://raw.githubusercontent.com/L-Antre-des-Loutres/Cobblemon-RLM/refs/heads/main/assets/logos/CobblemonRLM-big.png"
 ---
 
 ### 🦦 Qu'est-ce que "Cobblemon RLM" ?

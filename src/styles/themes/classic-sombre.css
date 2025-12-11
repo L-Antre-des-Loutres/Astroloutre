@@ -154,4 +154,21 @@
 
     /* Missing variables */
     --pTextColor: var(--color-blueish-gray-lightest);
+
+    /* Ranking colors */
+    --ranking-container-bg: var(--color-gray-deepest);
+    --ranking-row-odd-bg: var(--color-gray-deepest);
+    --ranking-row-even-bg: var(--color-black);
+    --ranking-text-color: var(--color-white);
+    --ranking-link-color: var(--color-gold-light);
+    --ranking-header-bg: linear-gradient(to right, #1a1a1a, #1a1a1a, #300e00);
+    --ranking-header-text: var(--color-white);
+
+    --ranking-button-bg: var(--color-gray-deep);
+    --ranking-button-text: var(--color-white);
+    --ranking-button-border: transparent;
+
+    --ranking-button-active-bg: var(--color-gold-deep);
+    --ranking-button-active-text: var(--color-white);
+    --ranking-button-active-border: var(--color-gold);
 }

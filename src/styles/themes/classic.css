@@ -124,6 +124,22 @@
     --mobile-nav-button-bg-hover: var(--color-gray-deep);
     --mobile-nav-button-text-hover: var(--color-white);
 
+    /* Ranking colors */
+    --ranking-container-bg: var(--color-white);
+    --ranking-row-odd-bg: var(--color-white);
+    --ranking-row-even-bg: #F9FAFB;
+    --ranking-text-color: var(--color-gray-deep);
+    --ranking-link-color: #101550;
+    --ranking-header-bg: linear-gradient(to right, #333, #333, #5a1a00);
+    --ranking-header-text: var(--color-white);
+
+    --ranking-button-bg: #333;
+    --ranking-button-text: var(--color-white);
+    --ranking-button-border: transparent;
+
+    --ranking-button-active-bg: var(--color-white);
+    --ranking-button-active-text: #081245;
+    --ranking-button-active-border: #101550;
 }
 
 @keyframes colorGradientShift {
