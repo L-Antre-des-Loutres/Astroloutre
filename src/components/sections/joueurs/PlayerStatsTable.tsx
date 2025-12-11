@@ -76,73 +76,65 @@ const PlayerStatsTable: React.FC<Props> = ({ player }) => {
                 `}
             </style>
 
-            <table className="min-w-[900px] w-full text-left shadow-lg rounded-xl overflow-hidden bg-white">
-                <thead
-                    className="text-white text-sm"
-                    style={{
-                        background: "linear-gradient(to right, #333, #333, #5a1a00)",
-                    }}
-                >
-                <tr>
-                    <th className="px-4 py-3">Nom du serveur</th>
-                    <th className="px-4 py-3">Temps de jeu</th>
-                    <th className="px-4 py-3">Morts</th>
-                    <th className="px-4 py-3">Kills</th>
-                    <th className="px-4 py-3">Kills joueurs</th>
-                    <th className="px-4 py-3">Blocs cassés</th>
-                    <th className="px-4 py-3">Blocs posés</th>
-                    <th className="px-4 py-3">Distance totale</th>
-                    <th className="px-4 py-3">À pied</th>
-                    <th className="px-4 py-3">Elytres</th>
-                </tr>
-                </thead>
-                <tbody className="text-sm text-[#101550]">
-                {player.map((stat, index) => (
-                    <tr
-                        key={stat.serveur_id}
-                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                    >
-                        <td className="px-4 py-3 flex items-center gap-2">
-                            <img
-                                src="/icons/minecraft_icon.webp"
-                                alt="Minecraft Bedrock"
-                                className="w-6 h-6 object-contain"
-                            />
-                            {stat.nom}
-                        </td>
-                        <td className={`px-4 py-3 ${stat.tmps_jeux > standoutPlaytime ? 'color-shift' : ''}`}>
-                            {formatHeures(stat.tmps_jeux)} heures
-                        </td>
-                        <td className="px-4 py-3">{formatNumber(stat.nb_mort)} morts</td>
-                        <td className="px-4 py-3">{formatNumber(stat.nb_kills)} kills</td>
-                        <td className="px-4 py-3">{formatNumber(stat.nb_playerkill)} kills de joueurs</td>
-                        <td className="px-4 py-3">{formatBlocs(stat.nb_blocs_detr)} blocs</td>
-                        <td className="px-4 py-3">{formatBlocs(stat.nb_blocs_pose)} blocs</td>
-                        <td className="px-4 py-3">{formatBlocs(stat.dist_total)} blocs</td>
-                        <td className="px-4 py-3">{formatBlocs(stat.dist_pieds)} blocs</td>
-                        <td className="px-4 py-3">{formatBlocs(stat.dist_elytres)} blocs</td>
+            <div className="ranking-table-container">
+                <table className="ranking-table">
+                    <thead className="ranking-thead">
+                    <tr>
+                        <th className="ranking-th">Nom du serveur</th>
+                        <th className="ranking-th">Temps de jeu</th>
+                        <th className="ranking-th">Morts</th>
+                        <th className="ranking-th">Kills</th>
+                        <th className="ranking-th">Kills joueurs</th>
+                        <th className="ranking-th">Blocs cassés</th>
+                        <th className="ranking-th">Blocs posés</th>
+                        <th className="ranking-th">Distance totale</th>
+                        <th className="ranking-th">À pied</th>
+                        <th className="ranking-th">Elytres</th>
                     </tr>
-                ))}
+                    </thead>
+                    <tbody>
+                    {player.map((stat, index) => (
+                        <tr
+                            key={stat.serveur_id}
+                            className={index % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}
+                        >
+                            <td className="ranking-td flex items-center gap-2">
+                                <img
+                                    src="/icons/minecraft_icon.webp"
+                                    alt="Minecraft Bedrock"
+                                    className="w-6 h-6 object-contain"
+                                />
+                                {stat.nom}
+                            </td>
+                            <td className={`ranking-td ${stat.tmps_jeux > standoutPlaytime ? 'color-shift' : ''}`}>
+                                {formatHeures(stat.tmps_jeux)} heures
+                            </td>
+                            <td className="ranking-td">{formatNumber(stat.nb_mort)} morts</td>
+                            <td className="ranking-td">{formatNumber(stat.nb_kills)} kills</td>
+                            <td className="ranking-td">{formatNumber(stat.nb_playerkill)} kills de joueurs</td>
+                            <td className="ranking-td">{formatBlocs(stat.nb_blocs_detr)} blocs</td>
+                            <td className="ranking-td">{formatBlocs(stat.nb_blocs_pose)} blocs</td>
+                            <td className="ranking-td">{formatBlocs(stat.dist_total)} blocs</td>
+                            <td className="ranking-td">{formatBlocs(stat.dist_pieds)} blocs</td>
+                            <td className="ranking-td">{formatBlocs(stat.dist_elytres)} blocs</td>
+                        </tr>
+                    ))}
 
-                <tr
-                    className="text-white text-sm"
-                    style={{
-                        background: "linear-gradient(to right, #333, #333, #333, #5a1a00)",
-                    }}
-                >
-                    <td className="px-4 py-3">Total tous serveurs</td>
-                    <td className="px-4 py-3">{formatHeures(total.tmps_jeux)} heures</td>
-                    <td className="px-4 py-3">{total.nb_mort} morts</td>
-                    <td className="px-4 py-3">{total.nb_kills} kills</td>
-                    <td className="px-4 py-3">{total.nb_playerkill} kills de joueurs</td>
-                    <td className="px-4 py-3">{formatBlocs(total.nb_blocs_detr)} blocs</td>
-                    <td className="px-4 py-3">{formatBlocs(total.nb_blocs_pose)} blocs</td>
-                    <td className="px-4 py-3">{formatBlocs(total.dist_total)} blocs</td>
-                    <td className="px-4 py-3">{formatBlocs(total.dist_pieds)} blocs</td>
-                    <td className="px-4 py-3">{formatBlocs(total.dist_elytres)} blocs</td>
-                </tr>
-                </tbody>
-            </table>
+                    <tr className="ranking-thead">
+                        <td className="ranking-td">Total tous serveurs</td>
+                        <td className="ranking-td">{formatHeures(total.tmps_jeux)} heures</td>
+                        <td className="ranking-td">{total.nb_mort} morts</td>
+                        <td className="ranking-td">{total.nb_kills} kills</td>
+                        <td className="ranking-td">{total.nb_playerkill} kills de joueurs</td>
+                        <td className="ranking-td">{formatBlocs(total.nb_blocs_detr)} blocs</td>
+                        <td className="ranking-td">{formatBlocs(total.nb_blocs_pose)} blocs</td>
+                        <td className="ranking-td">{formatBlocs(total.dist_total)} blocs</td>
+                        <td className="ranking-td">{formatBlocs(total.dist_pieds)} blocs</td>
+                        <td className="ranking-td">{formatBlocs(total.dist_elytres)} blocs</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
