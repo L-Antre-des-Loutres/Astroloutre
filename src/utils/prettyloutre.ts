@@ -15,7 +15,7 @@ export function parseTitle(text: string = ""): string {// Component: src/compone
     //        class: inline-image
     //
 
-    console.log("INPUT TITLE =", text);
+    // console.log("INPUT TITLE =", text);
 
     return text
         // %text%

@@ -12,17 +12,11 @@
     --h1-title-color: var(--color-gold-deep);
     --h2-title-color: var(--color-blueish-gray-lightest);
     --h3-title-color: var(--color-blueish-gray-lightest);
-  
+
     /* Gradient color */
     --golden-gradient-shift-1: var(--color-gold-light);
     --golden-gradient-shift-2: var(--color-gold);
     --golden-gradient-shift-3: var(--color-gold-deep);
-    @keyframes color-gradient-shift {
-        0%   { color: var(--golden-gradient-shift-1, #FEE140); }
-        33%  { color: var(--golden-gradient-shift-2, #FEE140); }
-        66%  { color: var(--golden-gradient-shift-3, #FEE140); }
-        100% { color: var(--golden-gradient-shift-1, #FEE140); }
-    }
 
     /* ====================== */
     /* == Header Variables == */
@@ -139,6 +133,14 @@
     --server-screen-color-text-main: var(--color-gold-light);
     --server-screen-color-text-muted: var(--color-blueish-gray-lightest);
     --server-screen-color-accent: var(--color-gold-deep);
+
+    /* Mobile Nav */
+    --mobile-nav-container-border: var(--color-gold-light);
+    --mobile-nav-button-text: var(--color-gold-light);
+    --mobile-nav-button-border: var(--color-gold-light);
+    --mobile-nav-button-bg-hover: var(--color-gold-light);
+    --mobile-nav-button-text-hover: var(--color-black);
+
 
     /* ==================================== */
     /* == Player Profile Page Variables == */

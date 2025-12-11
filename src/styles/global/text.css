@@ -80,12 +80,19 @@
 }
 
 @keyframes underlineExpandOnce {
-    to { width: 100%; }
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes slideLeftToRight {
-    from { transform: translateX(0%); }
-    to   { transform: translateX(-100%); }
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
 }
 
 /* TEXT FONTS */
@@ -94,4 +101,22 @@
     font-weight: 400;
     font-style: normal;
     font-size: 3.5rem;
+}
+
+@keyframes color-gradient-shift {
+    0% {
+        color: var(--golden-gradient-shift-1, #FEE140);
+    }
+
+    33% {
+        color: var(--golden-gradient-shift-2, #FEE140);
+    }
+
+    66% {
+        color: var(--golden-gradient-shift-3, #FEE140);
+    }
+
+    100% {
+        color: var(--golden-gradient-shift-1, #FEE140);
+    }
 }
