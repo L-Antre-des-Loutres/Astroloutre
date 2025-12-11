@@ -92,14 +92,8 @@ const PlayerClassement: React.FC<Props> = ({
                 <button
                     key={"__all__"}
                     onClick={() => setSelectedServer("")}
-                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
-                        selectedServer === "" ? "bg-white" : "text-white"
+                    className={`ranking-filter-button ${selectedServer === "" ? "active" : "inactive"
                     }`}
-                    style={
-                        selectedServer === ""
-                            ? { color: "#081245", borderColor: "#101550" }
-                            : { background: "#333", borderColor: "transparent" }
-                    }
                 >
                     Total de tous les serveurs
                 </button>
@@ -120,14 +114,8 @@ const PlayerClassement: React.FC<Props> = ({
                                 <button
                                     key={id}
                                     onClick={() => setSelectedServer(id)}
-                                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
-                                        selectedServer === id ? "bg-white" : "text-white"
+                                    className={`ranking-filter-button ${selectedServer === id ? "active" : "inactive"
                                     }`}
-                                    style={
-                                        selectedServer === id
-                                            ? { color: "#081245", borderColor: "#101550" }
-                                            : { background: "#333", borderColor: "transparent" }
-                                    }
                                 >
                                     {srv.nom}
                                 </button>
@@ -147,14 +135,8 @@ const PlayerClassement: React.FC<Props> = ({
                                 <button
                                     key={id}
                                     onClick={() => setSelectedServer(id)}
-                                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
-                                        selectedServer === id ? "bg-white" : "text-white"
+                                    className={`ranking-filter-button ${selectedServer === id ? "active" : "inactive"
                                     }`}
-                                    style={
-                                        selectedServer === id
-                                            ? { color: "#081245", borderColor: "#101550" }
-                                            : { background: "#333", borderColor: "transparent" }
-                                    }
                                 >
                                     {srv.nom}
                                 </button>
@@ -174,14 +156,8 @@ const PlayerClassement: React.FC<Props> = ({
                                 <button
                                     key={id}
                                     onClick={() => setSelectedServer(id)}
-                                    className={`px-4 py-2 rounded-md font-medium shadow-md transition border-2 ${
-                                        selectedServer === id ? "bg-white" : "text-white"
+                                    className={`ranking-filter-button ${selectedServer === id ? "active" : "inactive"
                                     }`}
-                                    style={
-                                        selectedServer === id
-                                            ? { color: "#081245", borderColor: "#101550" }
-                                            : { background: "#333", borderColor: "transparent" }
-                                    }
                                     title={srv.description}
                                 >
                                     {srv.nom}
@@ -193,14 +169,9 @@ const PlayerClassement: React.FC<Props> = ({
             </div>
 
             {/* Tableau des joueurs */}
-            <div className="w-1/1 overflow-x-auto shadow-lg rounded-xl bg-white">
-                <table className="w-full text-base text-left overflow-hidden rounded-xl">
-                    <thead
-                        style={{
-                            background: "linear-gradient(to right, #333, #333, #5a1a00)",
-                        }}
-                        className="text-white text-base"
-                    >
+            <div className="ranking-table-container">
+                <table className="ranking-table">
+                    <thead className="ranking-thead">
                     <tr>
                         {Object.entries(playerStats).map(([key, label]) => {
                             const isActive = sortConfig?.key === key;
@@ -212,10 +183,10 @@ const PlayerClassement: React.FC<Props> = ({
                                         if (isActive && sortConfig?.direction === "asc") {
                                             direction = "desc";
                                         }
-                                        setSortConfig({ key, direction });
+                                        setSortConfig({key, direction});
                                     }}
-                                    className="px-6 py-4 font-semibold cursor-pointer select-none"
-                                    style={{ minWidth: columnWidths[key] }}
+                                    className="ranking-th"
+                                    style={{minWidth: columnWidths[key]}}
                                 >
                                     {label} {isActive ? (sortConfig.direction === "asc" ? "▲" : "▼") : ""}
                                 </th>
@@ -228,19 +199,19 @@ const PlayerClassement: React.FC<Props> = ({
                         <tr>
                             <td
                                 colSpan={Object.keys(playerStats).length}
-                                className="text-center px-6 py-8 text-gray-500 bg-white"
+                                className="text-center px-6 py-8 ranking-text-color bg-white"
                             >
                                 Pas de données pour ce serveur.
                             </td>
                         </tr>
                     ) : (
                         sortedPlayers.map((player, idx) => (
-                            <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                            <tr key={idx} className={idx % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
                                 {Object.keys(playerStats).map((key) => (
                                     <td
                                         key={key}
-                                        className="px-6 py-4 whitespace-nowrap"
-                                        style={{ minWidth: columnWidths[key] }}
+                                        className="ranking-td"
+                                        style={{minWidth: columnWidths[key]}}
                                     >
                                         {(() => {
                                             if (key === "playername") {
@@ -254,13 +225,13 @@ const PlayerClassement: React.FC<Props> = ({
                                                             className="rounded-sm"
                                                         />
                                                         <span>
-                                <a
-                                    href={`/joueurs/minecraft/${slugify(player.playername)}`}
-                                    className="text-[#101550] underline hover:text-[#101550] transition"
-                                >
-                                  {player.playername}
-                                </a>
-                              </span>
+                                                                <a
+                                                                    href={`/joueurs/minecraft/${slugify(player.playername)}`}
+                                                                    className="ranking-link"
+                                                                >
+                                                                    {player.playername}
+                                                                </a>
+                                                            </span>
                                                     </div>
                                                 );
                                             } else if (key === "tmps_jeu") {
@@ -290,27 +261,27 @@ const PlayerClassement: React.FC<Props> = ({
             </div>
 
             {/* Infos */}
-            <div className="hidden sm:block text-center">
+            <div className="hidden sm:block text-center ranking-info-text">
                 <p className="mt-2 sm:mt-4">
                     Ces données sont mises à jour quotidiennement et ne reflètent pas les changements en temps réel.
                 </p>
                 <p className="mt-2">
                     Pour faire supprimer vos données, vous pouvez nous contacter sur Discord ou par e-mail à{" "}
-                    <a href="mailto:arisoutre@gmail.com" style={{ textDecoration: "underline", color: "#101550" }}>
+                    <a href="mailto:arisoutre@gmail.com" className="ranking-link">
                         arisoutre@gmail.com
                     </a>
                     .
                 </p>
                 <p>
-                    <a href="/donnees" style={{ textDecoration: "underline", color: "#101550" }}>
+                    <a href="/donnees" className="ranking-link">
                         En savoir plus sur la suppression de mes données
                     </a>
                 </p>
             </div>
 
-            <div className="block sm:hidden text-center mt-4 mb-4">
+            <div className="block sm:hidden text-center mt-4 mb-4 ranking-info-text">
                 <p>
-                    <a href="https://perdu.com" style={{ textDecoration: "underline", color: "#101550" }}>
+                    <a href="https://perdu.com" className="ranking-link">
                         En savoir plus sur l'utilisation de mes données
                     </a>
                 </p>
