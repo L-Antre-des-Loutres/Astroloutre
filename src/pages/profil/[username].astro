@@ -43,7 +43,8 @@ type LinkAccount = {
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
-const accountLink : LinkAccount | null = Astro.props.accountLink
+// Returns LinkAccount[] instead of single object
+const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 
 // Génération des pages statiques
 export async function getStaticPaths() {
@@ -70,7 +71,8 @@ export async function getStaticPaths() {
     return joueurs
         .filter((joueur) => typeof joueur.pseudo_discord === 'string' && joueur.pseudo_discord.trim() !== '')
         .map((joueur) => {
-            const accountLink = accountsLinks.find(
+            // Retrieve ALL linked accounts
+            const accountLinks = accountsLinks.filter(
                 (link) => link.utilisateur_id === joueur.id
             );
 
@@ -80,7 +82,7 @@ export async function getStaticPaths() {
                 },
                 props: {
                     joueur,
-                    accountLink: accountLink || null, // null si non trouvé
+                    accountLinks: accountLinks, // Returns array, empty if none
                 },
             };
         });
@@ -111,7 +113,7 @@ if (!(utilisateur) || utilisateur.nb_message === null) {
     <Banner/>
 
     <div class="profile-container">
-        <TransitionSection title=`Profil #Discord# ${prefixe}#${utilisateur.pseudo_discord}#`/>
+        <TransitionSection title={`Profil #Discord# ${prefixe}#${utilisateur.pseudo_discord}#`}/>
 
         <div class="profile-details">
 
@@ -134,7 +136,7 @@ if (!(utilisateur) || utilisateur.nb_message === null) {
                 {/* Badges style */}
                 <div class="server-card-footer">
                     <span class="server-card-badge version">{utilisateur.tag_discord}</span>
-                    {utilisateur.roles?.map(role => {
+                    {utilisateur.roles?.map((role: Roles) => {
                         const isFounder = role.id === "1112707976273338470";
                         const isInvesti = role.id === "1113865928086655037";
 
@@ -200,18 +202,24 @@ if (!(utilisateur) || utilisateur.nb_message === null) {
             {/* Colonne 3 : Actions / Comptes Liés */}
             <div class="info-grid">
                 <h2>Comptes Liés</h2>
-                <div class="server-boutons-container">
-                    {accountLink ? (
-                            <a href={`/joueurs/minecraft/${slugify(accountLink.playername)}`} class="w-full">
+                <div class="server-boutons-container"
+                     style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+                    {accountLinks.length > 0 ? (
+                        accountLinks.map(account => (
+                                <a href={`/joueurs/minecraft/${slugify(account.playername)}`} class="w-full">
                                 <button class="super-button golden-outline w-full" style="border-radius: 5px">
-                                <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                                    <Image src={`https://mc-heads.net/avatar/${accountLink.playername}/32`} alt="Head" width={24} height={24} class="rounded-sm"/>
-                                    {accountLink.playername}
-                                </span>
+                                    <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                                        <Image src={`https://mc-heads.net/avatar/${account.playername}/32`} alt="Head"
+                                               width={24} height={24} class="rounded-sm"/>
+                                        {account.playername}
+                                    </span>
                                 </button>
                             </a>
+                        ))
                     ) : (
-                            <div class="server-card-badge unactive" style="width: 100%; text-align: center;">Aucun compte lié</div>
+                            <div class="server-card-badge unactive" style="width: 100%; text-align: center;">Aucun
+                                compte lié
+                            </div>
                     )}
                 </div>
 
@@ -237,8 +245,8 @@ if (!(utilisateur) || utilisateur.nb_message === null) {
             </div>
         </div>
 
-        <TransitionSection title=`%Badges% de l'utilisateur #${utilisateur.pseudo_discord}#`/>
-        <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId=1/>
+        <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.pseudo_discord}#`}/>
+        <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1}/>
     </div>
 
     <style>
