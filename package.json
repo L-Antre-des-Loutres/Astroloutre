@@ -17,6 +17,7 @@
     "@types/react-dom": "^19.1.6",
     "astro": "^5.14.1",
     "astro-robots-txt": "^1.0.0",
+    "axios": "^1.13.2",
     "jsonwebtoken": "^9.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -42,8 +42,9 @@ type LinkAccount = {
 }
 
 // Props passées depuis getStaticPaths
-const joueur: DiscordUserType | undefined = Astro.props.joueur;
-const accountLink : LinkAccount | null = Astro.props.accountLink
+const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
+// Returns LinkAccount[] instead of single object
+const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 
 // Génération des pages statiques
 export async function getStaticPaths() {
@@ -70,7 +71,8 @@ export async function getStaticPaths() {
     return joueurs
         .filter((joueur) => typeof joueur.pseudo_discord === 'string' && joueur.pseudo_discord.trim() !== '')
         .map((joueur) => {
-            const accountLink = accountsLinks.find(
+            // Retrieve ALL linked accounts
+            const accountLinks = accountsLinks.filter(
                 (link) => link.utilisateur_id === joueur.id
             );
 
@@ -80,7 +82,7 @@ export async function getStaticPaths() {
                 },
                 props: {
                     joueur,
-                    accountLink: accountLink || null, // null si non trouvé
+                    accountLinks: accountLinks, // Returns array, empty if none
                 },
             };
         });
@@ -90,35 +92,36 @@ export async function getStaticPaths() {
 const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'h'];
 let prefixe = "de ";
 
-if (joueur && joueur.pseudo_discord && voyelles.includes(joueur.pseudo_discord[0].toLowerCase())) {
+if (utilisateur && utilisateur.pseudo_discord && voyelles.includes(utilisateur.pseudo_discord[0].toLowerCase())) {
     prefixe = "d’";
 }
 
 // Vérifie le nombre de message des joueurs
 let messageFormat = " message"
-if (!(joueur) || joueur.nb_message === null) {
-    if (joueur) {
-        joueur.nb_message = 0
+if (!(utilisateur) || utilisateur.nb_message === null) {
+    if (utilisateur) {
+        utilisateur.nb_message = 0
     }
-} else if (joueur.nb_message > 1) {
+} else if (utilisateur.nb_message > 1) {
     messageFormat = " messages"
 }
 ---
-{!joueur && <h1>Joueur introuvable</h1>}
-{joueur && (
-<Layout ogImage={joueur?.avatar_url} title={`${joueur?.pseudo_discord}`} ogDescription={`Profil Discord : ${joueur?.pseudo_discord}`}>
+{!utilisateur && <h1>Joueur introuvable</h1>}
+{utilisateur && (
+<Layout ogImage={utilisateur?.avatar_url} title={`${utilisateur?.pseudo_discord}`}
+        ogDescription={`Profil Discord : ${utilisateur?.pseudo_discord}`}>
     <Banner/>
 
     <div class="profile-container">
-        <TransitionSection title=`Profil #Discord# ${prefixe}#${joueur.pseudo_discord}#`/>
+        <TransitionSection title={`Profil #Discord# ${prefixe}#${utilisateur.pseudo_discord}#`}/>
 
         <div class="profile-details">
 
             {/* Colonne 1 : Avatar */}
             <div class="avatar">
                 <Image
-                        src={joueur.avatar_url}
-                        alt={`Avatar de ${joueur.pseudo_discord}`}
+                        src={utilisateur.avatar_url}
+                        alt={`Avatar de ${utilisateur.pseudo_discord}`}
                         class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
                         width={300}
                         height={300}
@@ -132,8 +135,8 @@ if (!(joueur) || joueur.nb_message === null) {
 
                 {/* Badges style */}
                 <div class="server-card-footer">
-                    <span class="server-card-badge version">{joueur.tag_discord}</span>
-                    {joueur.roles?.map(role => {
+                    <span class="server-card-badge version">{utilisateur.tag_discord}</span>
+                    {utilisateur.roles?.map((role: Roles) => {
                         const isFounder = role.id === "1112707976273338470";
                         const isInvesti = role.id === "1113865928086655037";
 
@@ -160,7 +163,7 @@ if (!(joueur) || joueur.nb_message === null) {
                             </svg>
                             Messages :
                         </strong>
-                        <span>{joueur.nb_message} {messageFormat}</span>
+                        <span>{utilisateur.nb_message} {messageFormat}</span>
                     </div>
 
                     <div class="stats-row">
@@ -170,7 +173,7 @@ if (!(joueur) || joueur.nb_message === null) {
                             </svg>
                             Temps Vocal :
                         </strong>
-                        <span>{vocalTimeFormater(joueur.vocal_time)}</span>
+                        <span>{vocalTimeFormater(utilisateur.vocal_time)}</span>
                     </div>
 
                     <div class="stats-row">
@@ -180,7 +183,7 @@ if (!(joueur) || joueur.nb_message === null) {
                             </svg>
                             Activité récente :
                         </strong>
-                        <span>{formatDate(joueur.last_activity)}</span>
+                        <span>{formatDate(utilisateur.last_activity)}</span>
                     </div>
 
                     <div class="stats-row">
@@ -191,7 +194,7 @@ if (!(joueur) || joueur.nb_message === null) {
                             </svg>
                             Date d'arrivée :
                         </strong>
-                        <span>{formatDate(joueur.join_date_discord)}</span>
+                        <span>{formatDate(utilisateur.join_date_discord)}</span>
                     </div>
                 </div>
             </div>
@@ -199,22 +202,30 @@ if (!(joueur) || joueur.nb_message === null) {
             {/* Colonne 3 : Actions / Comptes Liés */}
             <div class="info-grid">
                 <h2>Comptes Liés</h2>
-                <div class="server-boutons-container">
-                    {accountLink ? (
-                            <a href={`/joueurs/minecraft/${slugify(accountLink.playername)}`} class="w-full">
+                <div class="server-boutons-container"
+                     style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+                    {accountLinks.length > 0 ? (
+                        accountLinks.map(account => (
+                                <a href={`/joueurs/minecraft/${slugify(account.playername)}`} class="w-full">
                                 <button class="super-button golden-outline w-full" style="border-radius: 5px">
-                                <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                                    <Image src={`https://mc-heads.net/avatar/${accountLink.playername}/32`} alt="Head" width={24} height={24} class="rounded-sm"/>
-                                    {accountLink.playername}
-                                </span>
+                                    <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                                        <Image src={`https://mc-heads.net/avatar/${account.playername}/32`} alt="Head"
+                                               width={24} height={24} class="rounded-sm"/>
+                                        {account.playername}
+                                    </span>
                                 </button>
                             </a>
+                        ))
                     ) : (
-                            <div class="server-card-badge unactive" style="width: 100%; text-align: center;">Aucun compte lié</div>
+                            <div class="server-card-badge unactive" style="width: 100%; text-align: center;">Aucun
+                                compte lié
+                            </div>
                     )}
                 </div>
+
                 <div class="server-boutons-container">
-                    <form class="w-full form-inline" style="display: flex; flex-direction: row; gap: 0.5rem; width: 100%;">
+                    <!--
+                    <form id="link-account-form" data-user-id={utilisateur.id} class="w-full form-inline" style="display: flex; flex-direction: row; gap: 0.5rem; width: 100%;">
                         <input
                                 type="text"
                                 name="code"
@@ -229,12 +240,13 @@ if (!(joueur) || joueur.nb_message === null) {
                             </svg>
                         </button>
                     </form>
+                         -->
                 </div>
             </div>
         </div>
 
-        <TransitionSection title=`%Badges% de l'utilisateur #${joueur.pseudo_discord}#`/>
-        <BadgeList PlayerOrUser="User" userId={joueur.id} categoryId=1 />
+        <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.pseudo_discord}#`}/>
+        <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1}/>
     </div>
 
     <style>
@@ -326,5 +338,51 @@ if (!(joueur) || joueur.nb_message === null) {
             }
         }
     </style>
+
 </Layout>
     )}
+
+<script>
+    /**
+     import axios from "axios";
+
+     const form = document.getElementById('link-account-form') as HTMLFormElement;
+     if (form) {
+     form.addEventListener('submit', async (e) => {
+     e.preventDefault();
+     const formData = new FormData(form);
+     const codeEntry = formData.get('code');
+     const code = codeEntry ? codeEntry.toString().trim() : '';
+     const userId = form.dataset.userId;
+
+     if (!code || !userId) {
+     alert('Erreur: Code ou ID utilisateur manquant.');
+     return;
+     }
+     // On prépare les données
+     const data = {
+     utilisateur_id: parseInt(userId),
+     code: code
+     };
+     const linkRoute = "https://otterlyapi.antredesloutres.fr/api/joueurs/link-account"
+
+     try {
+     const response = await axios.post(linkRoute, data);
+
+     if (response.status === 200) {
+     alert('Compte lié avec succès !');
+     window.location.reload();
+     }
+     } catch (error: any) {
+     console.error('Erreur:', error);
+     if (error.response && error.response.data) {
+     alert(`Erreur: ${error.response.data.message || 'Une erreur est survenue lors de la liaison du compte.'}`);
+     } else {
+     alert('Une erreur est survenue lors de la communication avec le serveur.');
+     console.error('Erreur serveur:', error);
+     }
+     }
+     });
+     }
+     **/
+</script>
