@@ -121,7 +121,7 @@ try {
 <Layout ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}>
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
 
-    <TransitionSection title=`Profil ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ${prefixe} #${joueur.playername}#`/>
+    <TransitionSection title=`Profil ![/icons/logo_minecraft.svg] ${prefixe} #${joueur.playername}#`/>
 
     {joueur && (
         <div class="profile-container">
@@ -245,7 +245,7 @@ try {
             <PlayerStats uuid={joueur.compte_id} />
 
             <TransitionSection
-                    title={`Badges ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] optenus`}
+                    title={`Badges ![/icons/logo_minecraft.svg] optenus`}
             />
 
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
