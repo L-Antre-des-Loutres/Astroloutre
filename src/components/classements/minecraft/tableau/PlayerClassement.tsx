@@ -105,7 +105,7 @@ const PlayerClassement: React.FC<Props> = ({
             >
                 {/* Serveurs Actifs ADL */}
                 <div className="flex-1">
-                    <h3 className="text-center text-lg font-semibold mb-2">Serveurs actifs</h3>
+                    <h3 className="text-center text-lg font-semibold mb-2 ranking-section-title">Serveurs actifs</h3>
                     <div className="flex flex-wrap gap-2 justify-center">
                         {activeServersEntries.length === 0 ? (
                             <div className="text-gray-500 px-4 py-2">Aucun serveur</div>
@@ -126,7 +126,8 @@ const PlayerClassement: React.FC<Props> = ({
 
                 {/* Serveurs inactifs ADL */}
                 <div className="flex-1">
-                    <h3 className="text-center text-lg font-semibold mb-2">Serveurs désactivés</h3>
+                    <h3 className="text-center text-lg font-semibold mb-2 ranking-section-title">Serveurs
+                        désactivés</h3>
                     <div className="flex flex-wrap gap-2 justify-center">
                         {inactiveServersEntries.length === 0 ? (
                             <div className="text-gray-500 px-4 py-2">Aucun serveur</div>
@@ -147,7 +148,8 @@ const PlayerClassement: React.FC<Props> = ({
 
                 {/* Serveurs partenaires */}
                 <div className="flex-1">
-                    <h3 className="text-center text-lg font-semibold mb-2">Serveurs partenaires</h3>
+                    <h3 className="text-center text-lg font-semibold mb-2 ranking-section-title">Serveurs
+                        partenaires</h3>
                     <div className="flex flex-wrap gap-2 justify-center">
                         {partnerServersEntries.length === 0 ? (
                             <div className="text-gray-500 px-4 py-2">Aucun partenaire</div>
