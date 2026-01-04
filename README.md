@@ -84,8 +84,7 @@ Toutes les statistiques (Minecraft, Palworld, Discord) sont récupérées depuis
 
 ### Sources de données
 
-- **Minecraft** : Données collectées par [ServerSentinel](https://github.com/Corentin-cott/ServerSentinel) (Go) et
-  bientôt [Otternel](https://github.com/Corentin-cott/Otternel) (Rust).
+- **Minecraft** : Données collectées par [Otternel](https://github.com/Corentin-cott/Otternel) (Rust).
 - **Discord** : Bot Discord interne pour les statistiques d'activité.
 
 *Pour toute demande de suppression de données, veuillez consulter
