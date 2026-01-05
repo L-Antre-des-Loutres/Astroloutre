@@ -88,3 +88,7 @@
 .ranking-info-text {
     color: var(--ranking-text-color);
 }
+
+.ranking-section-title {
+    color: var(--ranking-text-color);
+}
