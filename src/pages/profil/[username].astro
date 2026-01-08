@@ -41,10 +41,33 @@ type LinkAccount = {
     playername: string
 }
 
+export type DiscordUserStatsType = {
+    id: number
+    id_utilisateur: number
+    nb_message: number
+    vocal_time: number
+    date_stats: string
+    voice_channels: Channel[]
+    text_channels: Channel[]
+    vocal_with: DiscordUser[]
+}
+
+export type Channel = {
+    id: string,
+    name: string
+}
+
+export type DiscordUser = {
+    id: string,
+    username: string
+}
+
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
+// Stats for this user
+const stats: (DiscordUserType & { stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
 
 // Génération des pages statiques
 export async function getStaticPaths() {
@@ -58,6 +81,15 @@ export async function getStaticPaths() {
     const json = await response.json();
     if (!json.success || !Array.isArray(json.data)) return [];
     const joueurs: DiscordUserType[] = json.data;
+
+    // Récupération des statistiques des utilisateurs
+    const reponseStats = await fetch("https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/stats")
+    if (!reponseStats.ok) {
+        throw new Error(`Erreur API Stats : ${reponseStats.status}`)
+    }
+    const jsonStats = await reponseStats.json()
+    if (!jsonStats.success || !Array.isArray(jsonStats.data)) return [];
+    const stats: DiscordUserStatsType[] = jsonStats.data;
 
     // Récupération des informations des comptes liées
     const reponseAccountLink = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs")
@@ -76,6 +108,23 @@ export async function getStaticPaths() {
                 (link) => link.utilisateur_id === joueur.id
             );
 
+            // Retrieve ALL stats for this user
+            const userStatsHistory = stats.filter(
+                (stat) => stat.id_utilisateur === joueur.id
+            );
+
+            // Aggregate stats
+            const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.nb_message) || 0), 0);
+            const totalVocalTime = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.vocal_time) || 0), 0);
+
+            // Combine into global stats object
+            const globalStats = {
+                ...joueur,
+                nb_message: totalMessages,
+                vocal_time: totalVocalTime,
+                stats: userStatsHistory
+            };
+
             return {
                 params: {
                     username: slugify(joueur.tag_discord),
@@ -83,6 +132,7 @@ export async function getStaticPaths() {
                 props: {
                     joueur,
                     accountLinks: accountLinks, // Returns array, empty if none
+                    stats: globalStats, // Pass combined stats
                 },
             };
         });
@@ -98,11 +148,9 @@ if (utilisateur && utilisateur.pseudo_discord && voyelles.includes(utilisateur.p
 
 // Vérifie le nombre de message des joueurs
 let messageFormat = " message"
-if (!(utilisateur) || utilisateur.nb_message === null) {
-    if (utilisateur) {
-        utilisateur.nb_message = 0
-    }
-} else if (utilisateur.nb_message > 1) {
+const msgCount = stats?.nb_message ?? utilisateur?.nb_message ?? 0;
+
+if (msgCount > 1) {
     messageFormat = " messages"
 }
 ---
@@ -163,7 +211,7 @@ if (!(utilisateur) || utilisateur.nb_message === null) {
                             </svg>
                             Messages :
                         </strong>
-                        <span>{utilisateur.nb_message} {messageFormat}</span>
+                        <span>{stats?.nb_message} {messageFormat}</span>
                     </div>
 
                     <div class="stats-row">
@@ -173,7 +221,7 @@ if (!(utilisateur) || utilisateur.nb_message === null) {
                             </svg>
                             Temps Vocal :
                         </strong>
-                        <span>{vocalTimeFormater(utilisateur.vocal_time)}</span>
+                        <span>{vocalTimeFormater(stats?.vocal_time || 0)}</span>
                     </div>
 
                     <div class="stats-row">
