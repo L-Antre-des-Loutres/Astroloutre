@@ -7,60 +7,7 @@ import {formatDate} from "../../formater/DateFormater";
 import BadgeList from "../../components/sections/badges/BadgeList.astro";
 import {vocalTimeFormater} from "../../formater/VocalTimeFormater";
 import TransitionSection from "../../components/sections/common/transitions/TransitionSection.astro";
-
-// Type des données joueur
-type DiscordUserType = {
-    id: number
-    discord_id: string
-    tag_discord: string
-    pseudo_discord: string
-    join_date_discord: string
-    first_activity: string
-    last_activity: string
-    nb_message: number
-    vocal_time: number
-    avatar_url: string,
-    roles: Roles[] | null;
-    delete_date: string | null;
-}
-
-type Roles = {
-    id: string
-    name: string
-    color: string
-}
-
-// Type des données des joueurs
-type LinkAccount = {
-    id: number
-    utilisateur_id: number
-    jeu: string
-    compte_id: string
-    premiere_co: string
-    derniere_co: string
-    playername: string
-}
-
-export type DiscordUserStatsType = {
-    id: number
-    id_utilisateur: number
-    nb_message: number
-    vocal_time: number
-    date_stats: string
-    voice_channels: Channel[]
-    text_channels: Channel[]
-    vocal_with: DiscordUser[]
-}
-
-export type Channel = {
-    id: string,
-    name: string
-}
-
-export type DiscordUser = {
-    id: string,
-    username: string
-}
+import type {LinkAccount, DiscordUserType, DiscordUserStatsType, Roles} from "../../types/UtilisateurDiscordType.ts";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
