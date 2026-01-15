@@ -4,6 +4,7 @@ import {formatDecimalHoursToString} from "../../../../formater/DecimalHoursForma
 import {formatDateWithHours} from "../../../../formater/DateWithHoursFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
 import type {DiscordUserStatsType, DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
+import {discordActivityScore} from "../../../../utils/discordActivityScore.ts";
 
 
 /* Types */
@@ -47,19 +48,34 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
     const [selectedYear, setSelectedYear] = useState<string>("all");
 
     // Extract unique years from stats
+    /**
+     * Valid year = ##/##/####
+     */
     const years = useMemo(() => {
         const _years = new Set<string>();
         if (Array.isArray(stats)) {
             stats.forEach(s => {
                 if (s.date_stats) {
-                    const y = new Date(s.date_stats).getFullYear().toString();
-                    _years.add(y);
+                    // Parse DD/MM/YYYY format
+                    const parts = s.date_stats.split('/');
+                    if (parts.length === 3) {
+                        const year = parts[2]; // Year is the third part
+                        // Validate year (4 digits)
+                        if (year && year.length === 4 && !isNaN(Number(year))) {
+                            _years.add(year);
+                        }
+                    }
                 }
             });
         }
+
+        // Always add 2025 if we have any stats, to count all stats for the entire year
+        if (stats && stats.length > 0) {
+            _years.add("2025");
+        }
+
         return Array.from(_years).sort((a, b) => b.localeCompare(a));
     }, [stats]);
-
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
         key: "activity_score",
@@ -75,7 +91,20 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
         const statsMap = new Map<number, { nb_message: number; vocal_time: number }>();
 
         stats.forEach((stat) => {
-            const statYear = new Date(stat.date_stats).getFullYear().toString();
+            // Parse DD/MM/YYYY format correctly
+            let statYear: string;
+            if (stat.date_stats) {
+                const parts = stat.date_stats.split('/');
+                if (parts.length === 3) {
+                    statYear = parts[2]; // Year is the third part
+                } else {
+                    // Fallback to trying Date constructor if format is different
+                    statYear = new Date(stat.date_stats).getFullYear().toString();
+                }
+            } else {
+                return; // Skip this stat if no date
+            }
+
             if (selectedYear === "all" || statYear === selectedYear) {
                 const current = statsMap.get(stat.id_utilisateur) || {nb_message: 0, vocal_time: 0};
                 statsMap.set(stat.id_utilisateur, {
@@ -98,11 +127,7 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
         // Calcul du score d'activité pour chaque joueur
         // Recalcul manuel du score pour éviter les promesses dans le sort/useMemo
         const calculateScore = (msg: number, vocal: number) => {
-            const m = msg || 0;
-            const v = vocal || 0;
-            const msgPoints = 0.45 * Math.pow(m, 0.9);
-            const vocPoints = 2.5 * Math.pow(v, 0.9);
-            return Math.round(msgPoints + vocPoints);
+            return discordActivityScore(msg, vocal);
         };
 
         players.forEach(p => {

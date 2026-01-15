@@ -10,7 +10,7 @@
  * @return {Promise<number>} A promise that resolves to the total activity score calculated by summing the points for messages and voice time.
  */
 
-export async function discordActivityScore(nbMessage: number, tmpsVocal: number): Promise<number> {
+export function discordActivityScore(nbMessage: number, tmpsVocal: number): number {
 
     // Vérification des valeurs du nombre de messages
     if (!nbMessage) {
