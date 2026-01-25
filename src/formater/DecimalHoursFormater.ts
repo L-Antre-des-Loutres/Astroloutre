@@ -6,10 +6,6 @@ export function formatDecimalHoursToString(hours: number | null): string {
     const wholeHours = Math.floor(hours);
     const decimalPart = hours - wholeHours;
 
-    if (decimalPart === 0) {
-        return wholeHours.toString();
-    }
-
     // Convert decimal part to minutes
     const minutes = Math.round(decimalPart * 60);
     const totalMinutes = wholeHours * 60 + minutes;
@@ -17,20 +13,10 @@ export function formatDecimalHoursToString(hours: number | null): string {
     const resultHours = Math.floor(totalMinutes / 60);
     const resultMinutes = totalMinutes % 60;
 
-    let hoursFormmat = ""
-    if (resultHours > 1) {
-        hoursFormmat = "heures"
-    } else {
-        hoursFormmat = "heure"
-    }
+    let hoursFormmat = resultHours > 1 ? "heures" : "heure";
+    let minutesFormmat = resultMinutes > 1 ? "minutes" : "minute";
 
-    let minutesFormmat = ""
-    if (resultMinutes > 1) {
-        minutesFormmat = "minutes"
-    } else {
-        minutesFormmat = "minute"
-    }
-
+    // Toujours afficher les heures et les minutes, même si minutes = 0
     return `${resultHours} ${hoursFormmat} ${resultMinutes.toString().padStart(2, '0')} ${minutesFormmat}`;
 }
 

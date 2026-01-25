@@ -1,31 +1,37 @@
 ---
 import React from "react";
-import UserClassementReactComponent from "./UserClassement.tsx"
+import UserClassementReactComponent from "./UserClassement.tsx";
+import type {
+    DiscordUserType,
+    DiscordUserStatsType,
+} from "../../../../types/UtilisateurDiscordType.ts";
 
-
-// Type 
-export type UserStatsType = {
-    id: number,
-    discord_id: string,
-    pseudo_discord: string,
-    join_date_discord: string,
-    first_activity: string,
-    last_activity: string,
-    nb_message: number,
-    tag_discord: string,
-    avatar_url: string,
-    vocal_time: number,
+// Fetch des utilisateurs
+const reponseUsers = await fetch(
+    "https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord",
+);
+if (!reponseUsers.ok) {
+    throw new Error(`Erreur API Users : ${reponseUsers.status}`);
 }
+const jsonUsers = await reponseUsers.json();
+if (!jsonUsers.success || !Array.isArray(jsonUsers.data)) return [];
+const users: DiscordUserType[] = jsonUsers.data;
 
-// Fetch des statistiques des utilisateurs depuis l'API, on stocke le tableau de résultats bruts dans "playersRaw".
-const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord");
-const userRaw: UserStatsType[] = (await resStats.json()).data ?? [];
-
-// Normalisations des données reçues en construisant un PlayerStats typé
-const userStats: UserStatsType[] = userRaw;
+// Fetch des statistiques des utilisateurs depuis l'API
+const reponseStats = await fetch(
+    "https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/stats",
+);
+if (!reponseStats.ok) {
+    throw new Error(`Erreur API Stats : ${reponseStats.status}`);
+}
+const jsonStats = await reponseStats.json();
+if (!jsonStats.success || !Array.isArray(jsonStats.data)) return [];
+const stats: DiscordUserStatsType[] = jsonStats.data;
 ---
+
 <UserClassementReactComponent
         client:load
         jeu="discord"
-        statsAllServer={userStats}
+        users={users}
+        stats={stats}
 />
