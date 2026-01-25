@@ -206,18 +206,19 @@ try {
                                                 <div class="pokemon-visual">
                                                     <div class="visual-bg" />
                                                     <img
-                                                        src={await showdownApiGetPkmArt(
-                                                            formatPokemonName(
+                                                            src={await showdownApiGetPkmArt(
+                                                                formatPokemonName(
+                                                                    p,
+                                                                ),
+                                                                f,
+                                                                s,
+                                                            )}
+                                                            alt={formatPokemonName(
                                                                 p,
-                                                            ),
-                                                            f,
-                                                            s,
-                                                        )}
-                                                        alt={formatPokemonName(
-                                                            p,
-                                                        )}
-                                                        class="pokemon-image floating-anim"
-                                                        loading="lazy"
+                                                            )}
+                                                            class="pokemon-image floating-anim"
+                                                            loading="lazy"
+                                                            onerror="this.onerror=null; this.src='https://play.pokemonshowdown.com/sprites/gen5/' + this.alt.toLowerCase() + '.png';"
                                                     />
                                                     {s && (
                                                         <div class="shiny-sparkles" />

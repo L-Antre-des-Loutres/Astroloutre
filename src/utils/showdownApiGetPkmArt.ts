@@ -29,31 +29,9 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
         return pokemonArt = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/flammiko.webp`;
     }
 
-    // 2. Forme RLM avec fallback vers Showdown
+    // 2. Forme RLM
     if (f === "rlm") {
-        const rlmFormePath = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
-
-        // Test de l'existence du sprite forme
-        return fetch(rlmFormePath)
-            .then(res => {
-                if (res.ok) {
-                    return rlmFormePath;
-                }
-                // Fallback : sprite Showdown normal
-                const showdownSprite = shiny ? `${apiUrlShiny}${p}.png` : `${apiUrl}${p}.png`;
-                return fetch(showdownSprite).then(res2 => {
-                    if (res2.ok) {
-                        return showdownSprite;
-                    }
-                    // Dernier fallback
-                    return defaultPokemonArt;
-                });
-            })
-            .catch(() => {
-                // En cas d'erreur réseau, fallback vers Showdown
-                const showdownSprite = shiny ? `${apiUrlShiny}${p}.png` : `${apiUrl}${p}.png`;
-                return showdownSprite;
-            });
+        return pokemonArt = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
     }
 
     // 3. Formes alternatives (océan / volcan / ciel)
