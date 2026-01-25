@@ -3,19 +3,27 @@ import {formatNumber} from "../../../../formater/NumberFormater.ts";
 import {formatDecimalHoursToString} from "../../../../formater/DecimalHoursFormater.ts";
 import {formatDateWithHours} from "../../../../formater/DateWithHoursFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
+import type {DiscordUserStatsType, DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
 import {discordActivityScore} from "../../../../utils/discordActivityScore.ts";
 
 
 /* Types */
-type UserStats = Record<string, any>; // TODO : VIRER CE ANY
+type UserWithStats = DiscordUserType & {
+    nb_message: number;
+    vocal_time: number;
+    activity_score?: number;
+    [key: string]: any;
+};
 
 /* Props attendues */
 type Props = {
-    statsAllServer: UserStats[];
+    users: DiscordUserType[];
+    stats: DiscordUserStatsType[];
+    jeu?: string;
 };
 
 /* Colonnes et largeurs */
-const userStats: Record<string, string> = {
+const userStatsConfig: Record<string, string> = {
     pseudo_discord: "Pseudo Discord",
     join_date_discord: "Date d'arrivée",
     first_activity: "Première activité",
@@ -35,8 +43,39 @@ const columnWidths: Record<string, string> = {
     activity_score: "150px"
 };
 
-const UserClassement: React.FC<Props> = ({statsAllServer}) => {
+const UserClassement: React.FC<Props> = ({users, stats}) => {
 
+    const [selectedYear, setSelectedYear] = useState<string>("all");
+
+    // Extract unique years from stats
+    /**
+     * Valid year = ##/##/####
+     */
+    const years = useMemo(() => {
+        const _years = new Set<string>();
+        if (Array.isArray(stats)) {
+            stats.forEach(s => {
+                if (s.date_stats) {
+                    // Parse DD/MM/YYYY format
+                    const parts = s.date_stats.split('/');
+                    if (parts.length === 3) {
+                        const year = parts[2]; // Year is the third part
+                        // Validate year (4 digits)
+                        if (year && year.length === 4 && !isNaN(Number(year))) {
+                            _years.add(year);
+                        }
+                    }
+                }
+            });
+        }
+
+        // Always add 2025 if we have any stats, to count all stats for the entire year
+        if (stats && stats.length > 0) {
+            _years.add("2025");
+        }
+
+        return Array.from(_years).sort((a, b) => b.localeCompare(a));
+    }, [stats]);
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
         key: "activity_score",
@@ -44,14 +83,57 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
     });
 
 
-    // tri des joueurs du serveur sélectionné 
+    // tri des joueurs du serveur sélectionné
     const sortedPlayers = useMemo(() => {
-        const players = Array.isArray(statsAllServer) ? statsAllServer : [];
+        if (!Array.isArray(users) || !Array.isArray(stats)) return [];
+
+        // 1. Aggregate stats based on selectedYear
+        const statsMap = new Map<number, { nb_message: number; vocal_time: number }>();
+
+        stats.forEach((stat) => {
+            // Parse DD/MM/YYYY format correctly
+            let statYear: string;
+            if (stat.date_stats) {
+                const parts = stat.date_stats.split('/');
+                if (parts.length === 3) {
+                    statYear = parts[2]; // Year is the third part
+                } else {
+                    // Fallback to trying Date constructor if format is different
+                    statYear = new Date(stat.date_stats).getFullYear().toString();
+                }
+            } else {
+                return; // Skip this stat if no date
+            }
+
+            if (selectedYear === "all" || statYear === selectedYear) {
+                const current = statsMap.get(stat.id_utilisateur) || {nb_message: 0, vocal_time: 0};
+                statsMap.set(stat.id_utilisateur, {
+                    nb_message: current.nb_message + (Number(stat.nb_message) || 0),
+                    vocal_time: current.vocal_time + (Number(stat.vocal_time) || 0),
+                });
+            }
+        });
+
+        // 2. Merge with users and calculate scores
+        const players: UserWithStats[] = users.map((user) => {
+            const userStats = statsMap.get(user.id) || {nb_message: 0, vocal_time: 0};
+            return {
+                ...user,
+                nb_message: userStats.nb_message,
+                vocal_time: userStats.vocal_time,
+            };
+        }).filter(p => p.nb_message > 0 || p.vocal_time > 0);
 
         // Calcul du score d'activité pour chaque joueur
-        players.map(async (player) => {
-            player.activity_score = await discordActivityScore(player.nb_message || 0, player.vocal_time || 0);
+        // Recalcul manuel du score pour éviter les promesses dans le sort/useMemo
+        const calculateScore = (msg: number, vocal: number) => {
+            return discordActivityScore(msg, vocal);
+        };
+
+        players.forEach(p => {
+            p.activity_score = calculateScore(p.nb_message, p.vocal_time);
         });
+
 
         if (!sortConfig) return players;
 
@@ -79,17 +161,40 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
             if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
             return 0;
         });
-    }, [sortConfig, statsAllServer]);
+    }, [sortConfig, users, stats, selectedYear]);
 
     /* Front */
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0">
+
+            {/* Filtre Année */}
+            <div className="mb-4">
+                <div className="flex flex-wrap gap-2 justify-center">
+                    <button
+                        key="all"
+                        onClick={() => setSelectedYear("all")}
+                        className={`ranking-filter-button ${selectedYear === "all" ? "active" : "inactive"}`}
+                    >
+                        Toutes les années
+                    </button>
+                    {years.map(y => (
+                        <button
+                            key={y}
+                            onClick={() => setSelectedYear(y)}
+                            className={`ranking-filter-button ${selectedYear === y ? "active" : "inactive"}`}
+                        >
+                            {y}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
             {/* Tableau des joueurs */}
             <div className="ranking-table-container">
                 <table className="ranking-table">
                     <thead className="ranking-thead">
                     <tr>
-                        {Object.entries(userStats).map(([key, label]) => {
+                        {Object.entries(userStatsConfig).map(([key, label]) => {
                             const isActive = sortConfig?.key === key;
                             return (
                                 <th
@@ -114,7 +219,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                     {!Array.isArray(sortedPlayers) || sortedPlayers.length === 0 ? (
                         <tr>
                             <td
-                                colSpan={Object.keys(userStats).length}
+                                colSpan={Object.keys(userStatsConfig).length}
                                 className="text-center px-6 py-8 ranking-td ranking-tr-even"
                             >
                                 Pas de données discord.
@@ -123,7 +228,7 @@ const UserClassement: React.FC<Props> = ({statsAllServer}) => {
                     ) : (
                         sortedPlayers.map((player, idx) => (
                             <tr key={idx} className={idx % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
-                                {Object.keys(userStats).map((key) => (
+                                {Object.keys(userStatsConfig).map((key) => (
                                     <td
                                         key={key}
                                         className="ranking-td"

@@ -206,18 +206,19 @@ try {
                                                 <div class="pokemon-visual">
                                                     <div class="visual-bg" />
                                                     <img
-                                                        src={await showdownApiGetPkmArt(
-                                                            formatPokemonName(
+                                                            src={await showdownApiGetPkmArt(
+                                                                formatPokemonName(
+                                                                    p,
+                                                                ),
+                                                                f,
+                                                                s,
+                                                            )}
+                                                            alt={formatPokemonName(
                                                                 p,
-                                                            ),
-                                                            f,
-                                                            s,
-                                                        )}
-                                                        alt={formatPokemonName(
-                                                            p,
-                                                        )}
-                                                        class="pokemon-image floating-anim"
-                                                        loading="lazy"
+                                                            )}
+                                                            class="pokemon-image floating-anim"
+                                                            loading="lazy"
+                                                            onerror="this.onerror=null; this.src='https://play.pokemonshowdown.com/sprites/gen5/' + this.alt.toLowerCase() + '.png';"
                                                     />
                                                     {s && (
                                                         <div class="shiny-sparkles" />
@@ -602,7 +603,7 @@ try {
 
     .pokemon-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        grid-template-columns: repeat(6, 1fr);
         gap: 1.5rem;
         transition: all 0.5s var(--transition-smooth);
     }
@@ -988,6 +989,20 @@ try {
 
         .pokemon-grid-container {
             padding: 1rem;
+        }
+    }
+
+    /* Tablettes / écrans moyens */
+    @media (max-width: 1024px) {
+        .pokemon-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Mobiles */
+    @media (max-width: 640px) {
+        .pokemon-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 </style>
