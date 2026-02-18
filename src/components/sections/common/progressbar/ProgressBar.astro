@@ -1,0 +1,41 @@
+---
+interface Props {
+    value: number;
+    max?: number;
+    color?: string;
+    height?: string;
+}
+
+const {
+    value,
+    max = 255,
+    color = "#FFCC00",
+    height = "1rem"
+} = Astro.props;
+
+const percentage = Math.min((value / max) * 100, 100);
+---
+
+<div class="stat-container" style={`--height: ${height};`}>
+    <div
+            class="stat-bar"
+            style={`width: ${percentage}%; background-color: ${color};`}
+    ></div>
+</div>
+
+<style>
+    .stat-container {
+        width: 100%;
+        height: var(--height);
+        border-radius: 999px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+    .stat-bar {
+        height: 100%;
+        border-radius: 999px;
+        transition: width 0.5s ease-out;
+    }
+</style>

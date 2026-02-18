@@ -1,0 +1,146 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
+import ProgressBar from "../../../components/sections/common/progressbar/ProgressBar.astro";
+import EvolutionTreeHorizontal from "../../../components/wiki/EvolutionTreeHorizontal.astro";
+
+export async function getStaticPaths() {
+    const pokemons = ["pikachu", "salameche", "bulbizarre", "carapuce"];
+
+    return pokemons.map((pokemon) => ({
+        params: { pokemon }
+    }));
+}
+
+---
+
+<Layout ogImage={`placeholder`} title={`Pokemonname`} ogDescription={`placeholder`}>
+    <Banner bannerUrl="https://champions.pokemon.com/_images/global/header/header-lg.jpg"/>
+
+    <div class="wiki-navigation-container">
+        <a href="#"><div>
+            <p>Page suivante</p>
+            <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/7/7f/Arbok-RFVF.png/250px-Arbok-RFVF.png"/>
+        </div></a>
+        <a href="#"><div>
+            <p>Page actuel</p>
+            <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png"/>
+        </div></a>
+        <a href="#"><div>
+            <p>Page précédente</p>
+            <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png"/>
+        </div></a>
+    </div>
+
+    <LargeTransitionSection title={`Page de #Pikachu#`} invertedBackground/>
+
+    <div class="wiki-main-container">
+        <div class="wiki-primary-infos">
+            <div class="wiki-col wiki-pokemon-artwork-container">
+                <img class="wiki-pokemon-artwork" src="https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png"/>
+            </div>
+            <div class="wiki col wiki-pokemon-infos">
+                <h2>Types :</h2>
+                <img class="wiki-pokemon-type-image" src="https://www.pokepedia.fr/images/thumb/6/6d/Miniature_Type_%C3%89lectrik_EV.png/80px-Miniature_Type_%C3%89lectrik_EV.png"/>
+
+                <h2>Talents :</h2>
+                <p>Static</p>
+                <p>Paratonnerre</p>
+            </div>
+            <div class="wiki col wiki-pokemon-stats-container">
+                <h2>Stats :</h2>
+                <div style="display: flex; justify-content: center;">
+                    <p>PV 35</p><ProgressBar value={35} color="red"/>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <p>Attaque 55</p><ProgressBar value={55} color="orange"/>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <p>Defense 40</p><ProgressBar value={40} color="red"/>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <p>Attaque Sp. 50</p><ProgressBar value={50} color="orange"/>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <p>Defense Sp. 50</p><ProgressBar value={50} color="orange"/>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <p>Vitesse 90</p><ProgressBar value={90} color="yellow"/>
+                </div>
+            </div>
+        </div>
+
+        <EvolutionTreeHorizontal
+                color="yellow"
+                stages={[
+                    { type: "pokemon", name: "Pichu", image: "https://www.pokepedia.fr/images/thumb/a/a0/Pichu-RFVF.png/250px-Pichu-RFVF.png" },
+                    { type: "condition", label: "Amitié" },
+                    { type: "pokemon", name: "Pikachu", image: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png" },
+                    { type: "condition", label: "Pierre foudre" },
+                    { type: "pokemon", name: "Raichu", image: "https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png" },
+                    { type: "condition", label: "Méga-Évolution" },
+                    { type: "pokemon", name: "Méga-Raichu X", image: "https://www.pokepedia.fr/images/thumb/9/98/M%C3%A9ga-Raichu_X_%28Official_Game_Art%29-LPZA.png/250px-M%C3%A9ga-Raichu_X_%28Official_Game_Art%29-LPZA.png" },
+                ]}
+        />
+        <EvolutionTreeHorizontal
+                color="yellow"
+                stages={[
+                    { type: "pokemon", name: "Pichu", image: "https://www.pokepedia.fr/images/thumb/a/a0/Pichu-RFVF.png/250px-Pichu-RFVF.png" },
+                    { type: "condition", label: "Amitié" },
+                    { type: "pokemon", name: "Pikachu", image: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png" },
+                    { type: "condition", label: "Pierre foudre" },
+                    { type: "pokemon", name: "Raichu", image: "https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png" },
+                    { type: "condition", label: "Méga-Évolution" },
+                    { type: "pokemon", name: "Méga-Raichu Y", image: "https://www.pokepedia.fr/images/thumb/7/7a/M%C3%A9ga-Raichu_Y_%28Official_Game_Art%29-LPZA.png/250px-M%C3%A9ga-Raichu_Y_%28Official_Game_Art%29-LPZA.png" },
+                ]}
+        />
+            <EvolutionTreeHorizontal
+                    color="yellow"
+                stages={[
+                    { type: "pokemon", name: "Pichu", image: "https://www.pokepedia.fr/images/thumb/a/a0/Pichu-RFVF.png/250px-Pichu-RFVF.png" },
+                    { type: "condition", label: "Amitié" },
+                    { type: "pokemon", name: "Pikachu", image: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png" },
+                    { type: "condition", label: "Pierre foudre" },
+                    { type: "pokemon", name: "Raichu (Alola)", image: "https://www.pokepedia.fr/images/thumb/7/79/Raichu_d%27Alola-SL.png/250px-Raichu_d%27Alola-SL.png" },
+                ]}
+        />
+
+
+    </div>
+
+</Layout>
+
+<style>
+
+    * {
+        color: white;
+    }
+
+    .wiki-main-container {
+        margin: 0 50rem 5rem;
+    }
+
+    .wiki-navigation-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-items: center;
+
+        text-align: center;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .wiki-navigation-container-img {
+        height: 5em;
+    }
+
+    .wiki-primary-infos {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem;
+    }
+
+</style>

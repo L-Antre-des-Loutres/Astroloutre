@@ -1,0 +1,75 @@
+---
+interface Stage {
+    type: "pokemon" | "condition";
+    name?: string;
+    image?: string;
+    label?: string;
+}
+
+interface Props {
+    stages: Stage[];
+    color: string;
+}
+
+const { color, stages } = Astro.props;
+---
+
+<div class="evo-wrapper">
+
+    <div class="evo-row">
+        {stages.map((stage) => (
+            stage.type === "pokemon" ? (
+                    <div class="evo-card">
+                        <img src={stage.image} alt={stage.name} />
+                        <p>{stage.name}</p>
+                    </div>
+            ) : (
+                    <div class="evo-condition" style={`--color: ${color};`}>
+                        <span>{stage.label} ➜</span>
+                    </div>
+            )
+        ))}
+    </div>
+
+</div>
+
+<style>
+    .evo-wrapper {
+        margin-top: 2rem;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .evo-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .evo-card {
+        text-align: center;
+        padding: 1rem;
+        border-radius: 8px;
+        min-width: 120px;
+    }
+
+    .evo-card img {
+        height: 100px;
+    }
+
+    .evo-card p {
+        margin-top: 0.5rem;
+        color: white;
+        font-weight: 500;
+    }
+
+    .evo-condition {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--color);
+        white-space: nowrap;
+    }
+</style>
