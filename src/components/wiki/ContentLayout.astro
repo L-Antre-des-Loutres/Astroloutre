@@ -1,0 +1,76 @@
+---
+
+---
+
+<div class="wiki-page-wrapper">
+    <aside class="wiki-sidebar-left">
+        <nav>
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/pokemon/pikachu">Pikachu</a></li>
+                <li><a href="/pokedex">Pokedex</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="wiki-main-container">
+        <slot/>
+    </div>
+
+    <aside class="wiki-sidebar-right">
+        <div class="ad-placeholder">
+            <p>Sponsor</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS48pt6lSqEbqhADumgXpJ2xlHhIcqdGYy-8Q&s" alt="Ad 1" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS48pt6lSqEbqhADumgXpJ2xlHhIcqdGYy-8Q&s" alt="Ad 2" />
+        </div>
+    </aside>
+</div>
+
+<style>
+    * {
+        color: white;
+        box-sizing: border-box;
+    }
+
+    .wiki-page-wrapper {
+        display: grid;
+        grid-template-columns: 200px 1fr 200px;
+        gap: 20px;
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    .wiki-sidebar-left,
+    .wiki-sidebar-right {
+        padding: 20px;
+    }
+
+    .wiki-main-container {
+        width: 100%;
+        max-width: 1050px;
+        margin: 0 auto 2rem;
+        padding: 0 1rem;
+        min-width: 0;
+    }
+
+    .ad-placeholder img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 1450px) {
+        .wiki-page-wrapper {
+            grid-template-columns: 1fr;
+            padding: 0 10px;
+        }
+
+        .wiki-sidebar-left,
+        .wiki-sidebar-right {
+            display: none;
+        }
+    }
+</style>
