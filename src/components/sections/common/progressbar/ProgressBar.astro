@@ -31,11 +31,23 @@ const percentage = Math.min((value / max) * 100, 100);
         overflow: hidden;
         display: flex;
         align-items: center;
+        background-color: rgba(255, 255, 255, 0.1);
+        min-width: 0;
     }
 
     .stat-bar {
         height: 100%;
         border-radius: 999px;
         transition: width 0.5s ease-out;
+        flex-shrink: 0;
     }
+
+    /* -------- MOBILE -------- */
+
+    @media (max-width: 600px) {
+        .stat-container {
+            height: calc(var(--height) * 0.8);
+        }
+    }
+
 </style>

@@ -65,6 +65,7 @@ const stats = [
         width: 100%;
         max-width: 600px;
         margin: 0 auto;
+        padding: 0 1rem;
     }
 
     .stat-row {
@@ -75,12 +76,28 @@ const stats = [
     }
 
     .stat-label {
-        width: 150px; /* largeur fixe pour aligner toutes les barres */
+        min-width: 120px;
         font-weight: 600;
+        white-space: nowrap;
     }
 
-    /* Si ton ProgressBar n'a pas déjà une largeur interne */
     .stat-bar-wrapper {
         flex: 1;
+        min-width: 0;
     }
+
+    @media (max-width: 350px) {
+
+        .stat-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+        }
+
+        .stat-label {
+            width: 100%;
+            min-width: unset;
+        }
+    }
+
 </style>

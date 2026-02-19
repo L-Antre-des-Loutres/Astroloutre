@@ -35,10 +35,11 @@ const { color, stages } = Astro.props;
 
 <style>
     .evo-wrapper {
-        margin-top: 2rem;
+        margin-top: 1rem;
         border-radius: 10px;
-        overflow: hidden;
+        overflow-x: auto;
         background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
     }
 
     .evo-row {
@@ -46,30 +47,53 @@ const { color, stages } = Astro.props;
         align-items: center;
         justify-content: center;
         gap: 1.5rem;
-        flex-wrap: wrap;
+        min-width: max-content;
     }
 
     .evo-card {
         text-align: center;
         padding: 1rem;
         border-radius: 8px;
-        min-width: 120px;
+        min-width: 100px;
+        flex-shrink: 0;
     }
 
     .evo-card img {
-        height: 100px;
+        max-width: 100%;
+        height: auto;
+        max-height: 100px;
     }
 
     .evo-card p {
         margin-top: 0.5rem;
         color: white;
         font-weight: 500;
+        font-size: 0.9rem;
     }
 
     .evo-condition {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 500;
         color: var(--color);
         white-space: nowrap;
+        flex-shrink: 0;
     }
+
+    /* -------- MOBILE -------- */
+
+    @media (max-width: 600px) {
+
+        .evo-row {
+            gap: 1rem;
+        }
+
+        .evo-card img {
+            max-height: 80px;
+        }
+
+        .evo-card {
+            padding: 0.5rem;
+        }
+    }
+
 </style>
