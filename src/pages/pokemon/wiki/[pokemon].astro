@@ -135,11 +135,24 @@ const PAGE_TYPE_COLOR = "#ad892d"
 
         <!-- Moveset -->
         <div class="wiki-section">
-            <h1>Moveset</h1>
+            <h1>Capacités apprises</h1>
             <ContentTable
+                title="Capacités appris par niveau"
                 color={PAGE_TYPE_COLOR}
                 columns={movesetColumns}
                 data={movesetData}
+            />
+            <ContentTable
+                    title="Capacités appris par CT/DT"
+                    color={PAGE_TYPE_COLOR}
+                    columns={movesetColumns}
+                    data={movesetData}
+            />
+            <ContentTable
+                    title="Capacités appris par Reproduction"
+                    color={PAGE_TYPE_COLOR}
+                    columns={movesetColumns}
+                    data={movesetData}
             />
         </div>
 
@@ -147,6 +160,7 @@ const PAGE_TYPE_COLOR = "#ad892d"
         <div class="wiki-section">
             <h1>Localisation</h1>
             <ContentTable
+                title="Localisation du Pokemon"
                 color={PAGE_TYPE_COLOR}
                 columns={localisationColumns}
                 data={localisationData}
@@ -162,6 +176,7 @@ const PAGE_TYPE_COLOR = "#ad892d"
         <div class="wiki-section">
             <h1>Pokedex</h1>
             <ContentTable
+                title="Descriptions du Pokedex"
                 color={PAGE_TYPE_COLOR}
                 columns={pokedexColumns}
                 data={pokedexData}
@@ -169,6 +184,9 @@ const PAGE_TYPE_COLOR = "#ad892d"
         </div>
 
         <!-- Imagerie -->
+        <div class="wiki-section">
+            <h1>Imagerie</h1>
+        </div>
     </ContentLayout>
 </Layout>
 

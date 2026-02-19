@@ -1,52 +1,122 @@
 ---
 interface Props {
+    title?: string;
     color?: string;
     columns: string[];
     data: Record<string, any>[];
 }
 
 const {
+    title = "Data",
     color = '#3498db',
     columns,
     data
 } = Astro.props;
 ---
 
-<div class="table-container">
-    <table>
-        <thead>
-        <tr>
-            {columns.map((col) => (
-                    <th>{col}</th>
+<div class="table-wrapper">
+    <div class="table-header-bar">
+        <span>{title}</span>
+        <button class="toggle-btn" aria-expanded="false">
+            <span class="icon">▼</span>
+        </button>
+    </div>
+
+    <div class="table-container is-collapsed">
+        <table>
+            <thead>
+            <tr>
+                {columns.map((col) => (
+                        <th>{col}</th>
+                ))}
+            </tr>
+            </thead>
+            <tbody>
+            {data.map((row) => (
+                    <tr>
+                        {columns.map((col) => (
+                                <td>{row[col] || row[col.toLowerCase()] || '-'}</td>
+                        ))}
+                    </tr>
             ))}
-        </tr>
-        </thead>
-        <tbody>
-        {data.map((row) => (
-                <tr>
-                    {columns.map((col) => (
-                            <td>{row[col] || row[col.toLowerCase()] || '-'}</td>
-                    ))}
-                </tr>
-        ))}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script>
+    // On sélectionne tous les wrappers pour isoler chaque instance
+    const wrappers = document.querySelectorAll('.table-wrapper');
+
+    wrappers.forEach((wrapper) => {
+        const btn = wrapper.querySelector('.toggle-btn');
+        const content = wrapper.querySelector('.table-container');
+
+        btn?.addEventListener('click', () => {
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+            // Inversion de l'état
+            btn.setAttribute('aria-expanded', (!isExpanded).toString());
+            content?.classList.toggle('is-collapsed');
+        });
+    });
+</script>
 
 <style define:vars={{ headerColor: color }}>
     :root {
         --table-border: rgba(255, 255, 255, 0.2);
+        --table-head-background: rgba(255, 255, 255, 0.1);
         --row-hover: rgba(255, 255, 255, 0.05);
         --text-main: #ffffff;
-        --transition-speed: 0.2s;
+        --transition-speed: 0.3s;
+    }
+
+    .table-wrapper {
+        border: 1px solid var(--table-border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+
+    .table-header-bar {
+        background-color: var(--headerColor);
+        padding: 10px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    .toggle-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        padding: 4px 8px;
+        transition: transform var(--transition-speed) ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .toggle-btn[aria-expanded="false"] {
+        transform: rotate(-90deg);
     }
 
     .table-container {
         width: 100%;
         overflow-x: auto;
-        background: transparent;
-        border: 1px solid var(--table-border);
-        border-radius: 8px;
+        max-height: 2000px;
+        transition: max-height var(--transition-speed) ease-in-out, opacity var(--transition-speed) ease;
+        opacity: 1;
+    }
+
+    .is-collapsed {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
     }
 
     table {
@@ -57,32 +127,24 @@ const {
         font-family: system-ui, sans-serif;
     }
 
-    thead {
-        background-color: var(--headerColor);
-    }
-
     th {
         padding: 12px 16px;
         font-weight: 600;
         text-transform: uppercase;
         font-size: 0.85rem;
-        letter-spacing: 0.05em;
+        background-color: var(--table-head-background);
+        white-space: nowrap;
     }
 
     td {
         padding: 12px 16px;
         border-bottom: 1px solid var(--table-border);
-    }
-
-    tr {
-        transition: background-color var(--transition-speed) ease;
+        background: transparent;
     }
 
     tr:hover {
         background-color: var(--row-hover);
     }
 
-    th:first-child { border-top-left-radius: 8px; }
-    th:last-child { border-top-right-radius: 8px; }
     tr:last-child td { border-bottom: none; }
 </style>
