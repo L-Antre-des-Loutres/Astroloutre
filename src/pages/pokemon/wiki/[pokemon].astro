@@ -58,15 +58,15 @@ const PAGE_TYPE_COLOR = "#ad892d"
     <Banner bannerUrl="https://champions.pokemon.com/_images/global/header/header-lg.jpg"/>
 
     <div class="wiki-navigation-container">
-        <a href="#"><div>
+        <a href="#"><div class="wiki-nav-pokemon-container">
             <p>Page précédente</p>
             <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/7/7f/Arbok-RFVF.png/250px-Arbok-RFVF.png"/>
         </div></a>
-        <a href="#"><div>
+        <a href="#"><div class="wiki-nav-pokemon-container wiki-nav-pokemon-middlemon">
             <p>Page actuel</p>
             <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png"/>
         </div></a>
-        <a href="#"><div>
+        <a href="#"><div class="wiki-nav-pokemon-container">
             <p>Page suivante</p>
             <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png"/>
         </div></a>
@@ -211,8 +211,6 @@ const PAGE_TYPE_COLOR = "#ad892d"
         font-size: 2rem;
     }
 
-
-
     .wiki-navigation-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -264,14 +262,33 @@ const PAGE_TYPE_COLOR = "#ad892d"
         margin-top: 2rem;
     }
 
-    @media (max-width: 846px) {
-        .wiki-navigation-container {
-            grid-template-columns: 1fr;
-        }
+    .wiki-nav-pokemon-container {
+        display: grid;
+        justify-items: center;
+    }
 
+    @media (max-width: 846px) {
         .wiki-primary-infos {
             grid-template-columns: 1fr;
             text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .wiki-nav-pokemon-container img {
+            width: 40px;
+            height: auto;
+        }
+
+        .wiki-nav-pokemon-middlemon {
+            display: none;
+        }
+    }
+
+    @media (max-width: 410px) {
+
+        .wiki-navigation-container {
+            display: none;
         }
     }
 </style>
