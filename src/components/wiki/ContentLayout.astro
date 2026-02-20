@@ -3,13 +3,21 @@
 ---
 
 <div class="wiki-page-wrapper">
-    <aside class="wiki-sidebar-left">
-        <nav>
-            <h3>Navigation</h3>
-            <ul>
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/pokemon/pikachu">Pikachu</a></li>
-                <li><a href="/pokedex">Pokedex</a></li>
+    <aside class="wiki-nav-container">
+        <nav class="wiki-nav-section">
+            <h1 class="wiki-nav-title">Navigation Wiki</h1>
+            <ul class="wiki-nav-list">
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="#">Accueil</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="#">Pokedex</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="#">Liste des nouvelles attaques</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="#">Liste des nouvelles talents</a></li>
+            </ul>
+        </nav>
+
+        <nav class="wiki-nav-section" style="margin-bottom: 0px;">
+            <h1 class="wiki-nav-title">Autres liens</h1>
+            <ul class="wiki-nav-list">
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="#">Cobblemon RLM</a></li>
             </ul>
         </nav>
     </aside>
@@ -35,16 +43,14 @@
 
     .wiki-page-wrapper {
         display: grid;
-        grid-template-columns: 200px 1fr 200px;
+        grid-template-columns: 1fr 3fr 1fr;
         gap: 20px;
-        width: 100%;
-        max-width: 1600px;
-        margin: 0 auto;
+        margin: 0 2em;
     }
 
     .wiki-sidebar-left,
     .wiki-sidebar-right {
-        padding: 20px;
+        padding: 5px;
     }
 
     .wiki-main-container {
@@ -72,5 +78,50 @@
         .wiki-sidebar-right {
             display: none;
         }
+    }
+
+    .wiki-nav-container {
+        padding: 1.5rem 1rem;
+        border: 5px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        height: fit-content;
+    }
+
+    .wiki-nav-section {
+        margin-bottom: 2rem;
+    }
+
+    .wiki-nav-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+        color: white;
+    }
+
+    .wiki-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .wiki-nav-item {
+        margin-bottom: 0.4rem;
+    }
+
+    .wiki-nav-link {
+        display: block;
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        color: mintcream;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .wiki-nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #92aea2;
     }
 </style>
