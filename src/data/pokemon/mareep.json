@@ -1,0 +1,123 @@
+{
+  "id": "000",
+  "slug": "mareep",
+  "name": "Mareep RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Électrik",
+    "Spectre"
+  ],
+  "abilities": [
+    "Static",
+    "Infiltrator",
+    "Shadowtag"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 40,
+    "defense": 40,
+    "specialAttack": 60,
+    "specialDefense": 40,
+    "speed": 40
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Astonishment",
+        "level": "N.1"
+      },
+      {
+        "name": "Roar",
+        "level": "N.1"
+      },
+      {
+        "name": "Quickattack",
+        "level": "N.4"
+      },
+      {
+        "name": "Thundershock",
+        "level": "N.8"
+      },
+      {
+        "name": "Shadowclaw",
+        "level": "N.10"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.11"
+      },
+      {
+        "name": "Charge",
+        "level": "N.15"
+      },
+      {
+        "name": "Electroball",
+        "level": "N.22"
+      },
+      {
+        "name": "Wildcharge",
+        "level": "N.25"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.29"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.32"
+      },
+      {
+        "name": "Protect",
+        "level": "N.36"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.43"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.46"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.47"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.mareep-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Luxray RLM",
+      "slug": "luxray",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Mareep RLM",
+      "slug": "mareep",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Mawile",
+      "slug": "mawile",
+      "image": "/pokeball.png"
+    }
+  }
+}

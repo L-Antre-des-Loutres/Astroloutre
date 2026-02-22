@@ -1,0 +1,252 @@
+{
+  "id": "1030",
+  "slug": "apheos",
+  "name": "Apheos",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Fée",
+    "Vol"
+  ],
+  "abilities": [
+    "Guts",
+    "Scrappy",
+    "Hustle"
+  ],
+  "stats": {
+    "hp": 55,
+    "attack": 45,
+    "defense": 35,
+    "specialAttack": 35,
+    "specialDefense": 35,
+    "speed": 85
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Peck",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Quickattack",
+        "level": "N.5"
+      },
+      {
+        "name": "Wingattack",
+        "level": "N.9"
+      },
+      {
+        "name": "Doubleteam",
+        "level": "N.13"
+      },
+      {
+        "name": "Endeavor",
+        "level": "N.17"
+      },
+      {
+        "name": "Aerialace",
+        "level": "N.21"
+      },
+      {
+        "name": "Agility",
+        "level": "N.25"
+      },
+      {
+        "name": "Airslash",
+        "level": "N.29"
+      },
+      {
+        "name": "Bravebird",
+        "level": "N.33"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Aerialace",
+        "ct": "CT"
+      },
+      {
+        "name": "Airslash",
+        "ct": "CT"
+      },
+      {
+        "name": "Attract",
+        "ct": "CT"
+      },
+      {
+        "name": "Bravebird",
+        "ct": "CT"
+      },
+      {
+        "name": "Defog",
+        "ct": "CT"
+      },
+      {
+        "name": "Doubleteam",
+        "ct": "CT"
+      },
+      {
+        "name": "Echoedvoice",
+        "ct": "CT"
+      },
+      {
+        "name": "Endure",
+        "ct": "CT"
+      },
+      {
+        "name": "Facade",
+        "ct": "CT"
+      },
+      {
+        "name": "Falseswipe",
+        "ct": "CT"
+      },
+      {
+        "name": "Fly",
+        "ct": "CT"
+      },
+      {
+        "name": "Frustration",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigaimpact",
+        "ct": "CT"
+      },
+      {
+        "name": "Helpinghand",
+        "ct": "CT"
+      },
+      {
+        "name": "Hiddenpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Hyperbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Pluck",
+        "ct": "CT"
+      },
+      {
+        "name": "Protect",
+        "ct": "CT"
+      },
+      {
+        "name": "Raindance",
+        "ct": "CT"
+      },
+      {
+        "name": "Rest",
+        "ct": "CT"
+      },
+      {
+        "name": "Return",
+        "ct": "CT"
+      },
+      {
+        "name": "Roost",
+        "ct": "CT"
+      },
+      {
+        "name": "Round",
+        "ct": "CT"
+      },
+      {
+        "name": "Skyattack",
+        "ct": "CT"
+      },
+      {
+        "name": "Sleeptalk",
+        "ct": "CT"
+      },
+      {
+        "name": "Steelwing",
+        "ct": "CT"
+      },
+      {
+        "name": "Substitute",
+        "ct": "CT"
+      },
+      {
+        "name": "Sunnyday",
+        "ct": "CT"
+      },
+      {
+        "name": "Swagger",
+        "ct": "CT"
+      },
+      {
+        "name": "Swift",
+        "ct": "CT"
+      },
+      {
+        "name": "Tailwind",
+        "ct": "CT"
+      },
+      {
+        "name": "Takedown",
+        "ct": "CT"
+      },
+      {
+        "name": "Terablast",
+        "ct": "CT"
+      },
+      {
+        "name": "Thief",
+        "ct": "CT"
+      },
+      {
+        "name": "Toxic",
+        "ct": "CT"
+      },
+      {
+        "name": "Uturn",
+        "ct": "CT"
+      },
+      {
+        "name": "Workup",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.apheos.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Aphelis",
+      "slug": "aphelis",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Apheos",
+      "slug": "apheos",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Bayleef RLM",
+      "slug": "bayleef",
+      "image": "/pokeball.png"
+    }
+  }
+}

@@ -1,0 +1,540 @@
+{
+  "id": "000",
+  "slug": "togekiss",
+  "name": "Togekiss RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Fée",
+    "Dragon"
+  ],
+  "abilities": [
+    "Dragonlate",
+    "Dragonlate",
+    "Dragonlate"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 60,
+    "defense": 80,
+    "specialAttack": 115,
+    "specialDefense": 85,
+    "speed": 90
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Skyattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Extremespeed",
+        "level": "N.1"
+      },
+      {
+        "name": "Aurasphere",
+        "level": "N.1"
+      },
+      {
+        "name": "Airslash",
+        "level": "N.1"
+      },
+      {
+        "name": "Safeguard",
+        "level": "N.1"
+      },
+      {
+        "name": "Ancientpower",
+        "level": "N.1"
+      },
+      {
+        "name": "Lastresort",
+        "level": "N.1"
+      },
+      {
+        "name": "Afteryou",
+        "level": "N.1"
+      },
+      {
+        "name": "Triattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Fairywind",
+        "level": "N.1"
+      },
+      {
+        "name": "Charm",
+        "level": "N.1"
+      },
+      {
+        "name": "Yawn",
+        "level": "N.1"
+      },
+      {
+        "name": "Metronome",
+        "level": "N.1"
+      },
+      {
+        "name": "Doubleedge",
+        "level": "N.1"
+      },
+      {
+        "name": "Followme",
+        "level": "N.1"
+      },
+      {
+        "name": "Batonpass",
+        "level": "N.1"
+      },
+      {
+        "name": "Wish",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Pound",
+        "level": "N.1"
+      },
+      {
+        "name": "Sweetkiss",
+        "level": "N.1"
+      },
+      {
+        "name": "Lifedew",
+        "level": "N.1"
+      },
+      {
+        "name": "Bestow",
+        "level": "N.1"
+      },
+      {
+        "name": "Dracometeor",
+        "level": "N.1"
+      },
+      {
+        "name": "Dragonpulse",
+        "level": "N.1"
+      },
+      {
+        "name": "Moonblast",
+        "level": "N.1"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Aerialace",
+        "ct": "CT"
+      },
+      {
+        "name": "Afteryou",
+        "ct": "CT"
+      },
+      {
+        "name": "Aircutter",
+        "ct": "CT"
+      },
+      {
+        "name": "Airslash",
+        "ct": "CT"
+      },
+      {
+        "name": "Allyswitch",
+        "ct": "CT"
+      },
+      {
+        "name": "Amnesia",
+        "ct": "CT"
+      },
+      {
+        "name": "Ancientpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Aurasphere",
+        "ct": "CT"
+      },
+      {
+        "name": "Babydolleyes",
+        "ct": "CT"
+      },
+      {
+        "name": "Batonpass",
+        "ct": "CT"
+      },
+      {
+        "name": "Bodyslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Brickbreak",
+        "ct": "CT"
+      },
+      {
+        "name": "Charm",
+        "ct": "CT"
+      },
+      {
+        "name": "Covet",
+        "ct": "CT"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "ct": "CT"
+      },
+      {
+        "name": "Defog",
+        "ct": "CT"
+      },
+      {
+        "name": "Doubleedge",
+        "ct": "CT"
+      },
+      {
+        "name": "Drainingkiss",
+        "ct": "CT"
+      },
+      {
+        "name": "Drainpunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Dreameater",
+        "ct": "CT"
+      },
+      {
+        "name": "Dualwingbeat",
+        "ct": "CT"
+      },
+      {
+        "name": "Echoedvoice",
+        "ct": "CT"
+      },
+      {
+        "name": "Encore",
+        "ct": "CT"
+      },
+      {
+        "name": "Endeavor",
+        "ct": "CT"
+      },
+      {
+        "name": "Endure",
+        "ct": "CT"
+      },
+      {
+        "name": "Facade",
+        "ct": "CT"
+      },
+      {
+        "name": "Fireblast",
+        "ct": "CT"
+      },
+      {
+        "name": "Flamethrower",
+        "ct": "CT"
+      },
+      {
+        "name": "Flash",
+        "ct": "CT"
+      },
+      {
+        "name": "Fling",
+        "ct": "CT"
+      },
+      {
+        "name": "Fly",
+        "ct": "CT"
+      },
+      {
+        "name": "Focuspunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Futuresight",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigaimpact",
+        "ct": "CT"
+      },
+      {
+        "name": "Grassknot",
+        "ct": "CT"
+      },
+      {
+        "name": "Headbutt",
+        "ct": "CT"
+      },
+      {
+        "name": "Healbell",
+        "ct": "CT"
+      },
+      {
+        "name": "Heatwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Helpinghand",
+        "ct": "CT"
+      },
+      {
+        "name": "Hyperbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Hypervoice",
+        "ct": "CT"
+      },
+      {
+        "name": "Imprison",
+        "ct": "CT"
+      },
+      {
+        "name": "Incinerate",
+        "ct": "CT"
+      },
+      {
+        "name": "Laserfocus",
+        "ct": "CT"
+      },
+      {
+        "name": "Lastresort",
+        "ct": "CT"
+      },
+      {
+        "name": "Lightscreen",
+        "ct": "CT"
+      },
+      {
+        "name": "Magicalleaf",
+        "ct": "CT"
+      },
+      {
+        "name": "Magiccoat",
+        "ct": "CT"
+      },
+      {
+        "name": "Megakick",
+        "ct": "CT"
+      },
+      {
+        "name": "Megapunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Metronome",
+        "ct": "CT"
+      },
+      {
+        "name": "Mudslap",
+        "ct": "CT"
+      },
+      {
+        "name": "Mysticalfire",
+        "ct": "CT"
+      },
+      {
+        "name": "Nastyplot",
+        "ct": "CT"
+      },
+      {
+        "name": "Ominouswind",
+        "ct": "CT"
+      },
+      {
+        "name": "Playrough",
+        "ct": "CT"
+      },
+      {
+        "name": "Pluck",
+        "ct": "CT"
+      },
+      {
+        "name": "Protect",
+        "ct": "CT"
+      },
+      {
+        "name": "Psychic",
+        "ct": "CT"
+      },
+      {
+        "name": "Psychup",
+        "ct": "CT"
+      },
+      {
+        "name": "Psyshock",
+        "ct": "CT"
+      },
+      {
+        "name": "Raindance",
+        "ct": "CT"
+      },
+      {
+        "name": "Reflect",
+        "ct": "CT"
+      },
+      {
+        "name": "Rest",
+        "ct": "CT"
+      },
+      {
+        "name": "Retaliate",
+        "ct": "CT"
+      },
+      {
+        "name": "Rocksmash",
+        "ct": "CT"
+      },
+      {
+        "name": "Rollout",
+        "ct": "CT"
+      },
+      {
+        "name": "Roost",
+        "ct": "CT"
+      },
+      {
+        "name": "Safeguard",
+        "ct": "CT"
+      },
+      {
+        "name": "Secretpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Shadowball",
+        "ct": "CT"
+      },
+      {
+        "name": "Shockwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Signalbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Silverwind",
+        "ct": "CT"
+      },
+      {
+        "name": "Skyattack",
+        "ct": "CT"
+      },
+      {
+        "name": "Sleeptalk",
+        "ct": "CT"
+      },
+      {
+        "name": "Smartstrike",
+        "ct": "CT"
+      },
+      {
+        "name": "Solarbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Steelwing",
+        "ct": "CT"
+      },
+      {
+        "name": "Storedpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Substitute",
+        "ct": "CT"
+      },
+      {
+        "name": "Sunnyday",
+        "ct": "CT"
+      },
+      {
+        "name": "Swift",
+        "ct": "CT"
+      },
+      {
+        "name": "Tailwind",
+        "ct": "CT"
+      },
+      {
+        "name": "Telekinesis",
+        "ct": "CT"
+      },
+      {
+        "name": "Terablast",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Triattack",
+        "ct": "CT"
+      },
+      {
+        "name": "Trick",
+        "ct": "CT"
+      },
+      {
+        "name": "Twister",
+        "ct": "CT"
+      },
+      {
+        "name": "Uproar",
+        "ct": "CT"
+      },
+      {
+        "name": "Waterpulse",
+        "ct": "CT"
+      },
+      {
+        "name": "Workup",
+        "ct": "CT"
+      },
+      {
+        "name": "Zenheadbutt",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.togekiss-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Sunflora",
+      "slug": "sunflora",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Togekiss RLM",
+      "slug": "togekiss",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Wartortle RLM",
+      "slug": "wartortle",
+      "image": "/pokeball.png"
+    }
+  }
+}

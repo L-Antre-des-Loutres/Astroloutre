@@ -1,0 +1,62 @@
+{
+  "id": "000",
+  "slug": "squirtle",
+  "name": "Squirtle",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Normal"
+  ],
+  "abilities": [],
+  "stats": {
+    "hp": 0,
+    "attack": 0,
+    "defense": 0,
+    "specialAttack": 0,
+    "specialDefense": 0,
+    "speed": 0
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": "Départ"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Description manquante..."
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Spiritomb RLM",
+      "slug": "spiritomb",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Squirtle",
+      "slug": "squirtle",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Sunflora",
+      "slug": "sunflora",
+      "image": "/pokeball.png"
+    }
+  }
+}

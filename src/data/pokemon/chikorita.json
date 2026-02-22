@@ -1,0 +1,62 @@
+{
+  "id": "000",
+  "slug": "chikorita",
+  "name": "Chikorita",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Normal"
+  ],
+  "abilities": [],
+  "stats": {
+    "hp": 0,
+    "attack": 0,
+    "defense": 0,
+    "specialAttack": 0,
+    "specialDefense": 0,
+    "speed": 0
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": "Départ"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Description manquante..."
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Braixen RLM",
+      "slug": "braixen",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Chikorita",
+      "slug": "chikorita",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Delphox RLM",
+      "slug": "delphox",
+      "image": "/pokeball.png"
+    }
+  }
+}

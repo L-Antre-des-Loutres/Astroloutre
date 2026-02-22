@@ -8,198 +8,233 @@ import ContentLayout from "../../../components/wiki/ContentLayout.astro";
 import ContentTable from "../../../components/wiki/ContentTable.astro";
 
 export async function getStaticPaths() {
-    const pokemons = ["pikachu", "salameche", "bulbizarre", "carapuce"];
+    // 1. On récupère tous les fichiers JSON
+    const files = import.meta.glob("../../../data/pokemon/*.json", {
+        eager: true,
+    });
 
-    return pokemons.map((pokemon) => ({
-        params: { pokemon }
-    }));
+    // 2. On transforme l'objet en tableau de chemins
+    return Object.values(files).map((file: any) => {
+        const data = file.default || file;
+        // Log de debug pour voir ce qu'Astro génère au build
+        console.log("Génération du chemin pour :", data.slug);
+
+        return {
+            params: { pokemon: data.slug }, // Doit correspondre au nom du fichier [pokemon].astro
+            props: { pokemon: data },
+        };
+    });
 }
 
-const localisationColumns = ["Jeu", "Localisation"];
-const localisationData = [
-    { Jeu: "Cobblemon RLM", Localisation: "Biome Plaine" }
+const { pokemon } = Astro.props;
+
+const allPokemonFiles = import.meta.glob("../../../data/pokemon/*.json", {
+    eager: true,
+});
+const allPokemon = Object.values(allPokemonFiles)
+    .map((file: any) => file.default || file)
+    .sort((a: any, b: any) => a.name.localeCompare(b.name));
+
+// Configuration des colonnes
+const movesetColumns: { label: string; key: string }[] = [
+    { label: "Capacité", key: "name" },
+    { label: "Niveau", key: "level" },
+];
+const localisationColumns: { label: string; key: string }[] = [
+    { label: "Jeu", key: "game" },
+    { label: "Localisation", key: "location" },
+];
+const tmColumns: { label: string; key: string }[] = [
+    { label: "Capacité", key: "name" },
+    { label: "Moyen", key: "ct" },
 ];
 
-const pokedexColumns = ["Jeu", "Description"];
-const pokedexData =  [
-    { Jeu: "Cobblemon RLM", Description: "placeholder" }
-];
+const typeColors: Record<string, string> = {
+    Normal: "#A8A77A",
+    Feu: "#EE8130",
+    Eau: "#6390F0",
+    Électrik: "#F7D02C",
+    Plante: "#7AC74C",
+    Glace: "#96D9D6",
+    Combat: "#C22E28",
+    Poison: "#A33EA1",
+    Sol: "#E2BF65",
+    Vol: "#A890F0",
+    Psy: "#F95587",
+    Insecte: "#A6B91A",
+    Roche: "#B6A136",
+    Spectre: "#735797",
+    Dragon: "#6F35FC",
+    Ténèbres: "#705746",
+    Acier: "#B7B7CE",
+    Fée: "#D685AD",
+};
 
-const movesetColumns = ["Capacité", "Niveau"];
-const movesetData = [
-    { Capacité: "Éclair", Niveau: "Départ" },
-    { Capacité: "Camaraderie", Niveau: "Départ" },
-    { Capacité: "Charme", Niveau: "Départ" },
-    { Capacité: "Doux Baiser", Niveau: "Départ" },
-    { Capacité: "Frotte-Frimousse", Niveau: "Départ" },
-    { Capacité: "Machination", Niveau: "Départ" },
-    { Capacité: "Mimi-Queue", Niveau: "Départ" },
-    { Capacité: "Rugissement", Niveau: "Départ" },
-    { Capacité: "Vive-Attaque", Niveau: "Départ" },
-    { Capacité: "Reflet", Niveau: "N.14" },
-    { Capacité: "Cage Éclair", Niveau: "N.18" },
-    { Capacité: "Boule Élek", Niveau: "N.12" },
-    { Capacité: "Météores", Niveau: "N.15" },
-    { Capacité: "Ruse", Niveau: "N.25" },
-    { Capacité: "Étincelle", Niveau: "N.20" },
-    { Capacité: "Hâte", Niveau: "N.21" },
-    { Capacité: "Souplesse", Niveau: "N.31" },
-    { Capacité: "Tonnerre", Niveau: "N.36" },
-    { Capacité: "Coup d'Jus", Niveau: "N.40" },
-    { Capacité: "Queue de Fer", Niveau: "N.37" },
-    { Capacité: "Mur Lumière", Niveau: "N.48" },
-    { Capacité: "Fatal-Foudre", Niveau: "N.44" }
-];
-
-const PAGE_TYPE_COLOR = "#ad892d"
+const defaultPageColor =
+    pokemon.types && pokemon.types.length > 0
+        ? typeColors[pokemon.types[0]] || pokemon.pageColor
+        : pokemon.pageColor;
 ---
 
-<Layout ogImage={`placeholder`} title={`Pokemonname`} ogDescription={`placeholder`}>
-    <Banner bannerUrl="https://champions.pokemon.com/_images/global/header/header-lg.jpg"/>
+<Layout title={pokemon.name} forceDarkTheme={true}>
+    <Banner bannerUrl={pokemon.bannerUrl} />
 
-    <div class="wiki-navigation-container">
-        <a href="#"><div class="wiki-nav-pokemon-container">
-            <p>Page précédente</p>
-            <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/7/7f/Arbok-RFVF.png/250px-Arbok-RFVF.png"/>
-        </div></a>
-        <a href="#"><div class="wiki-nav-pokemon-container wiki-nav-pokemon-middlemon">
-            <p>Page actuel</p>
-            <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png"/>
-        </div></a>
-        <a href="#"><div class="wiki-nav-pokemon-container">
-            <p>Page suivante</p>
-            <img class="wiki-navigation-container-img" src="https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png"/>
-        </div></a>
+    <div class="pokemon-selector-container">
+        <label for="pokemon-selector">Aller directement à :</label>
+        <select
+            id="pokemon-selector"
+            onchange="window.location.href='/pokemon/wiki/' + this.value"
+        >
+            <option value="" disabled>Choisir un Pokémon...</option>
+            {
+                allPokemon.map((p) => (
+                    <option value={p.slug} selected={p.slug === pokemon.slug}>
+                        {p.name}
+                    </option>
+                ))
+            }
+        </select>
     </div>
 
-    <LargeTransitionSection title={`Page de #Pikachu#`} invertedBackground/>
+    <div class="wiki-navigation-container">
+        <a
+            href={`/pokemon/wiki/${pokemon.navigation.previous.slug || pokemon.navigation.previous.name.toLowerCase()}`}
+        >
+            <div class="wiki-nav-pokemon-container">
+                <p>Précédent</p>
+                <img
+                    class="wiki-navigation-container-img"
+                    src={pokemon.navigation.previous.image}
+                    alt="Précédent"
+                />
+            </div>
+        </a>
+        <div class="wiki-nav-pokemon-container wiki-nav-pokemon-middlemon">
+            <p>Actuel</p>
+            <img
+                class="wiki-navigation-container-img"
+                src={pokemon.navigation.current.image}
+                alt="Actuel"
+            />
+        </div>
+        <a
+            href={`/pokemon/wiki/${pokemon.navigation.next.slug || pokemon.navigation.next.name.toLowerCase()}`}
+        >
+            <div class="wiki-nav-pokemon-container">
+                <p>Suivant</p>
+                <img
+                    class="wiki-navigation-container-img"
+                    src={pokemon.navigation.next.image}
+                    alt="Suivant"
+                />
+            </div>
+        </a>
+    </div>
+
+    <LargeTransitionSection
+        title={`Page de #${pokemon.name}#`}
+        invertedBackground
+    />
 
     <ContentLayout>
-        <!-- Primary -->
         <div class="wiki-primary-infos">
             <div class="wiki-col wiki-pokemon-artwork-container">
-                <img class="wiki-pokemon-artwork" src="https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png"/>
+                <img
+                    class="wiki-pokemon-artwork"
+                    src={pokemon.navigation.current.image}
+                    alt={pokemon.name}
+                />
             </div>
+
             <div class="wiki-col wiki-pokemon-infos">
                 <div class="wiki-pokemon-types-container">
-                    <img class="wiki-pokemon-type-image" src="https://www.pokepedia.fr/images/thumb/6/6d/Miniature_Type_%C3%89lectrik_EV.png/180px-Miniature_Type_%C3%89lectrik_EV.png"/>
-                    <img class="wiki-pokemon-type-image" src="https://www.pokepedia.fr/images/thumb/b/bf/Miniature_Type_Normal_EV.png/180px-Miniature_Type_Normal_EV.png"/>
+                    {
+                        pokemon.types.map((type: string) => (
+                            <span
+                                class="wiki-pokemon-type-badge"
+                                style={`background-color: ${typeColors[type] || "#777"};`}
+                            >
+                                {type.toUpperCase()}
+                            </span>
+                        ))
+                    }
                 </div>
-                <h1 style="margin-top: 1em">Pokemon Souris</h1>
+                <h1 style="margin-top: 1em">{pokemon.category}</h1>
                 <h1 style="margin-top: 1em">Talents :</h1>
                 <ul>
-                    <li>- Static</li>
-                    <li>- Paratonnerre</li>
+                    {pokemon.abilities.map((talent) => <li>- {talent}</li>)}
                 </ul>
             </div>
+
             <div class="wiki-col wiki-pokemon-stats-container">
-                <PkmnStatsGraph hpValue={35} attackValue={55} defenseValue={40} specialAttackValue={50} specialDefenseValue={50} speedValue={90} />
+                <PkmnStatsGraph
+                    hpValue={pokemon.stats.hp}
+                    attackValue={pokemon.stats.attack}
+                    defenseValue={pokemon.stats.defense}
+                    specialAttackValue={pokemon.stats.specialAttack}
+                    specialDefenseValue={pokemon.stats.specialDefense}
+                    speedValue={pokemon.stats.speed}
+                />
             </div>
         </div>
 
-        <!-- Evolutions -->
-        <EvolutionTreeHorizontal
-                color={PAGE_TYPE_COLOR}
-                stages={[
-                    { type: "pokemon", name: "Pichu", image: "https://www.pokepedia.fr/images/thumb/a/a0/Pichu-RFVF.png/250px-Pichu-RFVF.png" },
-                    { type: "condition", label: "Amitié" },
-                    { type: "pokemon", name: "Pikachu", image: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png" },
-                    { type: "condition", label: "Pierre foudre" },
-                    { type: "pokemon", name: "Raichu", image: "https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png" },
-                    { type: "condition", label: "Méga-Évolution" },
-                    { type: "pokemon", name: "Méga-Raichu X", image: "https://www.pokepedia.fr/images/thumb/9/98/M%C3%A9ga-Raichu_X_%28Official_Game_Art%29-LPZA.png/250px-M%C3%A9ga-Raichu_X_%28Official_Game_Art%29-LPZA.png" },
-                ]}
-        />
-        <EvolutionTreeHorizontal
-                color={PAGE_TYPE_COLOR}
-                stages={[
-                    { type: "pokemon", name: "Pichu", image: "https://www.pokepedia.fr/images/thumb/a/a0/Pichu-RFVF.png/250px-Pichu-RFVF.png" },
-                    { type: "condition", label: "Amitié" },
-                    { type: "pokemon", name: "Pikachu", image: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png" },
-                    { type: "condition", label: "Pierre foudre" },
-                    { type: "pokemon", name: "Raichu", image: "https://www.pokepedia.fr/images/thumb/5/57/Raichu-LPZA.png/250px-Raichu-LPZA.png" },
-                    { type: "condition", label: "Méga-Évolution" },
-                    { type: "pokemon", name: "Méga-Raichu Y", image: "https://www.pokepedia.fr/images/thumb/7/7a/M%C3%A9ga-Raichu_Y_%28Official_Game_Art%29-LPZA.png/250px-M%C3%A9ga-Raichu_Y_%28Official_Game_Art%29-LPZA.png" },
-                ]}
-        />
-        <EvolutionTreeHorizontal
-                color={PAGE_TYPE_COLOR}
-                stages={[
-                    { type: "pokemon", name: "Pichu", image: "https://www.pokepedia.fr/images/thumb/a/a0/Pichu-RFVF.png/250px-Pichu-RFVF.png" },
-                    { type: "condition", label: "Amitié" },
-                    { type: "pokemon", name: "Pikachu", image: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/250px-Pikachu-RFVF.png" },
-                    { type: "condition", label: "Pierre foudre" },
-                    { type: "pokemon", name: "Raichu (Alola)", image: "https://www.pokepedia.fr/images/thumb/7/79/Raichu_d%27Alola-SL.png/250px-Raichu_d%27Alola-SL.png" },
-                ]}
-        />
+        {
+            pokemon.evolutions.map((evo: any) => (
+                <EvolutionTreeHorizontal
+                    color={defaultPageColor}
+                    stages={evo.path}
+                />
+            ))
+        }
 
-        <!-- Moveset -->
         <div class="wiki-section">
             <h1>Capacités apprises</h1>
-            <ContentTable
-                title="Capacités appris par niveau"
-                color={PAGE_TYPE_COLOR}
-                columns={movesetColumns}
-                data={movesetData}
-            />
-            <ContentTable
-                    title="Capacités appris par CT/DT"
-                    color={PAGE_TYPE_COLOR}
+            <div class="wiki-tables-container">
+                <ContentTable
+                    title="Capacités par niveau"
+                    color={defaultPageColor}
                     columns={movesetColumns}
-                    data={movesetData}
-            />
-            <ContentTable
-                    title="Capacités appris par Reproduction"
-                    color={PAGE_TYPE_COLOR}
-                    columns={movesetColumns}
-                    data={movesetData}
-            />
-        </div>
-
-        <!-- Localisations -->
-        <div class="wiki-section">
-            <h1>Localisation</h1>
-            <ContentTable
-                title="Localisation du Pokemon"
-                color={PAGE_TYPE_COLOR}
-                columns={localisationColumns}
-                data={localisationData}
-            />
-        </div>
-
-        <!-- About -->
-        <div class="wiki-section">
-            <h1>À propos du Pokémon</h1>
-            <p>
-
-            </p>
-        </div>
-
-        <!-- Pokedex -->
-        <div class="wiki-section">
-            <h1>Pokedex</h1>
-            <ContentTable
-                title="Descriptions du Pokedex"
-                color={PAGE_TYPE_COLOR}
-                columns={pokedexColumns}
-                data={pokedexData}
-            />
-        </div>
-
-        <!-- Imagerie -->
-        <div class="wiki-section">
-            <h1>Imagerie</h1>
-            <p>
-
-            </p>
+                    data={pokemon.movesets.by_level}
+                />
+            </div>
         </div>
     </ContentLayout>
 </Layout>
-
 <style>
     * {
         color: white;
         box-sizing: border-box;
+    }
+
+    .pokemon-selector-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pokemon-selector-container label {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .pokemon-selector-container select {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        background-color: var(--background-color, #2a2a2a);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 1rem;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .pokemon-selector-container select:hover,
+    .pokemon-selector-container select:focus {
+        border-color: rgba(255, 255, 255, 0.6);
     }
 
     h1 {
@@ -253,13 +288,26 @@ const PAGE_TYPE_COLOR = "#ad892d"
         flex-wrap: wrap;
     }
 
-    .wiki-pokemon-type-image {
-        height: 1.5em;
-        max-width: 100%;
+    .wiki-pokemon-type-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .wiki-section {
         margin-top: 2rem;
+    }
+
+    .wiki-tables-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1rem;
     }
 
     .wiki-nav-pokemon-container {
@@ -286,7 +334,6 @@ const PAGE_TYPE_COLOR = "#ad892d"
     }
 
     @media (max-width: 410px) {
-
         .wiki-navigation-container {
             display: none;
         }

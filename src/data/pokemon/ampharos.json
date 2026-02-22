@@ -1,0 +1,564 @@
+{
+  "id": "000",
+  "slug": "ampharos",
+  "name": "Ampharos RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Électrik",
+    "Spectre"
+  ],
+  "abilities": [
+    "Cursedbody",
+    "Static",
+    "Shadowtag"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 60,
+    "defense": 80,
+    "specialAttack": 115,
+    "specialDefense": 85,
+    "speed": 90
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.1"
+      },
+      {
+        "name": "Astonish",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.1"
+      },
+      {
+        "name": "Thundershock",
+        "level": "N.1"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.1"
+      },
+      {
+        "name": "Charge",
+        "level": "N.1"
+      },
+      {
+        "name": "Hex",
+        "level": "N.1"
+      },
+      {
+        "name": "Takedown",
+        "level": "N.1"
+      },
+      {
+        "name": "Electroball",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.1"
+      },
+      {
+        "name": "Confuseray",
+        "level": "N.1"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.1"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.1"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.1"
+      },
+      {
+        "name": "Signalbeam",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.1"
+      },
+      {
+        "name": "Astonishment",
+        "level": "N.1"
+      },
+      {
+        "name": "Dragonpulse",
+        "level": "N.1"
+      },
+      {
+        "name": "Firepunch",
+        "level": "N.1"
+      },
+      {
+        "name": "Iondeluge",
+        "level": "N.1"
+      },
+      {
+        "name": "Magneticflux",
+        "level": "N.1"
+      },
+      {
+        "name": "Roar",
+        "level": "N.1"
+      },
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunderpunch",
+        "level": "N.1"
+      },
+      {
+        "name": "Zapcannon",
+        "level": "N.1"
+      },
+      {
+        "name": "Quickattack",
+        "level": "N.4"
+      },
+      {
+        "name": "Shadowclaw",
+        "level": "N.10"
+      },
+      {
+        "name": "Cottonspore",
+        "level": "N.11"
+      },
+      {
+        "name": "Charge",
+        "level": "N.15"
+      },
+      {
+        "name": "Electroball",
+        "level": "N.22"
+      },
+      {
+        "name": "Wildcharge",
+        "level": "N.25"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.29"
+      },
+      {
+        "name": "Shadowclaw",
+        "level": "N.30"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.32"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.35"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.35"
+      },
+      {
+        "name": "Protect",
+        "level": "N.36"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.38"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.40"
+      },
+      {
+        "name": "Voltswitch",
+        "level": "N.40"
+      },
+      {
+        "name": "Knockoff",
+        "level": "N.42"
+      },
+      {
+        "name": "Destinybond",
+        "level": "N.45"
+      },
+      {
+        "name": "Cottonguard",
+        "level": "N.46"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.46"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.47"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.51"
+      },
+      {
+        "name": "Signalbeam",
+        "level": "N.51"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.57"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.62"
+      },
+      {
+        "name": "Dragonpulse",
+        "level": "N.65"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Afteryou",
+        "ct": "CT"
+      },
+      {
+        "name": "Agility",
+        "ct": "CT"
+      },
+      {
+        "name": "Bodyslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Breakingswipe",
+        "ct": "CT"
+      },
+      {
+        "name": "Brickbreak",
+        "ct": "CT"
+      },
+      {
+        "name": "Brutalswing",
+        "ct": "CT"
+      },
+      {
+        "name": "Bulldoze",
+        "ct": "CT"
+      },
+      {
+        "name": "Charge",
+        "ct": "CT"
+      },
+      {
+        "name": "Chargebeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Confuseray",
+        "ct": "CT"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "ct": "CT"
+      },
+      {
+        "name": "Dig",
+        "ct": "CT"
+      },
+      {
+        "name": "Doubleedge",
+        "ct": "CT"
+      },
+      {
+        "name": "Dragoncheer",
+        "ct": "CT"
+      },
+      {
+        "name": "Dragonpulse",
+        "ct": "CT"
+      },
+      {
+        "name": "Dragontail",
+        "ct": "CT"
+      },
+      {
+        "name": "Echoedvoice",
+        "ct": "CT"
+      },
+      {
+        "name": "Eerieimpulse",
+        "ct": "CT"
+      },
+      {
+        "name": "Electricterrain",
+        "ct": "CT"
+      },
+      {
+        "name": "Electroball",
+        "ct": "CT"
+      },
+      {
+        "name": "Electroweb",
+        "ct": "CT"
+      },
+      {
+        "name": "Endeavor",
+        "ct": "CT"
+      },
+      {
+        "name": "Endure",
+        "ct": "CT"
+      },
+      {
+        "name": "Facade",
+        "ct": "CT"
+      },
+      {
+        "name": "Firepunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Flash",
+        "ct": "CT"
+      },
+      {
+        "name": "Fling",
+        "ct": "CT"
+      },
+      {
+        "name": "Focusblast",
+        "ct": "CT"
+      },
+      {
+        "name": "Focuspunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigaimpact",
+        "ct": "CT"
+      },
+      {
+        "name": "Headbutt",
+        "ct": "CT"
+      },
+      {
+        "name": "Healbell",
+        "ct": "CT"
+      },
+      {
+        "name": "Helpinghand",
+        "ct": "CT"
+      },
+      {
+        "name": "Hyperbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Icepunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Irontail",
+        "ct": "CT"
+      },
+      {
+        "name": "Laserfocus",
+        "ct": "CT"
+      },
+      {
+        "name": "Lightscreen",
+        "ct": "CT"
+      },
+      {
+        "name": "Lowkick",
+        "ct": "CT"
+      },
+      {
+        "name": "Magnetrise",
+        "ct": "CT"
+      },
+      {
+        "name": "Megakick",
+        "ct": "CT"
+      },
+      {
+        "name": "Megapunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Meteorbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Outrage",
+        "ct": "CT"
+      },
+      {
+        "name": "Powergem",
+        "ct": "CT"
+      },
+      {
+        "name": "Poweruppunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Protect",
+        "ct": "CT"
+      },
+      {
+        "name": "Raindance",
+        "ct": "CT"
+      },
+      {
+        "name": "Reflect",
+        "ct": "CT"
+      },
+      {
+        "name": "Rest",
+        "ct": "CT"
+      },
+      {
+        "name": "Risingvoltage",
+        "ct": "CT"
+      },
+      {
+        "name": "Roar",
+        "ct": "CT"
+      },
+      {
+        "name": "Rockclimb",
+        "ct": "CT"
+      },
+      {
+        "name": "Rocksmash",
+        "ct": "CT"
+      },
+      {
+        "name": "Safeguard",
+        "ct": "CT"
+      },
+      {
+        "name": "Screech",
+        "ct": "CT"
+      },
+      {
+        "name": "Shockwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Signalbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Sleeptalk",
+        "ct": "CT"
+      },
+      {
+        "name": "Stompingtantrum",
+        "ct": "CT"
+      },
+      {
+        "name": "Strength",
+        "ct": "CT"
+      },
+      {
+        "name": "Substitute",
+        "ct": "CT"
+      },
+      {
+        "name": "Sunnyday",
+        "ct": "CT"
+      },
+      {
+        "name": "Supercellslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Swift",
+        "ct": "CT"
+      },
+      {
+        "name": "Takedown",
+        "ct": "CT"
+      },
+      {
+        "name": "Terablast",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunder",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderbolt",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderpunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Trailblaze",
+        "ct": "CT"
+      },
+      {
+        "name": "Voltswitch",
+        "ct": "CT"
+      },
+      {
+        "name": "Wildcharge",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.ampharos-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Wartortle RLM",
+      "slug": "wartortle",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Ampharos RLM",
+      "slug": "ampharos",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Aphelis",
+      "slug": "aphelis",
+      "image": "/pokeball.png"
+    }
+  }
+}

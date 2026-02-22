@@ -1,0 +1,139 @@
+{
+  "id": "000",
+  "slug": "nosepass",
+  "name": "Nosepass RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Roche",
+    "Fée"
+  ],
+  "abilities": [
+    "Sturdy",
+    "Unaware",
+    "Contrary"
+  ],
+  "stats": {
+    "hp": 30,
+    "attack": 40,
+    "defense": 100,
+    "specialAttack": 80,
+    "specialDefense": 95,
+    "speed": 30
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Present",
+        "level": "N.1"
+      },
+      {
+        "name": "Harden",
+        "level": "N.4"
+      },
+      {
+        "name": "Watergun",
+        "level": "N.7"
+      },
+      {
+        "name": "Rockthrow",
+        "level": "N.10"
+      },
+      {
+        "name": "Rest",
+        "level": "N.13"
+      },
+      {
+        "name": "Fairywind",
+        "level": "N.16"
+      },
+      {
+        "name": "Waterpulse",
+        "level": "N.19"
+      },
+      {
+        "name": "Tailwind ",
+        "level": "N.19"
+      },
+      {
+        "name": "Rockslide",
+        "level": "N.22"
+      },
+      {
+        "name": "Aquaring",
+        "level": "N.25"
+      },
+      {
+        "name": "Rockblast",
+        "level": "N.28"
+      },
+      {
+        "name": "Doubleedge",
+        "level": "N.31"
+      },
+      {
+        "name": "Calmmind",
+        "level": "N.34"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.37"
+      },
+      {
+        "name": "Stoneedge",
+        "level": "N.40"
+      },
+      {
+        "name": "Charm",
+        "level": "N.43"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.43"
+      },
+      {
+        "name": "Explosion",
+        "level": "N.50"
+      },
+      {
+        "name": "Recover",
+        "level": "N.60"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.nosepass-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Ninjask RLM",
+      "slug": "ninjask",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Nosepass RLM",
+      "slug": "nosepass",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Piplup",
+      "slug": "piplup",
+      "image": "/pokeball.png"
+    }
+  }
+}

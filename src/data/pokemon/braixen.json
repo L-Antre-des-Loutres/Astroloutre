@@ -1,0 +1,66 @@
+{
+  "id": "000",
+  "slug": "braixen",
+  "name": "Braixen RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Feu"
+  ],
+  "abilities": [
+    "Blaze",
+    "Blaze",
+    "Magician"
+  ],
+  "stats": {
+    "hp": 59,
+    "attack": 59,
+    "defense": 58,
+    "specialAttack": 90,
+    "specialDefense": 70,
+    "speed": 73
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": "Départ"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.braixen-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Blastoise RLM",
+      "slug": "blastoise",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Braixen RLM",
+      "slug": "braixen",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Chikorita",
+      "slug": "chikorita",
+      "image": "/pokeball.png"
+    }
+  }
+}

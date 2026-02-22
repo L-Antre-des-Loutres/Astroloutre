@@ -1,0 +1,395 @@
+{
+  "id": "000",
+  "slug": "luxio",
+  "name": "Luxio RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Glace"
+  ],
+  "abilities": [
+    "Slushrush",
+    "Intimidate",
+    "Guts"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 95,
+    "defense": 49,
+    "specialAttack": 50,
+    "specialDefense": 49,
+    "speed": 60
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Leer",
+        "level": "N.1"
+      },
+      {
+        "name": "Charge",
+        "level": "N.1"
+      },
+      {
+        "name": "Hail",
+        "level": "N.1"
+      },
+      {
+        "name": "Icywind",
+        "level": "N.1"
+      },
+      {
+        "name": "Honeclaws",
+        "level": "N.1"
+      },
+      {
+        "name": "Bite",
+        "level": "N.12"
+      },
+      {
+        "name": "Bulldoze",
+        "level": "N.18"
+      },
+      {
+        "name": "Iceshard",
+        "level": "N.22"
+      },
+      {
+        "name": "Roar",
+        "level": "N.24"
+      },
+      {
+        "name": "Pursuit",
+        "level": "N.26"
+      },
+      {
+        "name": "Knockoff",
+        "level": "N.30"
+      },
+      {
+        "name": "Auroraveil",
+        "level": "N.32"
+      },
+      {
+        "name": "Flipturn",
+        "level": "N.33"
+      },
+      {
+        "name": "Nightslash",
+        "level": "N.34"
+      },
+      {
+        "name": "Frostyslide",
+        "level": "N.36"
+      },
+      {
+        "name": "Playrough",
+        "level": "N.38"
+      },
+      {
+        "name": "Scaryface",
+        "level": "N.40"
+      },
+      {
+        "name": "Stalagtite",
+        "level": "N.42"
+      },
+      {
+        "name": "Avalanche",
+        "level": "N.45"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.48"
+      },
+      {
+        "name": "Rockslide",
+        "level": "N.50"
+      },
+      {
+        "name": "Crunch",
+        "level": "N.56"
+      },
+      {
+        "name": "Tripleaxel",
+        "level": "N.64"
+      },
+      {
+        "name": "Swagger",
+        "level": "N.72"
+      },
+      {
+        "name": "Wildcharge",
+        "level": "N.80"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Agility",
+        "ct": "CT"
+      },
+      {
+        "name": "Babydolleyes",
+        "ct": "CT"
+      },
+      {
+        "name": "Bodyslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Charge",
+        "ct": "CT"
+      },
+      {
+        "name": "Chargebeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Confuseray",
+        "ct": "CT"
+      },
+      {
+        "name": "Crunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Doubleedge",
+        "ct": "CT"
+      },
+      {
+        "name": "Eerieimpulse",
+        "ct": "CT"
+      },
+      {
+        "name": "Electricterrain",
+        "ct": "CT"
+      },
+      {
+        "name": "Electroball",
+        "ct": "CT"
+      },
+      {
+        "name": "Electroweb",
+        "ct": "CT"
+      },
+      {
+        "name": "Endure",
+        "ct": "CT"
+      },
+      {
+        "name": "Facade",
+        "ct": "CT"
+      },
+      {
+        "name": "Faketears",
+        "ct": "CT"
+      },
+      {
+        "name": "Firefang",
+        "ct": "CT"
+      },
+      {
+        "name": "Flash",
+        "ct": "CT"
+      },
+      {
+        "name": "Furycutter",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigaimpact",
+        "ct": "CT"
+      },
+      {
+        "name": "Headbutt",
+        "ct": "CT"
+      },
+      {
+        "name": "Helpinghand",
+        "ct": "CT"
+      },
+      {
+        "name": "Hyperbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Icefang",
+        "ct": "CT"
+      },
+      {
+        "name": "Irontail",
+        "ct": "CT"
+      },
+      {
+        "name": "Laserfocus",
+        "ct": "CT"
+      },
+      {
+        "name": "Lightscreen",
+        "ct": "CT"
+      },
+      {
+        "name": "Magnetrise",
+        "ct": "CT"
+      },
+      {
+        "name": "Playrough",
+        "ct": "CT"
+      },
+      {
+        "name": "Protect",
+        "ct": "CT"
+      },
+      {
+        "name": "Psychicfangs",
+        "ct": "CT"
+      },
+      {
+        "name": "Raindance",
+        "ct": "CT"
+      },
+      {
+        "name": "Rest",
+        "ct": "CT"
+      },
+      {
+        "name": "Risingvoltage",
+        "ct": "CT"
+      },
+      {
+        "name": "Roar",
+        "ct": "CT"
+      },
+      {
+        "name": "Scaryface",
+        "ct": "CT"
+      },
+      {
+        "name": "Shockwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Signalbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Sleeptalk",
+        "ct": "CT"
+      },
+      {
+        "name": "Snarl",
+        "ct": "CT"
+      },
+      {
+        "name": "Strength",
+        "ct": "CT"
+      },
+      {
+        "name": "Substitute",
+        "ct": "CT"
+      },
+      {
+        "name": "Sunnyday",
+        "ct": "CT"
+      },
+      {
+        "name": "Supercellslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Superpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Swagger",
+        "ct": "CT"
+      },
+      {
+        "name": "Swift",
+        "ct": "CT"
+      },
+      {
+        "name": "Takedown",
+        "ct": "CT"
+      },
+      {
+        "name": "Terablast",
+        "ct": "CT"
+      },
+      {
+        "name": "Thief",
+        "ct": "CT"
+      },
+      {
+        "name": "Throatchop",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunder",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderbolt",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderfang",
+        "ct": "CT"
+      },
+      {
+        "name": "Thunderwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Trailblaze",
+        "ct": "CT"
+      },
+      {
+        "name": "Voltswitch",
+        "ct": "CT"
+      },
+      {
+        "name": "Wildcharge",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.luxio-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Golem",
+      "slug": "golem",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Luxio RLM",
+      "slug": "luxio",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Luxray RLM",
+      "slug": "luxray",
+      "image": "/pokeball.png"
+    }
+  }
+}

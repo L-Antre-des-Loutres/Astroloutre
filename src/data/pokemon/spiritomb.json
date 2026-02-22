@@ -1,0 +1,431 @@
+{
+  "id": "000",
+  "slug": "spiritomb",
+  "name": "Spiritomb RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Feu",
+    "Ténèbres"
+  ],
+  "abilities": [
+    "Compoundeyes",
+    "Shadowtag"
+  ],
+  "stats": {
+    "hp": 85,
+    "attack": 40,
+    "defense": 92,
+    "specialAttack": 108,
+    "specialDefense": 92,
+    "speed": 78
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Confuseray",
+        "level": "N.1"
+      },
+      {
+        "name": "Curse",
+        "level": "N.1"
+      },
+      {
+        "name": "Dreameater",
+        "level": "N.1"
+      },
+      {
+        "name": "Ember",
+        "level": "N.1"
+      },
+      {
+        "name": "Feintattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Healblock",
+        "level": "N.1"
+      },
+      {
+        "name": "Nightshade",
+        "level": "N.1"
+      },
+      {
+        "name": "Painsplit",
+        "level": "N.1"
+      },
+      {
+        "name": "Pursuit",
+        "level": "N.1"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.5"
+      },
+      {
+        "name": "Spite",
+        "level": "N.10"
+      },
+      {
+        "name": "Firespin",
+        "level": "N.15"
+      },
+      {
+        "name": "Payback",
+        "level": "N.15"
+      },
+      {
+        "name": "Calmmind",
+        "level": "N.20"
+      },
+      {
+        "name": "Nastyplot",
+        "level": "N.20"
+      },
+      {
+        "name": "Darkpulse",
+        "level": "N.25"
+      },
+      {
+        "name": "Hex",
+        "level": "N.25"
+      },
+      {
+        "name": "Flamethrower",
+        "level": "N.30"
+      },
+      {
+        "name": "Memento",
+        "level": "N.30"
+      },
+      {
+        "name": "Hex",
+        "level": "N.35"
+      },
+      {
+        "name": "Suckerpunch",
+        "level": "N.35"
+      },
+      {
+        "name": "Curse",
+        "level": "N.40"
+      },
+      {
+        "name": "Hypnosis",
+        "level": "N.40"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.45"
+      },
+      {
+        "name": "Darkpulse",
+        "level": "N.50"
+      },
+      {
+        "name": "Suckerpunch",
+        "level": "N.50"
+      },
+      {
+        "name": "Hypnosis",
+        "level": "N.55"
+      },
+      {
+        "name": "Inferno",
+        "level": "N.55"
+      },
+      {
+        "name": "Dreameater",
+        "level": "N.60"
+      },
+      {
+        "name": "Perishsong",
+        "level": "N.60"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Allyswitch",
+        "ct": "CT"
+      },
+      {
+        "name": "Bodyslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Burningjealousy",
+        "ct": "CT"
+      },
+      {
+        "name": "Calmmind",
+        "ct": "CT"
+      },
+      {
+        "name": "Captivate",
+        "ct": "CT"
+      },
+      {
+        "name": "Confuseray",
+        "ct": "CT"
+      },
+      {
+        "name": "Curse",
+        "ct": "CT"
+      },
+      {
+        "name": "Darkpulse",
+        "ct": "CT"
+      },
+      {
+        "name": "Dreameater",
+        "ct": "CT"
+      },
+      {
+        "name": "Embargo",
+        "ct": "CT"
+      },
+      {
+        "name": "Endure",
+        "ct": "CT"
+      },
+      {
+        "name": "Facade",
+        "ct": "CT"
+      },
+      {
+        "name": "Flash",
+        "ct": "CT"
+      },
+      {
+        "name": "Foulplay",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigaimpact",
+        "ct": "CT"
+      },
+      {
+        "name": "Helpinghand",
+        "ct": "CT"
+      },
+      {
+        "name": "Hex",
+        "ct": "CT"
+      },
+      {
+        "name": "Hyperbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Icywind",
+        "ct": "CT"
+      },
+      {
+        "name": "Imprison",
+        "ct": "CT"
+      },
+      {
+        "name": "Infestation",
+        "ct": "CT"
+      },
+      {
+        "name": "Lashout",
+        "ct": "CT"
+      },
+      {
+        "name": "Nastyplot",
+        "ct": "CT"
+      },
+      {
+        "name": "Nightshade",
+        "ct": "CT"
+      },
+      {
+        "name": "Ominouswind",
+        "ct": "CT"
+      },
+      {
+        "name": "Painsplit",
+        "ct": "CT"
+      },
+      {
+        "name": "Payback",
+        "ct": "CT"
+      },
+      {
+        "name": "Phantomforce",
+        "ct": "CT"
+      },
+      {
+        "name": "Poltergeist",
+        "ct": "CT"
+      },
+      {
+        "name": "Protect",
+        "ct": "CT"
+      },
+      {
+        "name": "Psybeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Psychic",
+        "ct": "CT"
+      },
+      {
+        "name": "Psyshock",
+        "ct": "CT"
+      },
+      {
+        "name": "Quash",
+        "ct": "CT"
+      },
+      {
+        "name": "Raindance",
+        "ct": "CT"
+      },
+      {
+        "name": "Rest",
+        "ct": "CT"
+      },
+      {
+        "name": "Retaliate",
+        "ct": "CT"
+      },
+      {
+        "name": "Rocktomb",
+        "ct": "CT"
+      },
+      {
+        "name": "Scaryface",
+        "ct": "CT"
+      },
+      {
+        "name": "Shadowball",
+        "ct": "CT"
+      },
+      {
+        "name": "Shockwave",
+        "ct": "CT"
+      },
+      {
+        "name": "Silverwind",
+        "ct": "CT"
+      },
+      {
+        "name": "Skillswap",
+        "ct": "CT"
+      },
+      {
+        "name": "Sleeptalk",
+        "ct": "CT"
+      },
+      {
+        "name": "Snarl",
+        "ct": "CT"
+      },
+      {
+        "name": "Snatch",
+        "ct": "CT"
+      },
+      {
+        "name": "Spite",
+        "ct": "CT"
+      },
+      {
+        "name": "Storedpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Substitute",
+        "ct": "CT"
+      },
+      {
+        "name": "Suckerpunch",
+        "ct": "CT"
+      },
+      {
+        "name": "Sunnyday",
+        "ct": "CT"
+      },
+      {
+        "name": "Taunt",
+        "ct": "CT"
+      },
+      {
+        "name": "Telekinesis",
+        "ct": "CT"
+      },
+      {
+        "name": "Terablast",
+        "ct": "CT"
+      },
+      {
+        "name": "Thief",
+        "ct": "CT"
+      },
+      {
+        "name": "Torment",
+        "ct": "CT"
+      },
+      {
+        "name": "Toxic",
+        "ct": "CT"
+      },
+      {
+        "name": "Trick",
+        "ct": "CT"
+      },
+      {
+        "name": "Trickroom",
+        "ct": "CT"
+      },
+      {
+        "name": "Willowisp",
+        "ct": "CT"
+      },
+      {
+        "name": "Wonderroom",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.spiritomb-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Shinx RLM",
+      "slug": "shinx",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Spiritomb RLM",
+      "slug": "spiritomb",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Squirtle",
+      "slug": "squirtle",
+      "image": "/pokeball.png"
+    }
+  }
+}

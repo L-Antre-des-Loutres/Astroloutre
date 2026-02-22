@@ -1,0 +1,164 @@
+{
+  "id": "1026",
+  "slug": "flammiko",
+  "name": "Flammiko",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Feu",
+    "Électrik"
+  ],
+  "abilities": [
+    "Voltabsorb",
+    "Flashfire",
+    "Simple"
+  ],
+  "stats": {
+    "hp": 55,
+    "attack": 85,
+    "defense": 40,
+    "specialAttack": 120,
+    "specialDefense": 40,
+    "speed": 145
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Ember",
+        "level": "N.1"
+      },
+      {
+        "name": "Thundershock",
+        "level": "N.1"
+      },
+      {
+        "name": "Pound",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Swift",
+        "level": "N.4"
+      },
+      {
+        "name": "Charge",
+        "level": "N.5"
+      },
+      {
+        "name": "Thunderbolt",
+        "level": "N.5"
+      },
+      {
+        "name": "Flamecharge",
+        "level": "N.8"
+      },
+      {
+        "name": "Nuzzle",
+        "level": "N.10"
+      },
+      {
+        "name": "Encore",
+        "level": "N.15"
+      },
+      {
+        "name": "Copycat",
+        "level": "N.18"
+      },
+      {
+        "name": "Spark",
+        "level": "N.20"
+      },
+      {
+        "name": "Flameburst",
+        "level": "N.20"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.25"
+      },
+      {
+        "name": "Will-o-wisp",
+        "level": "N.25"
+      },
+      {
+        "name": "Thunderbolt",
+        "level": "N.30"
+      },
+      {
+        "name": "Flamethrower",
+        "level": "N.30"
+      },
+      {
+        "name": "Power-uppunch",
+        "level": "N.35"
+      },
+      {
+        "name": "Thunderpunch",
+        "level": "N.40"
+      },
+      {
+        "name": "Firepunch",
+        "level": "N.40"
+      },
+      {
+        "name": "Icepunch",
+        "level": "N.45"
+      },
+      {
+        "name": "Knockoff",
+        "level": "N.50"
+      },
+      {
+        "name": "Overheat",
+        "level": "N.55"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.55"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Rest",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.flammiko.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Flaaffy RLM",
+      "slug": "flaaffy",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Flammiko",
+      "slug": "flammiko",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Galama",
+      "slug": "galama",
+      "image": "/pokeball.png"
+    }
+  }
+}

@@ -2,16 +2,11 @@
 interface Props {
     title?: string;
     color?: string;
-    columns: string[];
+    columns: { label: string; key: string }[];
     data: Record<string, any>[];
 }
 
-const {
-    title = "Data",
-    color = '#3498db',
-    columns,
-    data
-} = Astro.props;
+const { title = "Data", color = "#3498db", columns, data } = Astro.props;
 ---
 
 <div class="table-wrapper">
@@ -25,20 +20,20 @@ const {
     <div class="table-container is-collapsed">
         <table>
             <thead>
-            <tr>
-                {columns.map((col) => (
-                        <th>{col}</th>
-                ))}
-            </tr>
+                <tr>
+                    {columns.map((col) => <th>{col.label}</th>)}
+                </tr>
             </thead>
             <tbody>
-            {data.map((row) => (
-                    <tr>
-                        {columns.map((col) => (
-                                <td>{row[col] || row[col.toLowerCase()] || '-'}</td>
-                        ))}
-                    </tr>
-            ))}
+                {
+                    data.map((row) => (
+                        <tr>
+                            {columns.map((col) => (
+                                <td>{row[col.key] || "-"}</td>
+                            ))}
+                        </tr>
+                    ))
+                }
             </tbody>
         </table>
     </div>
@@ -46,18 +41,18 @@ const {
 
 <script>
     // On sélectionne tous les wrappers pour isoler chaque instance
-    const wrappers = document.querySelectorAll('.table-wrapper');
+    const wrappers = document.querySelectorAll(".table-wrapper");
 
     wrappers.forEach((wrapper) => {
-        const btn = wrapper.querySelector('.toggle-btn');
-        const content = wrapper.querySelector('.table-container');
+        const btn = wrapper.querySelector(".toggle-btn");
+        const content = wrapper.querySelector(".table-container");
 
-        btn?.addEventListener('click', () => {
-            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        btn?.addEventListener("click", () => {
+            const isExpanded = btn.getAttribute("aria-expanded") === "true";
 
             // Inversion de l'état
-            btn.setAttribute('aria-expanded', (!isExpanded).toString());
-            content?.classList.toggle('is-collapsed');
+            btn.setAttribute("aria-expanded", (!isExpanded).toString());
+            content?.classList.toggle("is-collapsed");
         });
     });
 </script>
@@ -109,7 +104,9 @@ const {
         width: 100%;
         overflow-x: auto;
         max-height: 2000px;
-        transition: max-height var(--transition-speed) ease-in-out, opacity var(--transition-speed) ease;
+        transition:
+            max-height var(--transition-speed) ease-in-out,
+            opacity var(--transition-speed) ease;
         opacity: 1;
     }
 
@@ -146,5 +143,7 @@ const {
         background-color: var(--row-hover);
     }
 
-    tr:last-child td { border-bottom: none; }
+    tr:last-child td {
+        border-bottom: none;
+    }
 </style>

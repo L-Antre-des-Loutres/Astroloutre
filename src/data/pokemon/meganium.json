@@ -1,0 +1,452 @@
+{
+  "id": "000",
+  "slug": "meganium",
+  "name": "Meganium RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Plante",
+    "Acier"
+  ],
+  "abilities": [
+    "Ironbarbs",
+    "Fullmetalbody",
+    "Grassysurge"
+  ],
+  "stats": {
+    "hp": 100,
+    "attack": 110,
+    "defense": 100,
+    "specialAttack": 55,
+    "specialDefense": 100,
+    "speed": 70
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Aromatherapy",
+        "level": "N.1"
+      },
+      {
+        "name": "Bodyslam",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Naturalgift",
+        "level": "N.1"
+      },
+      {
+        "name": "Petaldance",
+        "level": "N.1"
+      },
+      {
+        "name": "Petalblizzard",
+        "level": "N.1"
+      },
+      {
+        "name": "Poisonpowder",
+        "level": "N.1"
+      },
+      {
+        "name": "Razorleaf",
+        "level": "N.1"
+      },
+      {
+        "name": "Swordsdance",
+        "level": "N.1"
+      },
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Synthesis",
+        "level": "N.12"
+      },
+      {
+        "name": "Reflect",
+        "level": "N.18"
+      },
+      {
+        "name": "Magicalleaf",
+        "level": "N.22"
+      },
+      {
+        "name": "Leechseed",
+        "level": "N.26"
+      },
+      {
+        "name": "Sweetscent",
+        "level": "N.34"
+      },
+      {
+        "name": "Verdantbastion",
+        "level": "N.36"
+      },
+      {
+        "name": "Heavyslam",
+        "level": "N.38"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.40"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.42"
+      },
+      {
+        "name": "Reflect",
+        "level": "N.42"
+      },
+      {
+        "name": "Bodyslam",
+        "level": "N.46"
+      },
+      {
+        "name": "Ironhead",
+        "level": "N.48"
+      },
+      {
+        "name": "Taunt",
+        "level": "N.50"
+      },
+      {
+        "name": "Safeguard",
+        "level": "N.54"
+      },
+      {
+        "name": "Spikes",
+        "level": "N.54"
+      },
+      {
+        "name": "Leafblade",
+        "level": "N.56"
+      },
+      {
+        "name": "Earthquake",
+        "level": "N.60"
+      },
+      {
+        "name": "Gigadrain",
+        "level": "N.60"
+      },
+      {
+        "name": "Explosion",
+        "level": "N.64"
+      },
+      {
+        "name": "Solarbeam",
+        "level": "N.65"
+      },
+      {
+        "name": "Extremespeed",
+        "level": "N.68"
+      },
+      {
+        "name": "Petalblizzard",
+        "level": "N.70"
+      }
+    ],
+    "by_tm": [
+      {
+        "name": "Ancientpower",
+        "ct": "CT"
+      },
+      {
+        "name": "Bodypress",
+        "ct": "CT"
+      },
+      {
+        "name": "Bodyslam",
+        "ct": "CT"
+      },
+      {
+        "name": "Bulldoze",
+        "ct": "CT"
+      },
+      {
+        "name": "Bulletseed",
+        "ct": "CT"
+      },
+      {
+        "name": "Charm",
+        "ct": "CT"
+      },
+      {
+        "name": "Curse",
+        "ct": "CT"
+      },
+      {
+        "name": "Cut",
+        "ct": "CT"
+      },
+      {
+        "name": "Doubleedge",
+        "ct": "CT"
+      },
+      {
+        "name": "Dragontail",
+        "ct": "CT"
+      },
+      {
+        "name": "Earthquake",
+        "ct": "CT"
+      },
+      {
+        "name": "Echoedvoice",
+        "ct": "CT"
+      },
+      {
+        "name": "Encore",
+        "ct": "CT"
+      },
+      {
+        "name": "Endeavor",
+        "ct": "CT"
+      },
+      {
+        "name": "Endure",
+        "ct": "CT"
+      },
+      {
+        "name": "Energyball",
+        "ct": "CT"
+      },
+      {
+        "name": "Facade",
+        "ct": "CT"
+      },
+      {
+        "name": "Faketears",
+        "ct": "CT"
+      },
+      {
+        "name": "Flash",
+        "ct": "CT"
+      },
+      {
+        "name": "Frenzyplant",
+        "ct": "CT"
+      },
+      {
+        "name": "Furycutter",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigadrain",
+        "ct": "CT"
+      },
+      {
+        "name": "Gigaimpact",
+        "ct": "CT"
+      },
+      {
+        "name": "Grassknot",
+        "ct": "CT"
+      },
+      {
+        "name": "Grasspledge",
+        "ct": "CT"
+      },
+      {
+        "name": "Grassyglide",
+        "ct": "CT"
+      },
+      {
+        "name": "Grassyterrain",
+        "ct": "CT"
+      },
+      {
+        "name": "Headbutt",
+        "ct": "CT"
+      },
+      {
+        "name": "Helpinghand",
+        "ct": "CT"
+      },
+      {
+        "name": "Hyperbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Irontail",
+        "ct": "CT"
+      },
+      {
+        "name": "Knockoff",
+        "ct": "CT"
+      },
+      {
+        "name": "Laserfocus",
+        "ct": "CT"
+      },
+      {
+        "name": "Leafstorm",
+        "ct": "CT"
+      },
+      {
+        "name": "Lightscreen",
+        "ct": "CT"
+      },
+      {
+        "name": "Magicalleaf",
+        "ct": "CT"
+      },
+      {
+        "name": "Magiccoat",
+        "ct": "CT"
+      },
+      {
+        "name": "Mudslap",
+        "ct": "CT"
+      },
+      {
+        "name": "Naturalgift",
+        "ct": "CT"
+      },
+      {
+        "name": "Naturepower",
+        "ct": "CT"
+      },
+      {
+        "name": "Outrage",
+        "ct": "CT"
+      },
+      {
+        "name": "Petalblizzard",
+        "ct": "CT"
+      },
+      {
+        "name": "Protect",
+        "ct": "CT"
+      },
+      {
+        "name": "Reflect",
+        "ct": "CT"
+      },
+      {
+        "name": "Rest",
+        "ct": "CT"
+      },
+      {
+        "name": "Rockclimb",
+        "ct": "CT"
+      },
+      {
+        "name": "Rocksmash",
+        "ct": "CT"
+      },
+      {
+        "name": "Safeguard",
+        "ct": "CT"
+      },
+      {
+        "name": "Seedbomb",
+        "ct": "CT"
+      },
+      {
+        "name": "Sleeptalk",
+        "ct": "CT"
+      },
+      {
+        "name": "Solarbeam",
+        "ct": "CT"
+      },
+      {
+        "name": "Solarblade",
+        "ct": "CT"
+      },
+      {
+        "name": "Stompingtantrum",
+        "ct": "CT"
+      },
+      {
+        "name": "Strength",
+        "ct": "CT"
+      },
+      {
+        "name": "Substitute",
+        "ct": "CT"
+      },
+      {
+        "name": "Sunnyday",
+        "ct": "CT"
+      },
+      {
+        "name": "Swordsdance",
+        "ct": "CT"
+      },
+      {
+        "name": "Synthesis",
+        "ct": "CT"
+      },
+      {
+        "name": "Takedown",
+        "ct": "CT"
+      },
+      {
+        "name": "Terablast",
+        "ct": "CT"
+      },
+      {
+        "name": "Trailblaze",
+        "ct": "CT"
+      },
+      {
+        "name": "Weatherball",
+        "ct": "CT"
+      },
+      {
+        "name": "Workup",
+        "ct": "CT"
+      },
+      {
+        "name": "Worryseed",
+        "ct": "CT"
+      },
+      {
+        "name": "Zenheadbutt",
+        "ct": "CT"
+      }
+    ],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.meganium-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Mawile",
+      "slug": "mawile",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Meganium RLM",
+      "slug": "meganium",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Nincada RLM",
+      "slug": "nincada",
+      "image": "/pokeball.png"
+    }
+  }
+}

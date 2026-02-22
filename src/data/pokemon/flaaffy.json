@@ -1,0 +1,143 @@
+{
+  "id": "000",
+  "slug": "flaaffy",
+  "name": "Flaaffy RLM",
+  "category": "Pokémon Inconnu",
+  "pageColor": "#666666",
+  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "types": [
+    "Électrik",
+    "Spectre"
+  ],
+  "abilities": [
+    "Static",
+    "Infiltrator",
+    "Shadowtag"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 30,
+    "defense": 50,
+    "specialAttack": 80,
+    "specialDefense": 60,
+    "speed": 80
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.1"
+      },
+      {
+        "name": "Astonish",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.4"
+      },
+      {
+        "name": "Thundershock",
+        "level": "N.8"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.11"
+      },
+      {
+        "name": "Charge",
+        "level": "N.16"
+      },
+      {
+        "name": "Hex",
+        "level": "N.20"
+      },
+      {
+        "name": "Takedown",
+        "level": "N.20"
+      },
+      {
+        "name": "Electroball",
+        "level": "N.25"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.27"
+      },
+      {
+        "name": "Confuseray",
+        "level": "N.29"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.34"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.38"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.43"
+      },
+      {
+        "name": "Signalbeam",
+        "level": "N.47"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.52"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.56"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biome à définir"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "cobblemon.species.flaaffy-rlm.desc"
+    }
+  ],
+  "about": "",
+  "images": [],
+  "navigation": {
+    "previous": {
+      "name": "Fennekin",
+      "slug": "fennekin",
+      "image": "/pokeball.png"
+    },
+    "current": {
+      "name": "Flaaffy RLM",
+      "slug": "flaaffy",
+      "image": "/pokeball.png"
+    },
+    "next": {
+      "name": "Flammiko",
+      "slug": "flammiko",
+      "image": "/pokeball.png"
+    }
+  }
+}
