@@ -6,6 +6,7 @@ import EvolutionTreeHorizontal from "../../../components/wiki/EvolutionTreeHoriz
 import PkmnStatsGraph from "../../../components/wiki/PkmnStatsGraph.astro";
 import ContentLayout from "../../../components/wiki/ContentLayout.astro";
 import ContentTable from "../../../components/wiki/ContentTable.astro";
+import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
 
 export async function getStaticPaths() {
     // 1. On récupère tous les fichiers JSON
@@ -74,6 +75,29 @@ const defaultPageColor =
     pokemon.types && pokemon.types.length > 0
         ? typeColors[pokemon.types[0]] || pokemon.pageColor
         : pokemon.pageColor;
+
+// Récupération des sprites via l'API Showdown
+const currentName = pokemon.name.includes("RLM")
+    ? pokemon.name.replace(" RLM", "").toLowerCase()
+    : pokemon.slug;
+const currentForm = pokemon.name.includes("RLM") ? "rlm" : "normal";
+const currentImage = await showdownApiGetPkmArt(currentName, currentForm);
+
+const prevName = pokemon.navigation.previous.name.includes("RLM")
+    ? pokemon.navigation.previous.name.replace(" RLM", "").toLowerCase()
+    : pokemon.navigation.previous.slug;
+const prevForm = pokemon.navigation.previous.name.includes("RLM")
+    ? "rlm"
+    : "normal";
+const prevImage = await showdownApiGetPkmArt(prevName, prevForm);
+
+const nextName = pokemon.navigation.next.name.includes("RLM")
+    ? pokemon.navigation.next.name.replace(" RLM", "").toLowerCase()
+    : pokemon.navigation.next.slug;
+const nextForm = pokemon.navigation.next.name.includes("RLM")
+    ? "rlm"
+    : "normal";
+const nextImage = await showdownApiGetPkmArt(nextName, nextForm);
 ---
 
 <Layout title={pokemon.name} forceDarkTheme={true}>
@@ -104,7 +128,7 @@ const defaultPageColor =
                 <p>Précédent</p>
                 <img
                     class="wiki-navigation-container-img"
-                    src={pokemon.navigation.previous.image}
+                    src={prevImage}
                     alt="Précédent"
                 />
             </div>
@@ -113,7 +137,7 @@ const defaultPageColor =
             <p>Actuel</p>
             <img
                 class="wiki-navigation-container-img"
-                src={pokemon.navigation.current.image}
+                src={currentImage}
                 alt="Actuel"
             />
         </div>
@@ -124,7 +148,7 @@ const defaultPageColor =
                 <p>Suivant</p>
                 <img
                     class="wiki-navigation-container-img"
-                    src={pokemon.navigation.next.image}
+                    src={nextImage}
                     alt="Suivant"
                 />
             </div>
@@ -141,7 +165,7 @@ const defaultPageColor =
             <div class="wiki-col wiki-pokemon-artwork-container">
                 <img
                     class="wiki-pokemon-artwork"
-                    src={pokemon.navigation.current.image}
+                    src={currentImage}
                     alt={pokemon.name}
                 />
             </div>
@@ -260,6 +284,7 @@ const defaultPageColor =
     .wiki-navigation-container-img {
         height: 5em;
         max-width: 100%;
+        image-rendering: pixelated;
     }
 
     .wiki-primary-infos {
@@ -276,8 +301,10 @@ const defaultPageColor =
     }
 
     .wiki-pokemon-artwork {
-        max-width: 100%;
+        max-width: 250px;
+        width: 100%;
         height: auto;
+        image-rendering: pixelated; /* To keep sprites sharp */
     }
 
     .wiki-pokemon-types-container {
