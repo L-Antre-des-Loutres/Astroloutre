@@ -1,0 +1,144 @@
+{
+  "id": "033",
+  "slug": "togekiss",
+  "name": "Togekiss",
+  "form": "rlm",
+  "baseSpecies": "togekiss",
+  "category": "Pokémon Doubleface",
+  "types": [
+    "Fée",
+    "Dragon"
+  ],
+  "abilities": [
+    "Peau Draconique"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 60,
+    "defense": 80,
+    "specialAttack": 115,
+    "specialDefense": 85,
+    "speed": 90
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Skyattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Extremespeed",
+        "level": "N.1"
+      },
+      {
+        "name": "Aurasphere",
+        "level": "N.1"
+      },
+      {
+        "name": "Airslash",
+        "level": "N.1"
+      },
+      {
+        "name": "Safeguard",
+        "level": "N.1"
+      },
+      {
+        "name": "Ancientpower",
+        "level": "N.1"
+      },
+      {
+        "name": "Lastresort",
+        "level": "N.1"
+      },
+      {
+        "name": "Afteryou",
+        "level": "N.1"
+      },
+      {
+        "name": "Triattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Fairywind",
+        "level": "N.1"
+      },
+      {
+        "name": "Charm",
+        "level": "N.1"
+      },
+      {
+        "name": "Yawn",
+        "level": "N.1"
+      },
+      {
+        "name": "Metronome",
+        "level": "N.1"
+      },
+      {
+        "name": "Doubleedge",
+        "level": "N.1"
+      },
+      {
+        "name": "Followme",
+        "level": "N.1"
+      },
+      {
+        "name": "Batonpass",
+        "level": "N.1"
+      },
+      {
+        "name": "Wish",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Pound",
+        "level": "N.1"
+      },
+      {
+        "name": "Sweetkiss",
+        "level": "N.1"
+      },
+      {
+        "name": "Lifedew",
+        "level": "N.1"
+      },
+      {
+        "name": "Bestow",
+        "level": "N.1"
+      },
+      {
+        "name": "Dracometeor",
+        "level": "N.1"
+      },
+      {
+        "name": "Dragonpulse",
+        "level": "N.1"
+      },
+      {
+        "name": "Moonblast",
+        "level": "N.1"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Corrompu par la malveillance et les guerres incessantes des humains, ce Togekiss a perdu son esprit paisible. Il lutte constamment pour réprimer une rage draconique férale bouillonnant en lui. Il est désormais un annonciateur de conflits."
+    }
+  ],
+  "about": "",
+  "images": []
+}

@@ -1,20 +1,18 @@
 {
-  "id": "000",
+  "id": "028",
   "slug": "mareep",
-  "name": "Mareep RLM",
+  "name": "Wattouat",
   "form": "rlm",
   "baseSpecies": "mareep",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Lainâme",
   "types": [
     "Électrik",
     "Spectre"
   ],
   "abilities": [
-    "Static",
-    "Infiltrator",
-    "Shadowtag"
+    "Statik",
+    "Infiltration",
+    "Marque Ombre"
   ],
   "stats": {
     "hp": 60,
@@ -94,13 +92,13 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This mareep is dead."
+      "description": "Après qu'un violent orage a frappé un troupeau près d'un ancien cimetière, ces Wattouat ont renaît avec une énergie fantomatique. Leur laine ne stocke plus l'électricité statique, mais plutôt les esprits persistants des défunts, brillant d'une lueur bleue étrange."
     }
   ],
   "about": "",

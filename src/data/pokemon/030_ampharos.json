@@ -1,0 +1,250 @@
+{
+  "id": "030",
+  "slug": "ampharos",
+  "name": "Pharamp",
+  "form": "rlm",
+  "baseSpecies": "ampharos",
+  "category": "Pokémon Lumaide",
+  "types": [
+    "Électrik",
+    "Spectre"
+  ],
+  "abilities": [
+    "Statik",
+    "Infiltration",
+    "Marque Ombre"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 60,
+    "defense": 80,
+    "specialAttack": 115,
+    "specialDefense": 85,
+    "speed": 90
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.1"
+      },
+      {
+        "name": "Astonish",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.1"
+      },
+      {
+        "name": "Thundershock",
+        "level": "N.1"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.1"
+      },
+      {
+        "name": "Charge",
+        "level": "N.1"
+      },
+      {
+        "name": "Hex",
+        "level": "N.1"
+      },
+      {
+        "name": "Takedown",
+        "level": "N.1"
+      },
+      {
+        "name": "Electroball",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.1"
+      },
+      {
+        "name": "Confuseray",
+        "level": "N.1"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.1"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.1"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.1"
+      },
+      {
+        "name": "Signalbeam",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.1"
+      },
+      {
+        "name": "Astonishment",
+        "level": "N.1"
+      },
+      {
+        "name": "Dragonpulse",
+        "level": "N.1"
+      },
+      {
+        "name": "Firepunch",
+        "level": "N.1"
+      },
+      {
+        "name": "Iondeluge",
+        "level": "N.1"
+      },
+      {
+        "name": "Magneticflux",
+        "level": "N.1"
+      },
+      {
+        "name": "Roar",
+        "level": "N.1"
+      },
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunderpunch",
+        "level": "N.1"
+      },
+      {
+        "name": "Zapcannon",
+        "level": "N.1"
+      },
+      {
+        "name": "Quickattack",
+        "level": "N.4"
+      },
+      {
+        "name": "Shadowclaw",
+        "level": "N.10"
+      },
+      {
+        "name": "Cottonspore",
+        "level": "N.11"
+      },
+      {
+        "name": "Charge",
+        "level": "N.15"
+      },
+      {
+        "name": "Electroball",
+        "level": "N.22"
+      },
+      {
+        "name": "Wildcharge",
+        "level": "N.25"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.29"
+      },
+      {
+        "name": "Shadowclaw",
+        "level": "N.30"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.32"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.35"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.35"
+      },
+      {
+        "name": "Protect",
+        "level": "N.36"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.38"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.40"
+      },
+      {
+        "name": "Voltswitch",
+        "level": "N.40"
+      },
+      {
+        "name": "Knockoff",
+        "level": "N.42"
+      },
+      {
+        "name": "Destinybond",
+        "level": "N.45"
+      },
+      {
+        "name": "Cottonguard",
+        "level": "N.46"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.46"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.47"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.51"
+      },
+      {
+        "name": "Signalbeam",
+        "level": "N.51"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.57"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.62"
+      },
+      {
+        "name": "Dragonpulse",
+        "level": "N.65"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Devenu un véritable canal d'énergie spirituelle, l'orbe sur sa queue agit comme un phare pour les âmes égarées. Il n'émet pas de lumière pour guider les navires, mais pour mener les esprits errants vers l'au-delà. Ses décharges électriques sont silencieuses, apparaissant comme des apparitions fantomatiques qui s'évanouissent à l'impact."
+    }
+  ],
+  "about": "",
+  "images": []
+}

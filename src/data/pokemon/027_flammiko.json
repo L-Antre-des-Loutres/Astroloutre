@@ -1,19 +1,17 @@
 {
-  "id": "000",
+  "id": "027",
   "slug": "flammiko",
-  "name": "Flammiko Flammiko",
+  "name": "Flammiko",
   "form": "flammiko",
   "baseSpecies": "flammiko",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Perdu",
   "types": [
     "Feu",
     "Électrik"
   ],
   "abilities": [
-    "Voltabsorb",
-    "Flashfire",
+    "Absorbe-Volt",
+    "Torche",
     "Simple"
   ],
   "stats": {
@@ -124,24 +122,19 @@
         "level": "N.55"
       }
     ],
-    "by_tm": [
-      {
-        "name": "Rest",
-        "ct": "CT"
-      }
-    ],
+    "by_tm": [],
     "by_breeding": []
   },
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "placeholder"
+      "description": "Toujours perdu et incapable de se tenir correctement, les scientifiques n'ont pas encore découvert le miracle derrière la survie de cette espèce. Malgré ses pensées limitées, Flammiko est incroyablement amical et ferait n'importe quoi pour protéger ses amis."
     }
   ],
   "about": "",

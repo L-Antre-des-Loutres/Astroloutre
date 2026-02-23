@@ -1,0 +1,169 @@
+{
+  "id": "034",
+  "slug": "spiritomb",
+  "name": "Spiritomb",
+  "form": "rlm",
+  "baseSpecies": "spiritomb",
+  "category": "Pokémon Oni",
+  "types": [
+    "Feu",
+    "Ténèbres"
+  ],
+  "abilities": [
+    "Œil Composé",
+    "Marque Ombre"
+  ],
+  "stats": {
+    "hp": 85,
+    "attack": 40,
+    "defense": 92,
+    "specialAttack": 108,
+    "specialDefense": 92,
+    "speed": 78
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Confuseray",
+        "level": "N.1"
+      },
+      {
+        "name": "Curse",
+        "level": "N.1"
+      },
+      {
+        "name": "Dreameater",
+        "level": "N.1"
+      },
+      {
+        "name": "Ember",
+        "level": "N.1"
+      },
+      {
+        "name": "Feintattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Healblock",
+        "level": "N.1"
+      },
+      {
+        "name": "Nightshade",
+        "level": "N.1"
+      },
+      {
+        "name": "Painsplit",
+        "level": "N.1"
+      },
+      {
+        "name": "Pursuit",
+        "level": "N.1"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowsneak",
+        "level": "N.5"
+      },
+      {
+        "name": "Spite",
+        "level": "N.10"
+      },
+      {
+        "name": "Firespin",
+        "level": "N.15"
+      },
+      {
+        "name": "Payback",
+        "level": "N.15"
+      },
+      {
+        "name": "Calmmind",
+        "level": "N.20"
+      },
+      {
+        "name": "Nastyplot",
+        "level": "N.20"
+      },
+      {
+        "name": "Darkpulse",
+        "level": "N.25"
+      },
+      {
+        "name": "Hex",
+        "level": "N.25"
+      },
+      {
+        "name": "Flamethrower",
+        "level": "N.30"
+      },
+      {
+        "name": "Memento",
+        "level": "N.30"
+      },
+      {
+        "name": "Hex",
+        "level": "N.35"
+      },
+      {
+        "name": "Suckerpunch",
+        "level": "N.35"
+      },
+      {
+        "name": "Curse",
+        "level": "N.40"
+      },
+      {
+        "name": "Hypnosis",
+        "level": "N.40"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.45"
+      },
+      {
+        "name": "Darkpulse",
+        "level": "N.50"
+      },
+      {
+        "name": "Suckerpunch",
+        "level": "N.50"
+      },
+      {
+        "name": "Hypnosis",
+        "level": "N.55"
+      },
+      {
+        "name": "Inferno",
+        "level": "N.55"
+      },
+      {
+        "name": "Dreameater",
+        "level": "N.60"
+      },
+      {
+        "name": "Perishsong",
+        "level": "N.60"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Portant un masque de démon Oni, ce Spiritomb n'est pas lié à une clé de voûte, mais a choisi d'habiter une ancienne statue Jizo. Il agit comme une sentinelle spectrale, utilisant son apparence effrayante pour repousser les mauvais esprits."
+    }
+  ],
+  "about": "",
+  "images": []
+}

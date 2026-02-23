@@ -1,20 +1,18 @@
 {
-  "id": "000",
+  "id": "029",
   "slug": "flaaffy",
-  "name": "Flaaffy RLM",
+  "name": "Lainergie",
   "form": "rlm",
   "baseSpecies": "flaaffy",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Lainâme",
   "types": [
     "Électrik",
     "Spectre"
   ],
   "abilities": [
-    "Static",
-    "Infiltrator",
-    "Shadowtag"
+    "Statik",
+    "Infiltration",
+    "Marque Ombre"
   ],
   "stats": {
     "hp": 80,
@@ -114,13 +112,13 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This flaaffy is dead."
+      "description": "En évoluant, sa peau devient d'un noir livide et sa laine commence à se dissiper en une brume spectrale. Lainergie est connu pour hanter les centrales électriques, se nourrissant d'électricité pour maintenir sa forme physique. Ceux qui touchent son pelage ressentent un frisson surnaturel engourdissant."
     }
   ],
   "about": "",
