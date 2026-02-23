@@ -26,184 +26,184 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Bubble",
-        "level": "N.1"
+        "name": "Écume",
+        "level": 1
       },
       {
-        "name": "Flashcannon",
-        "level": "N.1"
+        "name": "Luminocanon",
+        "level": 1
       },
       {
-        "name": "Skullbash",
-        "level": "N.1"
+        "name": "Coud'Krâne",
+        "level": 1
       },
       {
-        "name": "Tackle",
-        "level": "N.1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Tailwhip",
-        "level": "N.1"
+        "name": "Mimi-Queue",
+        "level": 1
       },
       {
-        "name": "Watergun",
-        "level": "N.1"
+        "name": "Pistolet à O",
+        "level": 1
       },
       {
-        "name": "Withdraw",
-        "level": "N.1"
+        "name": "Repli",
+        "level": 1
       },
       {
-        "name": "Tailwhip",
-        "level": "N.4"
+        "name": "Mimi-Queue",
+        "level": 4
       },
       {
-        "name": "Watergun",
-        "level": "N.7"
+        "name": "Pistolet à O",
+        "level": 7
       },
       {
-        "name": "Rapidspin",
-        "level": "N.9"
+        "name": "Tour Rapide",
+        "level": 9
       },
       {
-        "name": "Aerialace",
-        "level": "N.10"
+        "name": "Aéropique",
+        "level": 10
       },
       {
-        "name": "Bite",
-        "level": "N.12"
+        "name": "Morsure",
+        "level": 12
       },
       {
-        "name": "Bubble",
-        "level": "N.13"
+        "name": "Écume",
+        "level": 13
       },
       {
-        "name": "Airslash",
-        "level": "N.15"
+        "name": "Lame d'Air",
+        "level": 15
       },
       {
-        "name": "Waterpulse",
-        "level": "N.15"
+        "name": "Vibraqua",
+        "level": 15
       },
       {
-        "name": "Bite",
-        "level": "N.17"
+        "name": "Morsure",
+        "level": 17
       },
       {
-        "name": "Tailwind ",
-        "level": "N.19"
+        "name": "Vent Arrière",
+        "level": 19
       },
       {
-        "name": "Protect",
-        "level": "N.20"
+        "name": "Abri",
+        "level": 20
       },
       {
-        "name": "Rapidsping",
-        "level": "N.21"
+        "name": "Tour Rapide",
+        "level": 21
       },
       {
-        "name": "Protect",
-        "level": "N.25"
+        "name": "Abri",
+        "level": 25
       },
       {
-        "name": "Raindance",
-        "level": "N.25"
+        "name": "Danse Pluie",
+        "level": 25
       },
       {
-        "name": "Waterpulse",
-        "level": "N.29"
+        "name": "Vibraqua",
+        "level": 29
       },
       {
-        "name": "Aquatail",
-        "level": "N.30"
+        "name": "Hydroqueue",
+        "level": 30
       },
       {
-        "name": "Aquajet",
-        "level": "N.33"
+        "name": "Aqua-Jet",
+        "level": 33
       },
       {
-        "name": "Aquatail",
-        "level": "N.34"
+        "name": "Hydroqueue",
+        "level": 34
       },
       {
-        "name": "Shellsmash",
-        "level": "N.35"
+        "name": "Exuviation",
+        "level": 35
       },
       {
-        "name": "Waterfall",
-        "level": "N.35"
+        "name": "Cascade",
+        "level": 35
       },
       {
-        "name": "Bulkup",
-        "level": "N.36"
+        "name": "Gonflette",
+        "level": 36
       },
       {
-        "name": "Highpropulsion",
-        "level": "N.36"
+        "name": "Haute Propulsion",
+        "level": 36
       },
       {
-        "name": "Doubleedge",
-        "level": "N.40"
+        "name": "Damoclès",
+        "level": 40
       },
       {
-        "name": "Irondefense",
-        "level": "N.42"
+        "name": "Mur de Fer",
+        "level": 42
       },
       {
-        "name": "Scald",
-        "level": "N.42"
+        "name": "Ébullition",
+        "level": 42
       },
       {
-        "name": "Earthpower",
-        "level": "N.44"
+        "name": "Telluriforce",
+        "level": 44
       },
       {
-        "name": "Highpropulsion",
-        "level": "N.45"
+        "name": "Haute-Propulsion",
+        "level": 45
       },
       {
-        "name": "Irondefense",
-        "level": "N.47"
+        "name": "Mur de Fer",
+        "level": 47
       },
       {
-        "name": "Hydropump",
-        "level": "N.49"
+        "name": "Hydrocanon",
+        "level": 49
       },
       {
-        "name": "Rapidspin",
-        "level": "N.50"
+        "name": "Tour Rapide",
+        "level": 50
       },
       {
-        "name": "Bravebird",
-        "level": "N.52"
+        "name": "Rapace",
+        "level": 52
       },
       {
-        "name": "Raindance",
-        "level": "N.54"
+        "name": "Danse Pluie",
+        "level": 54
       },
       {
-        "name": "Wavecrash",
-        "level": "N.56"
+        "name": "Aquatacle",
+        "level": 56
       },
       {
-        "name": "Earthquake",
-        "level": "N.58"
+        "name": "Séisme",
+        "level": 58
       },
       {
-        "name": "Hurricane",
-        "level": "N.60"
+        "name": "Vent Violent",
+        "level": 60
       },
       {
-        "name": "Hydropump",
-        "level": "N.62"
+        "name": "Hydrocanon",
+        "level": 62
       },
       {
-        "name": "Headsmash",
-        "level": "N.64"
+        "name": "Fracas'Tête",
+        "level": 64
       },
       {
-        "name": "Swordsdance",
-        "level": "N.70"
+        "name": "Danse Lames",
+        "level": 70
       }
     ],
     "by_tm": [],

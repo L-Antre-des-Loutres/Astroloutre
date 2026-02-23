@@ -24,60 +24,60 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Tackle",
-        "level": "1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Growl",
-        "level": "1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Razor Leaf",
-        "level": "6"
+        "name": "Tranch'Herbe",
+        "level": 6
       },
       {
-        "name": "Poison Powder",
-        "level": "9"
+        "name": "Poudre Toxik",
+        "level": 9
       },
       {
-        "name": "Synthesis",
-        "level": "12"
+        "name": "Synthèse",
+        "level": 12
       },
       {
-        "name": "Reflect",
-        "level": "17"
+        "name": "Protection",
+        "level": 17
       },
       {
-        "name": "Magical Leaf",
-        "level": "20"
+        "name": "Feuille Magik",
+        "level": 20
       },
       {
-        "name": "Natural Gift",
-        "level": "23"
+        "name": "Don Naturel",
+        "level": 23
       },
       {
-        "name": "Sweet Scent",
-        "level": "28"
+        "name": "Doux Parfum",
+        "level": 28
       },
       {
-        "name": "Light Screen",
-        "level": "31"
+        "name": "Mur Lumière",
+        "level": 31
       },
       {
-        "name": "Body Slam",
-        "level": "34"
+        "name": "Plaquage",
+        "level": 34
       },
       {
-        "name": "Safeguard",
-        "level": "39"
+        "name": "Rune Protect",
+        "level": 39
       },
       {
-        "name": "Giga Drain",
-        "level": "42"
+        "name": "Giga-Sangsue",
+        "level": 42
       },
       {
-        "name": "Solar Beam",
-        "level": "45"
+        "name": "Lance-Soleil",
+        "level": 45
       }
     ],
     "by_tm": [],

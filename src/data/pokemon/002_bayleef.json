@@ -22,65 +22,66 @@
   },
   "evolutions": [],
   "movesets": {
-    "by_level": [{
-      "name": "Tackle",
-      "level": "1"
-    },
+    "by_level": [
       {
-        "name": "Growl",
-        "level": "1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Razor Leaf",
-        "level": "1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Poison Powder",
-        "level": "1"
+        "name": "Tranch'Herbe",
+        "level": 1
       },
       {
-        "name": "Natural Gift",
-        "level": "1"
+        "name": "Poudre Toxik",
+        "level": 1
       },
       {
-        "name": "Synthesis",
-        "level": "12"
+        "name": "Don Naturel",
+        "level": 1
       },
       {
-        "name": "Reflect",
-        "level": "18"
+        "name": "Synthèse",
+        "level": 12
       },
       {
-        "name": "Magical Leaf",
-        "level": "22"
+        "name": "Protection",
+        "level": 18
       },
       {
-        "name": "Leech Seed",
-        "level": "26"
+        "name": "Feuille Magik",
+        "level": 22
       },
       {
-        "name": "Sweet Scent",
-        "level": "32"
+        "name": "Vampigraine",
+        "level": 26
       },
       {
-        "name": "Light Screen",
-        "level": "36"
+        "name": "Doux Parfum",
+        "level": 32
       },
       {
-        "name": "Body Slam",
-        "level": "40"
+        "name": "Mur Lumière",
+        "level": 36
       },
       {
-        "name": "Safeguard",
-        "level": "46"
+        "name": "Plaquage",
+        "level": 40
       },
       {
-        "name": "Giga Drain",
-        "level": "50"
+        "name": "Rune Protect",
+        "level": 46
       },
       {
-        "name": "Solar Beam",
-        "level": "54"
+        "name": "Giga-Sangsue",
+        "level": 50
+      },
+      {
+        "name": "Lance-Soleil",
+        "level": 54
       }
     ],
     "by_tm": [],

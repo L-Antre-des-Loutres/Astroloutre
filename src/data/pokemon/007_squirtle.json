@@ -22,7 +22,68 @@
   },
   "evolutions": [],
   "movesets": {
-    "by_level": [],
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 1
+      },
+      {
+        "name": "Écume",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 3
+      },
+      {
+        "name": "Repli",
+        "level": 6
+      },
+      {
+        "name": "Tour Rapide",
+        "level": 9
+      },
+      {
+        "name": "Morsure",
+        "level": 12
+      },
+      {
+        "name": "Vibraqua",
+        "level": 15
+      },
+      {
+        "name": "Abri",
+        "level": 18
+      },
+      {
+        "name": "Danse Pluie",
+        "level": 21
+      },
+      {
+        "name": "Hydroqueue",
+        "level": 24
+      },
+      {
+        "name": "Exuviation",
+        "level": 27
+      },
+      {
+        "name": "Force Ajoutée",
+        "level": 30
+      },
+      {
+        "name": "Hydrocanon",
+        "level": 33
+      },
+      {
+        "name": "Coud'Krâne",
+        "level": 36
+      }
+    ],
     "by_tm": [],
     "by_breeding": []
   },

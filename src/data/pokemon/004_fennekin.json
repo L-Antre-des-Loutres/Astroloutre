@@ -24,60 +24,60 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Scratch",
-        "level": "1"
+        "name": "Griffe",
+        "level": 1
       },
       {
-        "name": "Tail Whip",
-        "level": "1"
+        "name": "Mimi-Queue",
+        "level": 1
       },
       {
-        "name": "Ember",
-        "level": "5"
+        "name": "Flammèche",
+        "level": 5
       },
       {
-        "name": "Howl",
-        "level": "11"
+        "name": "Hurlement",
+        "level": 11
       },
       {
-        "name": "Flame Charge",
-        "level": "14"
+        "name": "Nitrocharge",
+        "level": 14
       },
       {
-        "name": "Psybeam",
-        "level": "17"
+        "name": "Rafale Psy",
+        "level": 17
       },
       {
-        "name": "Fire Spin",
-        "level": "20"
+        "name": "Danse Flammes",
+        "level": 20
       },
       {
-        "name": "Lucky Chant",
-        "level": "25"
+        "name": "Air Veinard",
+        "level": 25
       },
       {
-        "name": "Psyshock",
-        "level": "31"
+        "name": "Choc Psy",
+        "level": 31
       },
       {
-        "name": "Flamethrower",
-        "level": "35"
+        "name": "Lance-Flammes",
+        "level": 35
       },
       {
-        "name": "Will-O-Wisp",
-        "level": "38"
+        "name": "Feu Follet",
+        "level": 38
       },
       {
-        "name": "Psychic",
-        "level": "41"
+        "name": "Psyko",
+        "level": 41
       },
       {
-        "name": "Sunny Day",
-        "level": "43"
+        "name": "Zénith",
+        "level": 43
       },
       {
-        "name": "Fire Blast",
-        "level": "48"
+        "name": "Déflagration",
+        "level": 48
       }
     ],
     "by_tm": [],

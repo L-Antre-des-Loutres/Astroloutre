@@ -25,52 +25,52 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Tackle",
-        "level": "N.1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Tailwhip",
-        "level": "N.1"
+        "name": "Mimi-Queue",
+        "level": 1
       },
       {
-        "name": "Hornattack",
-        "level": "N.4"
+        "name": "Coup d'Corne",
+        "level": 4
       },
       {
-        "name": "Rapidspin",
-        "level": "N.8"
+        "name": "Tour Rapide",
+        "level": 8
       },
       {
-        "name": "Metalclaw",
-        "level": "N.12"
+        "name": "Griffe Acier",
+        "level": 12
       },
       {
-        "name": "Rollout",
-        "level": "N.16"
+        "name": "Roulade",
+        "level": 16
       },
       {
-        "name": "Irondefense",
-        "level": "N.20"
+        "name": "Mur de Fer",
+        "level": 20
       },
       {
-        "name": "Smartstrike",
-        "level": "N.24"
+        "name": "Estocorne",
+        "level": 24
       },
       {
-        "name": "Takedown",
-        "level": "N.28"
+        "name": "Bélier",
+        "level": 28
       },
       {
-        "name": "Ironhead",
-        "level": "N.32"
+        "name": "Tête de Fer",
+        "level": 32
       },
       {
-        "name": "Horndrill",
-        "level": "N.36"
+        "name": "Empal'Korne",
+        "level": 36
       },
       {
-        "name": "Megahorn",
-        "level": "N.40"
+        "name": "Mégacorne",
+        "level": 40
       }
     ],
     "by_tm": [],

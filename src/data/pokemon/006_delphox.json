@@ -25,140 +25,140 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Ember",
-        "level": "N.1"
+        "name": "Flammèche",
+        "level": 1
       },
       {
-        "name": "Futuresight",
-        "level": "N.1"
+        "name": "Prescience",
+        "level": 1
       },
       {
-        "name": "Howl",
-        "level": "N.1"
+        "name": "Hurlement",
+        "level": 1
       },
       {
-        "name": "Luckychant",
-        "level": "N.1"
+        "name": "Air Veinard",
+        "level": 1
       },
       {
-        "name": "Mysticalfire",
-        "level": "N.1"
+        "name": "Feu Ensorcelé",
+        "level": 1
       },
       {
-        "name": "Psybeam",
-        "level": "N.1"
+        "name": "Rafale Psy",
+        "level": 1
       },
       {
-        "name": "Roleplay",
-        "level": "N.1"
+        "name": "Imitation",
+        "level": 1
       },
       {
-        "name": "Scratch",
-        "level": "N.1"
+        "name": "Griffe",
+        "level": 1
       },
       {
-        "name": "Shadowball",
-        "level": "N.1"
+        "name": "Ball'Ombre",
+        "level": 1
       },
       {
-        "name": "Switcheroo",
-        "level": "N.1"
+        "name": "Passe-Passe",
+        "level": 1
       },
       {
-        "name": "Tailwhip",
-        "level": "N.1"
+        "name": "Mimi-Queue",
+        "level": 1
       },
       {
-        "name": "Flamecharge",
-        "level": "N.14"
+        "name": "Nitrocharge",
+        "level": 14
       },
       {
-        "name": "Psybeam",
-        "level": "N.18"
+        "name": "Rafale Psy",
+        "level": 18
       },
       {
-        "name": "Firespin",
-        "level": "N.22"
+        "name": "Danse Flammes",
+        "level": 22
       },
       {
-        "name": "Lightscreen",
-        "level": "N.28"
+        "name": "Mur Lumière",
+        "level": 28
       },
       {
-        "name": "Psyshock",
-        "level": "N.38"
+        "name": "Choc Psy",
+        "level": 38
       },
       {
-        "name": "Lightscreen",
-        "level": "N.40"
+        "name": "Mur Lumière",
+        "level": 40
       },
       {
-        "name": "Reflect",
-        "level": "N.41"
+        "name": "Protection",
+        "level": 41
       },
       {
-        "name": "Magicroom",
-        "level": "N.42"
+        "name": "Zone Magique",
+        "level": 42
       },
       {
-        "name": "Dazzlinggleam",
-        "level": "N.44"
+        "name": "Éclat Magique",
+        "level": 44
       },
       {
-        "name": "Flamethrower",
-        "level": "N.45"
+        "name": "Lance-Flammes",
+        "level": 45
       },
       {
-        "name": "Flamethrower",
-        "level": "N.48"
+        "name": "Lance-Flammes",
+        "level": 48
       },
       {
-        "name": "Will-o-wisp",
-        "level": "N.50"
+        "name": "Feu Follet",
+        "level": 50
       },
       {
-        "name": "Willowisp",
-        "level": "N.51"
+        "name": "Feu Follet",
+        "level": 51
       },
       {
-        "name": "Psychic",
-        "level": "N.52"
+        "name": "Psyko",
+        "level": 52
       },
       {
-        "name": "Ancientpower",
-        "level": "N.55"
+        "name": "Pouvoir Antique",
+        "level": 55
       },
       {
-        "name": "Moonblast",
-        "level": "N.55"
+        "name": "Pouvoir Lunaire",
+        "level": 55
       },
       {
-        "name": "Psychic",
-        "level": "N.57"
+        "name": "Psyko",
+        "level": 57
       },
       {
-        "name": "Sunnyday",
-        "level": "N.62"
+        "name": "Zénith",
+        "level": 62
       },
       {
-        "name": "Futuresight",
-        "level": "N.64"
+        "name": "Prescience",
+        "level": 64
       },
       {
-        "name": "Magicroom",
-        "level": "N.68"
+        "name": "Zone Magique",
+        "level": 68
       },
       {
-        "name": "Shadowball",
-        "level": "N.68"
+        "name": "Ball'Ombre",
+        "level": 68
       },
       {
-        "name": "Fireblast",
-        "level": "N.70"
+        "name": "Déflagration",
+        "level": 70
       },
       {
-        "name": "Fireblast",
-        "level": "N.74"
+        "name": "Déflagration",
+        "level": 74
       }
     ],
     "by_tm": [],

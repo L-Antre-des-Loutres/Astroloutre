@@ -25,108 +25,108 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Tackle",
-        "level": "N.1"
-      },
-      {
-        "name": "Leer",
-        "level": "N.1"
-      },
-      {
         "name": "Charge",
-        "level": "N.1"
+        "level": 1
       },
       {
-        "name": "Hail",
-        "level": "N.1"
+        "name": "Groz'Yeux",
+        "level": 1
       },
       {
-        "name": "Icywind",
-        "level": "N.1"
+        "name": "Chargeur",
+        "level": 1
       },
       {
-        "name": "Honeclaws",
-        "level": "N.1"
+        "name": "Grêle",
+        "level": 1
       },
       {
-        "name": "Bite",
-        "level": "N.12"
+        "name": "Vent Glacé",
+        "level": 1
       },
       {
-        "name": "Bulldoze",
-        "level": "N.18"
+        "name": "Aiguisage",
+        "level": 1
       },
       {
-        "name": "Iceshard",
-        "level": "N.22"
+        "name": "Morsure",
+        "level": 12
       },
       {
-        "name": "Roar",
-        "level": "N.24"
+        "name": "Piétisol",
+        "level": 18
       },
       {
-        "name": "Pursuit",
-        "level": "N.26"
+        "name": "Éclats Glace",
+        "level": 22
       },
       {
-        "name": "Knockoff",
-        "level": "N.30"
+        "name": "Hurlement",
+        "level": 24
       },
       {
-        "name": "Auroraveil",
-        "level": "N.32"
+        "name": "Poursuite",
+        "level": 26
       },
       {
-        "name": "Flipturn",
-        "level": "N.33"
+        "name": "Sabotage",
+        "level": 30
       },
       {
-        "name": "Nightslash",
-        "level": "N.34"
+        "name": "Voile Aurore",
+        "level": 32
       },
       {
-        "name": "Frostyslide",
-        "level": "N.36"
+        "name": "Eau Revoir",
+        "level": 33
       },
       {
-        "name": "Playrough",
-        "level": "N.38"
+        "name": "Tranche-Nuit",
+        "level": 34
       },
       {
-        "name": "Scaryface",
-        "level": "N.40"
+        "name": "Glissade Givrée",
+        "level": 36
+      },
+      {
+        "name": "Câlinerie",
+        "level": 38
+      },
+      {
+        "name": "Grimace",
+        "level": 40
       },
       {
         "name": "Stalagtite",
-        "level": "N.42"
+        "level": 42
       },
       {
         "name": "Avalanche",
-        "level": "N.45"
+        "level": 45
       },
       {
-        "name": "Thunderwave",
-        "level": "N.48"
+        "name": "Cage Éclair",
+        "level": 48
       },
       {
-        "name": "Rockslide",
-        "level": "N.50"
+        "name": "Éboulement",
+        "level": 50
       },
       {
-        "name": "Crunch",
-        "level": "N.56"
+        "name": "Mâchouille",
+        "level": 56
       },
       {
-        "name": "Tripleaxel",
-        "level": "N.64"
+        "name": "Triple Axel",
+        "level": 64
       },
       {
-        "name": "Swagger",
-        "level": "N.72"
+        "name": "Vantardise",
+        "level": 72
       },
       {
-        "name": "Wildcharge",
-        "level": "N.80"
+        "name": "Éclair Fou",
+        "level": 80
       }
     ],
     "by_tm": [],

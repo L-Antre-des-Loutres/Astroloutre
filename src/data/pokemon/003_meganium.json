@@ -26,132 +26,132 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Aromatherapy",
-        "level": "N.1"
+        "name": "Aromathérapie",
+        "level": 1
       },
       {
-        "name": "Bodyslam",
-        "level": "N.1"
+        "name": "Plaquage",
+        "level": 1
       },
       {
-        "name": "Growl",
-        "level": "N.1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Naturalgift",
-        "level": "N.1"
+        "name": "Don Naturel",
+        "level": 1
       },
       {
-        "name": "Petaldance",
-        "level": "N.1"
+        "name": "Danse Fleurs",
+        "level": 1
       },
       {
-        "name": "Petalblizzard",
-        "level": "N.1"
+        "name": "Tempête Florale",
+        "level": 1
       },
       {
-        "name": "Poisonpowder",
-        "level": "N.1"
+        "name": "Poudre Toxik",
+        "level": 1
       },
       {
-        "name": "Razorleaf",
-        "level": "N.1"
+        "name": "Tranch'Herbe",
+        "level": 1
       },
       {
-        "name": "Swordsdance",
-        "level": "N.1"
+        "name": "Danse Lames",
+        "level": 1
       },
       {
-        "name": "Tackle",
-        "level": "N.1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Synthesis",
-        "level": "N.12"
+        "name": "Synthèse",
+        "level": 12
       },
       {
-        "name": "Reflect",
-        "level": "N.18"
+        "name": "Protection",
+        "level": 18
       },
       {
-        "name": "Magicalleaf",
-        "level": "N.22"
+        "name": "Feuille Magik",
+        "level": 22
       },
       {
-        "name": "Leechseed",
-        "level": "N.26"
+        "name": "Vampigraine",
+        "level": 26
       },
       {
-        "name": "Sweetscent",
-        "level": "N.34"
+        "name": "Doux Parfum",
+        "level": 34
       },
       {
-        "name": "Verdantbastion",
-        "level": "N.36"
+        "name": "Bastion Verdoyant",
+        "level": 36
       },
       {
-        "name": "Heavyslam",
-        "level": "N.38"
+        "name": "Tacle Lourd",
+        "level": 38
       },
       {
-        "name": "Lightscreen",
-        "level": "N.40"
+        "name": "Mur Lumière",
+        "level": 40
       },
       {
-        "name": "Lightscreen",
-        "level": "N.42"
+        "name": "Mur Lumière",
+        "level": 42
       },
       {
-        "name": "Reflect",
-        "level": "N.42"
+        "name": "Protection",
+        "level": 42
       },
       {
-        "name": "Bodyslam",
-        "level": "N.46"
+        "name": "Plaquage",
+        "level": 46
       },
       {
-        "name": "Ironhead",
-        "level": "N.48"
+        "name": "Tête de Fer",
+        "level": 48
       },
       {
-        "name": "Taunt",
-        "level": "N.50"
+        "name": "Provoc",
+        "level": 50
       },
       {
-        "name": "Safeguard",
-        "level": "N.54"
+        "name": "Rune Protect",
+        "level": 54
       },
       {
-        "name": "Spikes",
-        "level": "N.54"
+        "name": "Picots",
+        "level": 54
       },
       {
-        "name": "Leafblade",
-        "level": "N.56"
+        "name": "Lame Feuille",
+        "level": 56
       },
       {
-        "name": "Earthquake",
-        "level": "N.60"
+        "name": "Séisme",
+        "level": 60
       },
       {
-        "name": "Gigadrain",
-        "level": "N.60"
+        "name": "Giga-Sangsue",
+        "level": 60
       },
       {
         "name": "Explosion",
-        "level": "N.64"
+        "level": 64
       },
       {
-        "name": "Solarbeam",
-        "level": "N.65"
+        "name": "Lance-Soleil",
+        "level": 65
       },
       {
-        "name": "Extremespeed",
-        "level": "N.68"
+        "name": "Vitesse Extrême",
+        "level": 68
       },
       {
-        "name": "Petalblizzard",
-        "level": "N.70"
+        "name": "Tempête Florale",
+        "level": 70
       }
     ],
     "by_tm": [],

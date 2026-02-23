@@ -26,64 +26,64 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Tackle",
-        "level": "N.1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Defensecurl",
-        "level": "N.1"
+        "name": "Boul'Armure",
+        "level": 1
       },
       {
-        "name": "Rockthrow",
-        "level": "N.4"
+        "name": "Jet-Pierres",
+        "level": 4
       },
       {
-        "name": "Irondefense",
-        "level": "N.8"
+        "name": "Mur de Fer",
+        "level": 8
       },
       {
-        "name": "Rockpolish",
-        "level": "N.12"
+        "name": "Poliroche",
+        "level": 12
       },
       {
-        "name": "Headbutt",
-        "level": "N.16"
+        "name": "Coup d'Boule",
+        "level": 16
       },
       {
-        "name": "Ironhead",
-        "level": "N.20"
+        "name": "Tête de Fer",
+        "level": 20
       },
       {
-        "name": "Bodyslam",
-        "level": "N.24"
+        "name": "Plaquage",
+        "level": 24
       },
       {
-        "name": "Rockslide",
-        "level": "N.28"
+        "name": "Éboulement",
+        "level": 28
       },
       {
-        "name": "Autotomize",
-        "level": "N.32"
+        "name": "Allègement",
+        "level": 32
       },
       {
-        "name": "Gyroball",
-        "level": "N.36"
+        "name": "Gyroballe",
+        "level": 36
       },
       {
-        "name": "Stealthrock",
-        "level": "N.40"
+        "name": "Piège de Roc",
+        "level": 40
       },
       {
-        "name": "Heavyslam",
-        "level": "N.44"
+        "name": "Tacle Lourd",
+        "level": 44
       },
       {
-        "name": "Stoneedge",
-        "level": "N.48"
+        "name": "Lame de Roc",
+        "level": 48
       },
       {
-        "name": "Doubleedge",
-        "level": "N.52"
+        "name": "Damoclès",
+        "level": 52
       }
     ],
     "by_tm": [],
