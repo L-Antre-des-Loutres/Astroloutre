@@ -1,0 +1,40 @@
+{
+  "id": "008",
+  "slug": "wartortle",
+  "name": "Carabaffe",
+  "form": "rlm",
+  "baseSpecies": "wartortle",
+  "category": "Pokémon Tortue Ailée",
+  "types": [
+    "Eau"
+  ],
+  "abilities": [],
+  "stats": {
+    "hp": 59,
+    "attack": 63,
+    "defense": 80,
+    "specialAttack": 65,
+    "specialDefense": 80,
+    "speed": 58
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Carabaffe est un rêveur persistant, souvent trouvé en train de pratiquer des manœuvres aériennes en sautant dans les courants ascendants. Ses oreilles-ailes ne lui permettent que de planer brièvement, mais il reste déterminé."
+    }
+  ],
+  "about": "",
+  "images": []
+}
