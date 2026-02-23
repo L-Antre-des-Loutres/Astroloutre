@@ -221,40 +221,57 @@ const nextImage = await showdownApiGetPkmArt(
         }
 
         <!-- Moveset -->
-        <div class="wiki-section">
-            <h1>Capacités apprises</h1>
-            <ContentTable
-                title="Capacités appris par niveau"
-                color={defaultPageColor}
-                columns={movesetColumns}
-                data={pokemon.movesets?.by_level || []}
-            />
-            <!--
-            <ContentTable
-                    title="Capacités appris par CT/DT"
-                    color={defaultPageColor}
-                    columns={movesetColumns}
-                    data={pokemon.movesets?.by_tm || []}
-            />
-            <ContentTable
-                    title="Capacités appris par Reproduction"
-                    color={defaultPageColor}
-                    columns={movesetColumns}
-                    data={pokemon.movesets?.by_breeding || []}
-            />
-            -->
-        </div>
+        {
+
+                <div class="wiki-section">
+                    <h1>Capacités apprises</h1>
+                    {
+                        pokemon.movesets?.by_level && pokemon.movesets.by_level.length > 0 && (
+                            <ContentTable
+                                title="Capacités appris par niveau"
+                                color={defaultPageColor}
+                                columns={movesetColumns}
+                                data={pokemon.movesets.by_level}
+                            />
+                        )
+                    }
+                    {
+                        pokemon.movesets?.by_tm && pokemon.movesets.by_tm.length > 0 && (
+                            <ContentTable
+                                title="Capacités appris par CT/DT"
+                                color={defaultPageColor}
+                                columns={movesetColumns}
+                                data={pokemon.movesets.by_tm}
+                            />
+                        )
+                    }
+                    {
+                        pokemon.movesets?.by_breeding && pokemon.movesets.by_breeding.length > 0 && (
+                            <ContentTable
+                                title="Capacités appris par Reproduction"
+                                color={defaultPageColor}
+                                columns={movesetColumns}
+                                data={pokemon.movesets.by_breeding}
+                            />
+                        )
+                    }
+                </div>
+        }
 
         <!-- Localisations -->
-        <div class="wiki-section">
-            <h1>Localisation</h1>
-            <ContentTable
-                title="Localisation du Pokemon"
-                color={defaultPageColor}
-                columns={localisationColumns}
-                data={pokemon.locations || []}
-            />
-        </div>
+        {
+            pokemon.locations && pokemon.locations.length > 0 && (
+                <div class="wiki-section">
+                    <h1>Localisation</h1>
+                    <ContentTable
+                        title="Localisation du Pokemon"
+                        color={defaultPageColor}
+                        columns={localisationColumns}
+                        data={pokemon.locations}
+                    />
+                </div>
+            )
+        }
 
         <!-- About -->
         <div class="wiki-section">
@@ -268,23 +285,31 @@ const nextImage = await showdownApiGetPkmArt(
         </div>
 
         <!-- Pokedex -->
-        <div class="wiki-section">
-            <h1>Pokedex</h1>
-            <ContentTable
-                title="Descriptions du Pokedex"
-                color={defaultPageColor}
-                columns={pokedexColumns}
-                data={pokemon.pokedex_entries || []}
-            />
-        </div>
+        {
+            pokemon.pokedex_entries && pokemon.pokedex_entries.length > 0 && (
+                <div class="wiki-section">
+                    <h1>Pokedex</h1>
+                    <ContentTable
+                        title="Descriptions du Pokedex"
+                        color={defaultPageColor}
+                        columns={pokedexColumns}
+                        data={pokemon.pokedex_entries}
+                    />
+                </div>
+            )
+        }
 
         <!-- Imagerie -->
-        <div class="wiki-section">
-            <h1>Imagerie</h1>
-            <p>
-                <!-- Section future pour les images additionnelles -->
-            </p>
-        </div>
+        {
+            pokemon.images && pokemon.images.length > 0 && (
+                <div class="wiki-section">
+                    <h1>Imagerie</h1>
+                    <p>
+                        <!-- Section future pour les images additionnelles -->
+                    </p>
+                </div>
+            )
+        }
     </ContentLayout>
 </Layout>
 
