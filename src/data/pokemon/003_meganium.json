@@ -1,12 +1,10 @@
 {
-  "id": "000",
+  "id": "003",
   "slug": "meganium",
-  "name": "Meganium RLM",
+  "name": "Meganium",
   "form": "rlm",
   "baseSpecies": "meganium",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Feuillacier",
   "types": [
     "Plante",
     "Acier"
@@ -156,280 +154,19 @@
         "level": "N.70"
       }
     ],
-    "by_tm": [
-      {
-        "name": "Ancientpower",
-        "ct": "CT"
-      },
-      {
-        "name": "Bodypress",
-        "ct": "CT"
-      },
-      {
-        "name": "Bodyslam",
-        "ct": "CT"
-      },
-      {
-        "name": "Bulldoze",
-        "ct": "CT"
-      },
-      {
-        "name": "Bulletseed",
-        "ct": "CT"
-      },
-      {
-        "name": "Charm",
-        "ct": "CT"
-      },
-      {
-        "name": "Curse",
-        "ct": "CT"
-      },
-      {
-        "name": "Cut",
-        "ct": "CT"
-      },
-      {
-        "name": "Doubleedge",
-        "ct": "CT"
-      },
-      {
-        "name": "Dragontail",
-        "ct": "CT"
-      },
-      {
-        "name": "Earthquake",
-        "ct": "CT"
-      },
-      {
-        "name": "Echoedvoice",
-        "ct": "CT"
-      },
-      {
-        "name": "Encore",
-        "ct": "CT"
-      },
-      {
-        "name": "Endeavor",
-        "ct": "CT"
-      },
-      {
-        "name": "Endure",
-        "ct": "CT"
-      },
-      {
-        "name": "Energyball",
-        "ct": "CT"
-      },
-      {
-        "name": "Facade",
-        "ct": "CT"
-      },
-      {
-        "name": "Faketears",
-        "ct": "CT"
-      },
-      {
-        "name": "Flash",
-        "ct": "CT"
-      },
-      {
-        "name": "Frenzyplant",
-        "ct": "CT"
-      },
-      {
-        "name": "Furycutter",
-        "ct": "CT"
-      },
-      {
-        "name": "Gigadrain",
-        "ct": "CT"
-      },
-      {
-        "name": "Gigaimpact",
-        "ct": "CT"
-      },
-      {
-        "name": "Grassknot",
-        "ct": "CT"
-      },
-      {
-        "name": "Grasspledge",
-        "ct": "CT"
-      },
-      {
-        "name": "Grassyglide",
-        "ct": "CT"
-      },
-      {
-        "name": "Grassyterrain",
-        "ct": "CT"
-      },
-      {
-        "name": "Headbutt",
-        "ct": "CT"
-      },
-      {
-        "name": "Helpinghand",
-        "ct": "CT"
-      },
-      {
-        "name": "Hyperbeam",
-        "ct": "CT"
-      },
-      {
-        "name": "Irontail",
-        "ct": "CT"
-      },
-      {
-        "name": "Knockoff",
-        "ct": "CT"
-      },
-      {
-        "name": "Laserfocus",
-        "ct": "CT"
-      },
-      {
-        "name": "Leafstorm",
-        "ct": "CT"
-      },
-      {
-        "name": "Lightscreen",
-        "ct": "CT"
-      },
-      {
-        "name": "Magicalleaf",
-        "ct": "CT"
-      },
-      {
-        "name": "Magiccoat",
-        "ct": "CT"
-      },
-      {
-        "name": "Mudslap",
-        "ct": "CT"
-      },
-      {
-        "name": "Naturalgift",
-        "ct": "CT"
-      },
-      {
-        "name": "Naturepower",
-        "ct": "CT"
-      },
-      {
-        "name": "Outrage",
-        "ct": "CT"
-      },
-      {
-        "name": "Petalblizzard",
-        "ct": "CT"
-      },
-      {
-        "name": "Protect",
-        "ct": "CT"
-      },
-      {
-        "name": "Reflect",
-        "ct": "CT"
-      },
-      {
-        "name": "Rest",
-        "ct": "CT"
-      },
-      {
-        "name": "Rockclimb",
-        "ct": "CT"
-      },
-      {
-        "name": "Rocksmash",
-        "ct": "CT"
-      },
-      {
-        "name": "Safeguard",
-        "ct": "CT"
-      },
-      {
-        "name": "Seedbomb",
-        "ct": "CT"
-      },
-      {
-        "name": "Sleeptalk",
-        "ct": "CT"
-      },
-      {
-        "name": "Solarbeam",
-        "ct": "CT"
-      },
-      {
-        "name": "Solarblade",
-        "ct": "CT"
-      },
-      {
-        "name": "Stompingtantrum",
-        "ct": "CT"
-      },
-      {
-        "name": "Strength",
-        "ct": "CT"
-      },
-      {
-        "name": "Substitute",
-        "ct": "CT"
-      },
-      {
-        "name": "Sunnyday",
-        "ct": "CT"
-      },
-      {
-        "name": "Swordsdance",
-        "ct": "CT"
-      },
-      {
-        "name": "Synthesis",
-        "ct": "CT"
-      },
-      {
-        "name": "Takedown",
-        "ct": "CT"
-      },
-      {
-        "name": "Terablast",
-        "ct": "CT"
-      },
-      {
-        "name": "Trailblaze",
-        "ct": "CT"
-      },
-      {
-        "name": "Weatherball",
-        "ct": "CT"
-      },
-      {
-        "name": "Workup",
-        "ct": "CT"
-      },
-      {
-        "name": "Worryseed",
-        "ct": "CT"
-      },
-      {
-        "name": "Zenheadbutt",
-        "ct": "CT"
-      }
-    ],
+    "by_tm": [],
     "by_breeding": []
   },
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This meganium is dead."
+      "description": "Doté d'une mèche courte et d'une nature impitoyable, ce Pokémon est souvent évité à cause de son tempérament féroce. Cependant, pour les rares personnes qui parviennent à gagner son respect, il devient un gardien intensément loyal."
     }
   ],
   "about": "",

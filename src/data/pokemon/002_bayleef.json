@@ -1,30 +1,86 @@
 {
-  "id": "000",
+  "id": "002",
   "slug": "bayleef",
-  "name": "Bayleef RLM",
+  "name": "Macronium",
   "form": "rlm",
   "baseSpecies": "bayleef",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Feuillacier",
   "types": [
-    "Normal"
+    "Plante"
   ],
-  "abilities": [],
+  "abilities": [
+    "Engrais",
+    "Feuille Garde"
+  ],
   "stats": {
-    "hp": 0,
-    "attack": 0,
-    "defense": 0,
-    "specialAttack": 0,
-    "specialDefense": 0,
-    "speed": 0
+    "hp": 60,
+    "attack": 62,
+    "defense": 80,
+    "specialAttack": 63,
+    "specialDefense": 80,
+    "speed": 60
   },
   "evolutions": [],
   "movesets": {
-    "by_level": [
+    "by_level": [{
+      "name": "Tackle",
+      "level": "1"
+    },
       {
-        "name": "Charge",
-        "level": "Départ"
+        "name": "Growl",
+        "level": "1"
+      },
+      {
+        "name": "Razor Leaf",
+        "level": "1"
+      },
+      {
+        "name": "Poison Powder",
+        "level": "1"
+      },
+      {
+        "name": "Natural Gift",
+        "level": "1"
+      },
+      {
+        "name": "Synthesis",
+        "level": "12"
+      },
+      {
+        "name": "Reflect",
+        "level": "18"
+      },
+      {
+        "name": "Magical Leaf",
+        "level": "22"
+      },
+      {
+        "name": "Leech Seed",
+        "level": "26"
+      },
+      {
+        "name": "Sweet Scent",
+        "level": "32"
+      },
+      {
+        "name": "Light Screen",
+        "level": "36"
+      },
+      {
+        "name": "Body Slam",
+        "level": "40"
+      },
+      {
+        "name": "Safeguard",
+        "level": "46"
+      },
+      {
+        "name": "Giga Drain",
+        "level": "50"
+      },
+      {
+        "name": "Solar Beam",
+        "level": "54"
       }
     ],
     "by_tm": [],
@@ -32,14 +88,14 @@
   },
   "locations": [
     {
-      "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "game": "Cobblemon",
+      "location": "Biome floral, ultra rare"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Ce bayleef est mort."
+      "description": "Bien plus territorial que son homologue de Johto, ce Macronium est un maître de l'embuscade. Il se cache dans les buissons denses pour lancer des attaques surprises sur quiconque ose pénétrer sur son domaine."
     }
   ],
   "about": "",
