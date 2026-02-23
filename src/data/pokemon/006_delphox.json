@@ -1,0 +1,181 @@
+{
+  "id": "006",
+  "slug": "delphox",
+  "name": "Goupelin",
+  "form": "rlm",
+  "baseSpecies": "delphox",
+  "category": "Pokémon Férenard",
+  "types": [
+    "Feu",
+    "Fée"
+  ],
+  "abilities": [
+    "Psychoprio",
+    "Créa-Brume"
+  ],
+  "stats": {
+    "hp": 70,
+    "attack": 70,
+    "defense": 65,
+    "specialAttack": 120,
+    "specialDefense": 80,
+    "speed": 130
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Ember",
+        "level": "N.1"
+      },
+      {
+        "name": "Futuresight",
+        "level": "N.1"
+      },
+      {
+        "name": "Howl",
+        "level": "N.1"
+      },
+      {
+        "name": "Luckychant",
+        "level": "N.1"
+      },
+      {
+        "name": "Mysticalfire",
+        "level": "N.1"
+      },
+      {
+        "name": "Psybeam",
+        "level": "N.1"
+      },
+      {
+        "name": "Roleplay",
+        "level": "N.1"
+      },
+      {
+        "name": "Scratch",
+        "level": "N.1"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.1"
+      },
+      {
+        "name": "Switcheroo",
+        "level": "N.1"
+      },
+      {
+        "name": "Tailwhip",
+        "level": "N.1"
+      },
+      {
+        "name": "Flamecharge",
+        "level": "N.14"
+      },
+      {
+        "name": "Psybeam",
+        "level": "N.18"
+      },
+      {
+        "name": "Firespin",
+        "level": "N.22"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.28"
+      },
+      {
+        "name": "Psyshock",
+        "level": "N.38"
+      },
+      {
+        "name": "Lightscreen",
+        "level": "N.40"
+      },
+      {
+        "name": "Reflect",
+        "level": "N.41"
+      },
+      {
+        "name": "Magicroom",
+        "level": "N.42"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.44"
+      },
+      {
+        "name": "Flamethrower",
+        "level": "N.45"
+      },
+      {
+        "name": "Flamethrower",
+        "level": "N.48"
+      },
+      {
+        "name": "Will-o-wisp",
+        "level": "N.50"
+      },
+      {
+        "name": "Willowisp",
+        "level": "N.51"
+      },
+      {
+        "name": "Psychic",
+        "level": "N.52"
+      },
+      {
+        "name": "Ancientpower",
+        "level": "N.55"
+      },
+      {
+        "name": "Moonblast",
+        "level": "N.55"
+      },
+      {
+        "name": "Psychic",
+        "level": "N.57"
+      },
+      {
+        "name": "Sunnyday",
+        "level": "N.62"
+      },
+      {
+        "name": "Futuresight",
+        "level": "N.64"
+      },
+      {
+        "name": "Magicroom",
+        "level": "N.68"
+      },
+      {
+        "name": "Shadowball",
+        "level": "N.68"
+      },
+      {
+        "name": "Fireblast",
+        "level": "N.70"
+      },
+      {
+        "name": "Fireblast",
+        "level": "N.74"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Maître de l'arcane, Goupelin est un magicien malicieux des bois. Bien qu'il aime jouer des tours à ceux qui entrent dans son domaine sombre, il possède un cœur pur ; il est connu pour guider secrètement les personnes égarées vers la sortie de la forêt à l'aide de feux follets magiques."
+    }
+  ],
+  "about": "",
+  "images": []
+}

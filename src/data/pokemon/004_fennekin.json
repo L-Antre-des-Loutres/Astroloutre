@@ -1,0 +1,100 @@
+{
+  "id": "004",
+  "slug": "fennekin",
+  "name": "Fennec",
+  "form": "normal",
+  "baseSpecies": "fennekin",
+  "category": "Pokémon Renard",
+  "types": [
+    "Feu"
+  ],
+  "abilities": [
+    "Brasier",
+    "Magicien"
+  ],
+  "stats": {
+    "hp": 40,
+    "attack": 45,
+    "defense": 40,
+    "specialAttack": 62,
+    "specialDefense": 60,
+    "speed": 60
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Scratch",
+        "level": "1"
+      },
+      {
+        "name": "Tail Whip",
+        "level": "1"
+      },
+      {
+        "name": "Ember",
+        "level": "5"
+      },
+      {
+        "name": "Howl",
+        "level": "11"
+      },
+      {
+        "name": "Flame Charge",
+        "level": "14"
+      },
+      {
+        "name": "Psybeam",
+        "level": "17"
+      },
+      {
+        "name": "Fire Spin",
+        "level": "20"
+      },
+      {
+        "name": "Lucky Chant",
+        "level": "25"
+      },
+      {
+        "name": "Psyshock",
+        "level": "31"
+      },
+      {
+        "name": "Flamethrower",
+        "level": "35"
+      },
+      {
+        "name": "Will-O-Wisp",
+        "level": "38"
+      },
+      {
+        "name": "Psychic",
+        "level": "41"
+      },
+      {
+        "name": "Sunny Day",
+        "level": "43"
+      },
+      {
+        "name": "Fire Blast",
+        "level": "48"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Deserts, ultra rare"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "En cas de coup de fatigue, il grignote des rameaux pour recharger ses batteries. Ses oreilles dégagent une chaleur qui dépasse les 200°C."
+    }
+  ],
+  "about": "",
+  "images": []
+}
