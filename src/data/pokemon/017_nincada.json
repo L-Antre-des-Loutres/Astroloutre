@@ -1,0 +1,89 @@
+{
+  "id": "017",
+  "slug": "nincada",
+  "name": "Ningale",
+  "form": "rlm",
+  "baseSpecies": "nincada",
+  "category": "Pokémon Cigaledo",
+  "types": [
+    "Insecte",
+    "Eau"
+  ],
+  "abilities": [
+    "Œil Composé",
+    "Fuite"
+  ],
+  "stats": {
+    "hp": 31,
+    "attack": 45,
+    "defense": 90,
+    "specialAttack": 30,
+    "specialDefense": 30,
+    "speed": 40
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Scratch",
+        "level": "N.1"
+      },
+      {
+        "name": "Sandattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Harden",
+        "level": "N.5"
+      },
+      {
+        "name": "Watergun",
+        "level": "N.6"
+      },
+      {
+        "name": "Falseswipe",
+        "level": "N.10"
+      },
+      {
+        "name": "Mudslap",
+        "level": "N.15"
+      },
+      {
+        "name": "Absorb",
+        "level": "N.21"
+      },
+      {
+        "name": "Metalclaw",
+        "level": "N.25"
+      },
+      {
+        "name": "Furyswipes",
+        "level": "N.30"
+      },
+      {
+        "name": "Mindreader",
+        "level": "N.35"
+      },
+      {
+        "name": "Dig",
+        "level": "N.40"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Contrairement à ses cousins montagnards, ce Ningale vit près des berges. Ses pattes spécialisées lui permettent de trotter occasionnellement à la surface de l'eau pour échapper aux prédateurs. On le voit souvent filtrer de petites particules au bord de l'eau.\","
+    }
+  ],
+  "about": "",
+  "images": []
+}
