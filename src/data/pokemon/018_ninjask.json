@@ -1,0 +1,146 @@
+{
+  "id": "018",
+  "slug": "ninjask",
+  "name": "Ninjask",
+  "form": "rlm",
+  "baseSpecies": "ninjask",
+  "category": "Pokémon Corises",
+  "types": [
+    "Eau",
+    "Vol"
+  ],
+  "abilities": [
+    "Turbo",
+    "Infiltration",
+    "Glissade"
+  ],
+  "stats": {
+    "hp": 61,
+    "attack": 100,
+    "defense": 70,
+    "specialAttack": 30,
+    "specialDefense": 70,
+    "speed": 135
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Scratch",
+        "level": "N.1"
+      },
+      {
+        "name": "Harden",
+        "level": "N.1"
+      },
+      {
+        "name": "Sandattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Furycutter",
+        "level": "N.1"
+      },
+      {
+        "name": "Screech",
+        "level": "N.1"
+      },
+      {
+        "name": "Batonpass",
+        "level": "N.1"
+      },
+      {
+        "name": "Dig",
+        "level": "N.1"
+      },
+      {
+        "name": "Mudslap",
+        "level": "N.1"
+      },
+      {
+        "name": "Falseswipe",
+        "level": "N.1"
+      },
+      {
+        "name": "Aerialace",
+        "level": "N.1"
+      },
+      {
+        "name": "Doubleteam",
+        "level": "N.1"
+      },
+      {
+        "name": "Metalclaw",
+        "level": "N.1"
+      },
+      {
+        "name": "Uturn",
+        "level": "N.1"
+      },
+      {
+        "name": "Stickyweb",
+        "level": "N.1"
+      },
+      {
+        "name": "Waterfall",
+        "level": "N.1"
+      },
+      {
+        "name": "Flipturn",
+        "level": "N.1"
+      },
+      {
+        "name": "Acrobatics",
+        "level": "N.1"
+      },
+      {
+        "name": "Agility",
+        "level": "N.15"
+      },
+      {
+        "name": "Absorb",
+        "level": "N.23"
+      },
+      {
+        "name": "Bugbite",
+        "level": "N.29"
+      },
+      {
+        "name": "Furyswipes",
+        "level": "N.36"
+      },
+      {
+        "name": "Mindreader",
+        "level": "N.43"
+      },
+      {
+        "name": "Slash",
+        "level": "N.50"
+      },
+      {
+        "name": "Swordsdance",
+        "level": "N.57"
+      },
+      {
+        "name": "Xscissor",
+        "level": "N.64"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Souvent appelé 'la rame du lac', cette variante de Ninjask est l'un des nageurs les plus rapides du monde Pokémon. En faisant vibrer ses pattes palmées à haute fréquence, il peut traverser la surface de l'eau en un clin d'œil."
+    }
+  ],
+  "about": "",
+  "images": []
+}

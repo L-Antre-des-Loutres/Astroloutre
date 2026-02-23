@@ -1,0 +1,149 @@
+{
+  "id": "014",
+  "slug": "luxray",
+  "name": "Luxray",
+  "form": "rlm",
+  "baseSpecies": "luxray",
+  "category": "Pokémon Glacial",
+  "types": [
+    "Glace"
+  ],
+  "abilities": [
+    "Chasse-Neige",
+    "Intimidation",
+    "Cran"
+  ],
+  "stats": {
+    "hp": 84,
+    "attack": 130,
+    "defense": 70,
+    "specialAttack": 75,
+    "specialDefense": 74,
+    "speed": 90
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Leer",
+        "level": "N.1"
+      },
+      {
+        "name": "Charge",
+        "level": "N.1"
+      },
+      {
+        "name": "Hail",
+        "level": "N.1"
+      },
+      {
+        "name": "Icywind",
+        "level": "N.1"
+      },
+      {
+        "name": "Honeclaws",
+        "level": "N.1"
+      },
+      {
+        "name": "Bite",
+        "level": "N.12"
+      },
+      {
+        "name": "Bulldoze",
+        "level": "N.18"
+      },
+      {
+        "name": "Iceshard",
+        "level": "N.22"
+      },
+      {
+        "name": "Roar",
+        "level": "N.24"
+      },
+      {
+        "name": "Pursuit",
+        "level": "N.26"
+      },
+      {
+        "name": "Knockoff",
+        "level": "N.30"
+      },
+      {
+        "name": "Auroraveil",
+        "level": "N.32"
+      },
+      {
+        "name": "Flipturn",
+        "level": "N.33"
+      },
+      {
+        "name": "Nightslash",
+        "level": "N.34"
+      },
+      {
+        "name": "Frostyslide",
+        "level": "N.36"
+      },
+      {
+        "name": "Playrough",
+        "level": "N.38"
+      },
+      {
+        "name": "Scaryface",
+        "level": "N.40"
+      },
+      {
+        "name": "Stalagtite",
+        "level": "N.42"
+      },
+      {
+        "name": "Avalanche",
+        "level": "N.45"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.48"
+      },
+      {
+        "name": "Rockslide",
+        "level": "N.50"
+      },
+      {
+        "name": "Crunch",
+        "level": "N.56"
+      },
+      {
+        "name": "Tripleaxel",
+        "level": "N.64"
+      },
+      {
+        "name": "Swagger",
+        "level": "N.72"
+      },
+      {
+        "name": "Wildcharge",
+        "level": "N.80"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Adapté aux sommets gelés, ce Luxray de type Glace maintient une attitude froide et distante. Bien qu'il rejoigne rarement le reste de sa tribu, il n'est jamais vraiment loin, surveillant les Lixy et les Luxio depuis les crêtes enneigées."
+    }
+  ],
+  "about": "",
+  "images": []
+}

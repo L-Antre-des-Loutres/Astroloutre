@@ -1,0 +1,43 @@
+{
+  "id": "007",
+  "slug": "squirtle",
+  "name": "Carapuce",
+  "form": "normal",
+  "baseSpecies": "squirtle",
+  "category": "Pokémon Minitortue",
+  "types": [
+    "Eau"
+  ],
+  "abilities": [
+    "Torrent",
+    "Cuvette"
+  ],
+  "stats": {
+    "hp": 44,
+    "attack": 48,
+    "defense": 65,
+    "specialAttack": 50,
+    "specialDefense": 64,
+    "speed": 43
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biomes d’eau douce, collines, jungles, zones tempérées, îles tropicales, jamais en climat glacial, ultra rare."
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Pokemon Rouge/Bleu",
+      "description": "Son dos durcit avec l'âge et devient une super carapace. Il peut cracher des jets d'écume."
+    }
+  ],
+  "about": "",
+  "images": []
+}

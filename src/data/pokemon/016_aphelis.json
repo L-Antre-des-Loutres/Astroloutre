@@ -1,0 +1,230 @@
+{
+  "id": "016",
+  "slug": "aphelis",
+  "name": "Aphelis Aphelis",
+  "form": "aphelis",
+  "baseSpecies": "aphelis",
+  "category": "Pokémon Oisodivin",
+  "types": [
+    "Fée",
+    "Vol"
+  ],
+  "abilities": [
+    "Battant",
+    "Prestance Royale",
+    "Médic Nature"
+  ],
+  "stats": {
+    "hp": 100,
+    "attack": 40,
+    "defense": 90,
+    "specialAttack": 70,
+    "specialDefense": 90,
+    "speed": 130
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Peck",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Quickattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Wingattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Doubleteam",
+        "level": "N.1"
+      },
+      {
+        "name": "Endeavor",
+        "level": "N.1"
+      },
+      {
+        "name": "Aerialace",
+        "level": "N.1"
+      },
+      {
+        "name": "Agility",
+        "level": "N.1"
+      },
+      {
+        "name": "Airslash",
+        "level": "N.1"
+      },
+      {
+        "name": "Bravebird",
+        "level": "N.1"
+      },
+      {
+        "name": "Skyattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Extremespeed",
+        "level": "N.1"
+      },
+      {
+        "name": "Aurasphere",
+        "level": "N.1"
+      },
+      {
+        "name": "Airslash",
+        "level": "N.1"
+      },
+      {
+        "name": "Safeguard",
+        "level": "N.1"
+      },
+      {
+        "name": "Ancientpower",
+        "level": "N.1"
+      },
+      {
+        "name": "Lastresort",
+        "level": "N.1"
+      },
+      {
+        "name": "Afteryou",
+        "level": "N.1"
+      },
+      {
+        "name": "Triattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Fairywind",
+        "level": "N.1"
+      },
+      {
+        "name": "Charm",
+        "level": "N.1"
+      },
+      {
+        "name": "Yawn",
+        "level": "N.1"
+      },
+      {
+        "name": "Metronome",
+        "level": "N.1"
+      },
+      {
+        "name": "Doubleedge",
+        "level": "N.1"
+      },
+      {
+        "name": "Followme",
+        "level": "N.1"
+      },
+      {
+        "name": "Batonpass",
+        "level": "N.1"
+      },
+      {
+        "name": "Wish",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Pound",
+        "level": "N.1"
+      },
+      {
+        "name": "Sweetkiss",
+        "level": "N.1"
+      },
+      {
+        "name": "Lifedew",
+        "level": "N.1"
+      },
+      {
+        "name": "Bestow",
+        "level": "N.1"
+      },
+      {
+        "name": "Peck",
+        "level": "N.1"
+      },
+      {
+        "name": "Quickattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Disarmingvoice",
+        "level": "N.5"
+      },
+      {
+        "name": "Gust",
+        "level": "N.9"
+      },
+      {
+        "name": "Encore",
+        "level": "N.13"
+      },
+      {
+        "name": "Wingattack",
+        "level": "N.17"
+      },
+      {
+        "name": "Drainingkiss",
+        "level": "N.21"
+      },
+      {
+        "name": "Roost",
+        "level": "N.25"
+      },
+      {
+        "name": "Tailwind",
+        "level": "N.29"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.33"
+      },
+      {
+        "name": "Moonblast",
+        "level": "N.37"
+      },
+      {
+        "name": "Hurricane",
+        "level": "N.42"
+      },
+      {
+        "name": "Healingwish",
+        "level": "N.48"
+      },
+      {
+        "name": "Aeroblast",
+        "level": "N.55"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Connus comme les fiers gardiens des cieux, les Aphelis nouent rarement des liens avec les humains. Ils sont farouchement protecteurs et interviennent souvent pour sauver d'autres Pokémon des griffes des braconniers."
+    }
+  ],
+  "about": "",
+  "images": []
+}

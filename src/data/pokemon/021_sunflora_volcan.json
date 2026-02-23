@@ -1,34 +1,36 @@
 {
   "id": "000",
-  "slug": "sunflora_ciel",
-  "name": "Sunflora Ciel",
-  "form": "ciel",
+  "slug": "sunflora_volcan",
+  "name": "Héliatronc Volcan",
+  "form": "volcan",
   "baseSpecies": "sunflora",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Volcan",
   "types": [
     "Plante",
-    "Vol"
+    "Feu"
   ],
   "abilities": [
-    "Deltastream",
-    "Unburden",
-    "Contrary"
+    "Sécheresse",
+    "Chlorophylle",
+    "Contestation"
   ],
   "stats": {
-    "hp": 85,
-    "attack": 115,
+    "hp": 45,
+    "attack": 85,
     "defense": 85,
-    "specialAttack": 45,
+    "specialAttack": 85,
     "specialDefense": 85,
-    "speed": 85
+    "speed": 115
   },
   "evolutions": [],
   "movesets": {
     "by_level": [
       {
-        "name": "Lifeforce",
+        "name": "Growth",
+        "level": "N.1"
+      },
+      {
+        "name": "Flamewheel",
         "level": "N.1"
       },
       {
@@ -36,71 +38,67 @@
         "level": "N.1"
       },
       {
-        "name": "Flowergathering",
-        "level": "N.1"
-      },
-      {
-        "name": "Sweetscent",
+        "name": "Flamecharge",
         "level": "N.4"
       },
       {
-        "name": "Grasswhistle",
+        "name": "Bodyslam",
         "level": "N.7"
       },
       {
-        "name": "Airslash",
+        "name": "Protect",
         "level": "N.10"
       },
       {
-        "name": "Leechseed",
-        "level": "N.13"
-      },
-      {
-        "name": "Airblade",
+        "name": "Stealthrock",
         "level": "N.16"
       },
       {
-        "name": "Worryseed",
+        "name": "Synthesis",
         "level": "N.19"
       },
       {
-        "name": "Leafblade",
+        "name": "Bodyslam",
         "level": "N.22"
       },
       {
-        "name": "Flail",
+        "name": "Takedown",
         "level": "N.25"
       },
       {
-        "name": "Defog",
+        "name": "Firespin",
         "level": "N.28"
-      },
-      {
-        "name": "Acrobatics",
-        "level": "N.31"
       },
       {
         "name": "Solarbeam",
         "level": "N.34"
       },
       {
-        "name": "Doubleedge",
+        "name": "Overheat",
         "level": "N.37"
       },
       {
-        "name": "Overheat",
+        "name": "Eruption",
+        "level": "N.39"
+      },
+      {
+        "name": "Sunnyday",
         "level": "N.40"
       },
       {
-        "name": "Fly",
+        "name": "Overheat",
         "level": "N.43"
       },
       {
-        "name": "Seedflare",
+        "name": "Flareblitz",
         "level": "N.50"
       },
       {
-        "name": "Dragonascent",
+        "name": "Fireblast",
+        "level": "N.60"
+      },
+      {
+        "name": "Magmastorm",
         "level": "N.100"
       }
     ],
@@ -110,13 +108,13 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This sunflora is dead."
+      "description": " \"Étonnamment, ce Héliatronc se croit être le meilleur ami de Groudon, affirmant avoir combattu Kyogre aux côtés du titan légendaire. Étrangement, aucune preuve n'a jamais été trouvée."
     }
   ],
   "about": "",
