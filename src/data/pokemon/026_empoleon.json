@@ -1,0 +1,174 @@
+{
+  "id": "026",
+  "slug": "empoleon",
+  "name": "Pingoléon",
+  "form": "rlm",
+  "baseSpecies": "empoleon",
+  "category": "Pokémon Élepingouin",
+  "types": [
+    "Eau",
+    "Électrik"
+  ],
+  "abilities": [
+    "Créa-Élec",
+    "Glissade",
+    "Sans Limite"
+  ],
+  "stats": {
+    "hp": 90,
+    "attack": 110,
+    "defense": 85,
+    "specialAttack": 70,
+    "specialDefense": 85,
+    "speed": 95
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Growl",
+        "level": "N.1"
+      },
+      {
+        "name": "Pound",
+        "level": "N.1"
+      },
+      {
+        "name": "Watergun",
+        "level": "N.1"
+      },
+      {
+        "name": "Bide",
+        "level": "N.1"
+      },
+      {
+        "name": "Watersport",
+        "level": "N.1"
+      },
+      {
+        "name": "Bubble",
+        "level": "N.1"
+      },
+      {
+        "name": "Metalclaw",
+        "level": "N.1"
+      },
+      {
+        "name": "Aquajet",
+        "level": "N.1"
+      },
+      {
+        "name": "Peck",
+        "level": "N.1"
+      },
+      {
+        "name": "Swordsdance",
+        "level": "N.11"
+      },
+      {
+        "name": "Peck",
+        "level": "N.15"
+      },
+      {
+        "name": "Bubblebeam",
+        "level": "N.19"
+      },
+      {
+        "name": "Swagger",
+        "level": "N.24"
+      },
+      {
+        "name": "Furyattack",
+        "level": "N.28"
+      },
+      {
+        "name": "Brine",
+        "level": "N.33"
+      },
+      {
+        "name": "Electrosiphon",
+        "level": "N.36"
+      },
+      {
+        "name": "Voltswitch",
+        "level": "N.38"
+      },
+      {
+        "name": "Whirlpool",
+        "level": "N.39"
+      },
+      {
+        "name": "Razorshell",
+        "level": "N.40"
+      },
+      {
+        "name": "Swagger",
+        "level": "N.44"
+      },
+      {
+        "name": "Mist",
+        "level": "N.46"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.48"
+      },
+      {
+        "name": "Drillpeck",
+        "level": "N.52"
+      },
+      {
+        "name": "Wildcharge",
+        "level": "N.52"
+      },
+      {
+        "name": "Liquidation",
+        "level": "N.55"
+      },
+      {
+        "name": "Raindance",
+        "level": "N.58"
+      },
+      {
+        "name": "Hydropump",
+        "level": "N.59"
+      },
+      {
+        "name": "Thrash",
+        "level": "N.62"
+      },
+      {
+        "name": "Wavecrash",
+        "level": "N.66"
+      },
+      {
+        "name": "Closecombat",
+        "level": "N.66"
+      },
+      {
+        "name": "Swordsdance",
+        "level": "N.70"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Habituellement calme, la colère de ce Pingoléon est insupportable. Il génère des torrents d'électricité depuis ses cornes et invoque des vagues massives pour submerger ses proies. En raison de son pouvoir destructeur, il est profondément craint par les autres Pokémon sauvages."
+    }
+  ],
+  "about": "",
+  "images": []
+}

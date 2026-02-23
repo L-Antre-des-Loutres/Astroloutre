@@ -1,0 +1,45 @@
+{
+  "id": "025",
+  "slug": "prinplup",
+  "name": "Prinplouf",
+  "form": "rlm",
+  "baseSpecies": "prinplup",
+  "category": "Pokémon Élepingouin",
+  "types": [
+    "Eau"
+  ],
+  "abilities": [
+    "Torrent",
+    "Acharné",
+    "Battant"
+  ],
+  "stats": {
+    "hp": 64,
+    "attack": 66,
+    "defense": 68,
+    "specialAttack": 81,
+    "specialDefense": 76,
+    "speed": 50
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Très irritable et orgueilleux, ce Prinplouf est un combattant téméraire. Il recherche les orages pour recharger ses ailes, mais finit souvent par perdre connaissance sous la puissance des éclairs."
+    }
+  ],
+  "about": "",
+  "images": []
+}

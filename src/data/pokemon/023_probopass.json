@@ -1,0 +1,270 @@
+{
+  "id": "023",
+  "slug": "probopass",
+  "name": "Tarinorme",
+  "form": "rlm",
+  "baseSpecies": "probopass",
+  "category": "Pokémon Flemme",
+  "types": [
+    "Roche",
+    "Fée"
+  ],
+  "abilities": [
+    "Fermeté",
+    "Inconscient",
+    "Contestation"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 45,
+    "defense": 150,
+    "specialAttack": 90,
+    "specialDefense": 150,
+    "speed": 30
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Aquaring",
+        "level": "N.1"
+      },
+      {
+        "name": "Block",
+        "level": "N.1"
+      },
+      {
+        "name": "Calmmind",
+        "level": "N.1"
+      },
+      {
+        "name": "Charm",
+        "level": "N.1"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.1"
+      },
+      {
+        "name": "Doubleedge",
+        "level": "N.1"
+      },
+      {
+        "name": "Explosion",
+        "level": "N.1"
+      },
+      {
+        "name": "Fairywind",
+        "level": "N.1"
+      },
+      {
+        "name": "Gravity",
+        "level": "N.1"
+      },
+      {
+        "name": "Harden",
+        "level": "N.1"
+      },
+      {
+        "name": "Irondefense",
+        "level": "N.1"
+      },
+      {
+        "name": "Magnetbomb",
+        "level": "N.1"
+      },
+      {
+        "name": "Magneticflux",
+        "level": "N.1"
+      },
+      {
+        "name": "Magnetrise",
+        "level": "N.1"
+      },
+      {
+        "name": "Present",
+        "level": "N.1"
+      },
+      {
+        "name": "Recover",
+        "level": "N.1"
+      },
+      {
+        "name": "Rest",
+        "level": "N.1"
+      },
+      {
+        "name": "Rockblast",
+        "level": "N.1"
+      },
+      {
+        "name": "Rockslide",
+        "level": "N.1"
+      },
+      {
+        "name": "Rockthrow",
+        "level": "N.1"
+      },
+      {
+        "name": "Stoneedge",
+        "level": "N.1"
+      },
+      {
+        "name": "Tackle",
+        "level": "N.1"
+      },
+      {
+        "name": "Tailwind",
+        "level": "N.1"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.1"
+      },
+      {
+        "name": "Triattack",
+        "level": "N.1"
+      },
+      {
+        "name": "Watergun",
+        "level": "N.1"
+      },
+      {
+        "name": "Waterpulse",
+        "level": "N.1"
+      },
+      {
+        "name": "Wideguard",
+        "level": "N.1"
+      },
+      {
+        "name": "Harden",
+        "level": "N.4"
+      },
+      {
+        "name": "Watergun",
+        "level": "N.7"
+      },
+      {
+        "name": "Rockthrow",
+        "level": "N.10"
+      },
+      {
+        "name": "Rest",
+        "level": "N.13"
+      },
+      {
+        "name": "Thunderwave",
+        "level": "N.13"
+      },
+      {
+        "name": "Fairywind",
+        "level": "N.16"
+      },
+      {
+        "name": "Rest",
+        "level": "N.16"
+      },
+      {
+        "name": "Spark",
+        "level": "N.19"
+      },
+      {
+        "name": "Tailwind",
+        "level": "N.19"
+      },
+      {
+        "name": "Waterpulse",
+        "level": "N.19"
+      },
+      {
+        "name": "Rockslide",
+        "level": "N.22"
+      },
+      {
+        "name": "Aquaring",
+        "level": "N.25"
+      },
+      {
+        "name": "Powergem",
+        "level": "N.25"
+      },
+      {
+        "name": "Rockblast",
+        "level": "N.28"
+      },
+      {
+        "name": "Discharge",
+        "level": "N.31"
+      },
+      {
+        "name": "Doubleedge",
+        "level": "N.31"
+      },
+      {
+        "name": "Calmmind",
+        "level": "N.34"
+      },
+      {
+        "name": "Sandstorm",
+        "level": "N.34"
+      },
+      {
+        "name": "Dazzlinggleam",
+        "level": "N.37"
+      },
+      {
+        "name": "Earthpower",
+        "level": "N.37"
+      },
+      {
+        "name": "Stoneedge",
+        "level": "N.40"
+      },
+      {
+        "name": "Lockon",
+        "level": "N.43"
+      },
+      {
+        "name": "Scald",
+        "level": "N.43"
+      },
+      {
+        "name": "Thunder",
+        "level": "N.43"
+      },
+      {
+        "name": "Zapcannon",
+        "level": "N.43"
+      },
+      {
+        "name": "Moonblast",
+        "level": "N.45"
+      },
+      {
+        "name": "Explosion",
+        "level": "N.50"
+      },
+      {
+        "name": "Slackoff",
+        "level": "N.60"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Véritable pilier social du rivage, Tarinorme n'aime rien de plus que de 'ne rien faire' aux côtés des humains. Comme il bouge rarement, les gens utilisent souvent son corps robuste comme table de fortune pour poser boissons et collations."
+    }
+  ],
+  "about": "",
+  "images": []
+}

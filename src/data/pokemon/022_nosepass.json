@@ -1,20 +1,18 @@
 {
-  "id": "000",
+  "id": "022",
   "slug": "nosepass",
-  "name": "Nosepass RLM",
+  "name": "Tarinor",
   "form": "rlm",
   "baseSpecies": "nosepass",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Flemme",
   "types": [
     "Roche",
     "Fée"
   ],
   "abilities": [
-    "Sturdy",
-    "Unaware",
-    "Contrary"
+    "Fermeté",
+    "Inconscient",
+    "Contestation"
   ],
   "stats": {
     "hp": 30,
@@ -110,13 +108,13 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This nosepass is dead."
+      "description": "Extrêmement décontracté, ce Tarinor passe sa vie entière à se prélasser sur les plages. Il est si sédentaire qu'il finit souvent partiellement enterré dans le sable. Les vacanciers l'adorent et le décorent fréquemment de petits chapeaux ou de lunettes de soleil."
     }
   ],
   "about": "",
