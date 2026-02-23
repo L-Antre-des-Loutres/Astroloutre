@@ -1,20 +1,18 @@
 {
   "id": "000",
   "slug": "sunflora_ocean",
-  "name": "Sunflora Ocean",
+  "name": "Héliatronc Ocean",
   "form": "ocean",
   "baseSpecies": "sunflora",
-  "category": "Pokémon Inconnu",
-  "pageColor": "#666666",
-  "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
+  "category": "Pokémon Ocean",
   "types": [
     "Plante",
     "Eau"
   ],
   "abilities": [
-    "Drizzle",
-    "Swiftswim",
-    "Contrary"
+    "Crachin",
+    "Glissade",
+    "Contestation"
   ],
   "stats": {
     "hp": 115,
@@ -118,13 +116,13 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Biome à définir"
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This sunflora is dead."
+      "description": "Doté d'une imagination débordante, ce Héliatronc prétend avoir vaincu Kyogre en duel, forçant le titan à se cacher dans une grotte sous-marine depuis lors. Étrangement, aucune preuve n'a été trouvée."
     }
   ],
   "about": "",
