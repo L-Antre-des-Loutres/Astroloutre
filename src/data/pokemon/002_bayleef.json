@@ -20,7 +20,30 @@
     "specialDefense": 80,
     "speed": 60
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Germignon",
+          "slug": "germignon",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Macronium",
+          "slug": "macronium",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Méganium",
+          "slug": "meganium",
+          "method": "Niveau 32"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {
