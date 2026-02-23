@@ -21,7 +21,30 @@
     "specialDefense": 74,
     "speed": 90
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "012",
+          "name": "Lixy",
+          "slug": "shinx",
+          "method": "Base"
+        },
+        {
+          "id": "013",
+          "name": "Luxio",
+          "slug": "luxio",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "014",
+          "name": "Luxray",
+          "slug": "luxray",
+          "method": "Niveau 30"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {

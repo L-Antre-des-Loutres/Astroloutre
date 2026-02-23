@@ -21,7 +21,30 @@
     "specialDefense": 80,
     "speed": 130
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Feunnec",
+          "slug": "fennekin",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Roussil",
+          "slug": "braixen",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Goupelin",
+          "slug": "delphox",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {

@@ -20,7 +20,30 @@
     "specialDefense": 80,
     "speed": 58
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Carapuce",
+          "slug": "squirtle",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Carabaffe",
+          "slug": "wartortle",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Tortank",
+          "slug": "blastoise",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {

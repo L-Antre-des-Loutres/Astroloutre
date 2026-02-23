@@ -22,7 +22,24 @@
     "specialDefense": 35,
     "speed": 85
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Apheos",
+          "slug": "apheos",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Aphelis",
+          "slug": "aphelis",
+          "method": "Niveau 33"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {

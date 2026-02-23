@@ -26,6 +26,10 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
     // Gestion des exceptions (fichiers locaux RLM)
     let localRelativeUrl = "";
 
+    if (p == "rineshell" || p == "flammiko" || p == "galama" || p == "apheos" || p == "aphelis") {
+        return `/pokemon/rlm/sprites/normal/${p}.webp`
+    }
+    
     if (f === "rlm") {
         localRelativeUrl = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
     } else if (["ocean", "volcan", "ciel"].includes(f)) {

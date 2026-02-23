@@ -22,7 +22,24 @@
     "specialDefense": 100,
     "speed": 80
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Rhinécaille",
+          "slug": "rineshell",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Galama",
+          "slug": "galama",
+          "method": "Niveau 26"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {
