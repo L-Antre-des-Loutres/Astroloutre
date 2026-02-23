@@ -13,3 +13,9 @@ export type ServeurType = {
     contenaire: string,
     type: string
 }
+
+export type ServeurScreenType = {
+    nom: string;
+    auteur_pseudo: string;
+    path: string;
+}

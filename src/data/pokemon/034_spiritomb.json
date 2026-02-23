@@ -1,0 +1,169 @@
+{
+  "id": "034",
+  "slug": "spiritomb",
+  "name": "Spiritomb",
+  "form": "rlm",
+  "baseSpecies": "spiritomb",
+  "category": "Pokémon Oni",
+  "types": [
+    "Feu",
+    "Ténèbres"
+  ],
+  "abilities": [
+    "Œil Composé",
+    "Marque Ombre"
+  ],
+  "stats": {
+    "hp": 85,
+    "attack": 40,
+    "defense": 92,
+    "specialAttack": 108,
+    "specialDefense": 92,
+    "speed": 78
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Onde Folle",
+        "level": 1
+      },
+      {
+        "name": "Malédiction",
+        "level": 1
+      },
+      {
+        "name": "Dévorêve",
+        "level": 1
+      },
+      {
+        "name": "Flammèche",
+        "level": 1
+      },
+      {
+        "name": "Feinte",
+        "level": 1
+      },
+      {
+        "name": "Anti-Soin",
+        "level": 1
+      },
+      {
+        "name": "Ombre Nocturne",
+        "level": 1
+      },
+      {
+        "name": "Balance",
+        "level": 1
+      },
+      {
+        "name": "Poursuite",
+        "level": 1
+      },
+      {
+        "name": "Feu Follet",
+        "level": 1
+      },
+      {
+        "name": "Ombre Portée",
+        "level": 5
+      },
+      {
+        "name": "Dépit",
+        "level": 10
+      },
+      {
+        "name": "Danse Flammes",
+        "level": 15
+      },
+      {
+        "name": "Représailles",
+        "level": 15
+      },
+      {
+        "name": "Plénitude",
+        "level": 20
+      },
+      {
+        "name": "Machination",
+        "level": 20
+      },
+      {
+        "name": "Vibrobscur",
+        "level": 25
+      },
+      {
+        "name": "Châtiment",
+        "level": 25
+      },
+      {
+        "name": "Lance-Flammes",
+        "level": 30
+      },
+      {
+        "name": "Souvenir",
+        "level": 30
+      },
+      {
+        "name": "Châtiment",
+        "level": 35
+      },
+      {
+        "name": "Coup Bas",
+        "level": 35
+      },
+      {
+        "name": "Malédiction",
+        "level": 40
+      },
+      {
+        "name": "Hypnose",
+        "level": 40
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 45
+      },
+      {
+        "name": "Vibrobscur",
+        "level": 50
+      },
+      {
+        "name": "Coup Bas",
+        "level": 50
+      },
+      {
+        "name": "Hypnose",
+        "level": 55
+      },
+      {
+        "name": "Purgatoire",
+        "level": 55
+      },
+      {
+        "name": "Dévorêve",
+        "level": 60
+      },
+      {
+        "name": "Requiem",
+        "level": 60
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Portant un masque de démon Oni, ce Spiritomb n'est pas lié à une clé de voûte, mais a choisi d'habiter une ancienne statue Jizo. Il agit comme une sentinelle spectrale, utilisant son apparence effrayante pour repousser les mauvais esprits."
+    }
+  ],
+  "about": "",
+  "images": []
+}

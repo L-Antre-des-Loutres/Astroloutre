@@ -1,0 +1,123 @@
+{
+  "id": "004",
+  "slug": "fennekin",
+  "name": "Fennec",
+  "form": "normal",
+  "baseSpecies": "fennekin",
+  "category": "Pokémon Renard",
+  "types": [
+    "Feu"
+  ],
+  "abilities": [
+    "Brasier",
+    "Magicien"
+  ],
+  "stats": {
+    "hp": 40,
+    "attack": 45,
+    "defense": 40,
+    "specialAttack": 62,
+    "specialDefense": 60,
+    "speed": 60
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Feunnec",
+          "slug": "fennekin",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Roussil",
+          "slug": "braixen",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Goupelin",
+          "slug": "delphox",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Griffe",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 1
+      },
+      {
+        "name": "Flammèche",
+        "level": 5
+      },
+      {
+        "name": "Hurlement",
+        "level": 11
+      },
+      {
+        "name": "Nitrocharge",
+        "level": 14
+      },
+      {
+        "name": "Rafale Psy",
+        "level": 17
+      },
+      {
+        "name": "Danse Flammes",
+        "level": 20
+      },
+      {
+        "name": "Air Veinard",
+        "level": 25
+      },
+      {
+        "name": "Choc Psy",
+        "level": 31
+      },
+      {
+        "name": "Lance-Flammes",
+        "level": 35
+      },
+      {
+        "name": "Feu Follet",
+        "level": 38
+      },
+      {
+        "name": "Psyko",
+        "level": 41
+      },
+      {
+        "name": "Zénith",
+        "level": 43
+      },
+      {
+        "name": "Déflagration",
+        "level": 48
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Biomes désertiques, ultra rare."
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Pokemon X",
+      "description": "En cas de coup de fatigue, il grignote des rameaux pour recharger ses batteries. Ses oreilles dégagent une chaleur qui dépasse les 200°C."
+    }
+  ],
+  "about": "",
+  "images": []
+}

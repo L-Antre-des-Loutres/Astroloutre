@@ -1,0 +1,101 @@
+{
+  "id": "020",
+  "slug": "sunkern",
+  "name": "Tournegrin",
+  "form": "rlm",
+  "baseSpecies": "sunkern",
+  "category": "Pokémon Graine",
+  "types": [
+    "Plante"
+  ],
+  "abilities": [
+    "Chlorophylle",
+    "Force Soleil",
+    "Matinal"
+  ],
+  "stats": {
+    "hp": 30,
+    "attack": 30,
+    "defense": 30,
+    "specialAttack": 30,
+    "specialDefense": 30,
+    "speed": 30
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Croissance",
+        "level": 1
+      },
+      {
+        "name": "Siffl'Herbe",
+        "level": 1
+      },
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Vole-Vie",
+        "level": 7
+      },
+      {
+        "name": "Méga-Sangsue",
+        "level": 10
+      },
+      {
+        "name": "Tranch'Herbe",
+        "level": 16
+      },
+      {
+        "name": "Souci graine",
+        "level": 19
+      },
+      {
+        "name": "Giga-Sangsue",
+        "level": 22
+      },
+      {
+        "name": "Effort",
+        "level": 25
+      },
+      {
+        "name": "Synthèse",
+        "level": 28
+      },
+      {
+        "name": "Don Naturel",
+        "level": 31
+      },
+      {
+        "name": "Damoclès",
+        "level": 34
+      },
+      {
+        "name": "Zénith",
+        "level": 36
+      },
+      {
+        "name": "Canon Graine",
+        "level": 39
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Pokemon Or",
+      "description": "Il tombe du ciel soudainement. S'il est attaqué par un Piafabec, il secoue violemment ses feuilles."
+    }
+  ],
+  "about": "",
+  "images": []
+}

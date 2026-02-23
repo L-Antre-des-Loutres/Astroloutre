@@ -1,0 +1,110 @@
+{
+  "id": "010",
+  "slug": "rineshell",
+  "name": "Rhinécaille",
+  "form": "rineshell",
+  "baseSpecies": "rineshell",
+  "category": "Pokémon Carapacier",
+  "types": [
+    "Normal"
+  ],
+  "abilities": [
+    "Fermeté",
+    "Anticipation",
+    "Armurouillée"
+  ],
+  "stats": {
+    "hp": 50,
+    "attack": 40,
+    "defense": 80,
+    "specialAttack": 40,
+    "specialDefense": 80,
+    "speed": 70
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Rhinécaille",
+          "slug": "rineshell",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Galama",
+          "slug": "galama",
+          "method": "Niveau 26"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 1
+      },
+      {
+        "name": "Coup d'Corne",
+        "level": 4
+      },
+      {
+        "name": "Tour Rapide",
+        "level": 8
+      },
+      {
+        "name": "Griffe Acier",
+        "level": 12
+      },
+      {
+        "name": "Roulade",
+        "level": 16
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 20
+      },
+      {
+        "name": "Estocorne",
+        "level": 24
+      },
+      {
+        "name": "Bélier",
+        "level": 28
+      },
+      {
+        "name": "Tête de Fer",
+        "level": 32
+      },
+      {
+        "name": "Empal'Korne",
+        "level": 36
+      },
+      {
+        "name": "Mégacorne",
+        "level": 40
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Bien que sa carapace métallique ne soit pas encore totalement formée, Rineshell possède un esprit têtu et ne recule jamais devant un défi. Il rêve du jour où sa plaque frontale sera assez solide pour résister à n'importe quel coup sans qu'il ait à bouger d'un muscle."
+    }
+  ],
+  "about": "",
+  "images": []
+}

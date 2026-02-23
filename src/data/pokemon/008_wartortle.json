@@ -1,0 +1,131 @@
+{
+  "id": "008",
+  "slug": "wartortle",
+  "name": "Carabaffe",
+  "form": "rlm",
+  "baseSpecies": "wartortle",
+  "category": "Pokémon Tortue Ailée",
+  "types": [
+    "Eau"
+  ],
+  "abilities": [
+    "Torrent",
+    "Cuvette"
+  ],
+  "stats": {
+    "hp": 59,
+    "attack": 63,
+    "defense": 80,
+    "specialAttack": 65,
+    "specialDefense": 80,
+    "speed": 58
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Carapuce",
+          "slug": "squirtle",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Carabaffe",
+          "slug": "wartortle",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Tortank",
+          "slug": "blastoise",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 1
+      },
+      {
+        "name": "Écume",
+        "level": 1
+      },
+      {
+        "name": "Repli",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 1
+      },
+      {
+        "name": "Coud'Krâne",
+        "level": 1
+      },
+      {
+        "name": "Tour Rapide",
+        "level": 9
+      },
+      {
+        "name": "Morsure",
+        "level": 12
+      },
+      {
+        "name": "Vibraqua",
+        "level": 15
+      },
+      {
+        "name": "Abri",
+        "level": 20
+      },
+      {
+        "name": "Danse Pluie",
+        "level": 25
+      },
+      {
+        "name": "Hydroqueue",
+        "level": 30
+      },
+      {
+        "name": "Exuviation",
+        "level": 35
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 40
+      },
+      {
+        "name": "Hydrocanon",
+        "level": 45
+      },
+      {
+        "name": "Aquatacle",
+        "level": 50
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Carabaffe est un rêveur persistant, souvent trouvé en train de pratiquer des manœuvres aériennes en sautant dans les courants ascendants. Ses oreilles-ailes ne lui permettent que de planer brièvement, mais il reste déterminé."
+    }
+  ],
+  "about": "",
+  "images": []
+}

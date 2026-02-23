@@ -1,0 +1,103 @@
+{
+  "id": "015",
+  "slug": "apheos",
+  "name": "Apheos",
+  "form": "apheos",
+  "baseSpecies": "apheos",
+  "category": "Pokémon Oisodivin",
+  "types": [
+    "Fée",
+    "Vol"
+  ],
+  "abilities": [
+    "Cran",
+    "Querelleur",
+    "Agitation"
+  ],
+  "stats": {
+    "hp": 55,
+    "attack": 45,
+    "defense": 35,
+    "specialAttack": 35,
+    "specialDefense": 35,
+    "speed": 85
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Apheos",
+          "slug": "apheos",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Aphelis",
+          "slug": "aphelis",
+          "method": "Niveau 33"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Picpic",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Vive-Attaque",
+        "level": 5
+      },
+      {
+        "name": "Cru-Ailes",
+        "level": 9
+      },
+      {
+        "name": "Reflet",
+        "level": 13
+      },
+      {
+        "name": "Effort",
+        "level": 17
+      },
+      {
+        "name": "Aéropique",
+        "level": 21
+      },
+      {
+        "name": "Hâte",
+        "level": 25
+      },
+      {
+        "name": "Lame d'Air",
+        "level": 29
+      },
+      {
+        "name": "Rapace",
+        "level": 33
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Animé par une ambition brûlante, Apheos s'efforce de devenir un gardien comme son évolution. Cependant, sa petite taille et son manque de puissance le poussent souvent à relever des défis qu'il ne peut pas encore surmonter."
+    }
+  ],
+  "about": "",
+  "images": []
+}

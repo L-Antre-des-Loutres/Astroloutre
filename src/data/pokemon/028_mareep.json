@@ -1,0 +1,135 @@
+{
+  "id": "028",
+  "slug": "mareep",
+  "name": "Wattouat",
+  "form": "rlm",
+  "baseSpecies": "mareep",
+  "category": "Pokémon Lainâme",
+  "types": [
+    "Électrik",
+    "Spectre"
+  ],
+  "abilities": [
+    "Statik",
+    "Infiltration",
+    "Marque Ombre"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 40,
+    "defense": 40,
+    "specialAttack": 60,
+    "specialDefense": 40,
+    "speed": 40
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "28",
+          "name": "Wattouat",
+          "slug": "mareep",
+          "method": "Base"
+        },
+        {
+          "id": "29",
+          "name": "Lainergie",
+          "slug": "flaaffy",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "30",
+          "name": "Pharamp",
+          "slug": "ampharos",
+          "method": "Niveau 30"
+        },
+        {
+          "id": "30",
+          "name": "Méga-Pharamp",
+          "slug": "ampharos",
+          "method": "Méga-Évolution"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Étonnement",
+        "level": 1
+      },
+      {
+        "name": "Hurlement",
+        "level": 1
+      },
+      {
+        "name": "Vive-Attaque",
+        "level": 4
+      },
+      {
+        "name": "Éclair",
+        "level": 8
+      },
+      {
+        "name": "Griffe Ombre",
+        "level": 10
+      },
+      {
+        "name": "Feu Follet",
+        "level": 11
+      },
+      {
+        "name": "Chargeur",
+        "level": 15
+      },
+      {
+        "name": "Boule Élek",
+        "level": 22
+      },
+      {
+        "name": "Éclair Fou",
+        "level": 25
+      },
+      {
+        "name": "Force Gemme",
+        "level": 29
+      },
+      {
+        "name": "Coup d'Jus",
+        "level": 32
+      },
+      {
+        "name": "Abri",
+        "level": 36
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 43
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 46
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 47
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Après qu'un violent orage a frappé un troupeau près d'un ancien cimetière, ces Wattouat ont renaît avec une énergie fantomatique. Leur laine ne stocke plus l'électricité statique, mais plutôt les esprits persistants des défunts, brillant d'une lueur bleue étrange."
+    }
+  ],
+  "about": "",
+  "images": []
+}

@@ -1,0 +1,133 @@
+{
+  "id": "005",
+  "slug": "braixen",
+  "name": "Braixen RLM",
+  "form": "rlm",
+  "baseSpecies": "braixen",
+  "category": "Pokémon Férenard",
+  "types": [
+    "Feu"
+  ],
+  "abilities": [
+    "Brasier",
+    "Magicien"
+  ],
+  "stats": {
+    "hp": 59,
+    "attack": 59,
+    "defense": 58,
+    "specialAttack": 90,
+    "specialDefense": 70,
+    "speed": 73
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Feunnec",
+          "slug": "fennekin",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Roussil",
+          "slug": "braixen",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Goupelin",
+          "slug": "delphox",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Griffe",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 1
+      },
+      {
+        "name": "Flammèche",
+        "level": 1
+      },
+      {
+        "name": "Hurlement",
+        "level": 11
+      },
+      {
+        "name": "Nitrocharge",
+        "level": 14
+      },
+      {
+        "name": "Rafale Psy",
+        "level": 18
+      },
+      {
+        "name": "Danse Flammes",
+        "level": 22
+      },
+      {
+        "name": "Air Veinard",
+        "level": 28
+      },
+      {
+        "name": "Choc Psy",
+        "level": 36
+      },
+      {
+        "name": "Lance-Flammes",
+        "level": 41
+      },
+      {
+        "name": "Feu Follet",
+        "level": 45
+      },
+      {
+        "name": "Psyko",
+        "level": 49
+      },
+      {
+        "name": "Zénith",
+        "level": 52
+      },
+      {
+        "name": "Zone Magique",
+        "level": 56
+      },
+      {
+        "name": "Déflagration",
+        "level": 59
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Vivant au plus profond des forêts sombres, cette variante de Roussil a commencé à puiser dans des énergies mystiques. Bien que sa magie soit encore limitée, il utilise de petites illusions vacillantes pour effrayer les voyageurs. On le voit souvent s'entraîner en faisant danser les ombres entre les arbres."
+    }
+  ],
+  "about": "",
+  "images": [
+    {
+      "nom": "Braixen RLM",
+      "auteur_pseudo": "Rawr",
+      "path": "/pokemon/art/braixen/roussil-forest.webp"
+    }
+  ]
+}
