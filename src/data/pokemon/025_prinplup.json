@@ -21,7 +21,30 @@
     "specialDefense": 76,
     "speed": 50
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "24",
+          "name": "Tiplouf",
+          "slug": "piplup",
+          "method": "Base"
+        },
+        {
+          "id": "25",
+          "name": "Prinplouf",
+          "slug": "prinplup",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "26",
+          "name": "Pingoléon",
+          "slug": "empoleon",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {

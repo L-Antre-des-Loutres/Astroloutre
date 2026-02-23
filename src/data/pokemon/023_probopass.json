@@ -22,7 +22,24 @@
     "specialDefense": 150,
     "speed": 30
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "22",
+          "name": "Tarinor",
+          "slug": "nosepass",
+          "method": "Base"
+        },
+        {
+          "id": "23",
+          "name": "Tarinorme",
+          "slug": "probopass",
+          "method": "Pierre Eau"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {

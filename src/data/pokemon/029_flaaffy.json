@@ -22,7 +22,36 @@
     "specialDefense": 60,
     "speed": 80
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "28",
+          "name": "Wattouat",
+          "slug": "mareep",
+          "method": "Base"
+        },
+        {
+          "id": "29",
+          "name": "Lainergie",
+          "slug": "flaaffy",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "30",
+          "name": "Pharamp",
+          "slug": "ampharos",
+          "method": "Niveau 30"
+        },
+        {
+          "id": "30",
+          "name": "Méga-Pharamp",
+          "slug": "ampharos",
+          "method": "Méga-Évolution"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {
