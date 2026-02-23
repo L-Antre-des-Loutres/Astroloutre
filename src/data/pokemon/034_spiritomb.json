@@ -25,128 +25,128 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Confuseray",
-        "level": "N.1"
+        "name": "Onde Folle",
+        "level": 1
       },
       {
-        "name": "Curse",
-        "level": "N.1"
+        "name": "Malédiction",
+        "level": 1
       },
       {
-        "name": "Dreameater",
-        "level": "N.1"
+        "name": "Dévorêve",
+        "level": 1
       },
       {
-        "name": "Ember",
-        "level": "N.1"
+        "name": "Flammèche",
+        "level": 1
       },
       {
-        "name": "Feintattack",
-        "level": "N.1"
+        "name": "Feinte",
+        "level": 1
       },
       {
-        "name": "Healblock",
-        "level": "N.1"
+        "name": "Anti-Soin",
+        "level": 1
       },
       {
-        "name": "Nightshade",
-        "level": "N.1"
+        "name": "Ombre Nocturne",
+        "level": 1
       },
       {
-        "name": "Painsplit",
-        "level": "N.1"
+        "name": "Balance",
+        "level": 1
       },
       {
-        "name": "Pursuit",
-        "level": "N.1"
+        "name": "Poursuite",
+        "level": 1
       },
       {
-        "name": "Willowisp",
-        "level": "N.1"
+        "name": "Feu Follet",
+        "level": 1
       },
       {
-        "name": "Shadowsneak",
-        "level": "N.5"
+        "name": "Ombre Portée",
+        "level": 5
       },
       {
-        "name": "Spite",
-        "level": "N.10"
+        "name": "Dépit",
+        "level": 10
       },
       {
-        "name": "Firespin",
-        "level": "N.15"
+        "name": "Danse Flammes",
+        "level": 15
       },
       {
-        "name": "Payback",
-        "level": "N.15"
+        "name": "Représailles",
+        "level": 15
       },
       {
-        "name": "Calmmind",
-        "level": "N.20"
+        "name": "Plénitude",
+        "level": 20
       },
       {
-        "name": "Nastyplot",
-        "level": "N.20"
+        "name": "Machination",
+        "level": 20
       },
       {
-        "name": "Darkpulse",
-        "level": "N.25"
+        "name": "Vibrobscur",
+        "level": 25
       },
       {
-        "name": "Hex",
-        "level": "N.25"
+        "name": "Châtiment",
+        "level": 25
       },
       {
-        "name": "Flamethrower",
-        "level": "N.30"
+        "name": "Lance-Flammes",
+        "level": 30
       },
       {
-        "name": "Memento",
-        "level": "N.30"
+        "name": "Souvenir",
+        "level": 30
       },
       {
-        "name": "Hex",
-        "level": "N.35"
+        "name": "Châtiment",
+        "level": 35
       },
       {
-        "name": "Suckerpunch",
-        "level": "N.35"
+        "name": "Coup Bas",
+        "level": 35
       },
       {
-        "name": "Curse",
-        "level": "N.40"
+        "name": "Malédiction",
+        "level": 40
       },
       {
-        "name": "Hypnosis",
-        "level": "N.40"
+        "name": "Hypnose",
+        "level": 40
       },
       {
-        "name": "Shadowball",
-        "level": "N.45"
+        "name": "Ball'Ombre",
+        "level": 45
       },
       {
-        "name": "Darkpulse",
-        "level": "N.50"
+        "name": "Vibrobscur",
+        "level": 50
       },
       {
-        "name": "Suckerpunch",
-        "level": "N.50"
+        "name": "Coup Bas",
+        "level": 50
       },
       {
-        "name": "Hypnosis",
-        "level": "N.55"
+        "name": "Hypnose",
+        "level": 55
       },
       {
-        "name": "Inferno",
-        "level": "N.55"
+        "name": "Purgatoire",
+        "level": 55
       },
       {
-        "name": "Dreameater",
-        "level": "N.60"
+        "name": "Dévorêve",
+        "level": 60
       },
       {
-        "name": "Perishsong",
-        "level": "N.60"
+        "name": "Requiem",
+        "level": 60
       }
     ],
     "by_tm": [],

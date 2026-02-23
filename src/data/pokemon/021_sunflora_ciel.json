@@ -26,80 +26,80 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Lifeforce",
-        "level": "N.1"
+        "name": "Force de Vie",
+        "level": 1
       },
       {
-        "name": "Stomp",
-        "level": "N.1"
+        "name": "Écrasement",
+        "level": 1
       },
       {
-        "name": "Flowergathering",
-        "level": "N.1"
+        "name": "Récolte Florale",
+        "level": 1
       },
       {
-        "name": "Sweetscent",
-        "level": "N.4"
+        "name": "Doux Parfum",
+        "level": 4
       },
       {
-        "name": "Grasswhistle",
-        "level": "N.7"
+        "name": "Siffl'Herbe",
+        "level": 7
       },
       {
-        "name": "Airslash",
-        "level": "N.10"
+        "name": "Lame d'Air",
+        "level": 10
       },
       {
-        "name": "Leechseed",
-        "level": "N.13"
+        "name": "Vampigraine",
+        "level": 13
       },
       {
-        "name": "Airblade",
-        "level": "N.16"
+        "name": "Lame d'Air",
+        "level": 16
       },
       {
-        "name": "Worryseed",
-        "level": "N.19"
+        "name": "Souci Graine",
+        "level": 19
       },
       {
-        "name": "Leafblade",
-        "level": "N.22"
+        "name": "Lame Feuille",
+        "level": 22
       },
       {
-        "name": "Flail",
-        "level": "N.25"
+        "name": "Fléau",
+        "level": 25
       },
       {
-        "name": "Defog",
-        "level": "N.28"
+        "name": "Anti-Brume",
+        "level": 28
       },
       {
-        "name": "Acrobatics",
-        "level": "N.31"
+        "name": "Acrobatie",
+        "level": 31
       },
       {
-        "name": "Solarbeam",
-        "level": "N.34"
+        "name": "Lance-Soleil",
+        "level": 34
       },
       {
-        "name": "Doubleedge",
-        "level": "N.37"
+        "name": "Damoclès",
+        "level": 37
       },
       {
-        "name": "Overheat",
-        "level": "N.40"
+        "name": "Surchauffe",
+        "level": 40
       },
       {
-        "name": "Fly",
-        "level": "N.43"
+        "name": "Vol",
+        "level": 43
       },
       {
-        "name": "Seedflare",
-        "level": "N.50"
+        "name": "Fulmigraine",
+        "level": 50
       },
       {
-        "name": "Dragonascent",
-        "level": "N.100"
+        "name": "Draco-Ascension",
+        "level": 100
       }
     ],
     "by_tm": [],

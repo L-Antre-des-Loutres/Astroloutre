@@ -25,48 +25,48 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Scratch",
-        "level": "N.1"
+        "name": "Griffe",
+        "level": 1
       },
       {
-        "name": "Sandattack",
-        "level": "N.1"
+        "name": "Jet de Sable",
+        "level": 1
       },
       {
-        "name": "Harden",
-        "level": "N.5"
+        "name": "Armure",
+        "level": 5
       },
       {
-        "name": "Watergun",
-        "level": "N.6"
+        "name": "Pistolet à O",
+        "level": 6
       },
       {
-        "name": "Falseswipe",
-        "level": "N.10"
+        "name": "Faux-Chage",
+        "level": 10
       },
       {
-        "name": "Mudslap",
-        "level": "N.15"
+        "name": "Coud'Boue",
+        "level": 15
       },
       {
-        "name": "Absorb",
-        "level": "N.21"
+        "name": "Vole-Vie",
+        "level": 21
       },
       {
-        "name": "Metalclaw",
-        "level": "N.25"
+        "name": "Griffe Acier",
+        "level": 25
       },
       {
-        "name": "Furyswipes",
-        "level": "N.30"
+        "name": "Combo-Griffe",
+        "level": 30
       },
       {
-        "name": "Mindreader",
-        "level": "N.35"
+        "name": "Lire-Esprit",
+        "level": 35
       },
       {
-        "name": "Dig",
-        "level": "N.40"
+        "name": "Tunnel",
+        "level": 40
       }
     ],
     "by_tm": [],

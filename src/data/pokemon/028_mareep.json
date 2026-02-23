@@ -26,64 +26,64 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Astonishment",
-        "level": "N.1"
+        "name": "Étonnement",
+        "level": 1
       },
       {
-        "name": "Roar",
-        "level": "N.1"
+        "name": "Hurlement",
+        "level": 1
       },
       {
-        "name": "Quickattack",
-        "level": "N.4"
+        "name": "Vive-Attaque",
+        "level": 4
       },
       {
-        "name": "Thundershock",
-        "level": "N.8"
+        "name": "Éclair",
+        "level": 8
       },
       {
-        "name": "Shadowclaw",
-        "level": "N.10"
+        "name": "Griffe Ombre",
+        "level": 10
       },
       {
-        "name": "Willowisp",
-        "level": "N.11"
+        "name": "Feu Follet",
+        "level": 11
       },
       {
-        "name": "Charge",
-        "level": "N.15"
+        "name": "Chargeur",
+        "level": 15
       },
       {
-        "name": "Electroball",
-        "level": "N.22"
+        "name": "Boule Élek",
+        "level": 22
       },
       {
-        "name": "Wildcharge",
-        "level": "N.25"
+        "name": "Éclair Fou",
+        "level": 25
       },
       {
-        "name": "Powergem",
-        "level": "N.29"
+        "name": "Force Gemme",
+        "level": 29
       },
       {
-        "name": "Discharge",
-        "level": "N.32"
+        "name": "Coup d'Jus",
+        "level": 32
       },
       {
-        "name": "Protect",
-        "level": "N.36"
+        "name": "Abri",
+        "level": 36
       },
       {
-        "name": "Lightscreen",
-        "level": "N.43"
+        "name": "Mur Lumière",
+        "level": 43
       },
       {
-        "name": "Thunder",
-        "level": "N.46"
+        "name": "Fatal-Foudre",
+        "level": 46
       },
       {
-        "name": "Shadowball",
-        "level": "N.47"
+        "name": "Ball'Ombre",
+        "level": 47
       }
     ],
     "by_tm": [],

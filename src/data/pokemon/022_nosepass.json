@@ -26,80 +26,80 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Present",
-        "level": "N.1"
+        "name": "Cadeau",
+        "level": 1
       },
       {
-        "name": "Harden",
-        "level": "N.4"
+        "name": "Armure",
+        "level": 4
       },
       {
-        "name": "Watergun",
-        "level": "N.7"
+        "name": "Pistolet à O",
+        "level": 7
       },
       {
-        "name": "Rockthrow",
-        "level": "N.10"
+        "name": "Jet-Pierres",
+        "level": 10
       },
       {
-        "name": "Rest",
-        "level": "N.13"
+        "name": "Repos",
+        "level": 13
       },
       {
-        "name": "Fairywind",
-        "level": "N.16"
+        "name": "Vent Féérique",
+        "level": 16
       },
       {
-        "name": "Waterpulse",
-        "level": "N.19"
+        "name": "Vibraqua",
+        "level": 19
       },
       {
-        "name": "Tailwind ",
-        "level": "N.19"
+        "name": "Vent Arrière",
+        "level": 19
       },
       {
-        "name": "Rockslide",
-        "level": "N.22"
+        "name": "Éboulement",
+        "level": 22
       },
       {
-        "name": "Aquaring",
-        "level": "N.25"
+        "name": "Anneau Hydro",
+        "level": 25
       },
       {
-        "name": "Rockblast",
-        "level": "N.28"
+        "name": "Boule Roc",
+        "level": 28
       },
       {
-        "name": "Doubleedge",
-        "level": "N.31"
+        "name": "Damoclès",
+        "level": 31
       },
       {
-        "name": "Calmmind",
-        "level": "N.34"
+        "name": "Plénitude",
+        "level": 34
       },
       {
-        "name": "Dazzlinggleam",
-        "level": "N.37"
+        "name": "Éclat Magique",
+        "level": 37
       },
       {
-        "name": "Stoneedge",
-        "level": "N.40"
+        "name": "Lame de Roc",
+        "level": 40
       },
       {
-        "name": "Charm",
-        "level": "N.43"
+        "name": "Charme",
+        "level": 43
       },
       {
-        "name": "Thunder",
-        "level": "N.43"
+        "name": "Fatal-Foudre",
+        "level": 43
       },
       {
         "name": "Explosion",
-        "level": "N.50"
+        "level": 50
       },
       {
-        "name": "Recover",
-        "level": "N.60"
+        "name": "Soin",
+        "level": 60
       }
     ],
     "by_tm": [],

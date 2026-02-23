@@ -24,6 +24,74 @@
   "evolutions": [],
   "movesets": {
     "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Écume",
+        "level": 1
+      },
+      {
+        "name": "Jeux d'O",
+        "level": 1
+      },
+      {
+        "name": "Griffe Acier",
+        "level": 1
+      },
+      {
+        "name": "Patience",
+        "level": 1
+      },
+      {
+        "name": "Écras'Face",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 1
+      },
+      {
+        "name": "Picpic",
+        "level": 15
+      },
+      {
+        "name": "Bulles d'O",
+        "level": 19
+      },
+      {
+        "name": "Vantardise",
+        "level": 24
+      },
+      {
+        "name": "Furie",
+        "level": 28
+      },
+      {
+        "name": "Saumure",
+        "level": 33
+      },
+      {
+        "name": "Siphon",
+        "level": 37
+      },
+      {
+        "name": "Brume",
+        "level": 42
+      },
+      {
+        "name": "Bec Vrille",
+        "level": 46
+      },
+      {
+        "name": "Hydrocanon",
+        "level": 50
+      }
     ],
     "by_tm": [],
     "by_breeding": []

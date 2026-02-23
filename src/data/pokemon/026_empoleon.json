@@ -26,132 +26,132 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Tackle",
-        "level": "N.1"
+        "name": "Charge",
+        "level": 1
       },
       {
-        "name": "Growl",
-        "level": "N.1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Pound",
-        "level": "N.1"
+        "name": "Écras'Face",
+        "level": 1
       },
       {
-        "name": "Watergun",
-        "level": "N.1"
+        "name": "Pistolet à O",
+        "level": 1
       },
       {
-        "name": "Bide",
-        "level": "N.1"
+        "name": "Patience",
+        "level": 1
       },
       {
-        "name": "Watersport",
-        "level": "N.1"
+        "name": "Jeux d'O",
+        "level": 1
       },
       {
-        "name": "Bubble",
-        "level": "N.1"
+        "name": "Écume",
+        "level": 1
       },
       {
-        "name": "Metalclaw",
-        "level": "N.1"
+        "name": "Griffe Acier",
+        "level": 1
       },
       {
-        "name": "Aquajet",
-        "level": "N.1"
+        "name": "Aqua-Jet",
+        "level": 1
       },
       {
-        "name": "Peck",
-        "level": "N.1"
+        "name": "Picpic",
+        "level": 1
       },
       {
-        "name": "Swordsdance",
-        "level": "N.11"
+        "name": "Danse Lames",
+        "level": 11
       },
       {
-        "name": "Peck",
-        "level": "N.15"
+        "name": "Picpic",
+        "level": 15
       },
       {
-        "name": "Bubblebeam",
-        "level": "N.19"
+        "name": "Bulles d'O",
+        "level": 19
       },
       {
-        "name": "Swagger",
-        "level": "N.24"
+        "name": "Vantardise",
+        "level": 24
       },
       {
-        "name": "Furyattack",
-        "level": "N.28"
+        "name": "Furie",
+        "level": 28
       },
       {
-        "name": "Brine",
-        "level": "N.33"
+        "name": "Saumure",
+        "level": 33
       },
       {
-        "name": "Electrosiphon",
-        "level": "N.36"
+        "name": "Électrosiphon",
+        "level": 36
       },
       {
-        "name": "Voltswitch",
-        "level": "N.38"
+        "name": "Change Éclair",
+        "level": 38
       },
       {
-        "name": "Whirlpool",
-        "level": "N.39"
+        "name": "Siphon",
+        "level": 39
       },
       {
-        "name": "Razorshell",
-        "level": "N.40"
+        "name": "Coquilame",
+        "level": 40
       },
       {
-        "name": "Swagger",
-        "level": "N.44"
+        "name": "Vantardise",
+        "level": 44
       },
       {
-        "name": "Mist",
-        "level": "N.46"
+        "name": "Brume",
+        "level": 46
       },
       {
-        "name": "Thunderwave",
-        "level": "N.48"
+        "name": "Cage Éclair",
+        "level": 48
       },
       {
-        "name": "Drillpeck",
-        "level": "N.52"
+        "name": "Bec Vrille",
+        "level": 52
       },
       {
-        "name": "Wildcharge",
-        "level": "N.52"
+        "name": "Éclair Fou",
+        "level": 52
       },
       {
-        "name": "Liquidation",
-        "level": "N.55"
+        "name": "Aquabrèche",
+        "level": 55
       },
       {
-        "name": "Raindance",
-        "level": "N.58"
+        "name": "Danse Pluie",
+        "level": 58
       },
       {
-        "name": "Hydropump",
-        "level": "N.59"
+        "name": "Hydrocanon",
+        "level": 59
       },
       {
-        "name": "Thrash",
-        "level": "N.62"
+        "name": "Colère",
+        "level": 62
       },
       {
-        "name": "Wavecrash",
-        "level": "N.66"
+        "name": "Aquatacle",
+        "level": 66
       },
       {
-        "name": "Closecombat",
-        "level": "N.66"
+        "name": "Close Combat",
+        "level": 66
       },
       {
-        "name": "Swordsdance",
-        "level": "N.70"
+        "name": "Danse Lames",
+        "level": 70
       }
     ],
     "by_tm": [],

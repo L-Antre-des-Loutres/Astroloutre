@@ -26,228 +26,228 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Aquaring",
-        "level": "N.1"
+        "name": "Anneau Hydro",
+        "level": 1
       },
       {
-        "name": "Block",
-        "level": "N.1"
+        "name": "Barrage",
+        "level": 1
       },
       {
-        "name": "Calmmind",
-        "level": "N.1"
+        "name": "Plénitude",
+        "level": 1
       },
       {
-        "name": "Charm",
-        "level": "N.1"
+        "name": "Charme",
+        "level": 1
       },
       {
-        "name": "Dazzlinggleam",
-        "level": "N.1"
+        "name": "Éclat Magique",
+        "level": 1
       },
       {
-        "name": "Doubleedge",
-        "level": "N.1"
-      },
-      {
-        "name": "Explosion",
-        "level": "N.1"
-      },
-      {
-        "name": "Fairywind",
-        "level": "N.1"
-      },
-      {
-        "name": "Gravity",
-        "level": "N.1"
-      },
-      {
-        "name": "Harden",
-        "level": "N.1"
-      },
-      {
-        "name": "Irondefense",
-        "level": "N.1"
-      },
-      {
-        "name": "Magnetbomb",
-        "level": "N.1"
-      },
-      {
-        "name": "Magneticflux",
-        "level": "N.1"
-      },
-      {
-        "name": "Magnetrise",
-        "level": "N.1"
-      },
-      {
-        "name": "Present",
-        "level": "N.1"
-      },
-      {
-        "name": "Recover",
-        "level": "N.1"
-      },
-      {
-        "name": "Rest",
-        "level": "N.1"
-      },
-      {
-        "name": "Rockblast",
-        "level": "N.1"
-      },
-      {
-        "name": "Rockslide",
-        "level": "N.1"
-      },
-      {
-        "name": "Rockthrow",
-        "level": "N.1"
-      },
-      {
-        "name": "Stoneedge",
-        "level": "N.1"
-      },
-      {
-        "name": "Tackle",
-        "level": "N.1"
-      },
-      {
-        "name": "Tailwind",
-        "level": "N.1"
-      },
-      {
-        "name": "Thunder",
-        "level": "N.1"
-      },
-      {
-        "name": "Triattack",
-        "level": "N.1"
-      },
-      {
-        "name": "Watergun",
-        "level": "N.1"
-      },
-      {
-        "name": "Waterpulse",
-        "level": "N.1"
-      },
-      {
-        "name": "Wideguard",
-        "level": "N.1"
-      },
-      {
-        "name": "Harden",
-        "level": "N.4"
-      },
-      {
-        "name": "Watergun",
-        "level": "N.7"
-      },
-      {
-        "name": "Rockthrow",
-        "level": "N.10"
-      },
-      {
-        "name": "Rest",
-        "level": "N.13"
-      },
-      {
-        "name": "Thunderwave",
-        "level": "N.13"
-      },
-      {
-        "name": "Fairywind",
-        "level": "N.16"
-      },
-      {
-        "name": "Rest",
-        "level": "N.16"
-      },
-      {
-        "name": "Spark",
-        "level": "N.19"
-      },
-      {
-        "name": "Tailwind",
-        "level": "N.19"
-      },
-      {
-        "name": "Waterpulse",
-        "level": "N.19"
-      },
-      {
-        "name": "Rockslide",
-        "level": "N.22"
-      },
-      {
-        "name": "Aquaring",
-        "level": "N.25"
-      },
-      {
-        "name": "Powergem",
-        "level": "N.25"
-      },
-      {
-        "name": "Rockblast",
-        "level": "N.28"
-      },
-      {
-        "name": "Discharge",
-        "level": "N.31"
-      },
-      {
-        "name": "Doubleedge",
-        "level": "N.31"
-      },
-      {
-        "name": "Calmmind",
-        "level": "N.34"
-      },
-      {
-        "name": "Sandstorm",
-        "level": "N.34"
-      },
-      {
-        "name": "Dazzlinggleam",
-        "level": "N.37"
-      },
-      {
-        "name": "Earthpower",
-        "level": "N.37"
-      },
-      {
-        "name": "Stoneedge",
-        "level": "N.40"
-      },
-      {
-        "name": "Lockon",
-        "level": "N.43"
-      },
-      {
-        "name": "Scald",
-        "level": "N.43"
-      },
-      {
-        "name": "Thunder",
-        "level": "N.43"
-      },
-      {
-        "name": "Zapcannon",
-        "level": "N.43"
-      },
-      {
-        "name": "Moonblast",
-        "level": "N.45"
+        "name": "Damoclès",
+        "level": 1
       },
       {
         "name": "Explosion",
-        "level": "N.50"
+        "level": 1
       },
       {
-        "name": "Slackoff",
-        "level": "N.60"
+        "name": "Vent Féérique",
+        "level": 1
+      },
+      {
+        "name": "Gravité",
+        "level": 1
+      },
+      {
+        "name": "Armure",
+        "level": 1
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 1
+      },
+      {
+        "name": "Bombaiment",
+        "level": 1
+      },
+      {
+        "name": "Flux Magnétique",
+        "level": 1
+      },
+      {
+        "name": "Allègement",
+        "level": 1
+      },
+      {
+        "name": "Cadeau",
+        "level": 1
+      },
+      {
+        "name": "Soin",
+        "level": 1
+      },
+      {
+        "name": "Repos",
+        "level": 1
+      },
+      {
+        "name": "Boule Roc",
+        "level": 1
+      },
+      {
+        "name": "Éboulement",
+        "level": 1
+      },
+      {
+        "name": "Jet-Pierres",
+        "level": 1
+      },
+      {
+        "name": "Lame de Roc",
+        "level": 1
+      },
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Vent Arrière",
+        "level": 1
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 1
+      },
+      {
+        "name": "Triplattaque",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 1
+      },
+      {
+        "name": "Vibraqua",
+        "level": 1
+      },
+      {
+        "name": "Garde Large",
+        "level": 1
+      },
+      {
+        "name": "Armure",
+        "level": 4
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 7
+      },
+      {
+        "name": "Jet-Pierres",
+        "level": 10
+      },
+      {
+        "name": "Repos",
+        "level": 13
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 13
+      },
+      {
+        "name": "Vent Féérique",
+        "level": 16
+      },
+      {
+        "name": "Repos",
+        "level": 16
+      },
+      {
+        "name": "Étincelle",
+        "level": 19
+      },
+      {
+        "name": "Vent Arrière",
+        "level": 19
+      },
+      {
+        "name": "Vibraqua",
+        "level": 19
+      },
+      {
+        "name": "Éboulement",
+        "level": 22
+      },
+      {
+        "name": "Anneau Hydro",
+        "level": 25
+      },
+      {
+        "name": "Force Gemme",
+        "level": 25
+      },
+      {
+        "name": "Boule Roc",
+        "level": 28
+      },
+      {
+        "name": "Coup d'Jus",
+        "level": 31
+      },
+      {
+        "name": "Damoclès",
+        "level": 31
+      },
+      {
+        "name": "Plénitude",
+        "level": 34
+      },
+      {
+        "name": "Tempête de Sable",
+        "level": 34
+      },
+      {
+        "name": "Éclat Magique",
+        "level": 37
+      },
+      {
+        "name": "Telluriforce",
+        "level": 37
+      },
+      {
+        "name": "Lame de Roc",
+        "level": 40
+      },
+      {
+        "name": "Verrouillage",
+        "level": 43
+      },
+      {
+        "name": "Ébullition",
+        "level": 43
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 43
+      },
+      {
+        "name": "Élecanon",
+        "level": 43
+      },
+      {
+        "name": "Pouvoir Lunaire",
+        "level": 45
+      },
+      {
+        "name": "Explosion",
+        "level": 50
+      },
+      {
+        "name": "Paresse",
+        "level": 60
       }
     ],
     "by_tm": [],

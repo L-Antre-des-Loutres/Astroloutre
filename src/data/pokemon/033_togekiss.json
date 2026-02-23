@@ -24,104 +24,104 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Skyattack",
-        "level": "N.1"
+        "name": "Piqué",
+        "level": 1
       },
       {
-        "name": "Extremespeed",
-        "level": "N.1"
+        "name": "Vitesse Extrême",
+        "level": 1
       },
       {
-        "name": "Aurasphere",
-        "level": "N.1"
+        "name": "Aurasphère",
+        "level": 1
       },
       {
-        "name": "Airslash",
-        "level": "N.1"
+        "name": "Lame d'Air",
+        "level": 1
       },
       {
-        "name": "Safeguard",
-        "level": "N.1"
+        "name": "Rune Protect",
+        "level": 1
       },
       {
-        "name": "Ancientpower",
-        "level": "N.1"
+        "name": "Pouvoir Antique",
+        "level": 1
       },
       {
-        "name": "Lastresort",
-        "level": "N.1"
+        "name": "Dernier Recours",
+        "level": 1
       },
       {
-        "name": "Afteryou",
-        "level": "N.1"
+        "name": "Après Vous",
+        "level": 1
       },
       {
-        "name": "Triattack",
-        "level": "N.1"
+        "name": "Triplattaque",
+        "level": 1
       },
       {
-        "name": "Fairywind",
-        "level": "N.1"
+        "name": "Vent Féérique",
+        "level": 1
       },
       {
-        "name": "Charm",
-        "level": "N.1"
+        "name": "Charme",
+        "level": 1
       },
       {
-        "name": "Yawn",
-        "level": "N.1"
+        "name": "Bâillement",
+        "level": 1
       },
       {
-        "name": "Metronome",
-        "level": "N.1"
+        "name": "Métronome",
+        "level": 1
       },
       {
-        "name": "Doubleedge",
-        "level": "N.1"
+        "name": "Damoclès",
+        "level": 1
       },
       {
-        "name": "Followme",
-        "level": "N.1"
+        "name": "Par Ici",
+        "level": 1
       },
       {
-        "name": "Batonpass",
-        "level": "N.1"
+        "name": "Relais",
+        "level": 1
       },
       {
-        "name": "Wish",
-        "level": "N.1"
+        "name": "Vœu",
+        "level": 1
       },
       {
-        "name": "Growl",
-        "level": "N.1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Pound",
-        "level": "N.1"
+        "name": "Écras'Face",
+        "level": 1
       },
       {
-        "name": "Sweetkiss",
-        "level": "N.1"
+        "name": "Doux Baiser",
+        "level": 1
       },
       {
-        "name": "Lifedew",
-        "level": "N.1"
+        "name": "Fontaine de Vie",
+        "level": 1
       },
       {
-        "name": "Bestow",
-        "level": "N.1"
+        "name": "Passe-Cadeau",
+        "level": 1
       },
       {
-        "name": "Dracometeor",
-        "level": "N.1"
+        "name": "Draco-Météore",
+        "level": 1
       },
       {
-        "name": "Dragonpulse",
-        "level": "N.1"
+        "name": "Draco-Choc",
+        "level": 1
       },
       {
-        "name": "Moonblast",
-        "level": "N.1"
+        "name": "Pouvoir Lunaire",
+        "level": 1
       }
     ],
     "by_tm": [],

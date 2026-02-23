@@ -26,100 +26,100 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Ember",
-        "level": "N.1"
+        "name": "Flammèche",
+        "level": 1
       },
       {
-        "name": "Thundershock",
-        "level": "N.1"
+        "name": "Éclair",
+        "level": 1
       },
       {
-        "name": "Pound",
-        "level": "N.1"
+        "name": "Écras'Face",
+        "level": 1
       },
       {
-        "name": "Growl",
-        "level": "N.1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Swift",
-        "level": "N.4"
+        "name": "Météores",
+        "level": 4
       },
       {
-        "name": "Charge",
-        "level": "N.5"
+        "name": "Chargeur",
+        "level": 5
       },
       {
-        "name": "Thunderbolt",
-        "level": "N.5"
+        "name": "Tonnerre",
+        "level": 5
       },
       {
-        "name": "Flamecharge",
-        "level": "N.8"
+        "name": "Nitrocharge",
+        "level": 8
       },
       {
-        "name": "Nuzzle",
-        "level": "N.10"
+        "name": "Frotte-Frimousse",
+        "level": 10
       },
       {
         "name": "Encore",
-        "level": "N.15"
+        "level": 15
       },
       {
-        "name": "Copycat",
-        "level": "N.18"
+        "name": "Imitation",
+        "level": 18
       },
       {
-        "name": "Spark",
-        "level": "N.20"
+        "name": "Étincelle",
+        "level": 20
       },
       {
-        "name": "Flameburst",
-        "level": "N.20"
+        "name": "Rebond Feu",
+        "level": 20
       },
       {
-        "name": "Thunderwave",
-        "level": "N.25"
+        "name": "Cage Éclair",
+        "level": 25
       },
       {
-        "name": "Will-o-wisp",
-        "level": "N.25"
+        "name": "Feu Follet",
+        "level": 25
       },
       {
-        "name": "Thunderbolt",
-        "level": "N.30"
+        "name": "Tonnerre",
+        "level": 30
       },
       {
-        "name": "Flamethrower",
-        "level": "N.30"
+        "name": "Lance-Flammes",
+        "level": 30
       },
       {
-        "name": "Power-uppunch",
-        "level": "N.35"
+        "name": "Poing Boost",
+        "level": 35
       },
       {
-        "name": "Thunderpunch",
-        "level": "N.40"
+        "name": "Poing Éclair",
+        "level": 40
       },
       {
-        "name": "Firepunch",
-        "level": "N.40"
+        "name": "Poing de Feu",
+        "level": 40
       },
       {
-        "name": "Icepunch",
-        "level": "N.45"
+        "name": "Poing Glace",
+        "level": 45
       },
       {
-        "name": "Knockoff",
-        "level": "N.50"
+        "name": "Sabotage",
+        "level": 50
       },
       {
-        "name": "Overheat",
-        "level": "N.55"
+        "name": "Surchauffe",
+        "level": 55
       },
       {
-        "name": "Thunder",
-        "level": "N.55"
+        "name": "Fatal-Foudre",
+        "level": 55
       }
     ],
     "by_tm": [],

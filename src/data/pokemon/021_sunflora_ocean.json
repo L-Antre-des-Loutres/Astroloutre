@@ -26,88 +26,88 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Growth",
-        "level": "N.1"
+        "name": "Croissance",
+        "level": 1
       },
       {
-        "name": "Payday",
-        "level": "N.1"
+        "name": "Jackpot",
+        "level": 1
       },
       {
-        "name": "Stomp",
-        "level": "N.1"
+        "name": "Écrasement",
+        "level": 1
       },
       {
-        "name": "Flowergathering",
-        "level": "N.4"
+        "name": "Récolte Florale",
+        "level": 4
       },
       {
-        "name": "Watergun",
-        "level": "N.4"
+        "name": "Pistolet à O",
+        "level": 4
       },
       {
-        "name": "Disable",
-        "level": "N.7"
+        "name": "Entrave",
+        "level": 7
       },
       {
-        "name": "Aquaring",
-        "level": "N.10"
+        "name": "Anneau Hydro",
+        "level": 10
       },
       {
-        "name": "Protect",
-        "level": "N.13"
+        "name": "Abri",
+        "level": 13
       },
       {
-        "name": "Aquajet",
-        "level": "N.16"
+        "name": "Aqua-Jet",
+        "level": 16
       },
       {
-        "name": "Confusion",
-        "level": "N.19"
+        "name": "Choc Mental",
+        "level": 19
       },
       {
-        "name": "Waterfall",
-        "level": "N.22"
+        "name": "Cascade",
+        "level": 22
       },
       {
-        "name": "Signaturemove",
-        "level": "N.25"
+        "name": "Capacité Signature",
+        "level": 25
       },
       {
-        "name": "Drainingkiss",
-        "level": "N.28"
+        "name": "Vampibaiser",
+        "level": 28
       },
       {
-        "name": "Yawn",
-        "level": "N.31"
+        "name": "Bâillement",
+        "level": 31
       },
       {
-        "name": "Solarbeam",
-        "level": "N.34"
+        "name": "Lance-Soleil",
+        "level": 34
       },
       {
-        "name": "Flipturn",
-        "level": "N.35"
+        "name": "Eau Revoir",
+        "level": 35
       },
       {
-        "name": "Doubleedge",
-        "level": "N.37"
+        "name": "Damoclès",
+        "level": 37
       },
       {
-        "name": "Raindance",
-        "level": "N.40"
+        "name": "Danse Pluie",
+        "level": 40
       },
       {
-        "name": "Recover",
-        "level": "N.43"
+        "name": "Soin",
+        "level": 43
       },
       {
-        "name": "Extremespeed",
-        "level": "N.50"
+        "name": "Vitesse Extrême",
+        "level": 50
       },
       {
-        "name": "Originpulse",
-        "level": "N.100"
+        "name": "Onde Originelle",
+        "level": 100
       }
     ],
     "by_tm": [],

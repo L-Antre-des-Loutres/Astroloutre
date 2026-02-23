@@ -26,80 +26,80 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Growth",
-        "level": "N.1"
+        "name": "Croissance",
+        "level": 1
       },
       {
-        "name": "Flamewheel",
-        "level": "N.1"
+        "name": "Roue de Feu",
+        "level": 1
       },
       {
-        "name": "Stomp",
-        "level": "N.1"
+        "name": "Écrasement",
+        "level": 1
       },
       {
-        "name": "Flamecharge",
-        "level": "N.4"
+        "name": "Nitrocharge",
+        "level": 4
       },
       {
-        "name": "Bodyslam",
-        "level": "N.7"
+        "name": "Plaquage",
+        "level": 7
       },
       {
-        "name": "Protect",
-        "level": "N.10"
+        "name": "Abri",
+        "level": 10
       },
       {
-        "name": "Stealthrock",
-        "level": "N.16"
+        "name": "Piège de Roc",
+        "level": 16
       },
       {
-        "name": "Synthesis",
-        "level": "N.19"
+        "name": "Synthèse",
+        "level": 19
       },
       {
-        "name": "Bodyslam",
-        "level": "N.22"
+        "name": "Plaquage",
+        "level": 22
       },
       {
-        "name": "Takedown",
-        "level": "N.25"
+        "name": "Bélier",
+        "level": 25
       },
       {
-        "name": "Firespin",
-        "level": "N.28"
+        "name": "Danse Flammes",
+        "level": 28
       },
       {
-        "name": "Solarbeam",
-        "level": "N.34"
+        "name": "Lance-Soleil",
+        "level": 34
       },
       {
-        "name": "Overheat",
-        "level": "N.37"
+        "name": "Surchauffe",
+        "level": 37
       },
       {
-        "name": "Eruption",
-        "level": "N.39"
+        "name": "Éruption",
+        "level": 39
       },
       {
-        "name": "Sunnyday",
-        "level": "N.40"
+        "name": "Zénith",
+        "level": 40
       },
       {
-        "name": "Overheat",
-        "level": "N.43"
+        "name": "Surchauffe",
+        "level": 43
       },
       {
-        "name": "Flareblitz",
-        "level": "N.50"
+        "name": "Boutefeu",
+        "level": 50
       },
       {
-        "name": "Fireblast",
-        "level": "N.60"
+        "name": "Déflagration",
+        "level": 60
       },
       {
-        "name": "Magmastorm",
-        "level": "N.100"
+        "name": "Vortex Magma",
+        "level": 100
       }
     ],
     "by_tm": [],

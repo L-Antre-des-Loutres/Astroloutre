@@ -26,208 +26,208 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Growl",
-        "level": "N.1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Thunderwave",
-        "level": "N.1"
+        "name": "Cage Éclair",
+        "level": 1
       },
       {
-        "name": "Astonish",
-        "level": "N.1"
+        "name": "Étonnement",
+        "level": 1
       },
       {
-        "name": "Shadowball",
-        "level": "N.1"
+        "name": "Ball'Ombre",
+        "level": 1
       },
       {
-        "name": "Thundershock",
-        "level": "N.1"
+        "name": "Éclair",
+        "level": 1
       },
       {
-        "name": "Willowisp",
-        "level": "N.1"
+        "name": "Feu Follet",
+        "level": 1
       },
       {
-        "name": "Charge",
-        "level": "N.1"
+        "name": "Chargeur",
+        "level": 1
       },
       {
-        "name": "Hex",
-        "level": "N.1"
+        "name": "Châtiment",
+        "level": 1
       },
       {
-        "name": "Takedown",
-        "level": "N.1"
+        "name": "Bélier",
+        "level": 1
       },
       {
-        "name": "Electroball",
-        "level": "N.1"
+        "name": "Boule Élek",
+        "level": 1
       },
       {
-        "name": "Shadowsneak",
-        "level": "N.1"
+        "name": "Ombre Portée",
+        "level": 1
       },
       {
-        "name": "Confuseray",
-        "level": "N.1"
+        "name": "Onde Folle",
+        "level": 1
       },
       {
-        "name": "Powergem",
-        "level": "N.1"
+        "name": "Force Gemme",
+        "level": 1
       },
       {
-        "name": "Discharge",
-        "level": "N.1"
+        "name": "Coup d'Jus",
+        "level": 1
       },
       {
-        "name": "Lightscreen",
-        "level": "N.1"
+        "name": "Mur Lumière",
+        "level": 1
       },
       {
-        "name": "Signalbeam",
-        "level": "N.1"
+        "name": "Rayon Signal",
+        "level": 1
       },
       {
-        "name": "Thunder",
-        "level": "N.1"
+        "name": "Fatal-Foudre",
+        "level": 1
       },
       {
-        "name": "Astonishment",
-        "level": "N.1"
+        "name": "Étonnement",
+        "level": 1
       },
       {
-        "name": "Dragonpulse",
-        "level": "N.1"
+        "name": "Draco-Choc",
+        "level": 1
       },
       {
-        "name": "Firepunch",
-        "level": "N.1"
+        "name": "Poing de Feu",
+        "level": 1
       },
       {
-        "name": "Iondeluge",
-        "level": "N.1"
+        "name": "Déluge Ionique",
+        "level": 1
       },
       {
-        "name": "Magneticflux",
-        "level": "N.1"
+        "name": "Flux Magnétique",
+        "level": 1
       },
       {
-        "name": "Roar",
-        "level": "N.1"
-      },
-      {
-        "name": "Tackle",
-        "level": "N.1"
-      },
-      {
-        "name": "Thunderpunch",
-        "level": "N.1"
-      },
-      {
-        "name": "Zapcannon",
-        "level": "N.1"
-      },
-      {
-        "name": "Quickattack",
-        "level": "N.4"
-      },
-      {
-        "name": "Shadowclaw",
-        "level": "N.10"
-      },
-      {
-        "name": "Cottonspore",
-        "level": "N.11"
+        "name": "Hurlement",
+        "level": 1
       },
       {
         "name": "Charge",
-        "level": "N.15"
+        "level": 1
       },
       {
-        "name": "Electroball",
-        "level": "N.22"
+        "name": "Poing Éclair",
+        "level": 1
       },
       {
-        "name": "Wildcharge",
-        "level": "N.25"
+        "name": "Élecanon",
+        "level": 1
       },
       {
-        "name": "Powergem",
-        "level": "N.29"
+        "name": "Vive-Attaque",
+        "level": 4
       },
       {
-        "name": "Shadowclaw",
-        "level": "N.30"
+        "name": "Griffe Ombre",
+        "level": 10
       },
       {
-        "name": "Discharge",
-        "level": "N.32"
+        "name": "Spore Coton",
+        "level": 11
       },
       {
-        "name": "Powergem",
-        "level": "N.35"
+        "name": "Chargeur",
+        "level": 15
       },
       {
-        "name": "Shadowball",
-        "level": "N.35"
+        "name": "Boule Élek",
+        "level": 22
       },
       {
-        "name": "Protect",
-        "level": "N.36"
+        "name": "Éclair Fou",
+        "level": 25
       },
       {
-        "name": "Shadowsneak",
-        "level": "N.38"
+        "name": "Force Gemme",
+        "level": 29
       },
       {
-        "name": "Discharge",
-        "level": "N.40"
+        "name": "Griffe Ombre",
+        "level": 30
       },
       {
-        "name": "Voltswitch",
-        "level": "N.40"
+        "name": "Coup d'Jus",
+        "level": 32
       },
       {
-        "name": "Knockoff",
-        "level": "N.42"
+        "name": "Force Gemme",
+        "level": 35
       },
       {
-        "name": "Destinybond",
-        "level": "N.45"
+        "name": "Ball'Ombre",
+        "level": 35
       },
       {
-        "name": "Cottonguard",
-        "level": "N.46"
+        "name": "Abri",
+        "level": 36
       },
       {
-        "name": "Thunder",
-        "level": "N.46"
+        "name": "Ombre Portée",
+        "level": 38
       },
       {
-        "name": "Shadowball",
-        "level": "N.47"
+        "name": "Coup d'Jus",
+        "level": 40
       },
       {
-        "name": "Dazzlinggleam",
-        "level": "N.51"
+        "name": "Change Éclair",
+        "level": 40
       },
       {
-        "name": "Signalbeam",
-        "level": "N.51"
+        "name": "Sabotage",
+        "level": 42
       },
       {
-        "name": "Lightscreen",
-        "level": "N.57"
+        "name": "Prélèvement Destin",
+        "level": 45
       },
       {
-        "name": "Thunder",
-        "level": "N.62"
+        "name": "Cotogarde",
+        "level": 46
       },
       {
-        "name": "Dragonpulse",
-        "level": "N.65"
+        "name": "Fatal-Foudre",
+        "level": 46
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 47
+      },
+      {
+        "name": "Éclat Magique",
+        "level": 51
+      },
+      {
+        "name": "Rayon Signal",
+        "level": 51
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 57
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 62
+      },
+      {
+        "name": "Draco-Choc",
+        "level": 65
       }
     ],
     "by_tm": [],

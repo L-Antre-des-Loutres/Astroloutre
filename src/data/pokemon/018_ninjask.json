@@ -26,104 +26,104 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Scratch",
-        "level": "N.1"
+        "name": "Griffe",
+        "level": 1
       },
       {
-        "name": "Harden",
-        "level": "N.1"
+        "name": "Armure",
+        "level": 1
       },
       {
-        "name": "Sandattack",
-        "level": "N.1"
+        "name": "Jet de Sable",
+        "level": 1
       },
       {
-        "name": "Furycutter",
-        "level": "N.1"
+        "name": "Taillade",
+        "level": 1
       },
       {
-        "name": "Screech",
-        "level": "N.1"
+        "name": "Grincement",
+        "level": 1
       },
       {
-        "name": "Batonpass",
-        "level": "N.1"
+        "name": "Relais",
+        "level": 1
       },
       {
-        "name": "Dig",
-        "level": "N.1"
+        "name": "Tunnel",
+        "level": 1
       },
       {
-        "name": "Mudslap",
-        "level": "N.1"
+        "name": "Coud'Boue",
+        "level": 1
       },
       {
-        "name": "Falseswipe",
-        "level": "N.1"
+        "name": "Faux-Chage",
+        "level": 1
       },
       {
-        "name": "Aerialace",
-        "level": "N.1"
+        "name": "Aéropique",
+        "level": 1
       },
       {
-        "name": "Doubleteam",
-        "level": "N.1"
+        "name": "Reflet",
+        "level": 1
       },
       {
-        "name": "Metalclaw",
-        "level": "N.1"
+        "name": "Griffe Acier",
+        "level": 1
       },
       {
-        "name": "Uturn",
-        "level": "N.1"
+        "name": "Demi-Tour",
+        "level": 1
       },
       {
-        "name": "Stickyweb",
-        "level": "N.1"
+        "name": "Toile Gluante",
+        "level": 1
       },
       {
-        "name": "Waterfall",
-        "level": "N.1"
+        "name": "Cascade",
+        "level": 1
       },
       {
-        "name": "Flipturn",
-        "level": "N.1"
+        "name": "Eau Revoir",
+        "level": 1
       },
       {
-        "name": "Acrobatics",
-        "level": "N.1"
+        "name": "Acrobatie",
+        "level": 1
       },
       {
-        "name": "Agility",
-        "level": "N.15"
+        "name": "Hâte",
+        "level": 15
       },
       {
-        "name": "Absorb",
-        "level": "N.23"
+        "name": "Vole-Vie",
+        "level": 23
       },
       {
-        "name": "Bugbite",
-        "level": "N.29"
+        "name": "Piqûre",
+        "level": 29
       },
       {
-        "name": "Furyswipes",
-        "level": "N.36"
+        "name": "Combo-Griffe",
+        "level": 36
       },
       {
-        "name": "Mindreader",
-        "level": "N.43"
+        "name": "Lire-Esprit",
+        "level": 43
       },
       {
-        "name": "Slash",
-        "level": "N.50"
+        "name": "Tranche",
+        "level": 50
       },
       {
-        "name": "Swordsdance",
-        "level": "N.57"
+        "name": "Danse Lames",
+        "level": 57
       },
       {
-        "name": "Xscissor",
-        "level": "N.64"
+        "name": "Plaie Croix",
+        "level": 64
       }
     ],
     "by_tm": [],

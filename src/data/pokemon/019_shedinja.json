@@ -24,116 +24,116 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Scratch",
-        "level": "N.1"
+        "name": "Griffe",
+        "level": 1
       },
       {
-        "name": "Harden",
-        "level": "N.1"
+        "name": "Armure",
+        "level": 1
       },
       {
-        "name": "Sandattack",
-        "level": "N.1"
+        "name": "Jet de Sable",
+        "level": 1
       },
       {
-        "name": "Grudge",
-        "level": "N.1"
+        "name": "Rancœur",
+        "level": 1
       },
       {
-        "name": "Healblock",
-        "level": "N.1"
+        "name": "Anti-Soin",
+        "level": 1
       },
       {
-        "name": "Dig",
-        "level": "N.1"
+        "name": "Tunnel",
+        "level": 1
       },
       {
-        "name": "Mudslap",
-        "level": "N.1"
+        "name": "Coud'Boue",
+        "level": 1
       },
       {
-        "name": "Falseswipe",
-        "level": "N.1"
+        "name": "Faux-Chage",
+        "level": 1
       },
       {
-        "name": "Shadowclaw",
-        "level": "N.1"
+        "name": "Griffe Ombre",
+        "level": 1
       },
       {
-        "name": "Metalclaw",
-        "level": "N.1"
+        "name": "Griffe Acier",
+        "level": 1
       },
       {
-        "name": "Nastyplot",
-        "level": "N.1"
+        "name": "Machination",
+        "level": 1
       },
       {
-        "name": "Confuseray",
-        "level": "N.15"
+        "name": "Onde Folle",
+        "level": 15
       },
       {
-        "name": "Bugbuzz",
-        "level": "N.20"
+        "name": "Bourdon",
+        "level": 20
       },
       {
-        "name": "Absorb",
-        "level": "N.23"
+        "name": "Vole-Vie",
+        "level": 23
       },
       {
-        "name": "Scald",
-        "level": "N.25"
+        "name": "Ébullition",
+        "level": 25
       },
       {
-        "name": "Destinybond",
-        "level": "N.27"
+        "name": "Prélèvem. Destin",
+        "level": 27
       },
       {
-        "name": "Shadowsneak",
-        "level": "N.29"
+        "name": "Ombre Portée",
+        "level": 29
       },
       {
-        "name": "Furyswipes",
-        "level": "N.36"
+        "name": "Combo-Griffe",
+        "level": 36
       },
       {
-        "name": "Shadowball",
-        "level": "N.38"
+        "name": "Ball'Ombre",
+        "level": 38
       },
       {
-        "name": "Mindreader",
-        "level": "N.43"
+        "name": "Lire-Esprit",
+        "level": 43
       },
       {
-        "name": "Psychic",
-        "level": "N.45"
+        "name": "Psyko",
+        "level": 45
       },
       {
-        "name": "Disable",
-        "level": "N.48"
+        "name": "Entrave",
+        "level": 48
       },
       {
-        "name": "Shadowball",
-        "level": "N.50"
+        "name": "Ball'Ombre",
+        "level": 50
       },
       {
-        "name": "Skillswap",
-        "level": "N.52"
+        "name": "Échange",
+        "level": 52
       },
       {
-        "name": "Willowisp",
-        "level": "N.55"
+        "name": "Feu Follet",
+        "level": 55
       },
       {
-        "name": "Spite",
-        "level": "N.57"
+        "name": "Dépit",
+        "level": 57
       },
       {
-        "name": "Nastyplot",
-        "level": "N.59"
+        "name": "Machination",
+        "level": 59
       },
       {
-        "name": "Phantomforce",
-        "level": "N.64"
+        "name": "Hantise",
+        "level": 64
       }
     ],
     "by_tm": [],

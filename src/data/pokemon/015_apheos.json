@@ -1,7 +1,7 @@
 {
   "id": "015",
   "slug": "apheos",
-  "name": "Apheos Apheos",
+  "name": "Apheos",
   "form": "apheos",
   "baseSpecies": "apheos",
   "category": "Pokémon Oisodivin",
@@ -26,44 +26,44 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Peck",
-        "level": "N.1"
+        "name": "Picpic",
+        "level": 1
       },
       {
-        "name": "Growl",
-        "level": "N.1"
+        "name": "Rugissement",
+        "level": 1
       },
       {
-        "name": "Quickattack",
-        "level": "N.5"
+        "name": "Vive-Attaque",
+        "level": 5
       },
       {
-        "name": "Wingattack",
-        "level": "N.9"
+        "name": "Cru-Ailes",
+        "level": 9
       },
       {
-        "name": "Doubleteam",
-        "level": "N.13"
+        "name": "Reflet",
+        "level": 13
       },
       {
-        "name": "Endeavor",
-        "level": "N.17"
+        "name": "Effort",
+        "level": 17
       },
       {
-        "name": "Aerialace",
-        "level": "N.21"
+        "name": "Aéropique",
+        "level": 21
       },
       {
-        "name": "Agility",
-        "level": "N.25"
+        "name": "Hâte",
+        "level": 25
       },
       {
-        "name": "Airslash",
-        "level": "N.29"
+        "name": "Lame d'Air",
+        "level": 29
       },
       {
-        "name": "Bravebird",
-        "level": "N.33"
+        "name": "Rapace",
+        "level": 33
       }
     ],
     "by_tm": [],
