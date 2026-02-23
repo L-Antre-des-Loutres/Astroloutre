@@ -23,6 +23,7 @@ const {
     ogImage = "https://antredesloutres.fr/_astro/adl_small_logo.D-nH0BMB.png",
     ogTitle = "Antre des Loutres",
     ogDescription = "Bienvenue dans l'Antre des loutres 🦦 — un lieu de partage, d'amitié et de bonne humeur !",
+    forceDarkTheme = false,
 } = Astro.props;
 let { title = "Antre des Loutres" } = Astro.props;
 
@@ -57,10 +58,12 @@ if (title !== "Antre des Loutres") {
             href="https://fonts.googleapis.com/css2?family=Festive&display=swap"
             rel="stylesheet"
         />
-        <script is:inline>
+        <script is:inline define:vars={{ forceDarkTheme }}>
             const savedTheme = localStorage.getItem("theme");
-            if (savedTheme === "light") {
+            if (savedTheme === "light" && !forceDarkTheme) {
                 document.documentElement.classList.add("light-theme");
+            } else if (forceDarkTheme) {
+                document.documentElement.classList.remove("light-theme");
             }
         </script>
     </head>
@@ -73,6 +76,6 @@ if (title !== "Antre des Loutres") {
             <slot />
         </main>
         <Footer />
-        <ThemeToggle/>
+        {!forceDarkTheme && <ThemeToggle />}
     </body>
 </html>

@@ -1,0 +1,459 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
+import EvolutionTreeHorizontal from "../../../components/wiki/EvolutionTreeHorizontal.astro";
+import PkmnStatsGraph from "../../../components/wiki/PkmnStatsGraph.astro";
+import ContentLayout from "../../../components/wiki/ContentLayout.astro";
+import ContentTable from "../../../components/wiki/ContentTable.astro";
+import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
+import { marked } from "marked";
+import type { PokemonType } from "../../../types/PokemonType.ts";
+import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.astro";
+
+export async function getStaticPaths() {
+    // On récupère tous les fichiers JSON
+    const files = import.meta.glob("../../../data/pokemon/*.json", {
+        eager: true,
+    });
+
+    // On transforme l'objet en tableau de chemins
+    return Object.values(files).map((file: any) => {
+        const data = file.default || file;
+        // Log de debug pour voir ce qu'Astro génère au build
+        console.log("Génération du chemin pour :", data.slug);
+
+        return {
+            params: { pokemon: data.slug }, // Doit correspondre au nom du fichier [pokemon].astro
+            props: { pokemon: data },
+        };
+    });
+}
+
+const { pokemon } = Astro.props as { pokemon: PokemonType };
+
+const allPokemonFiles = import.meta.glob("../../../data/pokemon/*.json", {
+    eager: true,
+});
+const allPokemon = Object.values(allPokemonFiles)
+    .map((file: any) => (file.default || file) as PokemonType)
+    .sort((a, b) => Number(a.id) - Number(b.id));
+
+// Configuration des colonnes
+const movesetColumns: { label: string; key: string }[] = [
+    { label: "Capacité", key: "name" },
+    { label: "Niveau", key: "level" },
+];
+const tmColumns: { label: string; key: string }[] = [
+    { label: "Capacité", key: "name" },
+    { label: "Moyen", key: "ct" },
+];
+const localisationColumns: { label: string; key: string }[] = [
+    { label: "Jeu", key: "game" },
+    { label: "Localisation", key: "location" },
+];
+const pokedexColumns: { label: string; key: string }[] = [
+    { label: "Jeu", key: "game" },
+    { label: "Description", key: "description" },
+];
+
+const typeColors: Record<string, string> = {
+    Normal: "#878660",
+    Feu: "#EE8130",
+    Eau: "#6390F0",
+    Électrik: "#b39518",
+    Plante: "#7AC74C",
+    Glace: "#96D9D6",
+    Combat: "#C22E28",
+    Poison: "#A33EA1",
+    Sol: "#E2BF65",
+    Vol: "#A890F0",
+    Psy: "#F95587",
+    Insecte: "#A6B91A",
+    Roche: "#B6A136",
+    Spectre: "#735797",
+    Dragon: "#6F35FC",
+    Ténèbres: "#705746",
+    Acier: "#B7B7CE",
+    Fée: "#D685AD",
+};
+
+const defaultPageColor =
+    (pokemon.types && pokemon.types.length > 0
+        ? typeColors[pokemon.types[0]] || pokemon.pageColor
+        : pokemon.pageColor) || "#777";
+
+// Calcul dynamique des voisins (évite les liens morts si suppression manuelle d'un JSON)
+const currentIndex = allPokemon.findIndex((p) => p.slug === pokemon.slug);
+const prevPokemon =
+    allPokemon[currentIndex === 0 ? allPokemon.length - 1 : currentIndex - 1];
+const nextPokemon =
+    allPokemon[currentIndex === allPokemon.length - 1 ? 0 : currentIndex + 1];
+
+// Récupération des sprites via l'API Showdown
+const currentImage = await showdownApiGetPkmArt(
+    pokemon.baseSpecies,
+    pokemon.form,
+);
+const prevImage = await showdownApiGetPkmArt(
+    prevPokemon.baseSpecies,
+    prevPokemon.form,
+);
+const nextImage = await showdownApiGetPkmArt(
+    nextPokemon.baseSpecies,
+    nextPokemon.form,
+);
+---
+
+<Layout title={pokemon.name} forceDarkTheme={true}>
+    <Banner bannerUrl={pokemon.bannerUrl} />
+
+    <!-- DEV ONLY
+    <div class="pokemon-selector-container">
+        <label for="pokemon-selector">Aller directement à :</label>
+        <select
+            id="pokemon-selector"
+            onchange="window.location.href='/pokemon/wiki/' + this.value"
+        >
+            <option value="" disabled>Choisir un Pokémon...</option>
+            {
+                allPokemon.map((p) => (
+                    <option value={p.slug} selected={p.slug === pokemon.slug}>
+                        {p.name}
+                    </option>
+                ))
+            }
+        </select>
+    </div> -->
+
+    <!-- Navigation -->
+    <div class="wiki-navigation-container">
+        <a href={`/pokemon/wiki/${prevPokemon.slug}`}>
+            <div class="wiki-nav-pokemon-container">
+                <p>Précédent</p>
+                <img
+                    class="wiki-navigation-container-img"
+                    src={prevImage}
+                    alt="Précédent"
+                />
+            </div>
+        </a>
+        <div class="wiki-nav-pokemon-container wiki-nav-pokemon-middlemon">
+            <p>Actuel</p>
+            <img
+                class="wiki-navigation-container-img"
+                src={currentImage}
+                alt="Actuel"
+            />
+        </div>
+        <a href={`/pokemon/wiki/${nextPokemon.slug}`}>
+            <div class="wiki-nav-pokemon-container">
+                <p>Suivant</p>
+                <img
+                    class="wiki-navigation-container-img"
+                    src={nextImage}
+                    alt="Suivant"
+                />
+            </div>
+        </a>
+    </div>
+
+    <LargeTransitionSection
+        title={`Page de #${pokemon.name}#`}
+        invertedBackground
+    />
+
+    <ContentLayout>
+        <div class="wiki-primary-infos">
+            <div class="wiki-col wiki-pokemon-artwork-container">
+                <img
+                    class="wiki-pokemon-artwork"
+                    src={currentImage}
+                    alt={pokemon.name}
+                />
+            </div>
+
+            <!-- Informations principales -->
+            <div class="wiki-col wiki-pokemon-infos">
+                <div class="wiki-pokemon-types-container">
+                    {
+                        pokemon.types.map((type: string) => (
+                            <span
+                                class="wiki-pokemon-type-badge"
+                                style={`background-color: ${typeColors[type] || "#777"};`}
+                            >
+                                {type.toUpperCase()}
+                            </span>
+                        ))
+                    }
+                </div>
+                <h1 style="margin-top: 1em">{pokemon.category}</h1>
+                <h1 style="margin-top: 1em">Talents :</h1>
+                <ul>
+                    {
+                        pokemon.abilities.map((talent: string) => (
+                            <li>- {talent}</li>
+                        ))
+                    }
+                </ul>
+            </div>
+
+            <!-- Statistiques -->
+            <div class="wiki-col wiki-pokemon-stats-container">
+                <PkmnStatsGraph
+                    hpValue={pokemon.stats.hp}
+                    attackValue={pokemon.stats.attack}
+                    defenseValue={pokemon.stats.defense}
+                    specialAttackValue={pokemon.stats.specialAttack}
+                    specialDefenseValue={pokemon.stats.specialDefense}
+                    speedValue={pokemon.stats.speed}
+                />
+            </div>
+        </div>
+
+        <!-- Evolutions -->
+        {
+            pokemon.evolutions?.map((evo: any) => (
+                <EvolutionTreeHorizontal
+                    color={defaultPageColor}
+                    stages={evo.path}
+                />
+            ))
+        }
+
+        <!-- Moveset -->
+        {
+
+                <div class="wiki-section">
+                    <h1>Capacités apprises</h1>
+                    {
+                        pokemon.movesets?.by_level && pokemon.movesets.by_level.length > 0 && (
+                            <ContentTable
+                                title="Capacités appris par niveau"
+                                color={defaultPageColor}
+                                columns={movesetColumns}
+                                data={pokemon.movesets.by_level}
+                            />
+                        )
+                    }
+                    {
+                        pokemon.movesets?.by_tm && pokemon.movesets.by_tm.length > 0 && (
+                            <ContentTable
+                                title="Capacités appris par CT/DT"
+                                color={defaultPageColor}
+                                columns={movesetColumns}
+                                data={pokemon.movesets.by_tm}
+                            />
+                        )
+                    }
+                    {
+                        pokemon.movesets?.by_breeding && pokemon.movesets.by_breeding.length > 0 && (
+                            <ContentTable
+                                title="Capacités appris par Reproduction"
+                                color={defaultPageColor}
+                                columns={movesetColumns}
+                                data={pokemon.movesets.by_breeding}
+                            />
+                        )
+                    }
+                </div>
+        }
+
+        <!-- Localisations -->
+        {
+            pokemon.locations && pokemon.locations.length > 0 && (
+                <div class="wiki-section">
+                    <h1>Localisation</h1>
+                    <ContentTable
+                        title="Localisation du Pokemon"
+                        color={defaultPageColor}
+                        columns={localisationColumns}
+                        data={pokemon.locations}
+                    />
+                </div>
+            )
+        }
+
+        <!-- About -->
+        <div class="wiki-section">
+            <h1>À propos du Pokémon</h1>
+            <div
+                set:html={marked.parse(
+                    pokemon.about ||
+                        "Aucune information supplémentaire n'est disponible pour le moment.",
+                )}
+            />
+        </div>
+
+        <!-- Pokedex -->
+        {
+            pokemon.pokedex_entries && pokemon.pokedex_entries.length > 0 && (
+                <div class="wiki-section">
+                    <h1>Pokedex</h1>
+                    <ContentTable
+                        title="Descriptions du Pokedex"
+                        color={defaultPageColor}
+                        columns={pokedexColumns}
+                        data={pokemon.pokedex_entries}
+                    />
+                </div>
+            )
+        }
+
+        <!-- Imagerie -->
+        {
+            pokemon.images && pokemon.images.length > 0 && (
+                <div class="wiki-section">
+                    <h1>Imagerie</h1>
+                    <p>
+                        <ServeurScreen screenList={pokemon.images}/>
+                    </p>
+                </div>
+            )
+        }
+    </ContentLayout>
+</Layout>
+
+<!-- Styles -->
+<style>
+    * {
+        color: white;
+        box-sizing: border-box;
+    }
+
+    .pokemon-selector-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pokemon-selector-container label {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .pokemon-selector-container select {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        background-color: var(--background-color, #2a2a2a);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 1rem;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .pokemon-selector-container select:hover,
+    .pokemon-selector-container select:focus {
+        border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    h1 {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .wiki-section h1 {
+        font-size: 2rem;
+    }
+
+    .wiki-navigation-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        justify-items: center;
+        text-align: center;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        padding: 1rem 0;
+        gap: 1rem;
+    }
+
+    .wiki-navigation-container-img {
+        height: 5em;
+        max-width: 100%;
+        image-rendering: pixelated;
+    }
+
+    .wiki-primary-infos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .wiki-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .wiki-pokemon-artwork {
+        max-width: 250px;
+        width: 100%;
+        height: auto;
+        image-rendering: pixelated; /* To keep sprites sharp */
+    }
+
+    .wiki-pokemon-types-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .wiki-pokemon-type-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .wiki-section {
+        margin-top: 2rem;
+    }
+
+    .wiki-tables-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .wiki-nav-pokemon-container {
+        display: grid;
+        justify-items: center;
+    }
+
+    @media (max-width: 846px) {
+        .wiki-primary-infos {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .wiki-nav-pokemon-container img {
+            width: 40px;
+            height: auto;
+        }
+
+        .wiki-nav-pokemon-middlemon {
+            display: none;
+        }
+    }
+
+    @media (max-width: 410px) {
+        .wiki-navigation-container {
+            display: none;
+        }
+    }
+</style>

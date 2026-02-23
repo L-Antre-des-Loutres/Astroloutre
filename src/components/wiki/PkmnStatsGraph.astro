@@ -1,0 +1,103 @@
+---
+import ProgressBar from '../sections/common/progressbar/ProgressBar.astro';
+
+interface Props {
+    hpValue: number;
+    attackValue: number;
+    defenseValue: number;
+    specialAttackValue: number;
+    specialDefenseValue: number;
+    speedValue: number;
+}
+
+const {
+    hpValue,
+    attackValue,
+    defenseValue,
+    specialAttackValue,
+    specialDefenseValue,
+    speedValue
+} = Astro.props;
+
+const VERY_BAD_COLOR = "#a83232";
+const BAD_COLOR = "#eb6234";
+const MID_COLOR = "#96a832";
+const GOOD_COLOR = "#32a848";
+const VERY_GOOD_COLOR = "#32a8a6";
+
+function getColorByStatValue(value: number) {
+    if (value < 50) return VERY_BAD_COLOR;
+    if (value < 80) return BAD_COLOR;
+    if (value < 100) return MID_COLOR;
+    if (value < 120) return GOOD_COLOR;
+    return VERY_GOOD_COLOR;
+}
+
+const stats = [
+    { label: "PV", value: hpValue },
+    { label: "Attaque", value: attackValue },
+    { label: "Défense", value: defenseValue },
+    { label: "Attaque Sp.", value: specialAttackValue },
+    { label: "Défense Sp.", value: specialDefenseValue },
+    { label: "Vitesse", value: speedValue }
+];
+---
+
+<div class="stats-container">
+    {stats.map(stat => (
+            <div class="stat-row">
+            <span class="stat-label">
+                {stat.label} {stat.value}
+            </span>
+                <div class="stat-bar-wrapper">
+                    <ProgressBar
+                            value={stat.value}
+                            color={getColorByStatValue(stat.value)}
+                    />
+                </div>
+            </div>
+    ))}
+</div>
+
+
+<style>
+    .stats-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .stat-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        min-width: 120px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .stat-bar-wrapper {
+        flex: 1;
+        min-width: 0;
+    }
+
+    @media (max-width: 350px) {
+
+        .stat-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+        }
+
+        .stat-label {
+            width: 100%;
+            min-width: unset;
+        }
+    }
+
+</style>

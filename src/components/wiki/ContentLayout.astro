@@ -1,0 +1,194 @@
+---
+
+---
+
+<div class="wiki-page-wrapper">
+    <aside class="wiki-nav-container">
+        <nav class="wiki-nav-section">
+            <h1 class="wiki-nav-title">Navigation Wiki</h1>
+            <ul class="wiki-nav-list">
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="/pokemon/wiki/home">Accueil</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="/pokemon/wiki/pokedex">Pokedex</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="/pokemon/wiki/moves">Liste des nouvelles attaques</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="/pokemon/wiki/abilities">Liste des nouvelles talents</a></li>
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="#">Lien aléatoire</a></li>
+            </ul>
+        </nav>
+
+        <nav class="wiki-nav-section" style="margin-bottom: 0px;">
+            <h1 class="wiki-nav-title">Autres liens</h1>
+            <ul class="wiki-nav-list">
+                <li class="wiki-nav-item"><a class="wiki-nav-link" href="/projets/cobblemon_rlm">Cobblemon RLM</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="wiki-main-container">
+        <slot/>
+    </div>
+
+    <aside class="wiki-sidebar-right">
+        <div class="wiki-message-right">
+            <nav class="wiki-nav-section" style="margin-bottom: 0px;">
+                <h1 class="wiki-nav-title">À props des pubs</h1>
+                <p>
+                    Celles-ci nous permettent d'amortir une partie des coup de l'hebergement de nos services.
+                </p>
+                <p>
+                    Cependant nous tenons à votre confort de navigation, et vous pouvez les désactivés si vous le souhaitez.
+                </p>
+                <button class="wiki-ad-toggle-button" id="wikiAdToggleBtn">
+                    Désactiver les pubs
+                </button>
+            </nav>
+        </div>
+        <div class="ad-placeholder">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS48pt6lSqEbqhADumgXpJ2xlHhIcqdGYy-8Q&s" alt="Ad 1" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS48pt6lSqEbqhADumgXpJ2xlHhIcqdGYy-8Q&s" alt="Ad 2" />
+        </div>
+    </aside>
+</div>
+
+<style>
+    * {
+        color: white;
+        box-sizing: border-box;
+    }
+
+    .wiki-page-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        gap: 20px;
+    }
+
+    .wiki-sidebar-left,
+    .wiki-sidebar-right {
+        padding: 5px;
+    }
+
+    .wiki-main-container {
+        width: 100%;
+        max-width: 3500px;
+        margin: 0 auto 2rem;
+        padding: 0 1rem;
+        min-width: 0;
+    }
+
+    .ad-placeholder img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 1450px) {
+        .wiki-page-wrapper {
+            grid-template-columns: 1fr;
+            padding: 0 10px;
+        }
+
+        .wiki-sidebar-left,
+        .wiki-sidebar-right {
+            display: none;
+        }
+    }
+
+    .wiki-nav-container {
+        margin: 0 16px;
+        padding: 1.5rem 1rem;
+        border: 5px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        height: fit-content;
+    }
+
+    .wiki-nav-section {
+        margin-bottom: 2rem;
+    }
+
+    .wiki-nav-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.75rem;
+        color: white;
+    }
+
+    .wiki-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .wiki-nav-item {
+        margin-bottom: 0.4rem;
+    }
+
+    .wiki-nav-link {
+        display: block;
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        color: mintcream;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .wiki-nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #92aea2;
+    }
+
+    .wiki-message-right {
+        padding: 1.5rem 1rem;
+        background-color: rgba(155, 255, 155, 0.2);
+        border-radius: 10px;
+        height: fit-content;
+    }
+
+    .wiki-ad-toggle-button {
+        margin-top: 1rem;
+        padding: 0.5rem 0.8rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+        width: 100%;
+    }
+
+    .wiki-ad-toggle-button:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .wiki-ad-toggle-button:active {
+        transform: scale(0.97);
+    }
+</style>
+
+<script>
+    const adContainer = document.querySelector(".ad-placeholder");
+    const toggleButton = document.getElementById("wikiAdToggleBtn");
+
+    function updateAdState() {
+        const adsDisabled = localStorage.getItem("wiki-ads-disabled");
+
+        if (adsDisabled === "true") {
+            adContainer.style.display = "none";
+            toggleButton.textContent = "Réactiver";
+        } else {
+            adContainer.style.display = "block";
+            toggleButton.textContent = "Désactiver";
+        }
+    }
+
+    toggleButton.addEventListener("click", () => {
+        const adsDisabled = localStorage.getItem("wiki-ads-disabled") === "true";
+        localStorage.setItem("wiki-ads-disabled", (!adsDisabled).toString());
+        updateAdState();
+    });
+
+    updateAdState();
+</script>

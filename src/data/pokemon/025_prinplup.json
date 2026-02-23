@@ -1,0 +1,136 @@
+{
+  "id": "025",
+  "slug": "prinplup",
+  "name": "Prinplouf",
+  "form": "rlm",
+  "baseSpecies": "prinplup",
+  "category": "Pokémon Élepingouin",
+  "types": [
+    "Eau"
+  ],
+  "abilities": [
+    "Torrent",
+    "Acharné",
+    "Battant"
+  ],
+  "stats": {
+    "hp": 64,
+    "attack": 66,
+    "defense": 68,
+    "specialAttack": 81,
+    "specialDefense": 76,
+    "speed": 50
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "24",
+          "name": "Tiplouf",
+          "slug": "piplup",
+          "method": "Base"
+        },
+        {
+          "id": "25",
+          "name": "Prinplouf",
+          "slug": "prinplup",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "26",
+          "name": "Pingoléon",
+          "slug": "empoleon",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Écume",
+        "level": 1
+      },
+      {
+        "name": "Jeux d'O",
+        "level": 1
+      },
+      {
+        "name": "Griffe Acier",
+        "level": 1
+      },
+      {
+        "name": "Patience",
+        "level": 1
+      },
+      {
+        "name": "Écras'Face",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 1
+      },
+      {
+        "name": "Picpic",
+        "level": 15
+      },
+      {
+        "name": "Bulles d'O",
+        "level": 19
+      },
+      {
+        "name": "Vantardise",
+        "level": 24
+      },
+      {
+        "name": "Furie",
+        "level": 28
+      },
+      {
+        "name": "Saumure",
+        "level": 33
+      },
+      {
+        "name": "Siphon",
+        "level": 37
+      },
+      {
+        "name": "Brume",
+        "level": 42
+      },
+      {
+        "name": "Bec Vrille",
+        "level": 46
+      },
+      {
+        "name": "Hydrocanon",
+        "level": 50
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Très irritable et orgueilleux, ce Prinplouf est un combattant téméraire. Il recherche les orages pour recharger ses ailes, mais finit souvent par perdre connaissance sous la puissance des éclairs."
+    }
+  ],
+  "about": "",
+  "images": []
+}

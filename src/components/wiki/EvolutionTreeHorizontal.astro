@@ -1,0 +1,117 @@
+---
+import { showdownApiGetPkmArt } from "../../utils/showdownApiGetPkmArt.ts";
+interface Stage {
+    id: string;
+    name: string;
+    slug: string;
+    method: string;
+    image: string;
+}
+
+interface Props {
+    stages: Stage[];
+    color: string;
+}
+
+const { color, stages } = Astro.props;
+
+// Calculate resolved images before rendering to handle async API calls
+const resolvedStages = await Promise.all(
+    stages.map(async (stage) => {
+        // showdownApiGetPkmArt expects the english name/slug to find the correct artwork
+        const resolvedImage = await showdownApiGetPkmArt(stage.slug, "rlm");
+        return {
+            ...stage,
+            resolvedImage,
+        };
+    }),
+);
+---
+
+<div class="evo-wrapper">
+    <div class="evo-row">
+        {
+            resolvedStages.map((stage, index) => (
+                <>
+                    {index > 0 && (
+                        <div class="evo-condition" style={`--color: ${color};`}>
+                            <span>{stage.method} ➜</span>
+                        </div>
+                    )}
+                    <a
+                        href={`/pokemon/wiki/${stage.slug}`}
+                        style="text-decoration: none;"
+                    >
+                        <div class="evo-card">
+                            <img src={stage.resolvedImage} alt={stage.name} />
+                            <p>{stage.name}</p>
+                        </div>
+                    </a>
+                </>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .evo-wrapper {
+        margin-top: 1rem;
+        border-radius: 10px;
+        overflow-x: auto;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+    }
+
+    .evo-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        min-width: max-content;
+    }
+
+    .evo-card {
+        text-align: center;
+        padding: 1rem;
+        border-radius: 8px;
+        min-width: 100px;
+        flex-shrink: 0;
+    }
+
+    .evo-card img {
+        max-width: 100%;
+        height: auto;
+        max-height: 100px;
+    }
+
+    .evo-card p {
+        margin-top: 0.5rem;
+        color: white;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .evo-condition {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--color);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* -------- MOBILE -------- */
+
+    @media (max-width: 600px) {
+        .evo-row {
+            gap: 1rem;
+        }
+
+        .evo-card img {
+            max-height: 80px;
+        }
+
+        .evo-card {
+            padding: 0.5rem;
+        }
+    }
+</style>

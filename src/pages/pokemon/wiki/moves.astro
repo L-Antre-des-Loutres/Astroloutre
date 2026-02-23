@@ -1,0 +1,21 @@
+---
+import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
+import ContentLayout from "../../../components/wiki/ContentLayout.astro";
+import Layout from "../../../layouts/Layout.astro";
+import SlidingVignette from "../../../components/ui/vignettes/SlidingVignette.astro";
+import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
+
+
+---
+
+<Layout title="Wiki RLM" forceDarkTheme={true}>
+    <Banner />
+
+    <LargeTransitionSection title="Accueil du #Wiki RLM#" invertedBackground/>
+
+    <ContentLayout>
+        <TransitionSection title="Page pas encore disponible, un #<a href='/pokemon/wiki/flammiko'>Flammiko</a># à fait tomber toutes nos infos..." invertedBackground/>
+        <TransitionSection title="La liste des nouvelles attaques sera disponible dans une prochaine<br>%mise à jour !%" invertedBackground/>
+    </ContentLayout>
+</Layout>

@@ -1,0 +1,247 @@
+{
+  "id": "016",
+  "slug": "aphelis",
+  "name": "Aphelis Aphelis",
+  "form": "aphelis",
+  "baseSpecies": "aphelis",
+  "category": "Pokémon Oisodivin",
+  "types": [
+    "Fée",
+    "Vol"
+  ],
+  "abilities": [
+    "Battant",
+    "Prestance Royale",
+    "Médic Nature"
+  ],
+  "stats": {
+    "hp": 100,
+    "attack": 40,
+    "defense": 90,
+    "specialAttack": 70,
+    "specialDefense": 90,
+    "speed": 130
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Apheos",
+          "slug": "apheos",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Aphelis",
+          "slug": "aphelis",
+          "method": "Niveau 33"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Picpic",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Vive-Attaque",
+        "level": 1
+      },
+      {
+        "name": "Cru-Ailes",
+        "level": 1
+      },
+      {
+        "name": "Reflet",
+        "level": 1
+      },
+      {
+        "name": "Effort",
+        "level": 1
+      },
+      {
+        "name": "Aéropique",
+        "level": 1
+      },
+      {
+        "name": "Hâte",
+        "level": 1
+      },
+      {
+        "name": "Lame d'Air",
+        "level": 1
+      },
+      {
+        "name": "Rapace",
+        "level": 1
+      },
+      {
+        "name": "Piqué",
+        "level": 1
+      },
+      {
+        "name": "Vitesse Extrême",
+        "level": 1
+      },
+      {
+        "name": "Aurasphère",
+        "level": 1
+      },
+      {
+        "name": "Lame d'Air",
+        "level": 1
+      },
+      {
+        "name": "Rune Protect",
+        "level": 1
+      },
+      {
+        "name": "Pouvoir Antique",
+        "level": 1
+      },
+      {
+        "name": "Dernier Recours",
+        "level": 1
+      },
+      {
+        "name": "Après Vous",
+        "level": 1
+      },
+      {
+        "name": "Triplattaque",
+        "level": 1
+      },
+      {
+        "name": "Vent Féérique",
+        "level": 1
+      },
+      {
+        "name": "Charme",
+        "level": 1
+      },
+      {
+        "name": "Bâillement",
+        "level": 1
+      },
+      {
+        "name": "Métronome",
+        "level": 1
+      },
+      {
+        "name": "Damoclès",
+        "level": 1
+      },
+      {
+        "name": "Par Ici",
+        "level": 1
+      },
+      {
+        "name": "Relais",
+        "level": 1
+      },
+      {
+        "name": "Vœu",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Écras'Face",
+        "level": 1
+      },
+      {
+        "name": "Doux Baiser",
+        "level": 1
+      },
+      {
+        "name": "Fontaine de Vie",
+        "level": 1
+      },
+      {
+        "name": "Passe-Cadeau",
+        "level": 1
+      },
+      {
+        "name": "Picpic",
+        "level": 1
+      },
+      {
+        "name": "Vive-Attaque",
+        "level": 1
+      },
+      {
+        "name": "Voix Enjôleuse",
+        "level": 5
+      },
+      {
+        "name": "Tornade",
+        "level": 9
+      },
+      {
+        "name": "Encore",
+        "level": 13
+      },
+      {
+        "name": "Cru-Ailes",
+        "level": 17
+      },
+      {
+        "name": "Vampibaiser",
+        "level": 21
+      },
+      {
+        "name": "Atterrissage",
+        "level": 25
+      },
+      {
+        "name": "Vent Arrière",
+        "level": 29
+      },
+      {
+        "name": "Éclat Magique",
+        "level": 33
+      },
+      {
+        "name": "Pouvoir Lunaire",
+        "level": 37
+      },
+      {
+        "name": "Vent Violent",
+        "level": 42
+      },
+      {
+        "name": "Vœu Soin",
+        "level": 48
+      },
+      {
+        "name": "Aéroblast",
+        "level": 55
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Connus comme les fiers gardiens des cieux, les Aphelis nouent rarement des liens avec les humains. Ils sont farouchement protecteurs et interviennent souvent pour sauver d'autres Pokémon des griffes des braconniers."
+    }
+  ],
+  "about": "",
+  "images": []
+}

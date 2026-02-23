@@ -1,0 +1,122 @@
+{
+  "id": "001",
+  "slug": "chikorita",
+  "name": "Germinion",
+  "form": "normal",
+  "baseSpecies": "chikorita",
+  "category": "Pokémon Feuille",
+  "types": [
+    "Plante"
+  ],
+  "abilities": [
+    "Engrais",
+    "Feuille Garde"
+  ],
+  "stats": {
+    "hp": 45,
+    "attack": 49,
+    "defense": 65,
+    "specialAttack": 49,
+    "specialDefense": 65,
+    "speed": 45
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Germignon",
+          "slug": "chikorita",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Macronium",
+          "slug": "bayleef",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Méganium",
+          "slug": "meganium",
+          "method": "Niveau 32"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Tranch'Herbe",
+        "level": 6
+      },
+      {
+        "name": "Poudre Toxik",
+        "level": 9
+      },
+      {
+        "name": "Synthèse",
+        "level": 12
+      },
+      {
+        "name": "Protection",
+        "level": 17
+      },
+      {
+        "name": "Feuille Magik",
+        "level": 20
+      },
+      {
+        "name": "Don Naturel",
+        "level": 23
+      },
+      {
+        "name": "Doux Parfum",
+        "level": 28
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 31
+      },
+      {
+        "name": "Plaquage",
+        "level": 34
+      },
+      {
+        "name": "Rune Protect",
+        "level": 39
+      },
+      {
+        "name": "Giga-Sangsue",
+        "level": 42
+      },
+      {
+        "name": "Lance-Soleil",
+        "level": 45
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon",
+      "location": "Biomes floraux, ultra rare."
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Pokémon Or",
+      "description": "Un doux parfum émane des feuilles placées sur sa tête. Il est très doux et il aime dormir au soleil."
+    }
+  ],
+  "about": "La version du **Royaume de Loutre Monde** de ce Pokémon n'as aucuns changements particuliers."
+}

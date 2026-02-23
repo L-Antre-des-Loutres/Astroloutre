@@ -24,6 +24,7 @@ const shuffleArray = (array: any[]) => {
 };
 
 let minecraftImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
+let pokemonImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
 let palworldImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = []
 
 try {
@@ -36,6 +37,20 @@ try {
     // Filtrer uniquement les images du jeu Minecraft
     minecraftImages = images
         .filter(img => img.jeu.toLowerCase() === "minecraft" && img.carrousel)
+        .map(img => ({
+            id: img.id,
+            nom: img.nom,
+            auteur: img.auteur,
+            origine: img.origine,
+            path: img.path,
+            jeu: img.jeu,
+            nom_serveur: img.nom_serveur,
+            carrousel: img.carrousel,
+            auteur_pseudo: img.auteur_pseudo,
+        }));
+
+    pokemonImages = images
+        .filter(img => img.jeu.toLowerCase() === "pokemon" && img.carrousel)
         .map(img => ({
             id: img.id,
             nom: img.nom,
@@ -84,6 +99,18 @@ const games = [
             Addons: {
                 title: "Addons",
                 link: "/projets/tag/Minecraft"
+            }
+        }
+    },
+    {
+        name: 'Pokemon',
+        icon: '/icons/pokemon_icon.webp',
+        logo: '/icons/pokemon_logo.webp',
+        slides: shuffleArray(pokemonImages),
+        buttons: {
+            wiki: {
+                title: "Wiki de nos Pokemon",
+                link: "/pokemon/wiki/home"
             }
         }
     },

@@ -1,0 +1,197 @@
+{
+  "id": "003",
+  "slug": "meganium",
+  "name": "Meganium",
+  "form": "rlm",
+  "baseSpecies": "meganium",
+  "category": "Pokémon Feuillacier",
+  "types": [
+    "Plante",
+    "Acier"
+  ],
+  "abilities": [
+    "Épine de Fer",
+    "Créa-Herbe",
+    "Imbreakaplante"
+  ],
+  "stats": {
+    "hp": 100,
+    "attack": 110,
+    "defense": 100,
+    "specialAttack": 55,
+    "specialDefense": 100,
+    "speed": 70
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Germignon",
+          "slug": "chikorita",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Macronium",
+          "slug": "bayleef",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Méganium",
+          "slug": "meganium",
+          "method": "Niveau 32"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Aromathérapie",
+        "level": 1
+      },
+      {
+        "name": "Plaquage",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Don Naturel",
+        "level": 1
+      },
+      {
+        "name": "Danse Fleurs",
+        "level": 1
+      },
+      {
+        "name": "Tempête Florale",
+        "level": 1
+      },
+      {
+        "name": "Poudre Toxik",
+        "level": 1
+      },
+      {
+        "name": "Tranch'Herbe",
+        "level": 1
+      },
+      {
+        "name": "Danse Lames",
+        "level": 1
+      },
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Synthèse",
+        "level": 12
+      },
+      {
+        "name": "Protection",
+        "level": 18
+      },
+      {
+        "name": "Feuille Magik",
+        "level": 22
+      },
+      {
+        "name": "Vampigraine",
+        "level": 26
+      },
+      {
+        "name": "Doux Parfum",
+        "level": 34
+      },
+      {
+        "name": "Bastion Verdoyant",
+        "level": 36
+      },
+      {
+        "name": "Tacle Lourd",
+        "level": 38
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 40
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 42
+      },
+      {
+        "name": "Protection",
+        "level": 42
+      },
+      {
+        "name": "Plaquage",
+        "level": 46
+      },
+      {
+        "name": "Tête de Fer",
+        "level": 48
+      },
+      {
+        "name": "Provoc",
+        "level": 50
+      },
+      {
+        "name": "Rune Protect",
+        "level": 54
+      },
+      {
+        "name": "Picots",
+        "level": 54
+      },
+      {
+        "name": "Lame Feuille",
+        "level": 56
+      },
+      {
+        "name": "Séisme",
+        "level": 60
+      },
+      {
+        "name": "Giga-Sangsue",
+        "level": 60
+      },
+      {
+        "name": "Explosion",
+        "level": 64
+      },
+      {
+        "name": "Lance-Soleil",
+        "level": 65
+      },
+      {
+        "name": "Vitesse Extrême",
+        "level": 68
+      },
+      {
+        "name": "Tempête Florale",
+        "level": 70
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Doté d'une mèche courte et d'une nature impitoyable, ce Pokémon est souvent évité à cause de son tempérament féroce. Cependant, pour les rares personnes qui parviennent à gagner son respect, il devient un gardien intensément loyal."
+    }
+  ],
+  "about": "",
+  "images": []
+}

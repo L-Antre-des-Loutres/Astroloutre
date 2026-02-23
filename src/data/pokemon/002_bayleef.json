@@ -1,0 +1,127 @@
+{
+  "id": "002",
+  "slug": "bayleef",
+  "name": "Macronium",
+  "form": "rlm",
+  "baseSpecies": "bayleef",
+  "category": "Pokémon Feuillacier",
+  "types": [
+    "Plante"
+  ],
+  "abilities": [
+    "Engrais",
+    "Feuille Garde"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 62,
+    "defense": 80,
+    "specialAttack": 63,
+    "specialDefense": 80,
+    "speed": 60
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Germignon",
+          "slug": "chikorita",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Macronium",
+          "slug": "bayleef",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Méganium",
+          "slug": "meganium",
+          "method": "Niveau 32"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Tranch'Herbe",
+        "level": 1
+      },
+      {
+        "name": "Poudre Toxik",
+        "level": 1
+      },
+      {
+        "name": "Don Naturel",
+        "level": 1
+      },
+      {
+        "name": "Synthèse",
+        "level": 12
+      },
+      {
+        "name": "Protection",
+        "level": 18
+      },
+      {
+        "name": "Feuille Magik",
+        "level": 22
+      },
+      {
+        "name": "Vampigraine",
+        "level": 26
+      },
+      {
+        "name": "Doux Parfum",
+        "level": 32
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 36
+      },
+      {
+        "name": "Plaquage",
+        "level": 40
+      },
+      {
+        "name": "Rune Protect",
+        "level": 46
+      },
+      {
+        "name": "Giga-Sangsue",
+        "level": 50
+      },
+      {
+        "name": "Lance-Soleil",
+        "level": 54
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Bien plus territorial que son homologue de Johto, ce Macronium est un maître de l'embuscade. Il se cache dans les buissons denses pour lancer des attaques surprises sur quiconque ose pénétrer sur son domaine."
+    }
+  ],
+  "about": "",
+  "images": []
+}
