@@ -1,7 +1,9 @@
 {
   "id": "1028",
   "slug": "galama",
-  "name": "Galama",
+  "name": "Galama Galama",
+  "form": "galama",
+  "baseSpecies": "galama",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -239,26 +241,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.galama.desc"
+      "description": "placeholder"
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Flammiko",
-      "slug": "flammiko",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Galama",
-      "slug": "galama",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Golem",
-      "slug": "golem",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

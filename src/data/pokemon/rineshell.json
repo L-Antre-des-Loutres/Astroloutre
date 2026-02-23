@@ -1,7 +1,9 @@
 {
   "id": "1027",
   "slug": "rineshell",
-  "name": "Rineshell",
+  "name": "Rineshell Rineshell",
+  "form": "rineshell",
+  "baseSpecies": "rineshell",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -194,26 +196,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.rineshell.desc"
+      "description": "placeholder"
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Probopass RLM",
-      "slug": "probopass",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Rineshell",
-      "slug": "rineshell",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Shedinja RLM",
-      "slug": "shedinja",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

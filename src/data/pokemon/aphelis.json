@@ -1,7 +1,9 @@
 {
   "id": "1031",
   "slug": "aphelis",
-  "name": "Aphelis",
+  "name": "Aphelis Aphelis",
+  "form": "aphelis",
+  "baseSpecies": "aphelis",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -599,26 +601,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.aphelis.desc"
+      "description": "placeholder"
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Ampharos RLM",
-      "slug": "ampharos",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Aphelis",
-      "slug": "aphelis",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Apheos",
-      "slug": "apheos",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

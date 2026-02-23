@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "mareep",
   "name": "Mareep RLM",
+  "form": "rlm",
+  "baseSpecies": "mareep",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -98,26 +100,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.mareep-rlm.desc"
+      "description": "This mareep is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Luxray RLM",
-      "slug": "luxray",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Mareep RLM",
-      "slug": "mareep",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Mawile",
-      "slug": "mawile",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

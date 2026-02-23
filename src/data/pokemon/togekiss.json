@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "togekiss",
   "name": "Togekiss RLM",
+  "form": "rlm",
+  "baseSpecies": "togekiss",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -515,26 +517,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.togekiss-rlm.desc"
+      "description": "This togekiss is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Sunflora",
-      "slug": "sunflora",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Togekiss RLM",
-      "slug": "togekiss",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Wartortle RLM",
-      "slug": "wartortle",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

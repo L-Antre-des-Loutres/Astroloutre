@@ -1,7 +1,9 @@
 {
   "id": "1026",
   "slug": "flammiko",
-  "name": "Flammiko",
+  "name": "Flammiko Flammiko",
+  "form": "flammiko",
+  "baseSpecies": "flammiko",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -139,26 +141,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.flammiko.desc"
+      "description": "placeholder"
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Flaaffy RLM",
-      "slug": "flaaffy",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Flammiko",
-      "slug": "flammiko",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Galama",
-      "slug": "galama",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

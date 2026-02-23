@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "delphox",
   "name": "Delphox RLM",
+  "form": "rlm",
+  "baseSpecies": "delphox",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -539,26 +541,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.delphox-rlm.desc"
+      "description": "This delphox is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Chikorita",
-      "slug": "chikorita",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Delphox RLM",
-      "slug": "delphox",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Empoleon RLM",
-      "slug": "empoleon",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

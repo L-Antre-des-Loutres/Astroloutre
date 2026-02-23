@@ -7,6 +7,7 @@ import PkmnStatsGraph from "../../../components/wiki/PkmnStatsGraph.astro";
 import ContentLayout from "../../../components/wiki/ContentLayout.astro";
 import ContentTable from "../../../components/wiki/ContentTable.astro";
 import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
+import { marked } from "marked";
 
 export async function getStaticPaths() {
     // 1. On récupère tous les fichiers JSON
@@ -34,7 +35,7 @@ const allPokemonFiles = import.meta.glob("../../../data/pokemon/*.json", {
 });
 const allPokemon = Object.values(allPokemonFiles)
     .map((file: any) => file.default || file)
-    .sort((a: any, b: any) => a.name.localeCompare(b.name));
+    .sort((a: any, b: any) => Number(a.id) - Number(b.id));
 
 // Configuration des colonnes
 const movesetColumns: { label: string; key: string }[] = [
@@ -44,6 +45,10 @@ const movesetColumns: { label: string; key: string }[] = [
 const localisationColumns: { label: string; key: string }[] = [
     { label: "Jeu", key: "game" },
     { label: "Localisation", key: "location" },
+];
+const pokedexColumns: { label: string; key: string }[] = [
+    { label: "Jeu", key: "game" },
+    { label: "Description", key: "description" },
 ];
 const tmColumns: { label: string; key: string }[] = [
     { label: "Capacité", key: "name" },
@@ -76,28 +81,26 @@ const defaultPageColor =
         ? typeColors[pokemon.types[0]] || pokemon.pageColor
         : pokemon.pageColor;
 
+// Calcul dynamique des voisins (évite les liens morts si suppression manuelle d'un JSON)
+const currentIndex = allPokemon.findIndex((p) => p.slug === pokemon.slug);
+const prevPokemon =
+    allPokemon[currentIndex === 0 ? allPokemon.length - 1 : currentIndex - 1];
+const nextPokemon =
+    allPokemon[currentIndex === allPokemon.length - 1 ? 0 : currentIndex + 1];
+
 // Récupération des sprites via l'API Showdown
-const currentName = pokemon.name.includes("RLM")
-    ? pokemon.name.replace(" RLM", "").toLowerCase()
-    : pokemon.slug;
-const currentForm = pokemon.name.includes("RLM") ? "rlm" : "normal";
-const currentImage = await showdownApiGetPkmArt(currentName, currentForm);
-
-const prevName = pokemon.navigation.previous.name.includes("RLM")
-    ? pokemon.navigation.previous.name.replace(" RLM", "").toLowerCase()
-    : pokemon.navigation.previous.slug;
-const prevForm = pokemon.navigation.previous.name.includes("RLM")
-    ? "rlm"
-    : "normal";
-const prevImage = await showdownApiGetPkmArt(prevName, prevForm);
-
-const nextName = pokemon.navigation.next.name.includes("RLM")
-    ? pokemon.navigation.next.name.replace(" RLM", "").toLowerCase()
-    : pokemon.navigation.next.slug;
-const nextForm = pokemon.navigation.next.name.includes("RLM")
-    ? "rlm"
-    : "normal";
-const nextImage = await showdownApiGetPkmArt(nextName, nextForm);
+const currentImage = await showdownApiGetPkmArt(
+    pokemon.baseSpecies,
+    pokemon.form,
+);
+const prevImage = await showdownApiGetPkmArt(
+    prevPokemon.baseSpecies,
+    prevPokemon.form,
+);
+const nextImage = await showdownApiGetPkmArt(
+    nextPokemon.baseSpecies,
+    nextPokemon.form,
+);
 ---
 
 <Layout title={pokemon.name} forceDarkTheme={true}>
@@ -121,9 +124,7 @@ const nextImage = await showdownApiGetPkmArt(nextName, nextForm);
     </div>
 
     <div class="wiki-navigation-container">
-        <a
-            href={`/pokemon/wiki/${pokemon.navigation.previous.slug || pokemon.navigation.previous.name.toLowerCase()}`}
-        >
+        <a href={`/pokemon/wiki/${prevPokemon.slug}`}>
             <div class="wiki-nav-pokemon-container">
                 <p>Précédent</p>
                 <img
@@ -141,9 +142,7 @@ const nextImage = await showdownApiGetPkmArt(nextName, nextForm);
                 alt="Actuel"
             />
         </div>
-        <a
-            href={`/pokemon/wiki/${pokemon.navigation.next.slug || pokemon.navigation.next.name.toLowerCase()}`}
-        >
+        <a href={`/pokemon/wiki/${nextPokemon.slug}`}>
             <div class="wiki-nav-pokemon-container">
                 <p>Suivant</p>
                 <img
@@ -186,7 +185,11 @@ const nextImage = await showdownApiGetPkmArt(nextName, nextForm);
                 <h1 style="margin-top: 1em">{pokemon.category}</h1>
                 <h1 style="margin-top: 1em">Talents :</h1>
                 <ul>
-                    {pokemon.abilities.map((talent) => <li>- {talent}</li>)}
+                    {
+                        pokemon.abilities.map((talent: string) => (
+                            <li>- {talent}</li>
+                        ))
+                    }
                 </ul>
             </div>
 
@@ -211,16 +214,68 @@ const nextImage = await showdownApiGetPkmArt(nextName, nextForm);
             ))
         }
 
+        <!-- Moveset -->
         <div class="wiki-section">
             <h1>Capacités apprises</h1>
-            <div class="wiki-tables-container">
-                <ContentTable
-                    title="Capacités par niveau"
+            <ContentTable
+                    title="Capacités appris par niveau"
                     color={defaultPageColor}
                     columns={movesetColumns}
-                    data={pokemon.movesets.by_level}
-                />
-            </div>
+                    data={pokemon.moveset?.levelUp || []}
+            />
+            <ContentTable
+                    title="Capacités appris par CT/DT"
+                    color={defaultPageColor}
+                    columns={movesetColumns}
+                    data={pokemon.moveset?.tm || []}
+            />
+            <ContentTable
+                    title="Capacités appris par Reproduction"
+                    color={defaultPageColor}
+                    columns={movesetColumns}
+                    data={pokemon.moveset?.breeding || []}
+            />
+        </div>
+
+        <!-- Localisations -->
+        <div class="wiki-section">
+            <h1>Localisation</h1>
+            <ContentTable
+                title="Localisation du Pokemon"
+                color={defaultPageColor}
+                columns={localisationColumns}
+                data={pokemon.locations || []}
+            />
+        </div>
+
+        <!-- About -->
+        <div class="wiki-section">
+            <h1>À propos du Pokémon</h1>
+            <div
+                set:html={marked.parse(
+                    pokemon.about ||
+                        "Aucune information supplémentaire n'est disponible pour le moment.",
+                )}
+            />
+        </div>
+
+        <!-- Pokedex -->
+        <div class="wiki-section">
+            <h1>Pokedex</h1>
+            <ContentTable
+                title="Descriptions du Pokedex"
+                color={defaultPageColor}
+                columns={pokedexColumns}
+                data={pokemon.pokedex_entries || []}
+            />
+        </div>
+
+        <!-- Imagerie -->
+        <div class="wiki-section">
+            <h1>Imagerie</h1>
+            <p>
+                <!-- Section future pour les images additionnelles -->
+            </p>
         </div>
     </ContentLayout>
 </Layout>

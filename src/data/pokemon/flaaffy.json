@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "flaaffy",
   "name": "Flaaffy RLM",
+  "form": "rlm",
+  "baseSpecies": "flaaffy",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -118,26 +120,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.flaaffy-rlm.desc"
+      "description": "This flaaffy is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Fennekin",
-      "slug": "fennekin",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Flaaffy RLM",
-      "slug": "flaaffy",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Flammiko",
-      "slug": "flammiko",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

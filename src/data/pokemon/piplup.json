@@ -1,14 +1,14 @@
 {
   "id": "000",
-  "slug": "prinplup",
-  "name": "Prinplup RLM",
-  "form": "rlm",
-  "baseSpecies": "prinplup",
+  "slug": "piplup",
+  "name": "Piplup",
+  "form": "normal",
+  "baseSpecies": "piplup",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
   "types": [
-    "Eau"
+    "Normal"
   ],
   "abilities": [],
   "stats": {
@@ -39,7 +39,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This prinplup is dead."
+      "description": "Aucune description trouvée."
     }
   ],
   "about": "",

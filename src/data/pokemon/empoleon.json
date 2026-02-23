@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "empoleon",
   "name": "Empoleon RLM",
+  "form": "rlm",
+  "baseSpecies": "empoleon",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -527,26 +529,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.empoleon-rlm.desc"
+      "description": "This empoleon is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Delphox RLM",
-      "slug": "delphox",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Empoleon RLM",
-      "slug": "empoleon",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Fennekin",
-      "slug": "fennekin",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

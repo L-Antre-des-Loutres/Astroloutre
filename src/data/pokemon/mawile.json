@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "mawile",
   "name": "Mawile",
+  "form": "normal",
+  "baseSpecies": "mawile",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -37,26 +39,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Description manquante..."
+      "description": "Aucune description trouvée."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Mareep RLM",
-      "slug": "mareep",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Mawile",
-      "slug": "mawile",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Meganium RLM",
-      "slug": "meganium",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

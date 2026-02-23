@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "wartortle",
   "name": "Wartortle RLM",
+  "form": "rlm",
+  "baseSpecies": "wartortle",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -37,26 +39,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.wartortle-rlm.desc"
+      "description": "Ce wartortle est mort."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Togekiss RLM",
-      "slug": "togekiss",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Wartortle RLM",
-      "slug": "wartortle",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Ampharos RLM",
-      "slug": "ampharos",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

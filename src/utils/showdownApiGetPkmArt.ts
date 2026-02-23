@@ -23,24 +23,34 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
         pokemonName = `${p}-${f}`;
     }
 
-    // Gestion des exceptions
-    // 1. Exception absolue : Flammiko
-    if (p === "flammiko") {
-        return pokemonArt = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/flammiko.webp`;
-    }
+    // Gestion des exceptions (fichiers locaux RLM)
+    let localRelativeUrl = "";
 
-    // 2. Forme RLM
     if (f === "rlm") {
-        return pokemonArt = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
+        localRelativeUrl = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
+    } else if (["ocean", "volcan", "ciel"].includes(f)) {
+        localRelativeUrl = `/pokemon/rlm/alternative/${f}/sprites/${shiny ? "shiny" : "normal"}/${p}.webp`;
+    } else {
+        // Formes de base mais potentiellement custom (Apheos, Flammiko, Galama...)
+        localRelativeUrl = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/${p}.webp`;
     }
 
-    // 3. Formes alternatives (océan / volcan / ciel)
-    const formesAlt = ["ocean", "volcan", "ciel"];
-    if (formesAlt.includes(f)) {
-        return pokemonArt = `/pokemon/rlm/alternative/${f}/sprites/${shiny ? "shiny" : "normal"}/${p}.webp`;
+    // Si on a déterminé une potentielle URL locale, on vérifie si le fichier existe physiquement
+    if (localRelativeUrl) {
+        try {
+            const fs = await import('fs');
+            const path = await import('path');
+            const absolutePath = path.join(process.cwd(), 'public', localRelativeUrl);
+            if (fs.existsSync(absolutePath)) {
+                return localRelativeUrl;
+            }
+        } catch (e) {
+            // Ignorer si exécuté côté client ou autre erreur
+            console.warn("Could not check local file system, fallback to Showdown API");
+        }
     }
 
-    // FIN de gestion des exceptions
+    // FIN de gestion des exceptions locales -> fallback sur Showdown
     if (shiny) {
         pokemonArt = `${apiUrlShiny}${pokemonName}.png`
     } else {

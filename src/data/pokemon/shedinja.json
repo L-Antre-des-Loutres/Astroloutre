@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "shedinja",
   "name": "Shedinja RLM",
+  "form": "rlm",
+  "baseSpecies": "shedinja",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -326,26 +328,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.shedinja-rlm.desc"
+      "description": "Ce shedinja est mort."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Rineshell",
-      "slug": "rineshell",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Shedinja RLM",
-      "slug": "shedinja",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Shinx RLM",
-      "slug": "shinx",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

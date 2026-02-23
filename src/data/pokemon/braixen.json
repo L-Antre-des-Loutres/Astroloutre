@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "braixen",
   "name": "Braixen RLM",
+  "form": "rlm",
+  "baseSpecies": "braixen",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -41,26 +43,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.braixen-rlm.desc"
+      "description": "This braixen is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Blastoise RLM",
-      "slug": "blastoise",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Braixen RLM",
-      "slug": "braixen",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Chikorita",
-      "slug": "chikorita",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

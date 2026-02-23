@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "luxray",
   "name": "Luxray RLM",
+  "form": "rlm",
+  "baseSpecies": "luxray",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -370,26 +372,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.luxray-rlm.desc"
+      "description": "This luxray is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Luxio RLM",
-      "slug": "luxio",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Luxray RLM",
-      "slug": "luxray",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Mareep RLM",
-      "slug": "mareep",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

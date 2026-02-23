@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "nincada",
   "name": "Nincada RLM",
+  "form": "rlm",
+  "baseSpecies": "nincada",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -202,26 +204,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.nincada-rlm.desc"
+      "description": "Ce nincada est mort."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Meganium RLM",
-      "slug": "meganium",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Nincada RLM",
-      "slug": "nincada",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Ninjask RLM",
-      "slug": "ninjask",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

@@ -1,4 +1,6 @@
 ---
+import { marked } from "marked";
+
 interface Props {
     title?: string;
     color?: string;
@@ -29,7 +31,11 @@ const { title = "Data", color = "#3498db", columns, data } = Astro.props;
                     data.map((row) => (
                         <tr>
                             {columns.map((col) => (
-                                <td>{row[col.key] || "-"}</td>
+                                <td
+                                    set:html={marked.parse(
+                                        row[col.key]?.toString() || "-",
+                                    )}
+                                />
                             ))}
                         </tr>
                     ))

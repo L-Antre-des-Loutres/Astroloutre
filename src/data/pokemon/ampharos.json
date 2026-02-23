@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "ampharos",
   "name": "Ampharos RLM",
+  "form": "rlm",
+  "baseSpecies": "ampharos",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -539,26 +541,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.ampharos-rlm.desc"
+      "description": "Ce ampharos est mort."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Wartortle RLM",
-      "slug": "wartortle",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Ampharos RLM",
-      "slug": "ampharos",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Aphelis",
-      "slug": "aphelis",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

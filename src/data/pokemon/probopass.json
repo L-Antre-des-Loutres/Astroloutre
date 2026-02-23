@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "probopass",
   "name": "Probopass RLM",
+  "form": "rlm",
+  "baseSpecies": "probopass",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -535,26 +537,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.probopass-rlm.desc"
+      "description": "This probopass is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Prinplup RLM",
-      "slug": "prinplup",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Probopass RLM",
-      "slug": "probopass",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Rineshell",
-      "slug": "rineshell",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

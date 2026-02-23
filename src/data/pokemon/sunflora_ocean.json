@@ -1,107 +1,115 @@
 {
   "id": "000",
-  "slug": "nosepass",
-  "name": "Nosepass RLM",
-  "form": "rlm",
-  "baseSpecies": "nosepass",
+  "slug": "sunflora_ocean",
+  "name": "Sunflora Ocean",
+  "form": "ocean",
+  "baseSpecies": "sunflora",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
   "types": [
-    "Roche",
-    "Fée"
+    "Plante",
+    "Eau"
   ],
   "abilities": [
-    "Sturdy",
-    "Unaware",
+    "Drizzle",
+    "Swiftswim",
     "Contrary"
   ],
   "stats": {
-    "hp": 30,
-    "attack": 40,
-    "defense": 100,
-    "specialAttack": 80,
-    "specialDefense": 95,
-    "speed": 30
+    "hp": 115,
+    "attack": 85,
+    "defense": 85,
+    "specialAttack": 45,
+    "specialDefense": 85,
+    "speed": 85
   },
   "evolutions": [],
   "movesets": {
     "by_level": [
       {
-        "name": "Present",
+        "name": "Growth",
         "level": "N.1"
       },
       {
-        "name": "Harden",
+        "name": "Payday",
+        "level": "N.1"
+      },
+      {
+        "name": "Stomp",
+        "level": "N.1"
+      },
+      {
+        "name": "Flowergathering",
         "level": "N.4"
       },
       {
         "name": "Watergun",
+        "level": "N.4"
+      },
+      {
+        "name": "Disable",
         "level": "N.7"
       },
       {
-        "name": "Rockthrow",
+        "name": "Aquaring",
         "level": "N.10"
       },
       {
-        "name": "Rest",
+        "name": "Protect",
         "level": "N.13"
       },
       {
-        "name": "Fairywind",
+        "name": "Aquajet",
         "level": "N.16"
       },
       {
-        "name": "Waterpulse",
+        "name": "Confusion",
         "level": "N.19"
       },
       {
-        "name": "Tailwind ",
-        "level": "N.19"
-      },
-      {
-        "name": "Rockslide",
+        "name": "Waterfall",
         "level": "N.22"
       },
       {
-        "name": "Aquaring",
+        "name": "Signaturemove",
         "level": "N.25"
       },
       {
-        "name": "Rockblast",
+        "name": "Drainingkiss",
         "level": "N.28"
       },
       {
-        "name": "Doubleedge",
+        "name": "Yawn",
         "level": "N.31"
       },
       {
-        "name": "Calmmind",
+        "name": "Solarbeam",
         "level": "N.34"
       },
       {
-        "name": "Dazzlinggleam",
+        "name": "Flipturn",
+        "level": "N.35"
+      },
+      {
+        "name": "Doubleedge",
         "level": "N.37"
       },
       {
-        "name": "Stoneedge",
+        "name": "Raindance",
         "level": "N.40"
       },
       {
-        "name": "Charm",
+        "name": "Recover",
         "level": "N.43"
       },
       {
-        "name": "Thunder",
-        "level": "N.43"
-      },
-      {
-        "name": "Explosion",
+        "name": "Extremespeed",
         "level": "N.50"
       },
       {
-        "name": "Recover",
-        "level": "N.60"
+        "name": "Originpulse",
+        "level": "N.100"
       }
     ],
     "by_tm": [],
@@ -116,7 +124,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "This nosepass is dead."
+      "description": "This sunflora is dead."
     }
   ],
   "about": "",

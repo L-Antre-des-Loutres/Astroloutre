@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "luxio",
   "name": "Luxio RLM",
+  "form": "rlm",
+  "baseSpecies": "luxio",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -370,26 +372,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.luxio-rlm.desc"
+      "description": "This luxio is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Golem",
-      "slug": "golem",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Luxio RLM",
-      "slug": "luxio",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Luxray RLM",
-      "slug": "luxray",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

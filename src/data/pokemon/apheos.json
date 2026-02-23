@@ -1,7 +1,9 @@
 {
   "id": "1030",
   "slug": "apheos",
-  "name": "Apheos",
+  "name": "Apheos Apheos",
+  "form": "apheos",
+  "baseSpecies": "apheos",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -227,26 +229,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.apheos.desc"
+      "description": "placeholder"
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Aphelis",
-      "slug": "aphelis",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Apheos",
-      "slug": "apheos",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Bayleef RLM",
-      "slug": "bayleef",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

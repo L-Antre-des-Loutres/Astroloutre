@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "meganium",
   "name": "Meganium RLM",
+  "form": "rlm",
+  "baseSpecies": "meganium",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -427,26 +429,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.meganium-rlm.desc"
+      "description": "This meganium is dead."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Mawile",
-      "slug": "mawile",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Meganium RLM",
-      "slug": "meganium",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Nincada RLM",
-      "slug": "nincada",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }

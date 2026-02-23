@@ -2,6 +2,8 @@
   "id": "000",
   "slug": "ninjask",
   "name": "Ninjask RLM",
+  "form": "rlm",
+  "baseSpecies": "ninjask",
   "category": "Pokémon Inconnu",
   "pageColor": "#666666",
   "bannerUrl": "https://champions.pokemon.com/_images/global/header/header-lg.jpg",
@@ -335,26 +337,9 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "cobblemon.species.ninjask-rlm.desc"
+      "description": "Ce ninjask est mort."
     }
   ],
   "about": "",
-  "images": [],
-  "navigation": {
-    "previous": {
-      "name": "Nincada RLM",
-      "slug": "nincada",
-      "image": "/pokeball.png"
-    },
-    "current": {
-      "name": "Ninjask RLM",
-      "slug": "ninjask",
-      "image": "/pokeball.png"
-    },
-    "next": {
-      "name": "Nosepass RLM",
-      "slug": "nosepass",
-      "image": "/pokeball.png"
-    }
-  }
+  "images": []
 }
