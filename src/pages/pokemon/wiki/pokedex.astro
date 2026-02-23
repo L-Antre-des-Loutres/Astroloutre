@@ -1,0 +1,176 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
+import ContentLayout from "../../../components/wiki/ContentLayout.astro";
+import type { PokemonType } from "../../../types/PokemonType.ts";
+import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
+
+const allPokemonFiles = import.meta.glob("../../../data/pokemon/*.json", {
+    eager: true,
+});
+const allPokemon = Object.values(allPokemonFiles)
+    .map((file: any) => (file.default || file) as PokemonType)
+    .sort((a, b) => Number(a.id) - Number(b.id));
+
+const allPokemonWithImages = await Promise.all(
+    allPokemon.map(async (p) => {
+        const image = await showdownApiGetPkmArt(p.baseSpecies, p.form);
+        return {
+            ...p,
+            imageUrl: image,
+        };
+    }),
+);
+
+const typeColors: Record<string, string> = {
+    Normal: "#878660",
+    Feu: "#EE8130",
+    Eau: "#6390F0",
+    Électrik: "#b39518",
+    Plante: "#7AC74C",
+    Glace: "#96D9D6",
+    Combat: "#C22E28",
+    Poison: "#A33EA1",
+    Sol: "#E2BF65",
+    Vol: "#A890F0",
+    Psy: "#F95587",
+    Insecte: "#A6B91A",
+    Roche: "#B6A136",
+    Spectre: "#735797",
+    Dragon: "#6F35FC",
+    Ténèbres: "#705746",
+    Acier: "#B7B7CE",
+    Fée: "#D685AD",
+};
+---
+
+<Layout title="Pokédex" forceDarkTheme={true}>
+    <Banner />
+
+    <LargeTransitionSection title="Pokédex du <span style='white-space: nowrap;'>Royaume de Loutre Mer</span>"
+                            invertedBackground/>
+
+    <ContentLayout>
+        <div class="pokedex-grid">
+            {
+                allPokemonWithImages.map((pokemon) => (
+                    <a
+                        href={`/pokemon/wiki/${pokemon.slug}`}
+                        class="pokemon-card"
+                        style={`--type-color: ${typeColors[pokemon.types[0]] || "#777"}`}
+                    >
+                        <div class="pokemon-id">
+                            #{pokemon.id.toString().padStart(3, "0")}
+                        </div>
+                        <img
+                            src={pokemon.imageUrl}
+                            alt={pokemon.name}
+                            class="pokemon-image"
+                            loading="lazy"
+                        />
+                        <div class="pokemon-name">{pokemon.name}</div>
+                        <div class="pokemon-types">
+                            {pokemon.types.map((type: string) => (
+                                <span
+                                    class="type-badge"
+                                    style={`background-color: ${typeColors[type] || "#777"}`}
+                                >
+                                    {type.toUpperCase()}
+                                </span>
+                            ))}
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </ContentLayout>
+</Layout>
+
+<style>
+    .pokedex-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+        padding: 2rem 0;
+    }
+
+    .pokemon-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem 1rem;
+        text-decoration: none;
+        color: white;
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s,
+            border-color 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pokemon-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(to bottom, var(--type-color), transparent);
+        opacity: 0.2;
+        z-index: 0;
+    }
+
+    .pokemon-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-color: var(--type-color);
+    }
+
+    .pokemon-id {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: bold;
+        opacity: 0.6;
+        z-index: 1;
+    }
+
+    .pokemon-image {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        image-rendering: pixelated;
+        margin-bottom: 1rem;
+        z-index: 1;
+    }
+
+    .pokemon-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        z-index: 1;
+    }
+
+    .pokemon-types {
+        display: flex;
+        gap: 0.5rem;
+        z-index: 1;
+    }
+
+    .type-badge {
+        font-size: 0.7rem;
+        font-weight: bold;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        text-transform: uppercase;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+</style>
