@@ -8,7 +8,10 @@
   "types": [
     "Eau"
   ],
-  "abilities": [],
+  "abilities": [
+    "Torrent",
+    "Cuvette"
+  ],
   "stats": {
     "hp": 59,
     "attack": 63,
