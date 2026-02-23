@@ -20,7 +20,7 @@
     "specialDefense": 65,
     "speed": 45
   },
-  "evolutions": [  ],
+  "evolutions": [],
   "movesets": {
     "by_level": [
       {
@@ -43,6 +43,5 @@
       "description": "Un doux parfum émane des feuilles placées sur sa tête. Il est très doux et il aime dormir au soleil."
     }
   ],
-  "about": "La version du **Royaume de Loutre Monde** de ce Pokémon n'as aucuns changements particuliers.",
-  "images": [ "https://www.pokepedia.fr/images/a/a5/Miniature_0153_HOME.png" ]
+  "about": "La version du **Royaume de Loutre Monde** de ce Pokémon n'as aucuns changements particuliers."
 }

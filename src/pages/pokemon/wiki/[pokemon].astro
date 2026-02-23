@@ -8,6 +8,7 @@ import ContentLayout from "../../../components/wiki/ContentLayout.astro";
 import ContentTable from "../../../components/wiki/ContentTable.astro";
 import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
 import { marked } from "marked";
+import type { PokemonType } from "../../../types/PokemonType.ts";
 
 export async function getStaticPaths() {
     // On récupère tous les fichiers JSON
@@ -28,14 +29,14 @@ export async function getStaticPaths() {
     });
 }
 
-const { pokemon } = Astro.props;
+const { pokemon } = Astro.props as { pokemon: PokemonType };
 
 const allPokemonFiles = import.meta.glob("../../../data/pokemon/*.json", {
     eager: true,
 });
 const allPokemon = Object.values(allPokemonFiles)
-    .map((file: any) => file.default || file)
-    .sort((a: any, b: any) => Number(a.id) - Number(b.id));
+    .map((file: any) => (file.default || file) as PokemonType)
+    .sort((a, b) => Number(a.id) - Number(b.id));
 
 // Configuration des colonnes
 const movesetColumns: { label: string; key: string }[] = [
@@ -77,9 +78,9 @@ const typeColors: Record<string, string> = {
 };
 
 const defaultPageColor =
-    pokemon.types && pokemon.types.length > 0
+    (pokemon.types && pokemon.types.length > 0
         ? typeColors[pokemon.types[0]] || pokemon.pageColor
-        : pokemon.pageColor;
+        : pokemon.pageColor) || "#777";
 
 // Calcul dynamique des voisins (évite les liens morts si suppression manuelle d'un JSON)
 const currentIndex = allPokemon.findIndex((p) => p.slug === pokemon.slug);
@@ -106,6 +107,7 @@ const nextImage = await showdownApiGetPkmArt(
 <Layout title={pokemon.name} forceDarkTheme={true}>
     <Banner bannerUrl={pokemon.bannerUrl} />
 
+    <!-- DEV ONLY
     <div class="pokemon-selector-container">
         <label for="pokemon-selector">Aller directement à :</label>
         <select
@@ -121,8 +123,9 @@ const nextImage = await showdownApiGetPkmArt(
                 ))
             }
         </select>
-    </div>
+    </div> -->
 
+    <!-- Navigation -->
     <div class="wiki-navigation-container">
         <a href={`/pokemon/wiki/${prevPokemon.slug}`}>
             <div class="wiki-nav-pokemon-container">
@@ -169,6 +172,7 @@ const nextImage = await showdownApiGetPkmArt(
                 />
             </div>
 
+            <!-- Informations principales -->
             <div class="wiki-col wiki-pokemon-infos">
                 <div class="wiki-pokemon-types-container">
                     {
@@ -193,6 +197,7 @@ const nextImage = await showdownApiGetPkmArt(
                 </ul>
             </div>
 
+            <!-- Statistiques -->
             <div class="wiki-col wiki-pokemon-stats-container">
                 <PkmnStatsGraph
                     hpValue={pokemon.stats.hp}
@@ -205,8 +210,9 @@ const nextImage = await showdownApiGetPkmArt(
             </div>
         </div>
 
+        <!-- Evolutions -->
         {
-            pokemon.evolutions.map((evo: any) => (
+            pokemon.evolutions?.map((evo: any) => (
                 <EvolutionTreeHorizontal
                     color={defaultPageColor}
                     stages={evo.path}
@@ -218,23 +224,23 @@ const nextImage = await showdownApiGetPkmArt(
         <div class="wiki-section">
             <h1>Capacités apprises</h1>
             <ContentTable
-                    title="Capacités appris par niveau"
-                    color={defaultPageColor}
-                    columns={movesetColumns}
-                    data={pokemon.moveset?.levelUp || []}
+                title="Capacités appris par niveau"
+                color={defaultPageColor}
+                columns={movesetColumns}
+                data={pokemon.movesets?.by_level || []}
             />
             <!--
             <ContentTable
                     title="Capacités appris par CT/DT"
                     color={defaultPageColor}
                     columns={movesetColumns}
-                    data={pokemon.moveset?.tm || []}
+                    data={pokemon.movesets?.by_tm || []}
             />
             <ContentTable
                     title="Capacités appris par Reproduction"
                     color={defaultPageColor}
                     columns={movesetColumns}
-                    data={pokemon.moveset?.breeding || []}
+                    data={pokemon.movesets?.by_breeding || []}
             />
             -->
         </div>
@@ -281,6 +287,8 @@ const nextImage = await showdownApiGetPkmArt(
         </div>
     </ContentLayout>
 </Layout>
+
+<!-- Styles -->
 <style>
     * {
         color: white;
