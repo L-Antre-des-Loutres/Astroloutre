@@ -1,3 +1,5 @@
+import type {ServeurScreenType} from "./ServeurType.ts";
+
 export type PokemonStats = {
     hp: number;
     attack: number;
@@ -43,7 +45,7 @@ export type PokemonType = {
     locations: PokemonLocation[];
     pokedex_entries: PokemonPokedexEntry[];
     about: string;
-    images: string[];
+    images: ServeurScreenType[];
     pageColor?: string;
     bannerUrl?: string;
 };

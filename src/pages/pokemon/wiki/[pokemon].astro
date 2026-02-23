@@ -9,6 +9,7 @@ import ContentTable from "../../../components/wiki/ContentTable.astro";
 import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
 import { marked } from "marked";
 import type { PokemonType } from "../../../types/PokemonType.ts";
+import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.astro";
 
 export async function getStaticPaths() {
     // On récupère tous les fichiers JSON
@@ -305,7 +306,7 @@ const nextImage = await showdownApiGetPkmArt(
                 <div class="wiki-section">
                     <h1>Imagerie</h1>
                     <p>
-                        <!-- Section future pour les images additionnelles -->
+                        <ServeurScreen screenList={pokemon.images}/>
                     </p>
                 </div>
             )

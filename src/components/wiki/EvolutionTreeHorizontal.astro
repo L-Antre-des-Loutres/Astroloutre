@@ -1,9 +1,11 @@
 ---
+import { showdownApiGetPkmArt } from "../../utils/showdownApiGetPkmArt.ts";
 interface Stage {
-    type: "pokemon" | "condition";
-    name?: string;
-    image?: string;
-    label?: string;
+    id: string;
+    name: string;
+    slug: string;
+    method: string;
+    image: string;
 }
 
 interface Props {
@@ -12,25 +14,43 @@ interface Props {
 }
 
 const { color, stages } = Astro.props;
+
+// Calculate resolved images before rendering to handle async API calls
+const resolvedStages = await Promise.all(
+    stages.map(async (stage) => {
+        // showdownApiGetPkmArt expects the english name/slug to find the correct artwork
+        const resolvedImage = await showdownApiGetPkmArt(stage.slug);
+        return {
+            ...stage,
+            resolvedImage,
+        };
+    }),
+);
 ---
 
 <div class="evo-wrapper">
-
     <div class="evo-row">
-        {stages.map((stage) => (
-            stage.type === "pokemon" ? (
-                    <div class="evo-card">
-                        <img src={stage.image} alt={stage.name} />
-                        <p>{stage.name}</p>
-                    </div>
-            ) : (
-                    <div class="evo-condition" style={`--color: ${color};`}>
-                        <span>{stage.label} ➜</span>
-                    </div>
-            )
-        ))}
+        {
+            resolvedStages.map((stage, index) => (
+                <>
+                    {index > 0 && (
+                        <div class="evo-condition" style={`--color: ${color};`}>
+                            <span>{stage.method} ➜</span>
+                        </div>
+                    )}
+                    <a
+                        href={`/pokemon/wiki/${stage.slug}`}
+                        style="text-decoration: none;"
+                    >
+                        <div class="evo-card">
+                            <img src={stage.resolvedImage} alt={stage.name} />
+                            <p>{stage.name}</p>
+                        </div>
+                    </a>
+                </>
+            ))
+        }
     </div>
-
 </div>
 
 <style>
@@ -82,7 +102,6 @@ const { color, stages } = Astro.props;
     /* -------- MOBILE -------- */
 
     @media (max-width: 600px) {
-
         .evo-row {
             gap: 1rem;
         }
@@ -95,5 +114,4 @@ const { color, stages } = Astro.props;
             padding: 0.5rem;
         }
     }
-
 </style>

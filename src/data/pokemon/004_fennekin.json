@@ -20,7 +20,33 @@
     "specialDefense": 60,
     "speed": 60
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Germignon",
+          "slug": "germignon",
+          "method": "Base",
+          "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/152.png"
+        },
+        {
+          "id": "153",
+          "name": "Macronium",
+          "slug": "macronium",
+          "method": "Niveau 16",
+          "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/153.png"
+        },
+        {
+          "id": "154",
+          "name": "Méganium",
+          "slug": "meganium",
+          "method": "Niveau 32",
+          "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/154.png"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {
