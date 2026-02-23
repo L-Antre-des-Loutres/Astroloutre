@@ -22,7 +22,40 @@
     "specialDefense": 70,
     "speed": 135
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "17",
+          "name": "Ningale",
+          "slug": "nincada",
+          "method": "Base"
+        },
+        {
+          "id": "18",
+          "name": "Ninjask",
+          "slug": "ninjask",
+          "method": "Niveau 20"
+        }
+      ]
+    },
+    {
+      "path": [
+        {
+          "id": "17",
+          "name": "Ningale",
+          "slug": "nincada",
+          "method": "Base"
+        },
+        {
+          "id": "19",
+          "name": "Munja",
+          "slug": "shedinja",
+          "method": "Niveau 20, emplacement libre et Poké Ball dans l'inventaire"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       {
