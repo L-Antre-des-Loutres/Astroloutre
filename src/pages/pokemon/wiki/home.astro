@@ -1,0 +1,47 @@
+---
+import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
+import Banner from "../../../components/sections/layout/Banner.astro";
+import ContentLayout from "../../../components/wiki/ContentLayout.astro";
+import Layout from "../../../layouts/Layout.astro";
+import SlidingVignette from "../../../components/ui/vignettes/SlidingVignette.astro";
+
+
+---
+
+<Layout title="Wiki RLM" forceDarkTheme={true}>
+    <Banner />
+
+    <LargeTransitionSection title="Accueil du #Wiki RLM#" invertedBackground/>
+
+    <ContentLayout>
+        <div class="sliding-cards-container">
+            <SlidingVignette
+                    image="https://cdn.modrinth.com/data/GC58bFHM/images/10d532c0fa22ddf3ff065dd9ba50e8b6cd1c6d58.png"
+                    image_alt="Pokemon illustration"
+                    title="Nos nouveaux #Pokemon#"
+                    paragraph="Flammiko, Rhinécaille, Aphelis..."
+                    card_link="/pokemon/wiki/pokedex"
+            />
+            <SlidingVignette
+                    image="https://cdn.modrinth.com/data/GC58bFHM/images/06a356d01f276709fd702ef4d061bf56c80eecfa.png"
+                    image_alt="Moves illustration"
+                    title="Nos nouvelles #attaques#"
+                    paragraph="Exploroc, Hydro-Propulsion, Glissade Glacée..."
+                    card_link="/pokemon/wiki/moves"
+            />
+            <SlidingVignette
+                    image="https://cdn.modrinth.com/data/GC58bFHM/images/d51cc6faec9a2755c90318e0775bf61958be8735.png"
+                    image_alt="Abilities illustration"
+                    title="Nos nouveaux #talents#"
+                    paragraph="Imbreakaplante, Psychoprio, Trombe Marine..."
+                    card_link="/pokemon/wiki/abilities"
+            />
+        </div>
+    </ContentLayout>
+</Layout>
+
+
+<!-- TODO : Mettre ça en global.css -->
+<style>
+
+</style>

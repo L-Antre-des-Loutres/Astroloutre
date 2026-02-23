@@ -6,12 +6,12 @@
   "baseSpecies": "sunkern",
   "category": "Pokémon Graine",
   "types": [
+    "Plante"
+  ],
+  "abilities": [
     "Chlorophylle",
     "Force Soleil",
     "Matinal"
-  ],
-  "abilities": [
-    "Garde Émoussée"
   ],
   "stats": {
     "hp": 30,
