@@ -1,0 +1,48 @@
+{
+  "id": "001",
+  "slug": "chikorita",
+  "name": "Germinion",
+  "form": "normal",
+  "baseSpecies": "chikorita",
+  "category": "Pokémon Feuille",
+  "types": [
+    "Plante"
+  ],
+  "abilities": [
+    "Engrais",
+    "Feuille Garde"
+  ],
+  "stats": {
+    "hp": 45,
+    "attack": 49,
+    "defense": 65,
+    "specialAttack": 49,
+    "specialDefense": 65,
+    "speed": 45
+  },
+  "evolutions": [  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": "Départ"
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon",
+      "location": "Biome floral, ultra rare"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Pokémon Or",
+      "description": "Un doux parfum émane des feuilles placées sur sa tête. Il est très doux et il aime dormir au soleil."
+    }
+  ],
+  "about": "La version du **Royaume de Loutre Monde** de ce Pokémon n'as aucuns changements particuliers.",
+  "images": [ "https://www.pokepedia.fr/images/a/a5/Miniature_0153_HOME.png" ]
+}

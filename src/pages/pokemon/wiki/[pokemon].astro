@@ -10,12 +10,12 @@ import { showdownApiGetPkmArt } from "../../../utils/showdownApiGetPkmArt";
 import { marked } from "marked";
 
 export async function getStaticPaths() {
-    // 1. On récupère tous les fichiers JSON
+    // On récupère tous les fichiers JSON
     const files = import.meta.glob("../../../data/pokemon/*.json", {
         eager: true,
     });
 
-    // 2. On transforme l'objet en tableau de chemins
+    // On transforme l'objet en tableau de chemins
     return Object.values(files).map((file: any) => {
         const data = file.default || file;
         // Log de debug pour voir ce qu'Astro génère au build
@@ -42,6 +42,10 @@ const movesetColumns: { label: string; key: string }[] = [
     { label: "Capacité", key: "name" },
     { label: "Niveau", key: "level" },
 ];
+const tmColumns: { label: string; key: string }[] = [
+    { label: "Capacité", key: "name" },
+    { label: "Moyen", key: "ct" },
+];
 const localisationColumns: { label: string; key: string }[] = [
     { label: "Jeu", key: "game" },
     { label: "Localisation", key: "location" },
@@ -50,16 +54,12 @@ const pokedexColumns: { label: string; key: string }[] = [
     { label: "Jeu", key: "game" },
     { label: "Description", key: "description" },
 ];
-const tmColumns: { label: string; key: string }[] = [
-    { label: "Capacité", key: "name" },
-    { label: "Moyen", key: "ct" },
-];
 
 const typeColors: Record<string, string> = {
-    Normal: "#A8A77A",
+    Normal: "#878660",
     Feu: "#EE8130",
     Eau: "#6390F0",
-    Électrik: "#F7D02C",
+    Électrik: "#b39518",
     Plante: "#7AC74C",
     Glace: "#96D9D6",
     Combat: "#C22E28",
@@ -223,6 +223,7 @@ const nextImage = await showdownApiGetPkmArt(
                     columns={movesetColumns}
                     data={pokemon.moveset?.levelUp || []}
             />
+            <!--
             <ContentTable
                     title="Capacités appris par CT/DT"
                     color={defaultPageColor}
@@ -235,6 +236,7 @@ const nextImage = await showdownApiGetPkmArt(
                     columns={movesetColumns}
                     data={pokemon.moveset?.breeding || []}
             />
+            -->
         </div>
 
         <!-- Localisations -->
