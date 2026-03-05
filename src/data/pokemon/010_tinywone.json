@@ -9,38 +9,32 @@
     "Insecte"
   ],
   "abilities": [
-    "Tête de Roc",
-    "Glissade",
-    "Trombe Marine"
+    "Attention",
+    "Impassible",
+    "Adaptabilité"
   ],
   "stats": {
-    "hp": 98,
-    "attack": 90,
-    "defense": 80,
-    "specialAttack": 80,
-    "specialDefense": 80,
-    "speed": 102
+    "hp": 40,
+    "attack": 20,
+    "defense": 50,
+    "specialAttack": 40,
+    "specialDefense": 60,
+    "speed": 45
   },
   "evolutions": [
     {
       "path": [
         {
-          "id": "152",
-          "name": "Carapuce",
-          "slug": "squirtle",
+          "id": "010",
+          "name": "tinywone",
+          "slug": "Ptimek",
           "method": "Base"
         },
         {
-          "id": "153",
-          "name": "Carabaffe",
-          "slug": "wartortle",
-          "method": "Niveau 16"
-        },
-        {
-          "id": "154",
-          "name": "Tortank",
-          "slug": "blastoise",
-          "method": "Niveau 36"
+          "id": "011",
+          "name": "Guerriek",
+          "slug": "wamek",
+          "method": "Niveau 15"
         }
       ]
     }
@@ -48,184 +42,36 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Écume",
+        "name": "Combo-Griffe",
         "level": 1
       },
       {
-        "name": "Luminocanon",
+        "name": "Rugissement",
         "level": 1
       },
       {
-        "name": "Coud'Krâne",
+        "name": "Sécrétion",
         "level": 1
       },
       {
-        "name": "Charge",
+        "name": "Choc Mental",
         "level": 1
       },
       {
-        "name": "Mimi-Queue",
-        "level": 1
-      },
-      {
-        "name": "Pistolet à O",
-        "level": 1
-      },
-      {
-        "name": "Repli",
-        "level": 1
-      },
-      {
-        "name": "Mimi-Queue",
+        "name": "Poing Boost",
         "level": 4
       },
       {
-        "name": "Pistolet à O",
+        "name": "Gonflette",
         "level": 7
       },
       {
-        "name": "Tour Rapide",
-        "level": 9
-      },
-      {
-        "name": "Aéropique",
+        "name": "Dard-Nuée",
         "level": 10
       },
       {
-        "name": "Morsure",
-        "level": 12
-      },
-      {
-        "name": "Écume",
+        "name": "Endurance",
         "level": 13
-      },
-      {
-        "name": "Lame d'Air",
-        "level": 15
-      },
-      {
-        "name": "Vibraqua",
-        "level": 15
-      },
-      {
-        "name": "Morsure",
-        "level": 17
-      },
-      {
-        "name": "Vent Arrière",
-        "level": 19
-      },
-      {
-        "name": "Abri",
-        "level": 20
-      },
-      {
-        "name": "Tour Rapide",
-        "level": 21
-      },
-      {
-        "name": "Abri",
-        "level": 25
-      },
-      {
-        "name": "Danse Pluie",
-        "level": 25
-      },
-      {
-        "name": "Vibraqua",
-        "level": 29
-      },
-      {
-        "name": "Hydroqueue",
-        "level": 30
-      },
-      {
-        "name": "Aqua-Jet",
-        "level": 33
-      },
-      {
-        "name": "Hydroqueue",
-        "level": 34
-      },
-      {
-        "name": "Exuviation",
-        "level": 35
-      },
-      {
-        "name": "Cascade",
-        "level": 35
-      },
-      {
-        "name": "Gonflette",
-        "level": 36
-      },
-      {
-        "name": "Haute Propulsion",
-        "level": 36
-      },
-      {
-        "name": "Damoclès",
-        "level": 40
-      },
-      {
-        "name": "Mur de Fer",
-        "level": 42
-      },
-      {
-        "name": "Ébullition",
-        "level": 42
-      },
-      {
-        "name": "Telluriforce",
-        "level": 44
-      },
-      {
-        "name": "Haute-Propulsion",
-        "level": 45
-      },
-      {
-        "name": "Mur de Fer",
-        "level": 47
-      },
-      {
-        "name": "Hydrocanon",
-        "level": 49
-      },
-      {
-        "name": "Tour Rapide",
-        "level": 50
-      },
-      {
-        "name": "Rapace",
-        "level": 52
-      },
-      {
-        "name": "Danse Pluie",
-        "level": 54
-      },
-      {
-        "name": "Aquatacle",
-        "level": 56
-      },
-      {
-        "name": "Séisme",
-        "level": 58
-      },
-      {
-        "name": "Vent Violent",
-        "level": 60
-      },
-      {
-        "name": "Hydrocanon",
-        "level": 62
-      },
-      {
-        "name": "Fracas'Tête",
-        "level": 64
-      },
-      {
-        "name": "Danse Lames",
-        "level": 70
       }
     ],
     "by_tm": [],
@@ -240,7 +86,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Adapté à la mobilité aérienne, cette variante utilise ses canons massifs comme des propulseurs à réaction. Il s'élance dans les airs avec une force explosive, devenant un projectile vivant. Une fois en vol, il fait preuve d'une grâce surprenante, naviguant au gré des vents en inclinant ses oreilles et sa queue."
+      "description": "Extrêmement faible, ce Pokémon a conscience de son potentiel. Il médite scrupuleusement tous les jours en pensant au jour où il sera grand et fort, capable d’enfin être fier de sa force."
     }
   ],
   "about": "",
