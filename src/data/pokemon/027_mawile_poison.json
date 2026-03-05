@@ -1,48 +1,48 @@
 {
   "id": "027",
-  "slug": "mawile",
-  "name": "Mysdibule",
-  "form": "mawile",
+  "slug": "mawile_poison",
+  "name": "Mysdibule Poison",
+  "form": "poison",
   "baseSpecies": "mawile",
   "category": "Pokémon Trompeur",
   "types": [
-    "Acier",
+    "Poison",
     "Fée"
   ],
   "abilities": [
-    "Hyper Cutter",
-    "Intimidation",
-    "Sans Limite"
+    "Poisseux",
+    "Soin Poison",
+    "Armure Venimeuse"
   ],
   "stats": {
-    "hp": 50,
-    "attack": 85,
-    "defense": 85,
-    "specialAttack": 55,
-    "specialDefense": 55,
+    "hp": 95,
+    "attack": 20,
+    "defense": 55,
+    "specialAttack": 85,
+    "specialDefense": 75,
     "speed": 50
   },
   "evolutions": [],
   "movesets": {
     "by_level": [
       { "name": "Étonnement", "level": 1 },
-      { "name": "Force Poigne", "level": 1 },
+      { "name": "Acide", "level": 1 },
       { "name": "Feinte", "level": 1 },
       { "name": "Rugissement", "level": 1 },
       { "name": "Vent Féérique", "level": 4 },
-      { "name": "Relais", "level": 8 },
+      { "name": "Coup d'Boule", "level": 8 },
       { "name": "Morsure", "level": 12 },
-      { "name": "Stockage", "level": 16 },
-      { "name": "Avale", "level": 16 },
-      { "name": "Relâche", "level": 16 },
+      { "name": "Choc Venin", "level": 16 },
       { "name": "Coup Bas", "level": 20 },
-      { "name": "Mur de Fer", "level": 24 },
+      { "name": "Acidarmure", "level": 24 },
       { "name": "Mâchouille", "level": 28 },
-      { "name": "Doux Parfum", "level": 32 },
-      { "name": "Tête de Fer", "level": 36 },
-      { "name": "Provoc", "level": 40 },
-      { "name": "Crocs Larme", "level": 44 },
-      { "name": "Câlinerie", "level": 48 }
+      { "name": "Gaz Toxik", "level": 32 },
+      { "name": "Ball'Ombre", "level": 36 },
+      { "name": "Cage Éclair", "level": 38 },
+      { "name": "Bomb-Beurk", "level": 40 },
+      { "name": "Toxik", "level": 42 },
+      { "name": "Plénitude", "level": 44 },
+      { "name": "Pouvoir Lunaire", "level": 48 }
     ],
     "by_tm": [
       { "name": "Pouvoir Antique" }, { "name": "Assurance" }, { "name": "Relais" },
@@ -73,23 +73,23 @@
       { "name": "Tourment" }
     ],
     "by_breeding": [
-      { "name": "Pouvoir Antique" }, { "name": "Séduction" }, { "name": "Cerclage" },
+      { "name": "Pouvoir Antique" }, { "name": "Séduction" }, { "name": "Rafale Psy" },
       { "name": "Crocs Poison" }, { "name": "Poing Boost" }, { "name": "Punition" },
       { "name": "Frappe Atlas" }, { "name": "Écrasement" }, { "name": "Chatouille" }
     ]
   },
   "locations": [
     {
-      "game": "Cobblemon",
-      "location": "Biomes deep dark, uncommon, niveau 13 à 18."
+      "game": "Cobblemon RLM",
+      "location": "???"
     }
   ],
   "pokedex_entries": [
     {
-      "game": "Cobblemon",
-      "description": "Il amadoue ses ennemis avec ses gestes mignons, puis les croque avec ses mâchoires géantes constituées de cornes transformées."
+      "game": "Cobblemon RLM",
+      "description": "Cette forme de Mysdibule a été empoisonnée alors qu’elle n’était encore qu’un Minibule. Depuis, une aura toxique émane en permanence de son chignon, dissuadant quiconque de l’approcher. Pour contenir cette malédiction, il canalise ses pouvoirs magiques. Bien que cela atténue les effets du poison, cet effort lui demande une énergie considérable."
     }
   ],
-  "about": "Mysdibule est un Pokémon de type Acier et Fée introduit dans la Génération 3. Il est connu pour la mâchoire impressionnante située à l'arrière de sa tête.",
+  "about": "Cette forme régionale de Mysdibule possède le type Poison/Fée. Elle est capable de se fixer sur l'épaule de son dresseur, bien que cela puisse porter malchance.",
   "images": []
 }

@@ -9,17 +9,17 @@
     "Fée"
   ],
   "abilities": [
-    "Créa-Élec",
-    "Glissade",
+    "Hyper Cutter",
+    "Intimidation",
     "Sans Limite"
   ],
   "stats": {
-    "hp": 90,
-    "attack": 110,
-    "defense": 85,
-    "specialAttack": 70,
-    "specialDefense": 85,
-    "speed": 95
+    "hp": 35,
+    "attack": 55,
+    "defense": 55,
+    "specialAttack": 45,
+    "specialDefense": 45,
+    "speed": 35
   },
   "evolutions": [
     {
@@ -48,8 +48,8 @@
         },
         {
           "id": "27",
-          "name": "Mysdibule",
-          "slug": "mawile",
+          "name": "Mysdibule Dragon",
+          "slug": "mawile_dragon",
           "method": "Niveau 40"
         }
       ]
@@ -64,28 +64,77 @@
         },
         {
           "id": "27",
-          "name": "Mysdibule",
-          "slug": "mawile",
+          "name": "Mysdibule Poison",
+          "slug": "mawile_poison",
           "method": "Niveau en tenant Orbe Toxique"
         }
       ]
     }
   ],
   "movesets": {
-    "by_level": [],
+    "by_level": [
+      {
+        "name": "Morsure",
+        "level": 1
+      },
+      {
+        "name": "Vent Féerique",
+        "level": 1
+      },
+      {
+        "name": "Crocs Larme",
+        "level": 6
+      },
+      {
+        "name": "Sabotage",
+        "level": 16
+      },
+      {
+        "name": "Charme",
+        "level": 20
+      },
+      {
+        "name": "Vampibaiser",
+        "level": 23
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 25
+      },
+      {
+        "name": "Mâchouille",
+        "level": 28
+      },
+      {
+        "name": "Tête de Fer",
+        "level": 34
+      },
+      {
+        "name": "Provoc",
+        "level": 38
+      },
+      {
+        "name": "Câlinerie",
+        "level": 44
+      },
+      {
+        "name": "Dynamopoing",
+        "level": 48
+      }
+    ],
     "by_tm": [],
     "by_breeding": []
   },
   "locations": [
     {
-      "game": "Cobblemon RLM",
+      "game": "Cobblemon",
       "location": "???"
     }
   ],
   "pokedex_entries": [
     {
-      "game": "Cobblemon RLM",
-      "description": "Habituellement calme, la colère de ce Pingoléon est insupportable. Il génère des torrents d'électricité depuis ses cornes et invoque des vagues massives pour submerger ses proies. En raison de son pouvoir destructeur, il est profondément craint par les autres Pokémon sauvages."
+      "game": "Cobblemon",
+      "description": "Ce Pokémon adorable est d’une grande timidité et se cache au moindre signe de présence. Bien qu’il paraisse fragile, il possède un potentiel insoupçonné et attend le Dresseur capable de le révéler."
     }
   ],
   "about": "",

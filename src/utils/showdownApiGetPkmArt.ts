@@ -18,7 +18,7 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
     const p = pokemonName.toLowerCase();
 
     // Si forme spéciale → suffixe au nom
-    const formesSpeciales = ["normal", "rlm", "ocean", "volcan", "ciel"];
+    const formesSpeciales = ["normal", "rlm", "ocean", "volcan", "ciel", "poison", "dragon"];
     if (!formesSpeciales.includes(f)) {
         pokemonName = `${p}-${f}`;
     }
@@ -26,13 +26,13 @@ export async function showdownApiGetPkmArt(pokemonName: string, forme: string = 
     // Gestion des exceptions (fichiers locaux RLM)
     let localRelativeUrl = "";
 
-    if (p == "rineshell" || p == "flammiko" || p == "galama" || p == "apheos" || p == "aphelis") {
+    if (p == "rineshell" || p == "flammiko" || p == "galama" || p == "apheos" || p == "aphelis" || p == "tinywone" || p == "wamek" || p == "smowile") {
         return `/pokemon/rlm/sprites/normal/${p}.webp`
     }
     
     if (f === "rlm") {
         localRelativeUrl = `/pokemon/rlm/sprites/${shiny ? "shiny" : "normal"}/forme/${p}.webp`;
-    } else if (["ocean", "volcan", "ciel"].includes(f)) {
+    } else if (["ocean", "volcan", "ciel", "poison", "dragon"].includes(f)) {
         localRelativeUrl = `/pokemon/rlm/alternative/${f}/sprites/${shiny ? "shiny" : "normal"}/${p}.webp`;
     } else {
         // Formes de base mais potentiellement custom (Apheos, Flammiko, Galama...)
