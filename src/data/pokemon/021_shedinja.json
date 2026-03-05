@@ -1,26 +1,24 @@
 {
-  "id": "018",
-  "slug": "ninjask",
-  "name": "Ninjask",
+  "id": "021",
+  "slug": "shedinja",
+  "name": "Munja",
   "form": "rlm",
-  "baseSpecies": "ninjask",
-  "category": "Pokémon Corises",
+  "baseSpecies": "shedinja",
+  "category": "Pokémon Exuvie",
   "types": [
     "Eau",
-    "Vol"
+    "Roche"
   ],
   "abilities": [
-    "Turbo",
-    "Infiltration",
-    "Glissade"
+    "Garde Émoussée"
   ],
   "stats": {
-    "hp": 61,
-    "attack": 100,
-    "defense": 70,
-    "specialAttack": 30,
-    "specialDefense": 70,
-    "speed": 135
+    "hp": 1,
+    "attack": 20,
+    "defense": 10,
+    "specialAttack": 95,
+    "specialDefense": 10,
+    "speed": 101
   },
   "evolutions": [
     {
@@ -71,15 +69,11 @@
         "level": 1
       },
       {
-        "name": "Taillade",
+        "name": "Rancœur",
         "level": 1
       },
       {
-        "name": "Grincement",
-        "level": 1
-      },
-      {
-        "name": "Relais",
+        "name": "Anti-Soin",
         "level": 1
       },
       {
@@ -95,11 +89,7 @@
         "level": 1
       },
       {
-        "name": "Aéropique",
-        "level": 1
-      },
-      {
-        "name": "Reflet",
+        "name": "Griffe Ombre",
         "level": 1
       },
       {
@@ -107,35 +97,31 @@
         "level": 1
       },
       {
-        "name": "Demi-Tour",
+        "name": "Machination",
         "level": 1
       },
       {
-        "name": "Toile Gluante",
-        "level": 1
-      },
-      {
-        "name": "Cascade",
-        "level": 1
-      },
-      {
-        "name": "Eau Revoir",
-        "level": 1
-      },
-      {
-        "name": "Acrobatie",
-        "level": 1
-      },
-      {
-        "name": "Hâte",
+        "name": "Onde Folle",
         "level": 15
+      },
+      {
+        "name": "Bourdon",
+        "level": 20
       },
       {
         "name": "Vole-Vie",
         "level": 23
       },
       {
-        "name": "Piqûre",
+        "name": "Ébullition",
+        "level": 25
+      },
+      {
+        "name": "Prélèvem. Destin",
+        "level": 27
+      },
+      {
+        "name": "Ombre Portée",
         "level": 29
       },
       {
@@ -143,19 +129,43 @@
         "level": 36
       },
       {
+        "name": "Ball'Ombre",
+        "level": 38
+      },
+      {
         "name": "Lire-Esprit",
         "level": 43
       },
       {
-        "name": "Tranche",
+        "name": "Psyko",
+        "level": 45
+      },
+      {
+        "name": "Entrave",
+        "level": 48
+      },
+      {
+        "name": "Ball'Ombre",
         "level": 50
       },
       {
-        "name": "Danse Lames",
+        "name": "Échange",
+        "level": 52
+      },
+      {
+        "name": "Feu Follet",
+        "level": 55
+      },
+      {
+        "name": "Dépit",
         "level": 57
       },
       {
-        "name": "Plaie Croix",
+        "name": "Machination",
+        "level": 59
+      },
+      {
+        "name": "Hantise",
         "level": 64
       }
     ],
@@ -171,7 +181,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Souvent appelé 'la rame du lac', cette variante de Ninjask est l'un des nageurs les plus rapides du monde Pokémon. En faisant vibrer ses pattes palmées à haute fréquence, il peut traverser la surface de l'eau en un clin d'œil."
+      "description": "Quand Ningale mue sous l'eau, sa carapace vide coule et fusionne avec les trésors des fonds marins. Avec le temps, ces restes de corail et de fossiles donnent une nouvelle vie spectrale à la coque. Ce Munja aquatique reste parfaitement immobile, se faisant passer pour un récif."
     }
   ],
   "about": "",

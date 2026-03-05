@@ -1,0 +1,93 @@
+{
+  "id": "026",
+  "slug": "smowile",
+  "name": "Minibule",
+  "form": "smowile",
+  "baseSpecies": "smowile",
+  "category": "Pokémon Smol",
+  "types": [
+    "Fée"
+  ],
+  "abilities": [
+    "Créa-Élec",
+    "Glissade",
+    "Sans Limite"
+  ],
+  "stats": {
+    "hp": 90,
+    "attack": 110,
+    "defense": 85,
+    "specialAttack": 70,
+    "specialDefense": 85,
+    "speed": 95
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "26",
+          "name": "Minibule",
+          "slug": "smowile",
+          "method": "Base"
+        },
+        {
+          "id": "27",
+          "name": "Mysdibule",
+          "slug": "mawile",
+          "method": "Niveau 15"
+        }
+      ]
+    },
+    {
+      "path": [
+        {
+          "id": "26",
+          "name": "Minibule",
+          "slug": "smowile",
+          "method": "Base"
+        },
+        {
+          "id": "27",
+          "name": "Mysdibule",
+          "slug": "mawile",
+          "method": "Niveau 40"
+        }
+      ]
+    },
+    {
+      "path": [
+        {
+          "id": "26",
+          "name": "Minibule",
+          "slug": "smowile",
+          "method": "Base"
+        },
+        {
+          "id": "27",
+          "name": "Mysdibule",
+          "slug": "mawile",
+          "method": "Niveau en tenant Orbe Toxique"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Habituellement calme, la colère de ce Pingoléon est insupportable. Il génère des torrents d'électricité depuis ses cornes et invoque des vagues massives pour submerger ses proies. En raison de son pouvoir destructeur, il est profondément craint par les autres Pokémon sauvages."
+    }
+  ],
+  "about": "",
+  "images": []
+}

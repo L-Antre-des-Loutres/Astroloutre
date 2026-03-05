@@ -1,0 +1,249 @@
+{
+  "id": "010",
+  "slug": "tinywone",
+  "name": "Ptimek",
+  "form": "tinywone",
+  "baseSpecies": "tinywone",
+  "category": "Pokémon Namek",
+  "types": [
+    "Eau",
+    "Vol"
+  ],
+  "abilities": [
+    "Tête de Roc",
+    "Glissade",
+    "Trombe Marine"
+  ],
+  "stats": {
+    "hp": 98,
+    "attack": 90,
+    "defense": 80,
+    "specialAttack": 80,
+    "specialDefense": 80,
+    "speed": 102
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "152",
+          "name": "Carapuce",
+          "slug": "squirtle",
+          "method": "Base"
+        },
+        {
+          "id": "153",
+          "name": "Carabaffe",
+          "slug": "wartortle",
+          "method": "Niveau 16"
+        },
+        {
+          "id": "154",
+          "name": "Tortank",
+          "slug": "blastoise",
+          "method": "Niveau 36"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Écume",
+        "level": 1
+      },
+      {
+        "name": "Luminocanon",
+        "level": 1
+      },
+      {
+        "name": "Coud'Krâne",
+        "level": 1
+      },
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 1
+      },
+      {
+        "name": "Repli",
+        "level": 1
+      },
+      {
+        "name": "Mimi-Queue",
+        "level": 4
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 7
+      },
+      {
+        "name": "Tour Rapide",
+        "level": 9
+      },
+      {
+        "name": "Aéropique",
+        "level": 10
+      },
+      {
+        "name": "Morsure",
+        "level": 12
+      },
+      {
+        "name": "Écume",
+        "level": 13
+      },
+      {
+        "name": "Lame d'Air",
+        "level": 15
+      },
+      {
+        "name": "Vibraqua",
+        "level": 15
+      },
+      {
+        "name": "Morsure",
+        "level": 17
+      },
+      {
+        "name": "Vent Arrière",
+        "level": 19
+      },
+      {
+        "name": "Abri",
+        "level": 20
+      },
+      {
+        "name": "Tour Rapide",
+        "level": 21
+      },
+      {
+        "name": "Abri",
+        "level": 25
+      },
+      {
+        "name": "Danse Pluie",
+        "level": 25
+      },
+      {
+        "name": "Vibraqua",
+        "level": 29
+      },
+      {
+        "name": "Hydroqueue",
+        "level": 30
+      },
+      {
+        "name": "Aqua-Jet",
+        "level": 33
+      },
+      {
+        "name": "Hydroqueue",
+        "level": 34
+      },
+      {
+        "name": "Exuviation",
+        "level": 35
+      },
+      {
+        "name": "Cascade",
+        "level": 35
+      },
+      {
+        "name": "Gonflette",
+        "level": 36
+      },
+      {
+        "name": "Haute Propulsion",
+        "level": 36
+      },
+      {
+        "name": "Damoclès",
+        "level": 40
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 42
+      },
+      {
+        "name": "Ébullition",
+        "level": 42
+      },
+      {
+        "name": "Telluriforce",
+        "level": 44
+      },
+      {
+        "name": "Haute-Propulsion",
+        "level": 45
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 47
+      },
+      {
+        "name": "Hydrocanon",
+        "level": 49
+      },
+      {
+        "name": "Tour Rapide",
+        "level": 50
+      },
+      {
+        "name": "Rapace",
+        "level": 52
+      },
+      {
+        "name": "Danse Pluie",
+        "level": 54
+      },
+      {
+        "name": "Aquatacle",
+        "level": 56
+      },
+      {
+        "name": "Séisme",
+        "level": 58
+      },
+      {
+        "name": "Vent Violent",
+        "level": 60
+      },
+      {
+        "name": "Hydrocanon",
+        "level": 62
+      },
+      {
+        "name": "Fracas'Tête",
+        "level": 64
+      },
+      {
+        "name": "Danse Lames",
+        "level": 70
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Adapté à la mobilité aérienne, cette variante utilise ses canons massifs comme des propulseurs à réaction. Il s'élance dans les airs avec une force explosive, devenant un projectile vivant. Une fois en vol, il fait preuve d'une grâce surprenante, naviguant au gré des vents en inclinant ses oreilles et sa queue."
+    }
+  ],
+  "about": "",
+  "images": []
+}

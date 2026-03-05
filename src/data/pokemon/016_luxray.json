@@ -1,10 +1,10 @@
 {
-  "id": "012",
-  "slug": "shinx",
-  "name": "Lixy",
+  "id": "016",
+  "slug": "luxray",
+  "name": "Luxray",
   "form": "rlm",
-  "baseSpecies": "shinx",
-  "category": "Pokémon Froid",
+  "baseSpecies": "luxray",
+  "category": "Pokémon Glacial",
   "types": [
     "Glace"
   ],
@@ -14,12 +14,12 @@
     "Cran"
   ],
   "stats": {
-    "hp": 45,
-    "attack": 75,
-    "defense": 34,
-    "specialAttack": 30,
-    "specialDefense": 34,
-    "speed": 45
+    "hp": 84,
+    "attack": 130,
+    "defense": 70,
+    "specialAttack": 75,
+    "specialDefense": 74,
+    "speed": 90
   },
   "evolutions": [
     {
@@ -164,7 +164,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "En raison de changements environnementaux, ce Lixy a dû s'adapter au froid. Il est connu pour être extrêmement timide et réservé, préférant rester caché et fuir devant le danger."
+      "description": "Adapté aux sommets gelés, ce Luxray de type Glace maintient une attitude froide et distante. Bien qu'il rejoigne rarement le reste de sa tribu, il n'est jamais vraiment loin, surveillant les Lixy et les Luxio depuis les crêtes enneigées."
     }
   ],
   "about": "",

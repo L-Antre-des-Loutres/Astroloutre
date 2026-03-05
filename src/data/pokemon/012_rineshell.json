@@ -1,12 +1,11 @@
 {
-  "id": "011",
-  "slug": "galama",
-  "name": "Galama",
-  "form": "galama",
-  "baseSpecies": "galama",
+  "id": "012",
+  "slug": "rineshell",
+  "name": "Rhinécaille",
+  "form": "rineshell",
+  "baseSpecies": "rineshell",
   "category": "Pokémon Carapacier",
   "types": [
-    "Acier",
     "Normal"
   ],
   "abilities": [
@@ -15,12 +14,12 @@
     "Armurouillée"
   ],
   "stats": {
-    "hp": 90,
-    "attack": 75,
-    "defense": 100,
-    "specialAttack": 75,
-    "specialDefense": 100,
-    "speed": 80
+    "hp": 50,
+    "attack": 40,
+    "defense": 80,
+    "specialAttack": 40,
+    "specialDefense": 80,
+    "speed": 70
   },
   "evolutions": [
     {
@@ -47,60 +46,48 @@
         "level": 1
       },
       {
-        "name": "Boul'Armure",
+        "name": "Mimi-Queue",
         "level": 1
       },
       {
-        "name": "Jet-Pierres",
+        "name": "Coup d'Corne",
         "level": 4
       },
       {
-        "name": "Mur de Fer",
+        "name": "Tour Rapide",
         "level": 8
       },
       {
-        "name": "Poliroche",
+        "name": "Griffe Acier",
         "level": 12
       },
       {
-        "name": "Coup d'Boule",
+        "name": "Roulade",
         "level": 16
       },
       {
-        "name": "Tête de Fer",
+        "name": "Mur de Fer",
         "level": 20
       },
       {
-        "name": "Plaquage",
+        "name": "Estocorne",
         "level": 24
       },
       {
-        "name": "Éboulement",
+        "name": "Bélier",
         "level": 28
       },
       {
-        "name": "Allègement",
+        "name": "Tête de Fer",
         "level": 32
       },
       {
-        "name": "Gyroballe",
+        "name": "Empal'Korne",
         "level": 36
       },
       {
-        "name": "Piège de Roc",
+        "name": "Mégacorne",
         "level": 40
-      },
-      {
-        "name": "Tacle Lourd",
-        "level": 44
-      },
-      {
-        "name": "Lame de Roc",
-        "level": 48
-      },
-      {
-        "name": "Damoclès",
-        "level": 52
       }
     ],
     "by_tm": [],
@@ -115,7 +102,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Souvent confondu avec une simple formation rocheuse, Galama est un Pokémon remarquablement calme qui possède une plaque épaisse en forme de carapace sur la tête. Ce casque naturel est presque indestructible, permettant à Galama d'ignorer la plupart des menaces pendant qu'il se repose. Il est si détendu que l'on voit souvent de petits Pokémon faire la sieste à l'ombre de sa tête métallique."
+      "description": "Bien que sa carapace métallique ne soit pas encore totalement formée, Rineshell possède un esprit têtu et ne recule jamais devant un défi. Il rêve du jour où sa plaque frontale sera assez solide pour résister à n'importe quel coup sans qu'il ait à bouger d'un muscle."
     }
   ],
   "about": "",

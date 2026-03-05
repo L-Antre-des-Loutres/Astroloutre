@@ -1,9 +1,9 @@
 {
-  "id": "028",
-  "slug": "mareep",
-  "name": "Wattouat",
+  "id": "033",
+  "slug": "flaaffy",
+  "name": "Lainergie",
   "form": "rlm",
-  "baseSpecies": "mareep",
+  "baseSpecies": "flaaffy",
   "category": "Pokémon Lainâme",
   "types": [
     "Électrik",
@@ -15,12 +15,12 @@
     "Marque Ombre"
   ],
   "stats": {
-    "hp": 60,
-    "attack": 40,
-    "defense": 40,
-    "specialAttack": 60,
-    "specialDefense": 40,
-    "speed": 40
+    "hp": 80,
+    "attack": 30,
+    "defense": 50,
+    "specialAttack": 80,
+    "specialDefense": 60,
+    "speed": 80
   },
   "evolutions": [
     {
@@ -55,15 +55,27 @@
   "movesets": {
     "by_level": [
       {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 1
+      },
+      {
         "name": "Étonnement",
         "level": 1
       },
       {
-        "name": "Hurlement",
+        "name": "Ball'Ombre",
         "level": 1
       },
       {
-        "name": "Vive-Attaque",
+        "name": "Cage Éclair",
         "level": 4
       },
       {
@@ -71,48 +83,56 @@
         "level": 8
       },
       {
-        "name": "Griffe Ombre",
-        "level": 10
-      },
-      {
         "name": "Feu Follet",
         "level": 11
       },
       {
         "name": "Chargeur",
-        "level": 15
+        "level": 16
+      },
+      {
+        "name": "Châtiment",
+        "level": 20
+      },
+      {
+        "name": "Bélier",
+        "level": 20
       },
       {
         "name": "Boule Élek",
-        "level": 22
-      },
-      {
-        "name": "Éclair Fou",
         "level": 25
       },
       {
-        "name": "Force Gemme",
+        "name": "Ombre Portée",
+        "level": 27
+      },
+      {
+        "name": "Onde Folle",
         "level": 29
       },
       {
-        "name": "Coup d'Jus",
-        "level": 32
+        "name": "Force Gemme",
+        "level": 34
       },
       {
-        "name": "Abri",
-        "level": 36
+        "name": "Coup d'Jus",
+        "level": 38
       },
       {
         "name": "Mur Lumière",
         "level": 43
       },
       {
-        "name": "Fatal-Foudre",
-        "level": 46
+        "name": "Rayon Signal",
+        "level": 47
       },
       {
-        "name": "Ball'Ombre",
-        "level": 47
+        "name": "Mur Lumière",
+        "level": 52
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 56
       }
     ],
     "by_tm": [],
@@ -127,7 +147,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Après qu'un violent orage a frappé un troupeau près d'un ancien cimetière, ces Wattouat ont renaît avec une énergie fantomatique. Leur laine ne stocke plus l'électricité statique, mais plutôt les esprits persistants des défunts, brillant d'une lueur bleue étrange."
+      "description": "En évoluant, sa peau devient d'un noir livide et sa laine commence à se dissiper en une brume spectrale. Lainergie est connu pour hanter les centrales électriques, se nourrissant d'électricité pour maintenir sa forme physique. Ceux qui touchent son pelage ressentent un frisson surnaturel engourdissant."
     }
   ],
   "about": "",

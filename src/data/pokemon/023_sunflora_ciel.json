@@ -1,22 +1,22 @@
 {
-  "id": "021",
-  "slug": "sunflora_ocean",
-  "name": "Héliatronc Ocean",
-  "form": "ocean",
+  "id": "023",
+  "slug": "sunflora_ciel",
+  "name": "Héliatronc Ciel",
+  "form": "ciel",
   "baseSpecies": "sunflora",
-  "category": "Pokémon Ocean",
+  "category": "Pokémon Ciel",
   "types": [
     "Plante",
-    "Eau"
+    "Vol"
   ],
   "abilities": [
-    "Crachin",
-    "Glissade",
+    "Souffle Delta",
+    "Délestage",
     "Contestation"
   ],
   "stats": {
-    "hp": 115,
-    "attack": 85,
+    "hp": 85,
+    "attack": 115,
     "defense": 85,
     "specialAttack": 45,
     "specialDefense": 85,
@@ -26,11 +26,7 @@
   "movesets": {
     "by_level": [
       {
-        "name": "Croissance",
-        "level": 1
-      },
-      {
-        "name": "Jackpot",
+        "name": "Force de Vie",
         "level": 1
       },
       {
@@ -39,46 +35,46 @@
       },
       {
         "name": "Récolte Florale",
+        "level": 1
+      },
+      {
+        "name": "Doux Parfum",
         "level": 4
       },
       {
-        "name": "Pistolet à O",
-        "level": 4
-      },
-      {
-        "name": "Entrave",
+        "name": "Siffl'Herbe",
         "level": 7
       },
       {
-        "name": "Anneau Hydro",
+        "name": "Lame d'Air",
         "level": 10
       },
       {
-        "name": "Abri",
+        "name": "Vampigraine",
         "level": 13
       },
       {
-        "name": "Aqua-Jet",
+        "name": "Lame d'Air",
         "level": 16
       },
       {
-        "name": "Choc Mental",
+        "name": "Souci Graine",
         "level": 19
       },
       {
-        "name": "Cascade",
+        "name": "Lame Feuille",
         "level": 22
       },
       {
-        "name": "Capacité Signature",
+        "name": "Fléau",
         "level": 25
       },
       {
-        "name": "Vampibaiser",
+        "name": "Anti-Brume",
         "level": 28
       },
       {
-        "name": "Bâillement",
+        "name": "Acrobatie",
         "level": 31
       },
       {
@@ -86,27 +82,23 @@
         "level": 34
       },
       {
-        "name": "Eau Revoir",
-        "level": 35
-      },
-      {
         "name": "Damoclès",
         "level": 37
       },
       {
-        "name": "Danse Pluie",
+        "name": "Surchauffe",
         "level": 40
       },
       {
-        "name": "Soin",
+        "name": "Vol",
         "level": 43
       },
       {
-        "name": "Vitesse Extrême",
+        "name": "Fulmigraine",
         "level": 50
       },
       {
-        "name": "Onde Originelle",
+        "name": "Draco-Ascension",
         "level": 100
       }
     ],
@@ -122,7 +114,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": "Doté d'une imagination débordante, ce Héliatronc prétend avoir vaincu Kyogre en duel, forçant le titan à se cacher dans une grotte sous-marine depuis lors. Étrangement, aucune preuve n'a été trouvée."
+      "description": "Ce Héliatronc insinue avec assurance qu'il était autrefois le maître de Rayquaza, affirmant avoir tout appris au Pokémon légendaire. Étrangement, aucune preuve de cela n'a jamais été trouvée."
     }
   ],
   "about": "",

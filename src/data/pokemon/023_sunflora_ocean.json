@@ -1,26 +1,26 @@
 {
-  "id": "021",
-  "slug": "sunflora_volcan",
-  "name": "Héliatronc Volcan",
-  "form": "volcan",
+  "id": "023",
+  "slug": "sunflora_ocean",
+  "name": "Héliatronc Ocean",
+  "form": "ocean",
   "baseSpecies": "sunflora",
-  "category": "Pokémon Volcan",
+  "category": "Pokémon Ocean",
   "types": [
     "Plante",
-    "Feu"
+    "Eau"
   ],
   "abilities": [
-    "Sécheresse",
-    "Chlorophylle",
+    "Crachin",
+    "Glissade",
     "Contestation"
   ],
   "stats": {
-    "hp": 45,
+    "hp": 115,
     "attack": 85,
     "defense": 85,
-    "specialAttack": 85,
+    "specialAttack": 45,
     "specialDefense": 85,
-    "speed": 115
+    "speed": 85
   },
   "evolutions": [],
   "movesets": {
@@ -30,7 +30,7 @@
         "level": 1
       },
       {
-        "name": "Roue de Feu",
+        "name": "Jackpot",
         "level": 1
       },
       {
@@ -38,67 +38,75 @@
         "level": 1
       },
       {
-        "name": "Nitrocharge",
+        "name": "Récolte Florale",
         "level": 4
       },
       {
-        "name": "Plaquage",
+        "name": "Pistolet à O",
+        "level": 4
+      },
+      {
+        "name": "Entrave",
         "level": 7
       },
       {
-        "name": "Abri",
+        "name": "Anneau Hydro",
         "level": 10
       },
       {
-        "name": "Piège de Roc",
+        "name": "Abri",
+        "level": 13
+      },
+      {
+        "name": "Aqua-Jet",
         "level": 16
       },
       {
-        "name": "Synthèse",
+        "name": "Choc Mental",
         "level": 19
       },
       {
-        "name": "Plaquage",
+        "name": "Cascade",
         "level": 22
       },
       {
-        "name": "Bélier",
+        "name": "Capacité Signature",
         "level": 25
       },
       {
-        "name": "Danse Flammes",
+        "name": "Vampibaiser",
         "level": 28
+      },
+      {
+        "name": "Bâillement",
+        "level": 31
       },
       {
         "name": "Lance-Soleil",
         "level": 34
       },
       {
-        "name": "Surchauffe",
+        "name": "Eau Revoir",
+        "level": 35
+      },
+      {
+        "name": "Damoclès",
         "level": 37
       },
       {
-        "name": "Éruption",
-        "level": 39
-      },
-      {
-        "name": "Zénith",
+        "name": "Danse Pluie",
         "level": 40
       },
       {
-        "name": "Surchauffe",
+        "name": "Soin",
         "level": 43
       },
       {
-        "name": "Boutefeu",
+        "name": "Vitesse Extrême",
         "level": 50
       },
       {
-        "name": "Déflagration",
-        "level": 60
-      },
-      {
-        "name": "Vortex Magma",
+        "name": "Onde Originelle",
         "level": 100
       }
     ],
@@ -114,7 +122,7 @@
   "pokedex_entries": [
     {
       "game": "Cobblemon RLM",
-      "description": " \"Étonnamment, ce Héliatronc se croit être le meilleur ami de Groudon, affirmant avoir combattu Kyogre aux côtés du titan légendaire. Étrangement, aucune preuve n'a jamais été trouvée."
+      "description": "Doté d'une imagination débordante, ce Héliatronc prétend avoir vaincu Kyogre en duel, forçant le titan à se cacher dans une grotte sous-marine depuis lors. Étrangement, aucune preuve n'a été trouvée."
     }
   ],
   "about": "",
