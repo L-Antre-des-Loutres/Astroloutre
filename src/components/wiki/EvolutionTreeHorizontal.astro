@@ -19,7 +19,11 @@ const { color, stages } = Astro.props;
 const resolvedStages = await Promise.all(
     stages.map(async (stage) => {
         // showdownApiGetPkmArt expects the english name/slug to find the correct artwork
-        const resolvedImage = await showdownApiGetPkmArt(stage.slug, "rlm");
+        const parts = stage.slug.split("_");
+        const baseSlug = parts[0];
+        const formSlug = parts.length > 1 ? parts.slice(1).join("_") : "rlm";
+
+        const resolvedImage = await showdownApiGetPkmArt(baseSlug, formSlug);
         return {
             ...stage,
             resolvedImage,

@@ -22,7 +22,24 @@
     "specialDefense": 75,
     "speed": 50
   },
-  "evolutions": [],
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "26",
+          "name": "Minibule",
+          "slug": "smowile",
+          "method": "Base"
+        },
+        {
+          "id": "27",
+          "name": "Mysdibule Poison",
+          "slug": "mawile_poison",
+          "method": "Niveau en tenant Orbe Toxique"
+        }
+      ]
+    }
+  ],
   "movesets": {
     "by_level": [
       { "name": "Étonnement", "level": 1 },

@@ -22,7 +22,24 @@
     "specialDefense": 45,
     "speed": 50
   },
-  "evolutions": [],
+  "evolutions": [
+      {
+        "path": [
+          {
+            "id": "26",
+            "name": "Minibule",
+            "slug": "smowile",
+            "method": "Base"
+          },
+          {
+            "id": "27",
+            "name": "Mysdibule Dragon",
+            "slug": "mawile_dragon",
+            "method": "Niveau 40"
+          }
+        ]
+      }
+  ],
   "movesets": {
     "by_level": [
       { "name": "Charge", "level": 1 },
