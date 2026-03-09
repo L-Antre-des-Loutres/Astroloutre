@@ -265,7 +265,15 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "???"
+      "location": "Soul Sand Nether - Ultra Rare"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Spooky biomes - Ultra Rare"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "End - Ultra Rare"
     }
   ],
   "pokedex_entries": [

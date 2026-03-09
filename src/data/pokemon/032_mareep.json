@@ -121,7 +121,15 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "???"
+      "location": "Soul Sand Nether - Common"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Spooky biomes - Common"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "End - Common"
     }
   ],
   "pokedex_entries": [

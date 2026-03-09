@@ -96,7 +96,11 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "???"
+      "location": "End - Common"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Desert - Uncommon"
     }
   ],
   "pokedex_entries": [

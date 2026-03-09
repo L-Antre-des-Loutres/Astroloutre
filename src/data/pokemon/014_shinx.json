@@ -158,7 +158,11 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "???"
+      "location": "Cold biomes - Uncommon"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Snowy Forest and Taiga - Common"
     }
   ],
   "pokedex_entries": [

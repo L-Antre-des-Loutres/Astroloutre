@@ -233,7 +233,11 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "???"
+      "location": "End - Uncommon"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Mountain - Rare"
     }
   ],
   "pokedex_entries": [
