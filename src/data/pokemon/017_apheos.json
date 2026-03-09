@@ -89,7 +89,11 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "Mountain - Uncommon & End - Common"
+      "location": "End - Common"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Mountain - Uncommon"
     }
   ],
   "pokedex_entries": [

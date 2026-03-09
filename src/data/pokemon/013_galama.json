@@ -109,7 +109,11 @@
   "locations": [
     {
       "game": "Cobblemon RLM",
-      "location": "End - Ultra rare & Desert - Rare"
+      "location": "End - Ultra rare"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Desert - Rare"
     }
   ],
   "pokedex_entries": [
