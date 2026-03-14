@@ -1,0 +1,144 @@
+{
+  "id": "035",
+  "slug": "togekiss",
+  "name": "Togekiss",
+  "form": "rlm",
+  "baseSpecies": "togekiss",
+  "category": "Pokémon Doubleface",
+  "types": [
+    "Fée",
+    "Dragon"
+  ],
+  "abilities": [
+    "Peau Draconique"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 60,
+    "defense": 80,
+    "specialAttack": 115,
+    "specialDefense": 85,
+    "speed": 90
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Piqué",
+        "level": 1
+      },
+      {
+        "name": "Vitesse Extrême",
+        "level": 1
+      },
+      {
+        "name": "Aurasphère",
+        "level": 1
+      },
+      {
+        "name": "Lame d'Air",
+        "level": 1
+      },
+      {
+        "name": "Rune Protect",
+        "level": 1
+      },
+      {
+        "name": "Pouvoir Antique",
+        "level": 1
+      },
+      {
+        "name": "Dernier Recours",
+        "level": 1
+      },
+      {
+        "name": "Après Vous",
+        "level": 1
+      },
+      {
+        "name": "Triplattaque",
+        "level": 1
+      },
+      {
+        "name": "Vent Féérique",
+        "level": 1
+      },
+      {
+        "name": "Charme",
+        "level": 1
+      },
+      {
+        "name": "Bâillement",
+        "level": 1
+      },
+      {
+        "name": "Métronome",
+        "level": 1
+      },
+      {
+        "name": "Damoclès",
+        "level": 1
+      },
+      {
+        "name": "Par Ici",
+        "level": 1
+      },
+      {
+        "name": "Relais",
+        "level": 1
+      },
+      {
+        "name": "Vœu",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Écras'Face",
+        "level": 1
+      },
+      {
+        "name": "Doux Baiser",
+        "level": 1
+      },
+      {
+        "name": "Fontaine de Vie",
+        "level": 1
+      },
+      {
+        "name": "Passe-Cadeau",
+        "level": 1
+      },
+      {
+        "name": "Draco-Météore",
+        "level": 1
+      },
+      {
+        "name": "Draco-Choc",
+        "level": 1
+      },
+      {
+        "name": "Pouvoir Lunaire",
+        "level": 1
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "End - Ultra Rare"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Corrompu par la malveillance et les guerres incessantes des humains, ce Togekiss a perdu son esprit paisible. Il lutte constamment pour réprimer une rage draconique férale bouillonnant en lui. Il est désormais un annonciateur de conflits."
+    }
+  ],
+  "about": "",
+  "images": []
+}

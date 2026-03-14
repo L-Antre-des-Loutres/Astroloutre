@@ -1,0 +1,114 @@
+{
+  "id": "027",
+  "slug": "mawile_dragon",
+  "name": "Mysdibule Dragon",
+  "form": "dragon",
+  "baseSpecies": "mawile",
+  "category": "Pokémon Trompeur",
+  "types": [
+    "Dragon",
+    "Fée"
+  ],
+  "abilities": [
+    "Intimidation",
+    "Prognathe",
+    "Force Mystique"
+  ],
+  "stats": {
+    "hp": 90,
+    "attack": 70,
+    "defense": 45,
+    "specialAttack": 80,
+    "specialDefense": 45,
+    "speed": 50
+  },
+  "evolutions": [
+      {
+        "path": [
+          {
+            "id": "26",
+            "name": "Minibule",
+            "slug": "smowile",
+            "method": "Base"
+          },
+          {
+            "id": "27",
+            "name": "Mysdibule Dragon",
+            "slug": "mawile_dragon",
+            "method": "Niveau 40"
+          }
+        ]
+      }
+  ],
+  "movesets": {
+    "by_level": [
+      { "name": "Charge", "level": 1 },
+      { "name": "Force Poigne", "level": 1 },
+      { "name": "Feinte", "level": 1 },
+      { "name": "Rugissement", "level": 1 },
+      { "name": "Vent Féérique", "level": 4 },
+      { "name": "Relais", "level": 8 },
+      { "name": "Faux-Chage", "level": 10 },
+      { "name": "Morsure", "level": 12 },
+      { "name": "Crocs Feu", "level": 14 },
+      { "name": "Draco-Rage", "level": 16 },
+      { "name": "Coup Bas", "level": 20 },
+      { "name": "Mur de Fer", "level": 24 },
+      { "name": "Mâchouille", "level": 28 },
+      { "name": "Choc Émotionnel", "level": 32 },
+      { "name": "Tête de Fer", "level": 36 },
+      { "name": "Lance-Flammes", "level": 38 },
+      { "name": "Provoc", "level": 40 },
+      { "name": "Crocs Larme", "level": 44 },
+      { "name": "Câlinerie", "level": 48 },
+      { "name": "Draco-Météore", "level": 48 },
+      { "name": "Danse Draco", "level": 50 },
+      { "name": "Déflagration", "level": 55 }
+    ],
+    "by_tm": [
+      { "name": "Pouvoir Antique" }, { "name": "Assurance" }, { "name": "Relais" },
+      { "name": "Plaquage" }, { "name": "Casse-Brique" }, { "name": "Centrifugifle" },
+      { "name": "Rayon Chargé" }, { "name": "Mâchouille" }, { "name": "Vibrobscur" },
+      { "name": "Vampibaiser" }, { "name": "Embargo" }, { "name": "Endurance" },
+      { "name": "Façade" }, { "name": "Crocs Larme" }, { "name": "Faux-Chage" },
+      { "name": "Déflagration" }, { "name": "Crocs Feu" }, { "name": "Lance-Flammes" },
+      { "name": "Luminocanon" }, { "name": "Dégommage" }, { "name": "Exploforce" },
+      { "name": "Mitra-Poing" }, { "name": "Tricherie" }, { "name": "Giga Impact" },
+      { "name": "Nœud Herbe" }, { "name": "Échange Force" }, { "name": "Coup d'Boule" },
+      { "name": "Coup d'Main" }, { "name": "Ultralaser" }, { "name": "Laser Glace" },
+      { "name": "Crocs Givré" }, { "name": "Poing Glace" }, { "name": "Vent Glacé" },
+      { "name": "Calcination" }, { "name": "Mur de Fer" }, { "name": "Tête de Fer" },
+      { "name": "Sabotage" }, { "name": "Affilage" }, { "name": "Atout" },
+      { "name": "Lévitouch" }, { "name": "Méga-Kick" }, { "name": "Méga-Poing" },
+      { "name": "Champ Brumeux" }, { "name": "Coud'Boue" }, { "name": "Balance" },
+      { "name": "Représailles" }, { "name": "Câlinerie" }, { "name": "Poing Boost" },
+      { "name": "Abri" }, { "name": "Psychocroc" }, { "name": "Danse Pluie" },
+      { "name": "Repos" }, { "name": "Éboulement" }, { "name": "Éclate-Roc" },
+      { "name": "Tomberoche" }, { "name": "Tempête de Sable" }, { "name": "Ball'Ombre" },
+      { "name": "Blabla Dodo" }, { "name": "Bomb-Beurk" }, { "name": "Saisie" },
+      { "name": "Lance-Soleil" }, { "name": "Piège de Roc" }, { "name": "Immolation" },
+      { "name": "Lame de Roc" }, { "name": "Force" }, { "name": "Clonage" },
+      { "name": "Coup Bas" }, { "name": "Zénith" }, { "name": "Croc de Mort" },
+      { "name": "Danse Lames" }, { "name": "Provoc" }, { "name": "Téra-Explosion" },
+      { "name": "Crocs Éclair" }, { "name": "Poing Éclair" }, { "name": "Tourment" }
+    ],
+    "by_breeding": [
+      { "name": "Pouvoir Antique" }, { "name": "Poing Boost" }, { "name": "Punition" },
+      { "name": "Frappe Atlas" }, { "name": "Écrasement" }
+    ]
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": " RLM",
+      "description": "Grâce à un entraînement rigoureux, ce Mysdibule ne possède plus une simple mâchoire derrière la tête, mais un véritable dragon capable de déchaîner des attaques dévastatrices. Sa force imposante lui confère un tempérament fier et inébranlable."
+    }
+  ],
+  "about": "Cette forme régionale Dragon/Fée de Mysdibule peut être portée sur l'épaule, octroyant un bonus de Force à son dresseur. Contrairement à la forme de base, elle est capable de voler sur sa tête de dragon.",
+  "images": []
+}

@@ -1,0 +1,176 @@
+{
+  "id": "015",
+  "slug": "luxio",
+  "name": "Luxio",
+  "form": "rlm",
+  "baseSpecies": "luxio",
+  "category": "Pokémon Gel",
+  "types": [
+    "Glace"
+  ],
+  "abilities": [
+    "Chasse-Neige",
+    "Intimidation",
+    "Cran"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 95,
+    "defense": 49,
+    "specialAttack": 50,
+    "specialDefense": 49,
+    "speed": 60
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "012",
+          "name": "Lixy",
+          "slug": "shinx",
+          "method": "Base"
+        },
+        {
+          "id": "013",
+          "name": "Luxio",
+          "slug": "luxio",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "014",
+          "name": "Luxray",
+          "slug": "luxray",
+          "method": "Niveau 30"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Groz'Yeux",
+        "level": 1
+      },
+      {
+        "name": "Chargeur",
+        "level": 1
+      },
+      {
+        "name": "Grêle",
+        "level": 1
+      },
+      {
+        "name": "Vent Glacé",
+        "level": 1
+      },
+      {
+        "name": "Aiguisage",
+        "level": 1
+      },
+      {
+        "name": "Morsure",
+        "level": 12
+      },
+      {
+        "name": "Piétisol",
+        "level": 18
+      },
+      {
+        "name": "Éclats Glace",
+        "level": 22
+      },
+      {
+        "name": "Hurlement",
+        "level": 24
+      },
+      {
+        "name": "Poursuite",
+        "level": 26
+      },
+      {
+        "name": "Sabotage",
+        "level": 30
+      },
+      {
+        "name": "Voile Aurore",
+        "level": 32
+      },
+      {
+        "name": "Eau Revoir",
+        "level": 33
+      },
+      {
+        "name": "Tranche-Nuit",
+        "level": 34
+      },
+      {
+        "name": "Glissade Givrée",
+        "level": 36
+      },
+      {
+        "name": "Câlinerie",
+        "level": 38
+      },
+      {
+        "name": "Grimace",
+        "level": 40
+      },
+      {
+        "name": "Stalagtite",
+        "level": 42
+      },
+      {
+        "name": "Avalanche",
+        "level": 45
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 48
+      },
+      {
+        "name": "Éboulement",
+        "level": 50
+      },
+      {
+        "name": "Mâchouille",
+        "level": 56
+      },
+      {
+        "name": "Triple Axel",
+        "level": 64
+      },
+      {
+        "name": "Vantardise",
+        "level": 72
+      },
+      {
+        "name": "Éclair Fou",
+        "level": 80
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Cold biomes - Rare"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Snowy Forest and Taiga - Uncommon"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Protecteur vigilant, Luxio utilise sa vision nocturne exceptionnelle pour chasser sous le couvert de l'obscurité. Pendant la journée, sa nature féroce s'adoucit et on peut le voir s'entraîner joyeusement avec les jeunes Lixy de sa meute."
+    }
+  ],
+  "about": "",
+  "images": []
+}

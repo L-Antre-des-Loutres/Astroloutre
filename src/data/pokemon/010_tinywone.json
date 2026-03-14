@@ -1,0 +1,94 @@
+{
+  "id": "010",
+  "slug": "tinywone",
+  "name": "Ptimek",
+  "form": "tinywone",
+  "baseSpecies": "tinywone",
+  "category": "Pokémon Namek",
+  "types": [
+    "Insecte"
+  ],
+  "abilities": [
+    "Attention",
+    "Impassible",
+    "Adaptabilité"
+  ],
+  "stats": {
+    "hp": 40,
+    "attack": 20,
+    "defense": 50,
+    "specialAttack": 40,
+    "specialDefense": 60,
+    "speed": 45
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "010",
+          "name": "Ptimek",
+          "slug": "tinywone",
+          "method": "Base"
+        },
+        {
+          "id": "011",
+          "name": "Guerriek",
+          "slug": "wamek",
+          "method": "Niveau 15"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Combo-Griffe",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Sécrétion",
+        "level": 1
+      },
+      {
+        "name": "Choc Mental",
+        "level": 1
+      },
+      {
+        "name": "Poing Boost",
+        "level": 4
+      },
+      {
+        "name": "Gonflette",
+        "level": 7
+      },
+      {
+        "name": "Dard-Nuée",
+        "level": 10
+      },
+      {
+        "name": "Endurance",
+        "level": 13
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Extrêmement faible, ce Pokémon a conscience de son potentiel. Il médite scrupuleusement tous les jours en pensant au jour où il sera grand et fort, capable d’enfin être fier de sa force."
+    }
+  ],
+  "about": "",
+  "images": []
+}

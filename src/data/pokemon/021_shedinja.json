@@ -1,0 +1,189 @@
+{
+  "id": "021",
+  "slug": "shedinja",
+  "name": "Munja",
+  "form": "rlm",
+  "baseSpecies": "shedinja",
+  "category": "Pokémon Exuvie",
+  "types": [
+    "Eau",
+    "Roche"
+  ],
+  "abilities": [
+    "Garde Émoussée"
+  ],
+  "stats": {
+    "hp": 1,
+    "attack": 20,
+    "defense": 10,
+    "specialAttack": 95,
+    "specialDefense": 10,
+    "speed": 101
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "17",
+          "name": "Ningale",
+          "slug": "nincada",
+          "method": "Base"
+        },
+        {
+          "id": "18",
+          "name": "Ninjask",
+          "slug": "ninjask",
+          "method": "Niveau 20"
+        }
+      ]
+    },
+    {
+      "path": [
+        {
+          "id": "17",
+          "name": "Ningale",
+          "slug": "nincada",
+          "method": "Base"
+        },
+        {
+          "id": "19",
+          "name": "Munja",
+          "slug": "shedinja",
+          "method": "Niveau 20, emplacement libre et Poké Ball dans l'inventaire"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Griffe",
+        "level": 1
+      },
+      {
+        "name": "Armure",
+        "level": 1
+      },
+      {
+        "name": "Jet de Sable",
+        "level": 1
+      },
+      {
+        "name": "Rancœur",
+        "level": 1
+      },
+      {
+        "name": "Anti-Soin",
+        "level": 1
+      },
+      {
+        "name": "Tunnel",
+        "level": 1
+      },
+      {
+        "name": "Coud'Boue",
+        "level": 1
+      },
+      {
+        "name": "Faux-Chage",
+        "level": 1
+      },
+      {
+        "name": "Griffe Ombre",
+        "level": 1
+      },
+      {
+        "name": "Griffe Acier",
+        "level": 1
+      },
+      {
+        "name": "Machination",
+        "level": 1
+      },
+      {
+        "name": "Onde Folle",
+        "level": 15
+      },
+      {
+        "name": "Bourdon",
+        "level": 20
+      },
+      {
+        "name": "Vole-Vie",
+        "level": 23
+      },
+      {
+        "name": "Ébullition",
+        "level": 25
+      },
+      {
+        "name": "Prélèvem. Destin",
+        "level": 27
+      },
+      {
+        "name": "Ombre Portée",
+        "level": 29
+      },
+      {
+        "name": "Combo-Griffe",
+        "level": 36
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 38
+      },
+      {
+        "name": "Lire-Esprit",
+        "level": 43
+      },
+      {
+        "name": "Psyko",
+        "level": 45
+      },
+      {
+        "name": "Entrave",
+        "level": 48
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 50
+      },
+      {
+        "name": "Échange",
+        "level": 52
+      },
+      {
+        "name": "Feu Follet",
+        "level": 55
+      },
+      {
+        "name": "Dépit",
+        "level": 57
+      },
+      {
+        "name": "Machination",
+        "level": 59
+      },
+      {
+        "name": "Hantise",
+        "level": 64
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Quand Ningale mue sous l'eau, sa carapace vide coule et fusionne avec les trésors des fonds marins. Avec le temps, ces restes de corail et de fossiles donnent une nouvelle vie spectrale à la coque. Ce Munja aquatique reste parfaitement immobile, se faisant passer pour un récif."
+    }
+  ],
+  "about": "",
+  "images": []
+}

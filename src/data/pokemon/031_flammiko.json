@@ -1,0 +1,142 @@
+{
+  "id": "031",
+  "slug": "flammiko",
+  "name": "Flammiko",
+  "form": "flammiko",
+  "baseSpecies": "flammiko",
+  "category": "Pokémon Perdu",
+  "types": [
+    "Feu",
+    "Électrik"
+  ],
+  "abilities": [
+    "Absorbe-Volt",
+    "Torche",
+    "Simple"
+  ],
+  "stats": {
+    "hp": 55,
+    "attack": 85,
+    "defense": 40,
+    "specialAttack": 120,
+    "specialDefense": 40,
+    "speed": 145
+  },
+  "evolutions": [],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Flammèche",
+        "level": 1
+      },
+      {
+        "name": "Éclair",
+        "level": 1
+      },
+      {
+        "name": "Écras'Face",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Météores",
+        "level": 4
+      },
+      {
+        "name": "Chargeur",
+        "level": 5
+      },
+      {
+        "name": "Tonnerre",
+        "level": 5
+      },
+      {
+        "name": "Nitrocharge",
+        "level": 8
+      },
+      {
+        "name": "Frotte-Frimousse",
+        "level": 10
+      },
+      {
+        "name": "Encore",
+        "level": 15
+      },
+      {
+        "name": "Imitation",
+        "level": 18
+      },
+      {
+        "name": "Étincelle",
+        "level": 20
+      },
+      {
+        "name": "Rebond Feu",
+        "level": 20
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 25
+      },
+      {
+        "name": "Feu Follet",
+        "level": 25
+      },
+      {
+        "name": "Tonnerre",
+        "level": 30
+      },
+      {
+        "name": "Lance-Flammes",
+        "level": 30
+      },
+      {
+        "name": "Poing Boost",
+        "level": 35
+      },
+      {
+        "name": "Poing Éclair",
+        "level": 40
+      },
+      {
+        "name": "Poing de Feu",
+        "level": 40
+      },
+      {
+        "name": "Poing Glace",
+        "level": 45
+      },
+      {
+        "name": "Sabotage",
+        "level": 50
+      },
+      {
+        "name": "Surchauffe",
+        "level": 55
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 55
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Overworld - Rare"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Toujours perdu et incapable de se tenir correctement, les scientifiques n'ont pas encore découvert le miracle derrière la survie de cette espèce. Malgré ses pensées limitées, Flammiko est incroyablement amical et ferait n'importe quoi pour protéger ses amis."
+    }
+  ],
+  "about": "",
+  "images": []
+}

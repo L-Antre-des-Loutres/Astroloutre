@@ -1,0 +1,287 @@
+{
+  "id": "034",
+  "slug": "ampharos",
+  "name": "Pharamp",
+  "form": "rlm",
+  "baseSpecies": "ampharos",
+  "category": "Pokémon Lumaide",
+  "types": [
+    "Électrik",
+    "Spectre"
+  ],
+  "abilities": [
+    "Statik",
+    "Infiltration",
+    "Marque Ombre"
+  ],
+  "stats": {
+    "hp": 80,
+    "attack": 60,
+    "defense": 80,
+    "specialAttack": 115,
+    "specialDefense": 85,
+    "speed": 90
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "28",
+          "name": "Wattouat",
+          "slug": "mareep",
+          "method": "Base"
+        },
+        {
+          "id": "29",
+          "name": "Lainergie",
+          "slug": "flaaffy",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "30",
+          "name": "Pharamp",
+          "slug": "ampharos",
+          "method": "Niveau 30"
+        },
+        {
+          "id": "30",
+          "name": "Méga-Pharamp",
+          "slug": "ampharos",
+          "method": "Méga-Évolution"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 1
+      },
+      {
+        "name": "Étonnement",
+        "level": 1
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 1
+      },
+      {
+        "name": "Éclair",
+        "level": 1
+      },
+      {
+        "name": "Feu Follet",
+        "level": 1
+      },
+      {
+        "name": "Chargeur",
+        "level": 1
+      },
+      {
+        "name": "Châtiment",
+        "level": 1
+      },
+      {
+        "name": "Bélier",
+        "level": 1
+      },
+      {
+        "name": "Boule Élek",
+        "level": 1
+      },
+      {
+        "name": "Ombre Portée",
+        "level": 1
+      },
+      {
+        "name": "Onde Folle",
+        "level": 1
+      },
+      {
+        "name": "Force Gemme",
+        "level": 1
+      },
+      {
+        "name": "Coup d'Jus",
+        "level": 1
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 1
+      },
+      {
+        "name": "Rayon Signal",
+        "level": 1
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 1
+      },
+      {
+        "name": "Étonnement",
+        "level": 1
+      },
+      {
+        "name": "Draco-Choc",
+        "level": 1
+      },
+      {
+        "name": "Poing de Feu",
+        "level": 1
+      },
+      {
+        "name": "Déluge Ionique",
+        "level": 1
+      },
+      {
+        "name": "Flux Magnétique",
+        "level": 1
+      },
+      {
+        "name": "Hurlement",
+        "level": 1
+      },
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Poing Éclair",
+        "level": 1
+      },
+      {
+        "name": "Élecanon",
+        "level": 1
+      },
+      {
+        "name": "Vive-Attaque",
+        "level": 4
+      },
+      {
+        "name": "Griffe Ombre",
+        "level": 10
+      },
+      {
+        "name": "Spore Coton",
+        "level": 11
+      },
+      {
+        "name": "Chargeur",
+        "level": 15
+      },
+      {
+        "name": "Boule Élek",
+        "level": 22
+      },
+      {
+        "name": "Éclair Fou",
+        "level": 25
+      },
+      {
+        "name": "Force Gemme",
+        "level": 29
+      },
+      {
+        "name": "Griffe Ombre",
+        "level": 30
+      },
+      {
+        "name": "Coup d'Jus",
+        "level": 32
+      },
+      {
+        "name": "Force Gemme",
+        "level": 35
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 35
+      },
+      {
+        "name": "Abri",
+        "level": 36
+      },
+      {
+        "name": "Ombre Portée",
+        "level": 38
+      },
+      {
+        "name": "Coup d'Jus",
+        "level": 40
+      },
+      {
+        "name": "Change Éclair",
+        "level": 40
+      },
+      {
+        "name": "Sabotage",
+        "level": 42
+      },
+      {
+        "name": "Prélèvement Destin",
+        "level": 45
+      },
+      {
+        "name": "Cotogarde",
+        "level": 46
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 46
+      },
+      {
+        "name": "Ball'Ombre",
+        "level": 47
+      },
+      {
+        "name": "Éclat Magique",
+        "level": 51
+      },
+      {
+        "name": "Rayon Signal",
+        "level": 51
+      },
+      {
+        "name": "Mur Lumière",
+        "level": 57
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 62
+      },
+      {
+        "name": "Draco-Choc",
+        "level": 65
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Soul Sand Nether - Ultra Rare"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Spooky biomes - Ultra Rare"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "End - Ultra Rare"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Devenu un véritable canal d'énergie spirituelle, l'orbe sur sa queue agit comme un phare pour les âmes égarées. Il n'émet pas de lumière pour guider les navires, mais pour mener les esprits errants vers l'au-delà. Ses décharges électriques sont silencieuses, apparaissant comme des apparitions fantomatiques qui s'évanouissent à l'impact."
+    }
+  ],
+  "about": "",
+  "images": []
+}

@@ -1,0 +1,112 @@
+{
+  "id": "027",
+  "slug": "mawile",
+  "name": "Mysdibule",
+  "form": "mawile",
+  "baseSpecies": "mawile",
+  "category": "Pokémon Trompeur",
+  "types": [
+    "Acier",
+    "Fée"
+  ],
+  "abilities": [
+    "Hyper Cutter",
+    "Intimidation",
+    "Sans Limite"
+  ],
+  "stats": {
+    "hp": 50,
+    "attack": 85,
+    "defense": 85,
+    "specialAttack": 55,
+    "specialDefense": 55,
+    "speed": 50
+  },
+  "evolutions": [
+    {
+    "path": [
+      {
+        "id": "26",
+        "name": "Minibule",
+        "slug": "smowile",
+        "method": "Base"
+      },
+      {
+        "id": "27",
+        "name": "Mysdibule",
+        "slug": "mawile",
+        "method": "Niveau 15"
+      }
+    ]
+  }
+  ],
+  "movesets": {
+    "by_level": [
+      { "name": "Étonnement", "level": 1 },
+      { "name": "Force Poigne", "level": 1 },
+      { "name": "Feinte", "level": 1 },
+      { "name": "Rugissement", "level": 1 },
+      { "name": "Vent Féérique", "level": 4 },
+      { "name": "Relais", "level": 8 },
+      { "name": "Morsure", "level": 12 },
+      { "name": "Stockage", "level": 16 },
+      { "name": "Avale", "level": 16 },
+      { "name": "Relâche", "level": 16 },
+      { "name": "Coup Bas", "level": 20 },
+      { "name": "Mur de Fer", "level": 24 },
+      { "name": "Mâchouille", "level": 28 },
+      { "name": "Doux Parfum", "level": 32 },
+      { "name": "Tête de Fer", "level": 36 },
+      { "name": "Provoc", "level": 40 },
+      { "name": "Crocs Larme", "level": 44 },
+      { "name": "Câlinerie", "level": 48 }
+    ],
+    "by_tm": [
+      { "name": "Pouvoir Antique" }, { "name": "Assurance" }, { "name": "Relais" },
+      { "name": "Plaquage" }, { "name": "Casse-Brique" }, { "name": "Centrifugifle" },
+      { "name": "Séduction" }, { "name": "Rayon Chargé" }, { "name": "Mâchouille" },
+      { "name": "Vibrobscur" }, { "name": "Vampibaiser" }, { "name": "Embargo" },
+      { "name": "Endurance" }, { "name": "Façade" }, { "name": "Crocs Larme" },
+      { "name": "Faux-Chage" }, { "name": "Déflagration" }, { "name": "Crocs Feu" },
+      { "name": "Lance-Flammes" }, { "name": "Luminocanon" }, { "name": "Dégommage" },
+      { "name": "Exploforce" }, { "name": "Mitra-Poing" }, { "name": "Tricherie" },
+      { "name": "Giga Impact" }, { "name": "Nœud Herbe" }, { "name": "Échange Force" },
+      { "name": "Coup d'Boule" }, { "name": "Coup d'Main" }, { "name": "Ultralaser" },
+      { "name": "Laser Glace" }, { "name": "Crocs Givré" }, { "name": "Poing Glace" },
+      { "name": "Vent Glacé" }, { "name": "Calcination" }, { "name": "Mur de Fer" },
+      { "name": "Tête de Fer" }, { "name": "Sabotage" }, { "name": "Affilage" },
+      { "name": "Atout" }, { "name": "Lévitouch" }, { "name": "Méga-Kick" },
+      { "name": "Méga-Poing" }, { "name": "Champ Brumeux" }, { "name": "Coud'Boue" },
+      { "name": "Balance" }, { "name": "Représailles" }, { "name": "Câlinerie" },
+      { "name": "Poing Boost" }, { "name": "Abri" }, { "name": "Psychocroc" },
+      { "name": "Danse Pluie" }, { "name": "Repos" }, { "name": "Éboulement" },
+      { "name": "Éclate-Roc" }, { "name": "Tomberoche" }, { "name": "Tempête de Sable" },
+      { "name": "Ball'Ombre" }, { "name": "Blabla Dodo" }, { "name": "Bomb-Beurk" },
+      { "name": "Saisie" }, { "name": "Lance-Soleil" }, { "name": "Piège de Roc" },
+      { "name": "Immolation" }, { "name": "Lame de Roc" }, { "name": "Force" },
+      { "name": "Clonage" }, { "name": "Coup Bas" }, { "name": "Zénith" },
+      { "name": "Croc de Mort" }, { "name": "Danse Lames" }, { "name": "Provoc" },
+      { "name": "Téra-Explosion" }, { "name": "Crocs Éclair" }, { "name": "Poing Éclair" },
+      { "name": "Tourment" }
+    ],
+    "by_breeding": [
+      { "name": "Pouvoir Antique" }, { "name": "Séduction" }, { "name": "Cerclage" },
+      { "name": "Crocs Poison" }, { "name": "Poing Boost" }, { "name": "Punition" },
+      { "name": "Frappe Atlas" }, { "name": "Écrasement" }, { "name": "Chatouille" }
+    ]
+  },
+  "locations": [
+    {
+      "game": "Cobblemon",
+      "location": "Biomes deep dark, uncommon, niveau 13 à 18."
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon",
+      "description": "Il amadoue ses ennemis avec ses gestes mignons, puis les croque avec ses mâchoires géantes constituées de cornes transformées."
+    }
+  ],
+  "about": "Mysdibule est un Pokémon de type Acier et Fée introduit dans la Génération 3. Il est connu pour la mâchoire impressionnante située à l'arrière de sa tête.",
+  "images": []
+}

@@ -1,0 +1,287 @@
+{
+  "id": "025",
+  "slug": "probopass",
+  "name": "Tarinorme",
+  "form": "rlm",
+  "baseSpecies": "probopass",
+  "category": "Pokémon Flemme",
+  "types": [
+    "Roche",
+    "Fée"
+  ],
+  "abilities": [
+    "Fermeté",
+    "Inconscient",
+    "Contestation"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 45,
+    "defense": 150,
+    "specialAttack": 90,
+    "specialDefense": 150,
+    "speed": 30
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "22",
+          "name": "Tarinor",
+          "slug": "nosepass",
+          "method": "Base"
+        },
+        {
+          "id": "23",
+          "name": "Tarinorme",
+          "slug": "probopass",
+          "method": "Pierre Eau"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Anneau Hydro",
+        "level": 1
+      },
+      {
+        "name": "Barrage",
+        "level": 1
+      },
+      {
+        "name": "Plénitude",
+        "level": 1
+      },
+      {
+        "name": "Charme",
+        "level": 1
+      },
+      {
+        "name": "Éclat Magique",
+        "level": 1
+      },
+      {
+        "name": "Damoclès",
+        "level": 1
+      },
+      {
+        "name": "Explosion",
+        "level": 1
+      },
+      {
+        "name": "Vent Féérique",
+        "level": 1
+      },
+      {
+        "name": "Gravité",
+        "level": 1
+      },
+      {
+        "name": "Armure",
+        "level": 1
+      },
+      {
+        "name": "Mur de Fer",
+        "level": 1
+      },
+      {
+        "name": "Bombaiment",
+        "level": 1
+      },
+      {
+        "name": "Flux Magnétique",
+        "level": 1
+      },
+      {
+        "name": "Allègement",
+        "level": 1
+      },
+      {
+        "name": "Cadeau",
+        "level": 1
+      },
+      {
+        "name": "Soin",
+        "level": 1
+      },
+      {
+        "name": "Repos",
+        "level": 1
+      },
+      {
+        "name": "Boule Roc",
+        "level": 1
+      },
+      {
+        "name": "Éboulement",
+        "level": 1
+      },
+      {
+        "name": "Jet-Pierres",
+        "level": 1
+      },
+      {
+        "name": "Lame de Roc",
+        "level": 1
+      },
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Vent Arrière",
+        "level": 1
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 1
+      },
+      {
+        "name": "Triplattaque",
+        "level": 1
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 1
+      },
+      {
+        "name": "Vibraqua",
+        "level": 1
+      },
+      {
+        "name": "Garde Large",
+        "level": 1
+      },
+      {
+        "name": "Armure",
+        "level": 4
+      },
+      {
+        "name": "Pistolet à O",
+        "level": 7
+      },
+      {
+        "name": "Jet-Pierres",
+        "level": 10
+      },
+      {
+        "name": "Repos",
+        "level": 13
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 13
+      },
+      {
+        "name": "Vent Féérique",
+        "level": 16
+      },
+      {
+        "name": "Repos",
+        "level": 16
+      },
+      {
+        "name": "Étincelle",
+        "level": 19
+      },
+      {
+        "name": "Vent Arrière",
+        "level": 19
+      },
+      {
+        "name": "Vibraqua",
+        "level": 19
+      },
+      {
+        "name": "Éboulement",
+        "level": 22
+      },
+      {
+        "name": "Anneau Hydro",
+        "level": 25
+      },
+      {
+        "name": "Force Gemme",
+        "level": 25
+      },
+      {
+        "name": "Boule Roc",
+        "level": 28
+      },
+      {
+        "name": "Coup d'Jus",
+        "level": 31
+      },
+      {
+        "name": "Damoclès",
+        "level": 31
+      },
+      {
+        "name": "Plénitude",
+        "level": 34
+      },
+      {
+        "name": "Tempête de Sable",
+        "level": 34
+      },
+      {
+        "name": "Éclat Magique",
+        "level": 37
+      },
+      {
+        "name": "Telluriforce",
+        "level": 37
+      },
+      {
+        "name": "Lame de Roc",
+        "level": 40
+      },
+      {
+        "name": "Verrouillage",
+        "level": 43
+      },
+      {
+        "name": "Ébullition",
+        "level": 43
+      },
+      {
+        "name": "Fatal-Foudre",
+        "level": 43
+      },
+      {
+        "name": "Élecanon",
+        "level": 43
+      },
+      {
+        "name": "Pouvoir Lunaire",
+        "level": 45
+      },
+      {
+        "name": "Explosion",
+        "level": 50
+      },
+      {
+        "name": "Paresse",
+        "level": 60
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Beach - Rare"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Véritable pilier social du rivage, Tarinorme n'aime rien de plus que de 'ne rien faire' aux côtés des humains. Comme il bouge rarement, les gens utilisent souvent son corps robuste comme table de fortune pour poser boissons et collations."
+    }
+  ],
+  "about": "",
+  "images": []
+}

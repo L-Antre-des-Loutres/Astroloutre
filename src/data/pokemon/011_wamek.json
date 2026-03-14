@@ -1,0 +1,155 @@
+{
+  "id": "011",
+  "slug": "wamek",
+  "name": "Guerriek",
+  "form": "wamek",
+  "baseSpecies": "wamek",
+  "category": "Pokémon Namek",
+  "types": [
+    "Insecte",
+    "Combat"
+  ],
+  "abilities": [
+    "Attention",
+    "Impassible",
+    "Adaptabilité"
+  ],
+  "stats": {
+    "hp": 60,
+    "attack": 114,
+    "defense": 70,
+    "specialAttack": 90,
+    "specialDefense": 80,
+    "speed": 114
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "010",
+          "name": "Ptimek",
+          "slug": "tinywone",
+          "method": "Base"
+        },
+        {
+          "id": "011",
+          "name": "Guerriek",
+          "slug": "wamek",
+          "method": "Niveau 15"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Combo-Griffe",
+        "level": 1
+      },
+      {
+        "name": "Rugissement",
+        "level": 1
+      },
+      {
+        "name": "Sécrétion",
+        "level": 1
+      },
+      {
+        "name": "Choc Mental",
+        "level": 1
+      },
+      {
+        "name": "Poing Boost",
+        "level": 4
+      },
+      {
+        "name": "Gonflette",
+        "level": 7
+      },
+      {
+        "name": "Dard-Nuée",
+        "level": 10
+      },
+      {
+        "name": "Endurance",
+        "level": 13
+      },
+      {
+        "name": "Casse-Brique",
+        "level": 18
+      },
+      {
+        "name": "Reflet",
+        "level": 21
+      },
+      {
+        "name": "Vent Argenté",
+        "level": 24
+      },
+      {
+        "name": "Aurasphère",
+        "level": 27
+      },
+      {
+        "name": "Psyko",
+        "level": 30
+      },
+      {
+        "name": "Escarmouche",
+        "level": 33
+      },
+      {
+        "name": "Poing Boost",
+        "level": 36
+      },
+      {
+        "name": "Plénitude",
+        "level": 39
+      },
+      {
+        "name": "Giga Impact",
+        "level": 42
+      },
+      {
+        "name": "Close Combat",
+        "level": 45
+      },
+      {
+        "name": "Plaie Croix",
+        "level": 48
+      },
+      {
+        "name": "Vol",
+        "level": 51
+      },
+      {
+        "name": "Mach Punch",
+        "level": 54
+      },
+      {
+        "name": "Faux-Chage",
+        "level": 57
+      },
+      {
+        "name": "Danse Lames",
+        "level": 60
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "???"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "Enfin évolué, les Guerriek sont fiers de leur force. Cependant, ils ne se reposent pas sur leurs lauriers et continuent de s’entraîner rigoureusement. Bien qu’ils possèdent de puissants pouvoirs psychiques, les Guerriek semblent préférer user de leur force physique en combat."
+    }
+  ],
+  "about": "",
+  "images": []
+}

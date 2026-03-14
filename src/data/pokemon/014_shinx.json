@@ -1,0 +1,176 @@
+{
+  "id": "014",
+  "slug": "shinx",
+  "name": "Lixy",
+  "form": "rlm",
+  "baseSpecies": "shinx",
+  "category": "Pokémon Froid",
+  "types": [
+    "Glace"
+  ],
+  "abilities": [
+    "Chasse-Neige",
+    "Intimidation",
+    "Cran"
+  ],
+  "stats": {
+    "hp": 45,
+    "attack": 75,
+    "defense": 34,
+    "specialAttack": 30,
+    "specialDefense": 34,
+    "speed": 45
+  },
+  "evolutions": [
+    {
+      "path": [
+        {
+          "id": "012",
+          "name": "Lixy",
+          "slug": "shinx",
+          "method": "Base"
+        },
+        {
+          "id": "013",
+          "name": "Luxio",
+          "slug": "luxio",
+          "method": "Niveau 15"
+        },
+        {
+          "id": "014",
+          "name": "Luxray",
+          "slug": "luxray",
+          "method": "Niveau 30"
+        }
+      ]
+    }
+  ],
+  "movesets": {
+    "by_level": [
+      {
+        "name": "Charge",
+        "level": 1
+      },
+      {
+        "name": "Groz'Yeux",
+        "level": 1
+      },
+      {
+        "name": "Chargeur",
+        "level": 1
+      },
+      {
+        "name": "Grêle",
+        "level": 1
+      },
+      {
+        "name": "Vent Glacé",
+        "level": 1
+      },
+      {
+        "name": "Aiguisage",
+        "level": 1
+      },
+      {
+        "name": "Morsure",
+        "level": 12
+      },
+      {
+        "name": "Piétisol",
+        "level": 18
+      },
+      {
+        "name": "Éclats Glace",
+        "level": 22
+      },
+      {
+        "name": "Hurlement",
+        "level": 24
+      },
+      {
+        "name": "Poursuite",
+        "level": 26
+      },
+      {
+        "name": "Sabotage",
+        "level": 30
+      },
+      {
+        "name": "Voile Aurore",
+        "level": 32
+      },
+      {
+        "name": "Eau Revoir",
+        "level": 33
+      },
+      {
+        "name": "Tranche-Nuit",
+        "level": 34
+      },
+      {
+        "name": "Glissade Givrée",
+        "level": 36
+      },
+      {
+        "name": "Câlinerie",
+        "level": 38
+      },
+      {
+        "name": "Grimace",
+        "level": 40
+      },
+      {
+        "name": "Stalagtite",
+        "level": 42
+      },
+      {
+        "name": "Avalanche",
+        "level": 45
+      },
+      {
+        "name": "Cage Éclair",
+        "level": 48
+      },
+      {
+        "name": "Éboulement",
+        "level": 50
+      },
+      {
+        "name": "Mâchouille",
+        "level": 56
+      },
+      {
+        "name": "Triple Axel",
+        "level": 64
+      },
+      {
+        "name": "Vantardise",
+        "level": 72
+      },
+      {
+        "name": "Éclair Fou",
+        "level": 80
+      }
+    ],
+    "by_tm": [],
+    "by_breeding": []
+  },
+  "locations": [
+    {
+      "game": "Cobblemon RLM",
+      "location": "Cold biomes - Uncommon"
+    },
+    {
+      "game": "Cobblemon RLM",
+      "location": "Snowy Forest and Taiga - Common"
+    }
+  ],
+  "pokedex_entries": [
+    {
+      "game": "Cobblemon RLM",
+      "description": "En raison de changements environnementaux, ce Lixy a dû s'adapter au froid. Il est connu pour être extrêmement timide et réservé, préférant rester caché et fuir devant le danger."
+    }
+  ],
+  "about": "",
+  "images": []
+}
