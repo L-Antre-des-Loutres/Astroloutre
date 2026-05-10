@@ -1,30 +1,10 @@
 ---
 // Enregistrement du type de tableau Discord ID
 import {slugify} from "../../../formater/JoueurFormater.ts";
+import type {DiscordUserType} from "../../../types/UtilisateurDiscordType.ts";
 
-type discordID = {
-    DiscordId: string;
-};
-
-type DiscordUserType = {
-    id: number;
-    discord_id: string;
-    tag_discord: string;
-    pseudo_discord: string;
-    avatar_url: string;
-};
-
-const discordFondateur: discordID[] = [
-    { DiscordId: "518780404057112580" },
-    { DiscordId: "383676607434457088" },
-];
-
-const discordInvestisseur: discordID[] = [
-    { DiscordId: "556501819468152832" },
-    { DiscordId: "432541622065168385" },
-    { DiscordId: "442285755113668609" },
-    { DiscordId: "334269770809606154" },
-];
+const FOUNDER_ROLE_ID = "1112707976273338470";
+const INVESTOR_ROLE_ID = "1113865928086655037";
 
 const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
 const response = await fetch(apiUrl);
@@ -37,13 +17,14 @@ if (!json.success || !Array.isArray(json.data)) {
 }
 const utilisateurs: DiscordUserType[] = json.data;
 
-// Filtrer fondateurs
-const idsFondateurs = discordFondateur.map(f => f.DiscordId);
-const fondateurs = utilisateurs.filter(u => idsFondateurs.includes(u.discord_id));
+// Filtrer fondateurs par rôle
+const fondateurs = utilisateurs.filter(u => u.roles?.some(r => r.id === FOUNDER_ROLE_ID));
 
-// Filtrer investisseurs
-const idsInvestisseurs = discordInvestisseur.map(i => i.DiscordId);
-const investisseurs = utilisateurs.filter(u => idsInvestisseurs.includes(u.discord_id));
+// Filtrer investisseurs par rôle (en excluant ceux qui sont déjà fondateurs)
+const investisseurs = utilisateurs.filter(u => 
+    u.roles?.some(r => r.id === INVESTOR_ROLE_ID) && 
+    !u.roles?.some(r => r.id === FOUNDER_ROLE_ID)
+);
 
 // Check if a user appears multiple times
 const uniqueFondateurs = [...new Set(fondateurs.map(u => u.discord_id))].map(id => fondateurs.find(u => u.discord_id === id)!);
