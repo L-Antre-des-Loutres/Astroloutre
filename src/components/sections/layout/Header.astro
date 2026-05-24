@@ -240,8 +240,8 @@ import adl_logo from "../../../assets/adl_small_logo.png";
 			const res = await fetch('https://otterlyapi.antredesloutres.fr/api/auth/discord/me', { credentials: 'include' });
 			if (res.ok) {
 				const data = await res.json();
-				const avatarImg = document.getElementById('user-avatar');
-				const profilLink = document.getElementById('profil-url');
+				const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
+				const profilLink = document.getElementById('profil-url') as HTMLAnchorElement | null;
 				if (data.avatarUrl && avatarImg) avatarImg.src = data.avatarUrl;
 				if (data.username && profilLink) profilLink.href = `/profil/${slugify(data.username)}`;
 			}

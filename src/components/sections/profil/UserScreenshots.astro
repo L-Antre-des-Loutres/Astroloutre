@@ -3,7 +3,7 @@ import type { PlayerScreenshotType } from "../../../types/PlayerScreenshoot";
 import { PB_URL } from "../../../utils/constantes";
 
 interface Props {
-    screenshots?: (PlayerScreenshotType | { nom: string, auteur_pseudo: string, path: string })[];
+    screenshots?: PlayerScreenshotType[];
 }
 
 const { screenshots = [] } = Astro.props;
@@ -13,26 +13,21 @@ const hasScreens = screenshots.length > 0;
 <div class="gallery-container">
     {hasScreens ? (
             <div class="serveur-screen">
-                {screenshots.map((screen: any) => {
-                    // Support à la fois du nouveau type PocketBase et de l'ancien format local
-                    const author = screen.expand?.player?.playername || 
-                                 screen.expand?.discord_users?.username || 
-                                 screen.auteur_pseudo || 
-                                 "Une loutre anonyme";
-                                 
-                    const imageUrl = screen.screenshot 
-                        ? `${PB_URL}/api/files/${screen.collectionId}/${screen.id}/${screen.screenshot}`
-                        : screen.path;
-                    
-                    const name = screen.name || screen.nom || "Screenshot";
+                {screenshots.map((screen) => {
+                    const serverName = screen.expand?.server?.name;
+                    const platformName = screen.expand?.platform?.name || screen.expand?.server?.expand?.platform?.name || "Inconnue";
+                    const imageUrl = `${PB_URL}/api/files/${screen.collectionId}/${screen.id}/${screen.screenshot}`;
                     
                     return (
                         <div class="screen-item">
                             <div class="image-wrapper">
-                                <img src={imageUrl} alt={name} loading="lazy" />
+                                <img src={imageUrl} alt={screen.name} loading="lazy" />
                             </div>
                             <div class="info-wrapper">
-                                <p class="author"><span class="label">Posté par </span>{author}</p>
+                                <p class="author">
+                                    <span class="label">Sur </span>
+                                    {serverName || `la plateforme ${platformName}`}
+                                </p>
                             </div>
                         </div>
                     )
@@ -40,7 +35,7 @@ const hasScreens = screenshots.length > 0;
             </div>
     ) : (
             <div class="empty-state">
-                <p>Aucun screens pour le moment !</p>
+                <p>Aucun screens posté par cet utilisateur !</p>
             </div>
     )}
 </div>
@@ -65,16 +60,10 @@ const hasScreens = screenshots.length > 0;
         display: grid;
         gap: 1.5rem;
         padding: 1rem;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     }
 
-    @media (max-width: 1200px) {
-        .serveur-screen {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 750px) {
+    @media (max-width: 535px) {
         .serveur-screen {
             grid-template-columns: 1fr;
         }
@@ -142,7 +131,7 @@ const hasScreens = screenshots.length > 0;
 
     /* --- EMPTY STATE --- */
     .empty-state {
-        flex-grow: 1; /* Prend tout l'espace restant */
+        flex-grow: 1;
         display: flex;
         align-items: center;
         justify-content: center;

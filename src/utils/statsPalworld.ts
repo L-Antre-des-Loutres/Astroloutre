@@ -40,7 +40,7 @@ export const aggregatePlayers = (raw: PlayerStats[]) => {
         }
 
         numericKeys.forEach(k => {
-            existing[k] = Number(existing[k] ?? 0) + Number(p[k] ?? 0);
+            (existing as any)[k] = Number(existing[k] ?? 0) + Number(p[k] ?? 0);
         });
 
         if (!existing.serveur_playername && p.serveur_playername) existing.serveur_playername = p.serveur_playername;

@@ -1,71 +1,68 @@
 ---
 import Banner from "../../../components/sections/layout/Banner.astro";
 import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
-import {Image} from 'astro:assets';
 import {slugify} from "../../../formater/JoueurFormater";
-import DiscordIcon from "../../../assets/icons/dicord_cube_icon.webp";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/sections/badges/BadgeList.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
 import PokemonTeams from "../../../components/sections/joueurs/PokemonTeams.astro";
-import {vocalTimeFormater} from "../../../formater/VocalTimeFormater.ts";
 
-// Type des données utilisateur Discord
-type UtilisateurDiscord = {
-    id: number;
-    tag_discord: string;
-};
-
-// Type des données joueur
-type JoueurType = {
-    id: number;
-    utilisateur_id: number | null;
-    tag_discord: string | null;
-    jeu: string;
-    compte_id: string;
-    premiere_co: string;
-    derniere_co: string;
-    playername: string;
-};
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import type {PlayerStatsType, PlayerType} from "../../../types/PlayerType.ts";
+import type {DiscordUserType} from "../../../types/UtilisateurDiscordType.ts";
+import {DISCORD_USERS, PLAYERS, PLAYERS_STATS} from "../../../utils/constantes.ts";
 
 // Props passées depuis getStaticPaths
-const joueur: JoueurType | undefined = Astro.props.joueur;
+const joueur: PlayerType | undefined = Astro.props.joueur;
+const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
+const playtime = Astro.props.playtime || 0;
 
 // Génération des pages statiques
 export async function getStaticPaths() {
 
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/joueurs/';
-    const response = await fetch(apiUrl);
+    // ──────────────────────────────────────────────
+    // Récupération des informations
+    // ──────────────────────────────────────────────
 
-    if (!response.ok) {
-        throw new Error(`Erreur API joueurs: ${response.status}`);
-    }
+    const joueurs = await ApiFetcher.getAllRecords<PlayerType>(PLAYERS);
+    const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
+    const allStats = await ApiFetcher.getAllRecords<PlayerStatsType>(PLAYERS_STATS);
 
-    const json = await response.json();
+    // Dédoublonnement par playername (on garde le record le plus récent)
+    const playersByName = new Map<string, PlayerType>();
+    
+    // Tri par date de connexion pour avoir le plus récent
+    const sortedJoueurs = [...joueurs].sort((a, b) => {
+        const dateA = a.last_connected_at ? new Date(a.last_connected_at).getTime() : 0;
+        const dateB = b.last_connected_at ? new Date(b.last_connected_at).getTime() : 0;
+        return dateB - dateA;
+    });
 
-    if (!json.success || !Array.isArray(json.data)) return [];
+    sortedJoueurs.forEach(joueur => {
+        const nameSlug = slugify(joueur.playername);
+        if (!playersByName.has(nameSlug)) {
+            playersByName.set(nameSlug, joueur);
+        }
+    });
 
-    const joueurs: JoueurType[] = json.data;
-
-    // Récupérer les utilisateurs Discord
-    const apiUrlDiscordTag = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
-    const responseDiscordTag = await fetch(apiUrlDiscordTag);
-
-    if (!responseDiscordTag.ok) {
-        throw new Error(`Erreur API utilisateurs Discord: ${responseDiscordTag.status}`);
-    }
-
-    const jsonDiscord = await responseDiscordTag.json();
-    const utilisateurs: UtilisateurDiscord[] = jsonDiscord.data ?? [];
-
-    return joueurs
+    return Array.from(playersByName.values())
         .filter(joueur => joueur.playername.trim() !== '')
         .map(joueur => {
-            // Associer le discord_tag si utilisateur_id est présent
-            const utilisateur = utilisateurs.find(u => u.id === joueur.utilisateur_id);
-            const discordTag = utilisateur ? utilisateur.tag_discord : null;
+            // Associer le discord_tag si discord_user est présent
+            const utilisateur = utilisateurs.find(u => u.id === joueur.discord_user);
+            const discordTag = utilisateur ? utilisateur.discord_tag : null;
+
+            // Aggréger le temps de jeu de TOUS les serveurs pour cet account_id
+            const playerStats = allStats.filter(s => s.account_id === joueur.account_id);
+            const totalTicks = playerStats.reduce((acc, curr) => acc + (Number(curr.playtime) || 0), 0);
+            const playtime = formatMinecraftPlayTime(totalTicks);
+
+            // Regrouper tous les records PocketBase pour ce même joueur (si doublons)
+            const allRelatedPbIds = joueurs
+                .filter(j => slugify(j.playername) === slugify(joueur.playername))
+                .map(j => j.id);
 
             return {
                 params: {
@@ -74,8 +71,10 @@ export async function getStaticPaths() {
                 props: {
                     joueur: {
                         ...joueur,
-                        tag_discord: slugify(discordTag),
-                    }
+                        discord_tag: slugify(discordTag),
+                    },
+                    playtime,
+                    allRelatedPbIds
                 },
             };
         });
@@ -91,31 +90,14 @@ if (joueur && joueur.playername && voyelles.includes(joueur.playername[0].toLowe
 
 let profilLink
 let profilText
-if (!joueur || !joueur.utilisateur_id) {
+if (!joueur || !joueur.discord_user) {
     profilLink = "#"
     profilText = "Lier ce profil"
 } else {
     // Le compte joueur est lié à un profil discord
-    profilLink = `/profil/${joueur.tag_discord}`
+    profilLink = `/profil/${joueur.discord_tag}`
     profilText = "Profil Discord"
 }
-
-
-let playtime = 0;
-
-try {
-    const totalRes = await fetch(`https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/total-stats-uid/${joueur?.compte_id}`);
-    const totalJson = await totalRes.json();
-    const totalData = totalJson?.data?.[0];
-
-    if (totalData && totalData.tmps_jeux) {
-        const ticks = parseInt(totalData.tmps_jeux, 10); // 1 tick = 1/20 sec
-        playtime = formatMinecraftPlayTime(ticks)
-    }
-} catch (error) {
-    console.error("Erreur lors du fetch des stats totales:", error);
-}
-
 ---
 
 <Layout ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}>
@@ -152,7 +134,7 @@ try {
                             </label>
                             <input
                                     type="text"
-                                    value={joueur.compte_id}
+                                    value={joueur.account_id}
                                     readonly
                                     onclick="this.select()"
                                     style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid var(--player-profile-border); background-color: var(--player-profile-input-bg); color: var(--player-profile-text-primary); border-radius: 4px; font-family: monospace;"
@@ -181,7 +163,7 @@ try {
                                 </svg>
                                 Première connexion :
                             </strong>
-                            <span>{formatDate(joueur.premiere_co)}</span>
+                            <span>{formatDate(joueur.first_connected_at)}</span>
                         </div>
 
                         <div class="stats-row">
@@ -194,7 +176,7 @@ try {
                                 </svg>
                                 Dernière connexion :
                             </strong>
-                            <span>{formatDate(joueur.derniere_co)}</span>
+                            <span>{formatDate(joueur.last_connected_at)}</span>
                         </div>
                     </div>
                 </div>
@@ -203,7 +185,7 @@ try {
                 <div class="info-grid">
                     <h2>Action</h2>
                     <button class="button-copy super-button golden-outline"
-                            data-uuid={joueur.compte_id}>
+                            data-uuid={joueur.account_id}>
                         <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
                         <img src={`https://mc-heads.net/avatar/${joueur.playername}/32`} alt="Copier UUID"/>
                         <span>Copier UUID</span>
@@ -215,15 +197,7 @@ try {
                         Profil NameMC
                     </a>
                     {profilLink !== "#" && (
-                            <a href={`/joueurs/minecraft/${slugify(joueur.playername)}`} class="w-full">
-                                <button class="super-button golden-outline w-full" style="border-radius: 5px">
-                                <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                                    <img src={`https://mc-heads.net/avatar/${joueur.playername}/32`} alt="Head"
-                                         class="svg"/>
-                                    {joueur.playername}
-                                </span>
-                                </button>
-                            </a>
+                        <>
                             <a class="super-button golden-outline" href={`${profilLink}`}>
                                 <svg width="800px" height="800px" viewBox="0 -28.5 256 256" version="1.1"
                                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -234,27 +208,28 @@ try {
                                         </path>
                                     </g>
                                 </svg>
-                            {profilText}
-                        </a>
+                                {profilText}
+                            </a>
+                        </>
                     )}
                 </div>
             </div>
 
             <TransitionSection title={`%Statistiques% ${prefixe} #${joueur.playername}#`}/>
 
-            <PlayerStats uuid={joueur.compte_id} />
+            <PlayerStats uuid={joueur.account_id} />
 
             <TransitionSection
                     title={`Badges ![/icons/logo_minecraft.svg] optenus`}
             />
 
-            <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId=2 />
+            <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId={2} allRelatedPbIds={allRelatedPbIds} />
 
             <TransitionSection
                     title={`Pokemon ${prefixe} #${joueur.playername}#`}
             />
 
-            <PokemonTeams uuid={joueur.compte_id}/>
+            <PokemonTeams uuid={joueur.account_id}/>
 
         </div>
     )}

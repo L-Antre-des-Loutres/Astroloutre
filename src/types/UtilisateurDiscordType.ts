@@ -1,17 +1,15 @@
 // Type des données joueur
 export type DiscordUserType = {
-    id: number
-    discord_id: string
-    tag_discord: string
-    pseudo_discord: string
-    join_date_discord: string
-    first_activity: string
-    last_activity: string
-    nb_message: number
-    vocal_time: number
-    avatar_url: string,
+    id: string;
+    username: string;
+    discord_id: string;
+    discord_tag: string;
+    avatar_url: string;
     roles: Roles[] | null;
-    delete_date: string | null;
+    joined_at: string;
+    first_active_at: string;
+    last_active_at: string;
+    delete_at: string;
 }
 
 export type Roles = {
@@ -22,24 +20,24 @@ export type Roles = {
 
 // Type des données des joueurs
 export type LinkAccount = {
-    id: number
-    utilisateur_id: number
-    jeu: string
-    compte_id: string
-    premiere_co: string
-    derniere_co: string
+    id: string
+    discord_user: string
+    platform: string
+    account_id: string
+    first_connected_at: string
+    last_connected_at: string
     playername: string
 }
 
 export type DiscordUserStatsType = {
-    id: number
-    id_utilisateur: number
-    nb_message: number
-    vocal_time: number
-    date_stats: string
-    voice_channels: Channel[]
-    text_channels: Channel[]
-    vocal_with: DiscordUser[]
+    id: string;
+    discord_user: string;
+    message_count: number;
+    vocal_time: number;
+    voice_channels: Channel[];
+    text_channels: Channel[];
+    vocal_with: DiscordUser[];
+    date_stats: string;
 }
 
 export type Channel = {
