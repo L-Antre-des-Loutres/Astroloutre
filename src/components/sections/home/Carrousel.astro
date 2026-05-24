@@ -30,7 +30,13 @@ try {
         const imageUrl = `${PB_URL}/api/files/${img.collectionId}/${img.id}/${img.screenshot}`;
         const author = img.expand?.player?.playername || img.expand?.discord_users?.username || "Une loutre anonyme";
         const serverName = img.expand?.server?.name;
-        const platformName = img.expand?.server?.expand?.platform?.name?.toLowerCase() || "minecraft";
+        
+        // On récupère le nom de la plateforme via le serveur OU directement via la plateforme liée
+        const platformName = (
+            img.expand?.server?.expand?.platform?.name || 
+            (img as any).expand?.platform?.name || 
+            "minecraft"
+        ).toLowerCase();
 
         const attribution = serverName 
             ? `Image par ${author} sur ${serverName}`
