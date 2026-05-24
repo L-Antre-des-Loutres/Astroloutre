@@ -29,13 +29,16 @@ try {
     const mapScreenshot = (img: PlayerScreenshotType) => {
         const imageUrl = `${PB_URL}/api/files/${img.collectionId}/${img.id}/${img.screenshot}`;
         const author = img.expand?.player?.playername || img.expand?.discord_users?.username || "Une loutre anonyme";
-        const serverName = img.expand?.server?.name || "un serveur inconnu";
+        const serverName = img.expand?.server?.name;
         const platformName = img.expand?.server?.expand?.platform?.name?.toLowerCase() || "minecraft";
+
+        const attribution = serverName 
+            ? `Image par ${author} sur ${serverName}`
+            : `Image par ${author}`;
 
         return {
             path: imageUrl,
-            auteur_pseudo: author,
-            nom_serveur: serverName,
+            attribution,
             platform: platformName
         };
     };
@@ -126,7 +129,7 @@ const games = [
                                 />
                             <!-- Crédit de l'image -->
                                 <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
-                                    <p>Par {src.auteur_pseudo} sur {src.nom_serveur}</p>
+                                    <p>{src.attribution}</p>
                                 </div>
                         ))}
 
