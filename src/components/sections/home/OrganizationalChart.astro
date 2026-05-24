@@ -2,20 +2,13 @@
 // Enregistrement du type de tableau Discord ID
 import {slugify} from "../../../formater/JoueurFormater.ts";
 import type {DiscordUserType} from "../../../types/UtilisateurDiscordType.ts";
+import {ApiFetcher} from "../../../utils/API/apiFetcher.ts";
 
 const FOUNDER_ROLE_ID = "1112707976273338470";
 const INVESTOR_ROLE_ID = "1113865928086655037";
 
-const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
-const response = await fetch(apiUrl);
-if (!response.ok) {
-    throw new Error(`Erreur API joueurs: ${response.status}`);
-}
-const json = await response.json();
-if (!json.success || !Array.isArray(json.data)) {
-    throw new Error('Données API invalides');
-}
-const utilisateurs: DiscordUserType[] = json.data;
+// Fetch all data
+const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>("discord_users");
 
 // Filtrer fondateurs par rôle
 const fondateurs = utilisateurs.filter(u => u.roles?.some(r => r.id === FOUNDER_ROLE_ID));
@@ -37,16 +30,16 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         <h3>Fondateurs</h3>
         <ul class="user-list">
             {uniqueFondateurs.map((user) => (
-                    <li class="user-card" key={user.tag_discord}>
-                        <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
+                    <li class="user-card" key={user.discord_tag}>
+                        <a href={`/profil/${slugify(user.discord_tag)}`} class="user-link">
                             <div class="user-content">
                                 <img
                                         src={user.avatar_url}
-                                        alt={`Avatar de ${user.pseudo_discord}`}
+                                        alt={`Avatar de ${user.username}`}
                                         class="user-avatar"
                                 />
-                                <div class="user-name">{user.pseudo_discord}</div>
-                                <div class="user-tag">{user.tag_discord}</div>
+                                <div class="user-name">{user.username}</div>
+                                <div class="user-tag">{user.discord_tag}</div>
                             </div>
                         </a>
                     </li>
@@ -58,16 +51,16 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
         <h3>Nos investisseurs</h3>
         <ul class="user-list">
             {uniqueInvestisseurs.map((user) => (
-                    <li class="user-card" key={user.tag_discord} >
-                        <a href={`/profil/${slugify(user.tag_discord)}`} class="user-link">
+                    <li class="user-card" key={user.discord_tag} >
+                        <a href={`/profil/${slugify(user.discord_tag)}`} class="user-link">
                             <div class="user-content">
                                 <img
                                         src={user.avatar_url}
-                                        alt={`Avatar de ${user.pseudo_discord}`}
+                                        alt={`Avatar de ${user.username}`}
                                         class="user-avatar"
                                 />
-                                <div class="user-name">{user.pseudo_discord}</div>
-                                <div class="user-tag">{user.tag_discord}</div>
+                                <div class="user-name">{user.username}</div>
+                                <div class="user-tag">{user.discord_tag}</div>
                             </div>
                         </a>
                     </li>

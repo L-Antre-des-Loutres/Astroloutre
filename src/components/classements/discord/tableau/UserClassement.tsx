@@ -24,20 +24,20 @@ type Props = {
 
 /* Colonnes et largeurs */
 const userStatsConfig: Record<string, string> = {
-    pseudo_discord: "Pseudo Discord",
-    join_date_discord: "Date d'arrivée",
-    first_activity: "Première activité",
-    last_activity: "Dernière activité",
+    username: "Pseudo Discord",
+    joined_at: "Date d'arrivée",
+    first_active_at: "Première activité",
+    last_active_at: "Dernière activité",
     nb_message: "Messages envoyés",
     vocal_time: "Temps en vocal",
     activity_score: "Score d'activité"
 };
 
 const columnWidths: Record<string, string> = {
-    pseudo_discord: "200px",
-    join_date_discord: "150px",
-    first_activity: "150px",
-    last_activity: "150px",
+    username: "200px",
+    joined_at: "150px",
+    first_active_at: "150px",
+    last_active_at: "150px",
     nb_message: "150px",
     vocal_time: "150px",
     activity_score: "150px"
@@ -142,7 +142,7 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
             let bVal = b[sortConfig.key];
 
             // Dates
-            if (["join_date_discord", "first_activity", "last_activity"].includes(sortConfig.key)) {
+            if (["joined_at", "first_active_at", "last_active_at"].includes(sortConfig.key)) {
                 aVal = aVal ? new Date(aVal).getTime() : 0;
                 bVal = bVal ? new Date(bVal).getTime() : 0;
             }
@@ -235,29 +235,29 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
                                         style={{minWidth: columnWidths[key]}}
                                     >
                                         {(() => {
-                                            if (key === "pseudo_discord") {
+                                            if (key === "username") {
                                                 return (
                                                     <div className="flex items-center gap-3">
                                                         <img
                                                             src={player.avatar_url}
-                                                            alt={player.pseudo_discord}
+                                                            alt={player.username}
                                                             width={40}
                                                             height={40}
                                                             className="rounded-sm"
                                                         />
                                                         <a
-                                                            href={`/profil/${slugify(player.tag_discord)}`}
+                                                            href={`/profil/${slugify(player.discord_tag)}`}
                                                             className="ranking-link"
                                                         >
                                                             <span>{player[key] ?? "-"}</span>
                                                         </a>
                                                     </div>
                                                 );
-                                            } else if (key === "join_date_discord") {
+                                            } else if (key === "joined_at") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
-                                            } else if (key === "first_activity") {
+                                            } else if (key === "first_active_at") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
-                                            } else if (key === "last_activity") {
+                                            } else if (key === "last_active_at") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
                                             } else if (key === "vocal_time") {
                                                 return <div>{!player[key] ? "Aucun temps" : formatDecimalHoursToString(player[key])}</div>;

@@ -14,15 +14,15 @@ import {vocalTimeFormater} from "../../../formater/VocalTimeFormater.ts";
 
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
-    id: number;
-    tag_discord: string;
+    id: string;
+    discord_tag: string;
 };
 
 // Type des données joueur
 type JoueurType = {
     id: number;
-    utilisateur_id: number | null;
-    tag_discord: string | null;
+    utilisateur_id: string | null;
+    discord_tag: string | null;
     jeu: string;
     compte_id: string;
     premiere_co: string;
@@ -65,7 +65,7 @@ export async function getStaticPaths() {
         .map(joueur => {
             // Associer le discord_tag si utilisateur_id est présent
             const utilisateur = utilisateurs.find(u => u.id === joueur.utilisateur_id);
-            const discordTag = utilisateur ? utilisateur.tag_discord : null;
+            const discordTag = utilisateur ? utilisateur.discord_tag : null;
 
             return {
                 params: {
@@ -74,7 +74,7 @@ export async function getStaticPaths() {
                 props: {
                     joueur: {
                         ...joueur,
-                        tag_discord: slugify(discordTag),
+                        discord_tag: slugify(discordTag),
                     }
                 },
             };
@@ -96,7 +96,7 @@ if (!joueur || !joueur.utilisateur_id) {
     profilText = "Lier ce profil"
 } else {
     // Le compte joueur est lié à un profil discord
-    profilLink = `/profil/${joueur.tag_discord}`
+    profilLink = `/profil/${joueur.discord_tag}`
     profilText = "Profil Discord"
 }
 

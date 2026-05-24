@@ -48,7 +48,7 @@ export async function getStaticPaths() {
     const accountsLinks: LinkAccount[] = jsonAccountLink.data;
 
     return joueurs
-        .filter((joueur) => typeof joueur.pseudo_discord === 'string' && joueur.pseudo_discord.trim() !== '')
+        .filter((joueur) => typeof joueur.username === 'string' && joueur.username.trim() !== '')
         .map((joueur) => {
             // Retrieve ALL linked accounts
             const accountLinks = accountsLinks.filter(
@@ -74,7 +74,7 @@ export async function getStaticPaths() {
 
             return {
                 params: {
-                    username: slugify(joueur.tag_discord),
+                    username: slugify(joueur.discord_tag),
                 },
                 props: {
                     joueur,
@@ -89,7 +89,7 @@ export async function getStaticPaths() {
 const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'h'];
 let prefixe = "de ";
 
-if (utilisateur && utilisateur.pseudo_discord && voyelles.includes(utilisateur.pseudo_discord[0].toLowerCase())) {
+if (utilisateur && utilisateur.username && voyelles.includes(utilisateur.username[0].toLowerCase())) {
     prefixe = "d’";
 }
 
@@ -103,12 +103,12 @@ if (msgCount > 1) {
 ---
 {!utilisateur && <h1>Joueur introuvable</h1>}
 {utilisateur && (
-<Layout ogImage={utilisateur?.avatar_url} title={`${utilisateur?.pseudo_discord}`}
-        ogDescription={`Profil Discord : ${utilisateur?.pseudo_discord}`}>
+<Layout ogImage={utilisateur?.avatar_url} title={`${utilisateur?.username}`}
+        ogDescription={`Profil Discord : ${utilisateur?.username}`}>
     <Banner/>
 
     <div class="profile-container">
-        <TransitionSection title={`Profil #Discord# ${prefixe}#${utilisateur.pseudo_discord}#`}/>
+        <TransitionSection title={`Profil #Discord# ${prefixe}#${utilisateur.username}#`}/>
 
         <div class="profile-details">
 
@@ -116,7 +116,7 @@ if (msgCount > 1) {
             <div class="avatar">
                 <Image
                         src={utilisateur.avatar_url}
-                        alt={`Avatar de ${utilisateur.pseudo_discord}`}
+                        alt={`Avatar de ${utilisateur.username}`}
                         class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
                         width={300}
                         height={300}
@@ -130,7 +130,7 @@ if (msgCount > 1) {
 
                 {/* Badges style */}
                 <div class="server-card-footer">
-                    <span class="server-card-badge version">{utilisateur.tag_discord}</span>
+                    <span class="server-card-badge version">{utilisateur.discord_tag}</span>
                     {utilisateur.roles?.map((role: Roles) => {
                         const isFounder = role.id === "1112707976273338470";
                         const isInvesti = role.id === "1113865928086655037";
@@ -178,7 +178,7 @@ if (msgCount > 1) {
                             </svg>
                             Activité récente :
                         </strong>
-                        <span>{formatDate(utilisateur.last_activity)}</span>
+                        <span>{formatDate(utilisateur.last_active_at)}</span>
                     </div>
 
                     <div class="stats-row">
@@ -189,7 +189,7 @@ if (msgCount > 1) {
                             </svg>
                             Date d'arrivée :
                         </strong>
-                        <span>{formatDate(utilisateur.join_date_discord)}</span>
+                        <span>{formatDate(utilisateur.joined_at)}</span>
                     </div>
                 </div>
             </div>
@@ -240,7 +240,7 @@ if (msgCount > 1) {
             </div>
         </div>
 
-        <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.pseudo_discord}#`}/>
+        <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.username}#`}/>
         <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1}/>
     </div>
 

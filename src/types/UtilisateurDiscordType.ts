@@ -1,17 +1,15 @@
 // Type des données joueur
 export type DiscordUserType = {
-    id: number
-    discord_id: string
-    tag_discord: string
-    pseudo_discord: string
-    join_date_discord: string
-    first_activity: string
-    last_activity: string
-    nb_message: number
-    vocal_time: number
-    avatar_url: string,
+    id: string;
+    username: string;
+    discord_id: string;
+    discord_tag: string;
+    avatar_url: string;
     roles: Roles[] | null;
-    delete_date: string | null;
+    joined_at: string;
+    first_active_at: string;
+    last_active_at: string;
+    delete_at: string;
 }
 
 export type Roles = {
