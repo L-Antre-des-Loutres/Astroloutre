@@ -5,74 +5,47 @@ import { fixEncoding } from "../../../utils/fixEncoder.ts";
 import { UUIDToPseudo } from "../../../utils/UUIDToPseudo.ts";
 import { CapitalLetter } from "../../../formater/CapitalLetter.ts";
 import { slugify } from "../../../formater/JoueurFormater.ts";
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {CAPTURED_POKEMONS, POKEMON_PLAYERS, SERVERS} from "../../../utils/constantes";
 
-// Type PokemonTeam
+// Type Pokemon (correspondant à captured_pokemons dans PB)
+type Pokemon = {
+    id: string;
+    pokemon_name: string;
+    form: string;
+    gender: string;
+    nickname: string;
+    level: number;
+    pokemon_uuid: string;
+    original_owner_uuid: string;
+    is_shiny: boolean;
+};
+
+// Type Team (correspondant à pokemon_players dans PB)
 type PokemonTeam = {
-    id: number;
-    serveur_id: number;
-    serveur_nom: string;
-    joueur_uuid: string;
-    pkmn1: string;
-    pkmn1_form: string;
-    pkmn2: string;
-    pkmn2_form: string;
-    pkmn3: string;
-    pkmn3_form: string;
-    pkmn4: string;
-    pkmn4_form: string;
-    pkmn5: string;
-    pkmn5_form: string;
-    pkmn6: string;
-    pkmn6_form: string;
-    pkmn6_shiny: boolean;
-    pkmn5_shiny: boolean;
-    pkmn4_shiny: boolean;
-    pkmn3_shiny: boolean;
-    pkmn2_shiny: boolean;
-    pkmn1_shiny: boolean;
-    pkmn1_nickname: string;
-    pkmn2_nickname: string;
-    pkmn3_nickname: string;
-    pkmn4_nickname: string;
-    pkmn5_nickname: string;
-    pkmn6_nickname: string;
-    pkmn1_level: number;
-    pkmn2_level: number;
-    pkmn3_level: number;
-    pkmn4_level: number;
-    pkmn5_level: number;
-    pkmn6_level: number;
-    pkmn1_do_uuid: string;
-    pkmn2_do_uuid: string;
-    pkmn3_do_uuid: string;
-    pkmn4_do_uuid: string;
-    pkmn5_do_uuid: string;
-    pkmn6_do_uuid: string;
-    pkmn1_gender: string;
-    pkmn2_gender: string;
-    pkmn3_gender: string;
-    pkmn4_gender: string;
-    pkmn5_gender: string;
-    pkmn6_gender: string;
+    id: string;
+    server: string;
+    player_uuid: string;
+    party: string[];
+    expand?: {
+        server?: {
+            name: string;
+        };
+        party?: Pokemon[];
+    };
 };
 
 const { uuid } = Astro.props;
-// Récupération des données des équipes Pokémon
+
+// Récupération des données des équipes Pokémon via PocketBase
 let pokemonTeams: PokemonTeam[] = [];
 try {
-    const res = await fetch(
-        `https://otterlyapi.antredesloutres.fr/api/cobblemon/stats/${uuid}`,
-    );
-    const json = await res.json();
-
-    if (!json?.success) {
-        throw new Error("Erreur lors de la récupération des données");
-    }
-
-    pokemonTeams = json.data ?? [];
+    pokemonTeams = await ApiFetcher.getAllRecords<PokemonTeam>(POKEMON_PLAYERS, {
+        filter: `player_uuid = "${uuid}"`,
+        expand: 'server,party'
+    });
 } catch (error) {
-    console.error("Error fetching Pokemon teams data:", error);
-    throw error;
+    console.error("Error fetching Pokemon teams data from PocketBase:", error);
 }
 ---
 
@@ -91,26 +64,16 @@ try {
                                 <a
                                     href={
                                         "/serveurs/minecraft/" +
-                                        slugify(team.serveur_nom)
+                                        slugify(team.expand?.server?.name || "inconnu")
                                     }
                                     class="server-link"
                                 >
-                                    {team.serveur_nom}
+                                    {team.expand?.server?.name || "Serveur Inconnu"}
                                 </a>
                             </h3>
                             <div class="team-badges">
                                 <span class="badge-count">
-                                    {
-                                        [
-                                            team.pkmn1,
-                                            team.pkmn2,
-                                            team.pkmn3,
-                                            team.pkmn4,
-                                            team.pkmn5,
-                                            team.pkmn6,
-                                        ].filter(Boolean).length
-                                    }{" "}
-                                    / 6
+                                    {team.expand?.party?.length || 0} / 6
                                 </span>
                             </div>
                         </div>
@@ -132,72 +95,16 @@ try {
 
                     <div class="pokemon-grid-container">
                         <div class="pokemon-grid">
-                            {[
-                                {
-                                    p: team.pkmn1,
-                                    f: team.pkmn1_form,
-                                    s: !!team.pkmn1_shiny,
-                                    n: team.pkmn1_nickname,
-                                    l: team.pkmn1_level,
-                                    d: team.pkmn1_do_uuid,
-                                    g: team.pkmn1_gender,
-                                },
-                                {
-                                    p: team.pkmn2,
-                                    f: team.pkmn2_form,
-                                    s: !!team.pkmn2_shiny,
-                                    n: team.pkmn2_nickname,
-                                    l: team.pkmn2_level,
-                                    d: team.pkmn2_do_uuid,
-                                    g: team.pkmn2_gender,
-                                },
-                                {
-                                    p: team.pkmn3,
-                                    f: team.pkmn3_form,
-                                    s: !!team.pkmn3_shiny,
-                                    n: team.pkmn3_nickname,
-                                    l: team.pkmn3_level,
-                                    d: team.pkmn3_do_uuid,
-                                    g: team.pkmn3_gender,
-                                },
-                                {
-                                    p: team.pkmn4,
-                                    f: team.pkmn4_form,
-                                    s: !!team.pkmn4_shiny,
-                                    n: team.pkmn4_nickname,
-                                    l: team.pkmn4_level,
-                                    d: team.pkmn4_do_uuid,
-                                    g: team.pkmn4_gender,
-                                },
-                                {
-                                    p: team.pkmn5,
-                                    f: team.pkmn5_form,
-                                    s: !!team.pkmn5_shiny,
-                                    n: team.pkmn5_nickname,
-                                    l: team.pkmn5_level,
-                                    d: team.pkmn5_do_uuid,
-                                    g: team.pkmn5_gender,
-                                },
-                                {
-                                    p: team.pkmn6,
-                                    f: team.pkmn6_form,
-                                    s: !!team.pkmn6_shiny,
-                                    n: team.pkmn6_nickname,
-                                    l: team.pkmn6_level,
-                                    d: team.pkmn6_do_uuid,
-                                    g: team.pkmn6_gender,
-                                },
-                            ].map(
-                                async ({ p, f, s, n, l, d, g }) =>
-                                    p && (
+                            {(team.expand?.party || []).map(
+                                async (pkm) => (
                                         <div
-                                                class={`pokemon-card ${s ? "is-shiny" : ""} ${
-                                                    (f &&
-                                                        f.toLowerCase() ===
+                                                class={`pokemon-card ${pkm.is_shiny ? "is-shiny" : ""} ${
+                                                    (pkm.form &&
+                                                        pkm.form.toLowerCase() ===
                                                         "rlm") ||
-                                                    f.toLowerCase() === "ocean" ||
-                                                    f.toLowerCase() === "volcan" ||
-                                                    f.toLowerCase() === "ciel"
+                                                    pkm.form.toLowerCase() === "ocean" ||
+                                                    pkm.form.toLowerCase() === "volcan" ||
+                                                    pkm.form.toLowerCase() === "ciel"
                                                         ? "is-rlm"
                                                         : ""
                                                 }`}
@@ -208,24 +115,24 @@ try {
                                                     <img
                                                             src={await showdownApiGetPkmArt(
                                                                 formatPokemonName(
-                                                                    p,
+                                                                    pkm.pokemon_name,
                                                                 ),
-                                                                f,
-                                                                s,
+                                                                pkm.form,
+                                                                pkm.is_shiny,
                                                             )}
                                                             alt={formatPokemonName(
-                                                                p,
+                                                                pkm.pokemon_name,
                                                             )}
                                                             class="pokemon-image floating-anim"
                                                             loading="lazy"
                                                             onerror="this.onerror=null; this.src='https://play.pokemonshowdown.com/sprites/gen5/' + this.alt.toLowerCase() + '.png';"
                                                     />
-                                                    {s && (
+                                                    {pkm.is_shiny && (
                                                         <div class="shiny-sparkles" />
                                                     )}
-                                                    {l > 0 && (
+                                                    {pkm.level > 0 && (
                                                         <div class="level-badge">
-                                                            Lvl {l}
+                                                            Lvl {pkm.level}
                                                         </div>
                                                     )}
                                                 </div>
@@ -233,35 +140,35 @@ try {
                                                 <div class="pokemon-info">
                                                     <div class="name-container">
                                                         <strong class="pokemon-name">
-                                                            {n
-                                                                ? fixEncoding(n)
+                                                            {pkm.nickname
+                                                                ? fixEncoding(pkm.nickname)
                                                                 : formatPokemonName(
-                                                                      p,
+                                                                      pkm.pokemon_name,
                                                                   )
                                                                       .charAt(0)
                                                                       .toUpperCase() +
                                                                   formatPokemonName(
-                                                                      p,
+                                                                      pkm.pokemon_name,
                                                                   )
                                                                       .slice(1)
                                                                       .toLowerCase()}
                                                         </strong>
-                                                        {s && (
+                                                        {pkm.is_shiny && (
                                                             <span class="shiny-tag">
                                                                 SHINY
                                                             </span>
                                                         )}
-                                                        {f &&
-                                                            (f.toLowerCase() ===
+                                                        {pkm.form &&
+                                                            (pkm.form.toLowerCase() ===
                                                                 "rlm" ||
-                                                                f.toLowerCase() ===
+                                                                pkm.form.toLowerCase() ===
                                                                 "ocean" ||
-                                                                f.toLowerCase() ===
+                                                                pkm.form.toLowerCase() ===
                                                                 "volcan" ||
-                                                                f.toLowerCase() ===
+                                                                pkm.form.toLowerCase() ===
                                                                 "ciel") && (
                                                                         <span
-                                                                                class={`rlm-tag ${s ? "is-shiny" : ""}`}
+                                                                                class={`rlm-tag ${pkm.is_shiny ? "is-shiny" : ""}`}
                                                                         >
                                                                     RLM
                                                                 </span>
@@ -270,31 +177,31 @@ try {
 
                                                     <div class="pokemon-details collapsed">
                                                         <div class="details-grid">
-                                                            {f && (
+                                                            {pkm.form && (
                                                                 <div class="detail-pill">
                                                                     <span class="label">
                                                                         Forme
                                                                     </span>
                                                                     <span class="value">
                                                                         {CapitalLetter(
-                                                                            f,
+                                                                            pkm.form,
                                                                         )}
                                                                     </span>
                                                                 </div>
                                                             )}
-                                                            {g && (
+                                                            {pkm.gender && (
                                                                 <div class="detail-pill">
                                                                     <span class="label">
                                                                         Genre
                                                                     </span>
                                                                     <span class="value">
                                                                         {CapitalLetter(
-                                                                            g,
+                                                                            pkm.gender,
                                                                         )}
                                                                     </span>
                                                                 </div>
                                                             )}
-                                                            {d && (
+                                                            {pkm.original_owner_uuid && (
                                                                 <div class="detail-pill do-pill">
                                                                     <span class="label">
                                                                         DO
@@ -305,13 +212,13 @@ try {
                                                                             "/joueurs/minecraft/" +
                                                                             slugify(
                                                                                 await UUIDToPseudo(
-                                                                                    d,
+                                                                                    pkm.original_owner_uuid,
                                                                                 ),
                                                                             )
                                                                         }
                                                                     >
                                                                         {await UUIDToPseudo(
-                                                                            d,
+                                                                            pkm.original_owner_uuid,
                                                                         )}
                                                                     </a>
                                                                 </div>

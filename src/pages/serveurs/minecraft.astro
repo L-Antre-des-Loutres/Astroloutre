@@ -18,11 +18,14 @@ const serversRaw = await ApiFetcher.getAllRecords<ServeurType>(SERVERS, {
 });
 
 const data = serversRaw
-    .filter(item => item.expand?.platform?.name.toLowerCase() === 'minecraft')
+    .filter(item => {
+        const pName = item.expand?.platform?.name?.toLowerCase() || "";
+        return pName === 'minecraft';
+    })
     .map(item => ({
         ...item,
         // Construction de l'URL de l'image PocketBase si c'est une image stockée
-        image: item.image ? `${PB_URL}/api/files/pbc_3738798621/${item.id}/${item.image}` : item.image
+        image: item.image ? `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.image}` : item.image
     }));
 ---
 

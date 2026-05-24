@@ -37,9 +37,7 @@ const filteredArticles = articles
     <div class="projects-container">
         <ul class="projects-list">
             {filteredArticles.map((article) => (
-                    <SlidingVignette image={article.data.image} image_alt={article.data.title}
-                                     title=`#${article.data.title}#` paragraph={article.data.description}
-                                     card_link={`/projets/${slugify(article.data.title)}`} margin="0.8em"/>
+                    <SlidingVignette image={article.data.image || ""} image_alt={article.data.title} title=`#${article.data.title}#` paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0.8em"/>
             ))}
         </ul>
     </div>

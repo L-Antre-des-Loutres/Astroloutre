@@ -43,15 +43,17 @@ export class ApiFetcher {
     /**
      * Récupère tous les enregistrements d'une collection PocketBase.
      * @param collectionName Nom de la collection
+     * @param options Options PocketBase (expand, filter, sort, etc.)
      * @returns Un tableau contenant tous les enregistrements
      */
-    static async getAllRecords<T>(collectionName: string): Promise<T[]> {
+    static async getAllRecords<T>(collectionName: string, options: any = {}): Promise<T[]> {
         try {
             // On s'assure d'être authentifié pour les appels serveur
             await this.authenticate();
 
             return await this.pb.collection(collectionName).getFullList<T>({
                 requestKey: null,
+                ...options
             });
         } catch (error) {
             console.error(`Erreur lors de la récupération de la collection ${collectionName}:`, error);

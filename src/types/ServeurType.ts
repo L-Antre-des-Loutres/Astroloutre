@@ -1,4 +1,6 @@
 export type ServeurType = {
+[x: string]: any;
+    collectionId?: string;
     id: string;
     name: string;
     platform: string;

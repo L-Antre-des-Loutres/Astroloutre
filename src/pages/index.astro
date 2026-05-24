@@ -10,7 +10,6 @@ import TransitionSection from "../components/sections/common/transitions/Transit
 import SlidingVignette from "../components/ui/vignettes/SlidingVignette.astro";
 // Other imports
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
-import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
 import {ApiFetcher} from "../utils/API/apiFetcher";
 import {PLAYERS_STATS} from "../utils/constantes";
 
@@ -21,15 +20,6 @@ let totalHours: number = 0;
 const mcStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
 const totalTicksMinecraft = mcStats.reduce((acc, curr) => acc + (Number(curr.playtime) || 0), 0);
 totalHours = formatMinecraftPlayTime(totalTicksMinecraft);
-
-// Palworld playtime (Legacy fetch as it's not yet in PocketBase)
-const responsePalworld = await fetch(
-    "https://otterlyapi.antredesloutres.fr/api/palworld/stats/total-hours",
-);
-if (responsePalworld.ok) {
-    const json = await responsePalworld.json();
-    totalHours += (await formatDecimalHours(json?.data?.[0]?.total_hours)) || 0;
-}
 ---
 
 <Layout>
