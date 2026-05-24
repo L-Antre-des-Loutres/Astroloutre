@@ -54,7 +54,7 @@ export async function getStaticPaths() {
             embed_color: s.embed_color,
             is_enabled: s.is_enabled,
             is_global: s.is_global,
-            image: s.image ? `${PB_URL}/api/files/${s.collectionId}/${s.id}/${s.image}` : s.image,
+            image: s.image ? `${PB_URL}/api/files/${s.collectionId}/${s.id}/${s.image}` : "/banner/minecraft/nos_serveurs.webp",
             description: s.description,
             container: s.container,
             type: s.type

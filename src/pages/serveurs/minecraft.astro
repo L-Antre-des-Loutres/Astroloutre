@@ -24,8 +24,8 @@ const data = serversRaw
     })
     .map(item => ({
         ...item,
-        // Construction de l'URL de l'image PocketBase si c'est une image stockée
-        image: item.image ? `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.image}` : item.image
+        // Construction de l'URL de l'image PocketBase si c'est une image stockée, sinon image par défaut
+        image: item.image ? `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.image}` : "/banner/minecraft/nos_serveurs.webp"
     }));
 ---
 
