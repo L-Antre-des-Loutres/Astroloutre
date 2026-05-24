@@ -5,12 +5,22 @@ import {
     makeServersMap, pickStatsFor, aggregatePlayers,
     type Server, type PlayerStats
 } from "../../../../utils/statsPalworld";
+import {ApiFetcher} from "../../../../utils/API/apiFetcher";
+import {SERVERS} from "../../../../utils/constantes";
 
 const {jeu} = Astro.props;
 
-// Fetch des serveurs depuis l’API
-const res = await fetch("https://otterlyapi.antredesloutres.fr/api/serveurs");
-const servers: Server[] = (await res.json()).data ?? [];
+// Fetch des serveurs depuis PocketBase
+const serversRaw = await ApiFetcher.getAllRecords<any>(SERVERS, { expand: 'platform' });
+const servers: Server[] = serversRaw.map(s => ({
+    id: s.id,
+    nom: s.name,
+    jeu: s.expand?.platform?.name || 'Unknown',
+    description: s.description,
+    actif: s.is_enabled ? 1 : 0,
+    global: s.is_global ? 1 : 0,
+    type: s.type
+}));
 
 // Catégorisation des serveurs
 // - "activeGlobalServers" → serveurs globaux actifs (global = 1, actif = 1)
@@ -31,7 +41,7 @@ const serversListActiveGlobal = makeServersMap(activeGlobalServers);
 const serversListInactiveGlobal = makeServersMap(inactiveGlobalServers);
 const serversListPartner = makeServersMap(partnerServers);
 
-// Fetch des statistiques de joueurs depuis l’API, on stocke le tableau de résultats bruts dans "playersRaw".
+// Fetch des statistiques de joueurs depuis l’API legacy (pas encore dans PocketBase)
 const resStats = await fetch("https://otterlyapi.antredesloutres.fr/api/palworld/stats");
 const playersRaw = (await resStats.json()).data ?? [];
 

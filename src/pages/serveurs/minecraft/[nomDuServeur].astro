@@ -28,57 +28,64 @@ type ServeurType = {
 };
 
 type ScreenType = {
-    id: number,
+    id: string,
     nom: string,
-    origine: number,
-    auteur: string
+    origine: string,
+    auteur_pseudo: string,
     path: string,
-    jeu: string,
-    carrousel: boolean,
-    nom_serveur: string,
 }
 
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 
 export async function getScreenList(): Promise<ScreenType[]> {
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/astroloutre/images';
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch images: ${response.status}`);
-    }
-    const json = await response.json();
-    if (!json.success) return [];
+    try {
+        const screenshots = await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
+            expand: 'player,discord_users',
+            requestKey: null
+        });
 
-    // On retourne la liste des images
-    return json.data ?? [];
+        return screenshots.map(img => {
+            const author = img.expand?.player?.playername || img.expand?.discord_users?.username || "Une loutre anonyme";
+            return {
+                id: img.id,
+                nom: img.name,
+                origine: img.server,
+                auteur_pseudo: author,
+                path: `${PB_URL}/api/files/${img.collectionId}/${img.id}/${img.screenshot}`
+            };
+        });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des screenshots :", error);
+        return [];
+    }
 }
 
 import {ApiFetcher} from "../../../utils/API/apiFetcher";
-import {PLAYERS_STATS} from "../../../utils/constantes";
+import {PLAYERS_STATS, PLAYER_SCREENSHOTS, PB_URL} from "../../../utils/constantes";
 
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
 
-    // On récupère la liste des serveurs
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/';
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch servers: ${response.status}`);
-    }
-
-    const json = await response.json();
-
-    // On vérifie si la requête est un succès
-    if (!json.success) return
-
-    // On récupère les informations dans les Data
-    const serveurs = json.data ?? json;
-
-    if (!Array.isArray(serveurs)) {
-        throw new Error("Serveurs is not an array");
-    }
+    // On récupère la liste des serveurs depuis PocketBase
+    const serversRaw = await ApiFetcher.getAllRecords<any>(SERVERS, { expand: 'platform' });
+    
+    const serveurs = serversRaw.map(s => ({
+        id: s.id,
+        nom: s.name,
+        jeu: s.expand?.platform?.name?.toLowerCase() || 'minecraft',
+        version: s.version,
+        modpack: s.modpack,
+        modpack_url: s.modpack_url,
+        nom_monde: s.world_name,
+        embed_color: s.embed_color,
+        actif: s.is_enabled ? 1 : 0,
+        global: s.is_global ? 1 : 0,
+        image: s.image ? `${PB_URL}/api/files/pbc_3738798621/${s.id}/${s.image}` : s.image,
+        description: s.description,
+        contenaire: s.container,
+        type: s.type
+    }));
 
     // On récupère le temps de jeu pour chaque serveur depuis PocketBase
     const allStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);

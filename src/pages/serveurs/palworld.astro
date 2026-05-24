@@ -6,18 +6,24 @@ import type {ServeurType} from "../../types/ServeurType.ts";
 import {slugify} from "../../formater/JoueurFormater.ts";
 import GameServerVignette from "../../components/ui/vignettes/GameServerVignette.astro";
 
-const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/actif-global/palworld';
+import {ApiFetcher} from "../../utils/API/apiFetcher";
+import {SERVERS, PB_URL} from "../../utils/constantes";
+
 const jeu = 'palworld';
 
-// Récupération des données depuis l'API
-let data
-if (apiUrl) {
-    const res = await fetch(apiUrl);
-    const json = await res.json();
-    if (json.success && Array.isArray(json.data)) {
-        data = json.data;
-    }
-}
+// Récupération des données depuis PocketBase
+const serversRaw = await ApiFetcher.getAllRecords<ServeurType>(SERVERS, {
+    expand: 'platform',
+    sort: '-is_enabled'
+});
+
+const data = serversRaw
+    .filter(item => item.expand?.platform?.name.toLowerCase() === 'palworld')
+    .map(item => ({
+        ...item,
+        // Construction de l'URL de l'image PocketBase
+        image: item.image ? `${PB_URL}/api/files/pbc_3738798621/${item.id}/${item.image}` : item.image
+    }));
 ---
 
 <Layout>
@@ -28,8 +34,8 @@ if (apiUrl) {
 
 <div class="grid-container">
     {data.map((item: ServeurType) => (
-            <a href={'/serveurs/' + jeu + "/" + slugify(item.nom)} class="card-link">
-                <GameServerVignette image={item.image} image_alt="Server Image" title={item.nom} paragraph={item.description} version={item.version} jeu={item.jeu} type={item.type}/>
+            <a href={'/serveurs/' + jeu + "/" + slugify(item.name)} class="card-link">
+                <GameServerVignette image={item.image} image_alt="Server Image" title={item.name} paragraph={item.description} version={item.version} jeu="palworld" type={item.type} actif={item.is_enabled}/>
             </a>
     ))}
 </div>

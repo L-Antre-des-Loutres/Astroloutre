@@ -1,17 +1,23 @@
 export type ServeurType = {
-    nom : string,
-    jeu : string,
-    version: string,
-    modpack: string,
-    modpack_url: string,
-    nom_monde: string,
-    embed_color: string,
-    actif: boolean,
-    global: boolean
-    image: string,
-    description: string,
-    contenaire: string,
-    type: string
+    id: string;
+    name: string;
+    platform: string;
+    version: string;
+    modpack: string;
+    modpack_url: string;
+    world_name: string;
+    embed_color: string;
+    is_enabled: boolean;
+    is_global: boolean;
+    image: string;
+    description: string;
+    container: string;
+    type: string;
+    expand?: {
+        platform?: {
+            name: string;
+        }
+    }
 }
 
 export type ServeurScreenType = {
