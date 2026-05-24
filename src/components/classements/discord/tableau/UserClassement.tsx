@@ -87,10 +87,17 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
     const sortedPlayers = useMemo(() => {
         if (!Array.isArray(users) || !Array.isArray(stats)) return [];
 
-        // 1. Aggregate stats based on selectedYear
+        // 0. Map PB IDs to Discord IDs
+        const pbIdToDiscordId = new Map<string, string>();
+        users.forEach(u => pbIdToDiscordId.set(u.id, u.discord_id));
+
+        // 1. Aggregate stats based on selectedYear, grouped by Discord Snowflake (discord_id)
         const statsMap = new Map<string, { message_count: number; vocal_time: number }>();
 
         stats.forEach((stat) => {
+            const discordId = pbIdToDiscordId.get(stat.discord_user);
+            if (!discordId) return; // Skip if user not found
+
             // Parse DD/MM/YYYY format correctly
             let statYear: string;
             if (stat.date_stats) {
@@ -106,23 +113,32 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
             }
 
             if (selectedYear === "all" || statYear === selectedYear) {
-                const current = statsMap.get(stat.discord_user) || {message_count: 0, vocal_time: 0};
-                statsMap.set(stat.discord_user, {
+                const current = statsMap.get(discordId) || {message_count: 0, vocal_time: 0};
+                statsMap.set(discordId, {
                     message_count: current.message_count + (Number(stat.message_count) || 0),
                     vocal_time: current.vocal_time + (Number(stat.vocal_time) || 0),
                 });
             }
         });
 
-        // 2. Merge with users and calculate scores
-        const players: UserWithStats[] = users.map((user) => {
-            const userStats = statsMap.get(user.id) || {message_count: 0, vocal_time: 0};
-            return {
-                ...user,
-                message_count: userStats.message_count,
-                vocal_time: userStats.vocal_time,
-            };
-        }).filter(p => p.message_count > 0 || p.vocal_time > 0);
+        // 2. Deduplicate users by discord_id and merge with aggregated stats
+        const uniqueUsersMap = new Map<string, UserWithStats>();
+        users.forEach(user => {
+            const discordId = user.discord_id;
+            const userStats = statsMap.get(discordId) || {message_count: 0, vocal_time: 0};
+
+            if (userStats.message_count > 0 || userStats.vocal_time > 0) {
+                if (!uniqueUsersMap.has(discordId)) {
+                    uniqueUsersMap.set(discordId, {
+                        ...user,
+                        message_count: userStats.message_count,
+                        vocal_time: userStats.vocal_time,
+                    });
+                }
+            }
+        });
+
+        const players = Array.from(uniqueUsersMap.values());
 
         // Calcul du score d'activité pour chaque joueur
         // Recalcul manuel du score pour éviter les promesses dans le sort/useMemo

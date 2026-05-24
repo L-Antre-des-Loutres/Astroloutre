@@ -32,19 +32,46 @@ export async function getStaticPaths() {
     const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players");
 
     // ──────────────────────────────────────────────
+    // Regroupement par Discord ID pour gérer les doublons
+    // ──────────────────────────────────────────────
+
+    // Map pour stocker les joueurs uniques par leur discord_id
+    const playersByDiscordId = new Map<string, DiscordUserType>();
+    // Map pour regrouper tous les PB IDs associés à un discord_id
+    const pbIdsByDiscordId = new Map<string, string[]>();
+
+    // On trie par last_active_at pour avoir les records les plus récents en premier
+    const sortedJoueurs = [...joueurs].sort((a, b) => {
+        const dateA = a.last_active_at ? new Date(a.last_active_at).getTime() : 0;
+        const dateB = b.last_active_at ? new Date(b.last_active_at).getTime() : 0;
+        return dateB - dateA;
+    });
+
+    sortedJoueurs.forEach(joueur => {
+        if (!playersByDiscordId.has(joueur.discord_id)) {
+            playersByDiscordId.set(joueur.discord_id, joueur);
+        }
+        const ids = pbIdsByDiscordId.get(joueur.discord_id) || [];
+        ids.push(joueur.id);
+        pbIdsByDiscordId.set(joueur.discord_id, ids);
+    });
+
+    // ──────────────────────────────────────────────
     // Renvoie des informations
     // ──────────────────────────────────────────────
-    return joueurs
+    return Array.from(playersByDiscordId.values())
         .filter((joueur) => typeof joueur.username === 'string' && joueur.username.trim() !== '')
         .map((joueur) => {
-            // Retrieve ALL linked accounts
+            const allRelatedPbIds = pbIdsByDiscordId.get(joueur.discord_id) || [joueur.id];
+
+            // Retrieve ALL linked accounts for all PB IDs of this user
             const accountLinks = accountsLinks.filter(
-                (link) => link.utilisateur_id === joueur.id
+                (link) => allRelatedPbIds.includes(link.discord_user)
             );
 
-            // Retrieve ALL stats for this user
+            // Retrieve ALL stats for all PB IDs of this user
             const userStatsHistory = stats.filter(
-                (stat) => stat.discord_user === joueur.id
+                (stat) => allRelatedPbIds.includes(stat.discord_user)
             );
 
             // Aggregate stats

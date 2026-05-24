@@ -3,16 +3,16 @@
 import {slugify} from "../../../formater/JoueurFormater.ts";
 import type {DiscordUserType} from "../../../types/UtilisateurDiscordType.ts";
 import {ApiFetcher} from "../../../utils/API/apiFetcher.ts";
+import {DISCORD_USERS} from "../../../utils/constantes.ts";
 
 const FOUNDER_ROLE_ID = "1112707976273338470";
 const INVESTOR_ROLE_ID = "1113865928086655037";
 
 // Fetch all data
-const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>("discord_users");
+const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
 
 // Filtrer fondateurs par rôle
 const fondateurs = utilisateurs.filter(u => u.roles?.some(r => r.id === FOUNDER_ROLE_ID));
-
 // Filtrer investisseurs par rôle (en excluant ceux qui sont déjà fondateurs)
 const investisseurs = utilisateurs.filter(u => 
     u.roles?.some(r => r.id === INVESTOR_ROLE_ID) && 

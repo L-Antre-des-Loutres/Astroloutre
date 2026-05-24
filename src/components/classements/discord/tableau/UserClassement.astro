@@ -11,7 +11,7 @@ import {ApiFetcher} from "../../../../utils/API/apiFetcher";
 const users = await ApiFetcher.getAllRecords<DiscordUserType>("discord_users");
 
 // Fetch des statistiques des utilisateurs depuis l'API
-const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>("discord_users_stats");
+const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>("discord_user_stats");
 ---
 
 <UserClassementReactComponent
