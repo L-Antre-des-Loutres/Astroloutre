@@ -22,7 +22,7 @@ try {
     // Récupération des images via PocketBase avec expansion des relations
     const screenshots = await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
         filter: 'is_in_carousel = true',
-        expand: 'player,server,server.platform,discord_users',
+        expand: 'player,server,server.platform,discord_users,platform',
         requestKey: null
     });
 
