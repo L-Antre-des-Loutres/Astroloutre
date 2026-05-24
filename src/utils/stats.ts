@@ -1,4 +1,4 @@
-// utils/statsPalworld.ts
+// utils/stats.ts
 export type Server = {
     id: number;
     nom: string;
