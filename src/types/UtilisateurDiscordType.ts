@@ -20,8 +20,8 @@ export type Roles = {
 
 // Type des données des joueurs
 export type LinkAccount = {
-    id: number
-    utilisateur_id: number
+    id: string
+    utilisateur_id: string
     jeu: string
     compte_id: string
     premiere_co: string

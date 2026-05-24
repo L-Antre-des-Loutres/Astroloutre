@@ -12,6 +12,8 @@ import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormat
 import PokemonTeams from "../../../components/sections/joueurs/PokemonTeams.astro";
 import {vocalTimeFormater} from "../../../formater/VocalTimeFormater.ts";
 
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+
 // Type des données utilisateur Discord
 type UtilisateurDiscord = {
     id: string;
@@ -20,7 +22,7 @@ type UtilisateurDiscord = {
 
 // Type des données joueur
 type JoueurType = {
-    id: number;
+    id: string;
     utilisateur_id: string | null;
     discord_tag: string | null;
     jeu: string;
@@ -36,29 +38,10 @@ const joueur: JoueurType | undefined = Astro.props.joueur;
 // Génération des pages statiques
 export async function getStaticPaths() {
 
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/joueurs/';
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-        throw new Error(`Erreur API joueurs: ${response.status}`);
-    }
-
-    const json = await response.json();
-
-    if (!json.success || !Array.isArray(json.data)) return [];
-
-    const joueurs: JoueurType[] = json.data;
+    const joueurs = await ApiFetcher.getAllRecords<JoueurType>("joueurs");
 
     // Récupérer les utilisateurs Discord
-    const apiUrlDiscordTag = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
-    const responseDiscordTag = await fetch(apiUrlDiscordTag);
-
-    if (!responseDiscordTag.ok) {
-        throw new Error(`Erreur API utilisateurs Discord: ${responseDiscordTag.status}`);
-    }
-
-    const jsonDiscord = await responseDiscordTag.json();
-    const utilisateurs: UtilisateurDiscord[] = jsonDiscord.data ?? [];
+    const utilisateurs = await ApiFetcher.getAllRecords<UtilisateurDiscord>("discord_users");
 
     return joueurs
         .filter(joueur => joueur.playername.trim() !== '')

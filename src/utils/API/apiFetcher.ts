@@ -22,7 +22,7 @@ export class ApiFetcher {
      * Utilise la collection '_superusers' pour PocketBase v0.23+
      */
     private static async authenticate() {
-        if (this.pb.authStore.isValid && this.pb.authStore.isAdmin) return;
+        if (this.pb.authStore.isValid && this.pb.authStore.isSuperuser) return;
 
         const email = import.meta.env.PB_EMAIL;
         const password = import.meta.env.PB_PASSWORD;

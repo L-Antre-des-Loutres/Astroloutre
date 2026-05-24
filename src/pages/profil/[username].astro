@@ -15,7 +15,7 @@ const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 // Stats for this user
-const stats: (DiscordUserType & { stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
+const stats: (DiscordUserType & { message_count: number, vocal_time: number, stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
 
 // Génération des pages statiques
 export async function getStaticPaths() {
@@ -77,7 +77,7 @@ if (utilisateur && utilisateur.username && voyelles.includes(utilisateur.usernam
 
 // Vérifie le nombre de message des joueurs
 let messageFormat = " message"
-const msgCount = stats?.message_count ?? utilisateur?.message_count ?? 0;
+const msgCount = stats?.message_count ??  0;
 
 if (msgCount > 1) {
     messageFormat = " messages"
