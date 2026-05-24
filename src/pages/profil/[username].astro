@@ -9,6 +9,7 @@ import {vocalTimeFormater} from "../../formater/VocalTimeFormater";
 import TransitionSection from "../../components/sections/common/transitions/TransitionSection.astro";
 import type {LinkAccount, DiscordUserType, DiscordUserStatsType, Roles} from "../../types/UtilisateurDiscordType.ts";
 import {ApiFetcher} from "../../utils/API/apiFetcher";
+import {DISCORD_USER_STATS, DISCORD_USERS} from "../../utils/constantes.ts";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
@@ -17,18 +18,22 @@ const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 // Stats for this user
 const stats: (DiscordUserType & { message_count: number, vocal_time: number, stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
 
-// Génération des pages statiques
+/**
+ * Génère les pages statiques
+ */
 export async function getStaticPaths() {
 
-    // Récupération des informations des utilisateurs discord
-    const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>("discord_users");
+    // ──────────────────────────────────────────────
+    // Récupération des informations
+    // ──────────────────────────────────────────────
 
-    // Récupération des statistiques des utilisateurs
-    const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>("discord_users_stats");
+    const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
+    const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>(DISCORD_USER_STATS);
+    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players");
 
-    // Récupération des informations des comptes liées
-    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("joueurs");
-
+    // ──────────────────────────────────────────────
+    // Renvoie des informations
+    // ──────────────────────────────────────────────
     return joueurs
         .filter((joueur) => typeof joueur.username === 'string' && joueur.username.trim() !== '')
         .map((joueur) => {

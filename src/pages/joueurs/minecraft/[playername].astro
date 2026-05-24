@@ -38,7 +38,7 @@ const joueur: JoueurType | undefined = Astro.props.joueur;
 // Génération des pages statiques
 export async function getStaticPaths() {
 
-    const joueurs = await ApiFetcher.getAllRecords<JoueurType>("joueurs");
+    const joueurs = await ApiFetcher.getAllRecords<JoueurType>("players");
 
     // Récupérer les utilisateurs Discord
     const utilisateurs = await ApiFetcher.getAllRecords<UtilisateurDiscord>("discord_users");
