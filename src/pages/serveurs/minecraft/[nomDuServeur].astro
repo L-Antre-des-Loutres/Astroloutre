@@ -7,53 +7,25 @@ import PlayerList from "../../../components/sections/serveurs/PlayerList.astro";
 import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 
-// Type du serveur
-type ServeurType = {
-    id: number,
-    nom: string,
-    jeu: string,
-    version: string,
-    modpack: string,
-    modpack_url: string,
-    nom_monde: string,
-    embed_color: string,
-    actif: boolean,
-    global: boolean,
-    image: string,
-    description: string,
-    contenaire: string,
-    type: string,
-    ip: string
-    screens: ScreenType[]
-};
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PLAYERS_STATS, PLAYER_SCREENSHOTS, PB_URL, SERVERS} from "../../../utils/constantes";
+import type {PlayerScreenshotType} from "../../../types/PlayerScreenshoot";
+import type {ServeurType as BaseServeurType} from "../../../types/ServeurType";
 
-type ScreenType = {
-    id: string,
-    nom: string,
-    origine: string,
-    auteur_pseudo: string,
-    path: string,
-}
+// Type du serveur étendu pour la page
+type ServeurType = BaseServeurType & {
+    ip: string;
+    screens: PlayerScreenshotType[];
+};
 
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 
-export async function getScreenList(): Promise<ScreenType[]> {
+export async function getScreenList(): Promise<PlayerScreenshotType[]> {
     try {
-        const screenshots = await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
-            expand: 'player,discord_users',
+        return await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
+            expand: 'player,discord_users,server',
             requestKey: null
-        });
-
-        return screenshots.map(img => {
-            const author = img.expand?.player?.playername || img.expand?.discord_users?.username || "Une loutre anonyme";
-            return {
-                id: img.id,
-                nom: img.name,
-                origine: img.server,
-                auteur_pseudo: author,
-                path: `${PB_URL}/api/files/${img.collectionId}/${img.id}/${img.screenshot}`
-            };
         });
     } catch (error) {
         console.error("Erreur lors de la récupération des screenshots :", error);
@@ -61,88 +33,75 @@ export async function getScreenList(): Promise<ScreenType[]> {
     }
 }
 
-import {ApiFetcher} from "../../../utils/API/apiFetcher";
-import {PLAYERS_STATS, PLAYER_SCREENSHOTS, PB_URL} from "../../../utils/constantes";
-
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
 
     // On récupère la liste des serveurs depuis PocketBase
     const serversRaw = await ApiFetcher.getAllRecords<any>(SERVERS, { expand: 'platform' });
     
-    const serveurs = serversRaw.map(s => ({
-        id: s.id,
-        nom: s.name,
-        jeu: s.expand?.platform?.name?.toLowerCase() || 'minecraft',
-        version: s.version,
-        modpack: s.modpack,
-        modpack_url: s.modpack_url,
-        nom_monde: s.world_name,
-        embed_color: s.embed_color,
-        actif: s.is_enabled ? 1 : 0,
-        global: s.is_global ? 1 : 0,
-        image: s.image ? `${PB_URL}/api/files/pbc_3738798621/${s.id}/${s.image}` : s.image,
-        description: s.description,
-        contenaire: s.container,
-        type: s.type
-    }));
-
-    // On récupère le temps de jeu pour chaque serveur depuis PocketBase
     const allStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
-    
-    // Aggrégation par serveur ID
-    const playtimeByServer: Record<string, number> = {};
-    allStats.forEach(stat => {
-        if (!playtimeByServer[stat.server]) playtimeByServer[stat.server] = 0;
-        playtimeByServer[stat.server] += Number(stat.playtime) || 0;
-    });
-
-    // On récupére la liste des images
     const screenList = await getScreenList();
 
-    return serveurs.map((serveur) => {
+    const serveurs = serversRaw.map(s => {
+        const base = {
+            id: s.id,
+            name: s.name,
+            platform: s.expand?.platform?.name?.toLowerCase() || 'minecraft',
+            version: s.version,
+            modpack: s.modpack,
+            modpack_url: s.modpack_url,
+            world_name: s.world_name,
+            embed_color: s.embed_color,
+            is_enabled: s.is_enabled,
+            is_global: s.is_global,
+            image: s.image ? `${PB_URL}/api/files/${s.collectionId}/${s.id}/${s.image}` : s.image,
+            description: s.description,
+            container: s.container,
+            type: s.type
+        };
+
         let ip: string;
-        if (serveur.jeu === "palworld") {
+        if (base.platform === "palworld") {
             ip = "antredesloutres.fr:8211"
-        } else if (serveur.type === "primary") {
+        } else if (base.type === "primary") {
             ip = "antredesloutres.fr"
         } else {
             ip = "secondaire.antredesloutres.fr"
         }
-        serveur.ip = ip
 
-        // Associe le playtime au serveur depuis PocketBase
-        const playTimeTicks = playtimeByServer[serveur.id] || 0;
+        // Aggrégation playtime
+        const playTimeTicks = allStats
+            .filter(stat => stat.server === s.id)
+            .reduce((acc, curr) => acc + (Number(curr.playtime) || 0), 0);
         const playTimeHours = Math.round(playTimeTicks / 72000);
 
-        // On associe la liste des screen à chaque serveur
-        serveur.screens = screenList.filter(screen => screen.origine === serveur.id);
-
-        const statutServeur = serveur?.actif === 1
-            ? "Le serveur est actif"
-            : serveur?.actif === 0
-                ? "Le serveur est désactivé"
-                : "Statut inconnu";
-
         return {
-            params: {
-                nomDuServeur: slugify(serveur.nom),
-            },
-            props: {
-                serveur,
-                statutServeur,
-                playTime: playTimeHours,
-            },
+            ...base,
+            ip,
+            screens: screenList.filter(screen => screen.server === s.id),
+            playTimeHours,
+            statutServeur: base.is_enabled ? "Le serveur est actif" : "Le serveur est désactivé"
         };
     });
+
+    return serveurs.map((srv) => ({
+        params: {
+            nomDuServeur: slugify(srv.name),
+        },
+        props: {
+            serveur: srv,
+            statutServeur: srv.statutServeur,
+            playTime: srv.playTimeHours,
+        },
+    }));
 }
 ---
 {!serveur && <h1>Serveur introuvable</h1>}
 {serveur && (
-<Layout title={serveur.nom} ogDescription=`Description du serveur ${serveur.nom}`>
-    <Banner bannerUrl=`/banner/minecraft/${slugify(serveur.nom)}.webp`/>
+<Layout title={serveur.name} ogDescription={`Description du serveur ${serveur.name}`}>
+    <Banner bannerUrl={`/banner/minecraft/${slugify(serveur.name)}.webp`}/>
     <div class="profile-container">
-        <TransitionSection title=`Informations du serveur #${serveur.nom}#`/>
+        <TransitionSection title={`Informations du serveur #${serveur.name}#`}/>
         <div class="profile-details">
             <div class="avatar">
                 <img
@@ -160,7 +119,7 @@ export async function getStaticPaths() {
                         {serveur.modpack}
                     </a></span>
                     <span class="server-card-badge ip">{serveur.ip}</span>
-                    {serveur.actif ? (
+                    {serveur.is_enabled ? (
                             <span class="server-card-badge active">Activé</span>
                     ) : (
                             <span class="server-card-badge unactive">Désactivé</span>
@@ -198,11 +157,11 @@ export async function getStaticPaths() {
             </div>
         </div>
 
-        <TransitionSection title=`Joueurs ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ayant rejoint #${serveur.nom}#`></TransitionSection>
+        <TransitionSection title={`Joueurs ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg] ayant rejoint #${serveur.name}#`}></TransitionSection>
         <PlayerList serveurId={serveur.id}/>
 
-        <TransitionSection title=`%Screenshots% des joueurs sur le serveur #${serveur.nom}#`></TransitionSection>
-        <ServeurScreen screenList={serveur.screens}/>
+        <TransitionSection title={`%Screenshots% des joueurs sur le serveur #${serveur.name}#`}></TransitionSection>
+        <ServeurScreen screenshots={serveur.screens}/>
     </div>
 
     <style>

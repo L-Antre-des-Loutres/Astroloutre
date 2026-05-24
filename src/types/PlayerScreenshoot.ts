@@ -13,6 +13,9 @@ export type PlayerScreenshotType = {
     discord_users: string;
     player: string;
     expand?: {
+        platform?: {
+            name: string;
+        };
         server?: {
             name: string;
             expand?: {

@@ -7,13 +7,16 @@ import {formatDate} from "../../formater/DateFormater";
 import BadgeList from "../../components/sections/badges/BadgeList.astro";
 import {vocalTimeFormater} from "../../formater/VocalTimeFormater";
 import TransitionSection from "../../components/sections/common/transitions/TransitionSection.astro";
+import UserScreenshots from "../../components/sections/profil/UserScreenshots.astro";
 import type {LinkAccount, DiscordUserType, DiscordUserStatsType, Roles} from "../../types/UtilisateurDiscordType.ts";
 import {ApiFetcher} from "../../utils/API/apiFetcher";
-import {DISCORD_USER_STATS, DISCORD_USERS} from "../../utils/constantes.ts";
+import {DISCORD_USER_STATS, DISCORD_USERS, PLAYER_SCREENSHOTS} from "../../utils/constantes.ts";
+import type {PlayerScreenshotType} from "../../types/PlayerScreenshoot";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
 const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
+const userScreenshots: PlayerScreenshotType[] = Astro.props.userScreenshots || [];
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 // Stats for this user
@@ -31,6 +34,9 @@ export async function getStaticPaths() {
     const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
     const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>(DISCORD_USER_STATS);
     const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players");
+    const allScreenshots = await ApiFetcher.getAllRecords<PlayerScreenshotType>(PLAYER_SCREENSHOTS, {
+        expand: 'server,server.platform,platform'
+    });
 
     // ──────────────────────────────────────────────
     // Regroupement par Discord ID pour gérer les doublons
@@ -75,6 +81,11 @@ export async function getStaticPaths() {
                 (stat) => allRelatedPbIds.includes(stat.discord_user)
             );
 
+            // Retrieve ALL screenshots for all PB IDs of this user
+            const userScreenshots = allScreenshots.filter(
+                (screen) => allRelatedPbIds.includes(screen.discord_users)
+            );
+
             // Aggregate stats
             const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.message_count) || 0), 0);
             const totalVocalTime = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.vocal_time) || 0), 0);
@@ -94,6 +105,7 @@ export async function getStaticPaths() {
                 props: {
                     joueur,
                     allRelatedPbIds,
+                    userScreenshots,
                     accountLinks: accountLinks, // Returns array, empty if none
                     stats: globalStats, // Pass combined stats
                 },
@@ -258,6 +270,9 @@ if (msgCount > 1) {
 
         <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.username}#`}/>
         <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1} allRelatedPbIds={allRelatedPbIds} />
+
+        <TransitionSection title={`%Screenshots% de l'utilisateur #${utilisateur.username}#`}/>
+        <UserScreenshots screenshots={userScreenshots} />
     </div>
 
     <style>
