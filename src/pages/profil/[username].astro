@@ -13,6 +13,7 @@ import {DISCORD_USER_STATS, DISCORD_USERS} from "../../utils/constantes.ts";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
+const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 // Stats for this user
@@ -92,6 +93,7 @@ export async function getStaticPaths() {
                 },
                 props: {
                     joueur,
+                    allRelatedPbIds,
                     accountLinks: accountLinks, // Returns array, empty if none
                     stats: globalStats, // Pass combined stats
                 },
@@ -255,7 +257,7 @@ if (msgCount > 1) {
         </div>
 
         <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.username}#`}/>
-        <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1}/>
+        <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1} allRelatedPbIds={allRelatedPbIds} />
     </div>
 
     <style>

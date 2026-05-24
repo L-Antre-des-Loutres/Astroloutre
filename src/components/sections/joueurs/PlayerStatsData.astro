@@ -1,13 +1,41 @@
 ---
 // PlayerStatsData.astro
 import PlayerStatsTable from './PlayerStatsTable.tsx';
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PLAYERS_STATS, SERVERS} from "../../../utils/constantes";
 
 const { uuid } = Astro.props;
 
-const res = await fetch(`https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/per-server-uid/${uuid}`);
-const json = await res.json();
+// ──────────────────────────────────────────────
+// Récupération des données
+// ──────────────────────────────────────────────
 
-const playerDataList = json.data ?? [];
+const allStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
+const allServers = await ApiFetcher.getAllRecords<any>(SERVERS);
+
+// Filtrage pour le joueur actuel
+const playerStats = allStats.filter(s => s.account_id === uuid);
+
+// Mapping vers le format attendu par PlayerStatsTable.tsx
+const playerDataList = playerStats.map(stat => {
+    const server = allServers.find(srv => srv.id === stat.server);
+    return {
+        playername: "", // Optionnel pour le tableau
+        uuid: stat.account_id,
+        nom: server ? server.name : "Serveur Inconnu",
+        tmps_jeux: Number(stat.playtime) || 0,
+        nb_mort: Number(stat.deaths) || 0,
+        nb_kills: Number(stat.mob_kills) || 0,
+        nb_playerkill: Number(stat.player_kills) || 0,
+        nb_blocs_detr: Number(stat.blocks_mined) || 0,
+        nb_blocs_pose: Number(stat.blocks_placed) || 0,
+        dist_total: Number(stat.total_distance) || 0,
+        dist_pieds: Number(stat.distance_walked) || 0,
+        dist_elytres: Number(stat.distance_elytra) || 0,
+        dist_vol: Number(stat.distance_fligth) || 0,
+        serveur_id: stat.server
+    };
+});
 ---
 
 {playerDataList.length > 0 ? (
