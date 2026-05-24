@@ -61,7 +61,9 @@ export async function getStaticPaths() {
         };
 
         let ip: string;
-        if (base.type === "primary") {
+        if (base.platform === "palworld") {
+            ip = "antredesloutres.fr:8211"
+        } else if (base.type === "primary") {
             ip = "antredesloutres.fr"
         } else {
             ip = "secondaire.antredesloutres.fr"

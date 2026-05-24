@@ -78,7 +78,7 @@ automatiquement à la préférence de l'utilisateur ou au switch manuel.
 ## 📊 Données et API
 
 L'application est "Frontend-only" pour l'affichage, mais elle consomme des données dynamiques.
-Toutes les statistiques (Minecraft, Discord) sont récupérées depuis notre API publique :
+Toutes les statistiques (Minecraft, Palworld, Discord) sont récupérées depuis notre API publique :
 
 👉 **[Otterly API](https://otterlyapi.antredesloutres.fr/)**
 

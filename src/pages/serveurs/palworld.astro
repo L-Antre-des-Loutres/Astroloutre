@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import type {ServeurType} from "../../types/ServeurType.ts";
+import {slugify} from "../../formater/JoueurFormater.ts";
+import GameServerVignette from "../../components/ui/vignettes/GameServerVignette.astro";
+
+import {ApiFetcher} from "../../utils/API/apiFetcher";
+import {SERVERS, PB_URL} from "../../utils/constantes";
+
+const jeu = 'palworld';
+
+// Récupération des données depuis PocketBase
+const serversRaw = await ApiFetcher.getAllRecords<ServeurType>(SERVERS, {
+    expand: 'platform',
+    sort: '-is_enabled'
+});
+
+const data = serversRaw
+    .filter(item => item.expand?.platform?.name.toLowerCase() === 'palworld')
+    .map(item => ({
+        ...item,
+        // Construction de l'URL de l'image PocketBase
+        image: item.image ? `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.image}` : item.image
+    }));
+---
+
+<Layout>
+
+<Banner bannerUrl="https://image.api.playstation.com/vulcan/ap/rnd/202405/2108/d976f5d6313a7174e5341d3a5e3f21559f56f86f40a71d2f.png"/>
+
+<LargeTransitionSection title="%Nos serveurs% #Palworld#" invertedBackground/>
+
+<div class="grid-container">
+    {data.map((item: ServeurType) => (
+            <a href={'/serveurs/' + jeu + "/" + slugify(item.name)} class="card-link">
+                <GameServerVignette image={item.image} image_alt="Server Image" title={item.name} paragraph={item.description} version={item.version} jeu="palworld" type={item.type} actif={item.is_enabled}/>
+            </a>
+    ))}
+</div>
+
+</Layout>
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem 1rem 2.5rem;
+        margin: 0 1rem;
+    }
+
+    @media (min-width: 950px) {
+        .grid-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1500px) {
+        .grid-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
