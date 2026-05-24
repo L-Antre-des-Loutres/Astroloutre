@@ -13,7 +13,7 @@ interface Props {
 const { image, image_alt, title, paragraph, version, jeu, type, actif = false } = Astro.props;
 
 // Calcul de l'IP pour simplifier le template
-const ipAddress = jeu === "palworld" ? "antredesloutres.fr:8211" : type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr";
+const ipAddress = type === "primary" ? "antredesloutres.fr" : "secondaire.antredesloutres.fr";
 ---
 
 <div class="server-card">
