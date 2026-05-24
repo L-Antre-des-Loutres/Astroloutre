@@ -1,17 +1,8 @@
 ---
 import {Image} from 'astro:assets';
-
-type CarrouselImage = {
-    id: number,
-    nom: string,
-    origine: string,
-    auteur: string,
-    path: string,
-    jeu: string,
-    nom_serveur: string,
-    carrousel: boolean,
-    auteur_pseudo: string,
-};
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PB_URL, PLAYER_SCREENSHOTS} from "../../../utils/constantes";
+import type {PlayerScreenshotType} from "../../../types/PlayerScreenshoot";
 
 // Fonction de mélange
 const shuffleArray = (array: any[]) => {
@@ -23,62 +14,40 @@ const shuffleArray = (array: any[]) => {
     return shuffled;
 };
 
-let minecraftImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
-let pokemonImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
-let palworldImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = []
+let minecraftImages: any[] = [];
+let pokemonImages: any[] = [];
+let palworldImages: any[] = [];
 
 try {
-    const res = await fetch("https://otterlyapi.antredesloutres.fr/api/astroloutre/images");
-    if (!res.ok) return
+    // Récupération des images via PocketBase avec expansion des relations
+    const screenshots = await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
+        filter: 'is_in_carousel = true',
+        expand: 'player,server,server.platform,discord_users',
+        requestKey: null
+    });
 
-    const json = await res.json();
-    const images: CarrouselImage[] = json.data;
+    const mapScreenshot = (img: PlayerScreenshotType) => {
+        const imageUrl = `${PB_URL}/api/files/${img.collectionId}/${img.id}/${img.screenshot}`;
+        const author = img.expand?.player?.playername || img.expand?.discord_users?.username || "Une loutre anonyme";
+        const serverName = img.expand?.server?.name || "un serveur inconnu";
+        const platformName = img.expand?.server?.expand?.platform?.name?.toLowerCase() || "minecraft";
 
-    // Filtrer uniquement les images du jeu Minecraft
-    minecraftImages = images
-        .filter(img => img.jeu.toLowerCase() === "minecraft" && img.carrousel)
-        .map(img => ({
-            id: img.id,
-            nom: img.nom,
-            auteur: img.auteur,
-            origine: img.origine,
-            path: img.path,
-            jeu: img.jeu,
-            nom_serveur: img.nom_serveur,
-            carrousel: img.carrousel,
-            auteur_pseudo: img.auteur_pseudo,
-        }));
+        return {
+            path: imageUrl,
+            auteur_pseudo: author,
+            nom_serveur: serverName,
+            platform: platformName
+        };
+    };
 
-    pokemonImages = images
-        .filter(img => img.jeu.toLowerCase() === "pokemon" && img.carrousel)
-        .map(img => ({
-            id: img.id,
-            nom: img.nom,
-            auteur: img.auteur,
-            origine: img.origine,
-            path: img.path,
-            jeu: img.jeu,
-            nom_serveur: img.nom_serveur,
-            carrousel: img.carrousel,
-            auteur_pseudo: img.auteur_pseudo,
-        }));
+    const mappedImages = screenshots.map(mapScreenshot);
 
-    palworldImages = images
-        .filter(img => img.jeu.toLowerCase() === "palworld" && img.carrousel)
-        .map(img => ({
-            id: img.id,
-            nom: img.nom,
-            auteur: img.auteur,
-            origine: img.origine,
-            path: img.path,
-            jeu: img.jeu,
-            nom_serveur: img.nom_serveur,
-            carrousel: img.carrousel,
-            auteur_pseudo: img.auteur_pseudo,
-        }));
+    minecraftImages = mappedImages.filter(img => img.platform === "minecraft");
+    pokemonImages = mappedImages.filter(img => img.platform === "pokemon");
+    palworldImages = mappedImages.filter(img => img.platform === "palworld");
 
 } catch (error) {
-    console.error("Erreur lors de la récupération des images :", error);
+    console.error("Erreur lors de la récupération des images du carrousel :", error);
 }
 
 const games = [
