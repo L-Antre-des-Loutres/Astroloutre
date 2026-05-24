@@ -27,11 +27,6 @@ type ServeurType = {
     screens: ScreenType[]
 };
 
-type PlayTimeType = {
-    serveur_id: number;
-    total_hours: number;
-}
-
 type ScreenType = {
     id: number,
     nom: string,
@@ -59,6 +54,9 @@ export async function getScreenList(): Promise<ScreenType[]> {
     return json.data ?? [];
 }
 
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PLAYERS_STATS} from "../../../utils/constantes";
+
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
 
@@ -82,20 +80,15 @@ export async function getStaticPaths() {
         throw new Error("Serveurs is not an array");
     }
 
-    // On récupère le temps de jeu pour chaque serveur
-    const apiUrlPlayTimePerServeur = "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime-per-server"
-    const responsePlayTimePerServeur = await fetch(apiUrlPlayTimePerServeur);
-
-    if (!responsePlayTimePerServeur.ok) {
-        throw new Error(`Failed to fetch servers: ${response.status}`);
-    }
-
-    const jsonPlayTimePerServeur = await responsePlayTimePerServeur.json();
-
-    // On vérifie si la requête est un succès
-    if (!jsonPlayTimePerServeur.success) return
-
-    const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
+    // On récupère le temps de jeu pour chaque serveur depuis PocketBase
+    const allStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
+    
+    // Aggrégation par serveur ID
+    const playtimeByServer: Record<string, number> = {};
+    allStats.forEach(stat => {
+        if (!playtimeByServer[stat.server]) playtimeByServer[stat.server] = 0;
+        playtimeByServer[stat.server] += Number(stat.playtime) || 0;
+    });
 
     // On récupére la liste des images
     const screenList = await getScreenList();
@@ -111,8 +104,9 @@ export async function getStaticPaths() {
         }
         serveur.ip = ip
 
-        // Associe le playtime au serveur (par ID, nom ou autre clé logique)
-        const playTime = playTimes.find(pt => pt.serveur_id === serveur.id);
+        // Associe le playtime au serveur depuis PocketBase
+        const playTimeTicks = playtimeByServer[serveur.id] || 0;
+        const playTimeHours = Math.round(playTimeTicks / 72000);
 
         // On associe la liste des screen à chaque serveur
         serveur.screens = screenList.filter(screen => screen.origine === serveur.id);
@@ -130,7 +124,7 @@ export async function getStaticPaths() {
             props: {
                 serveur,
                 statutServeur,
-                playTime: playTime ? playTime.total_hours : undefined,
+                playTime: playTimeHours,
             },
         };
     });

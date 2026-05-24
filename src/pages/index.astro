@@ -11,26 +11,24 @@ import SlidingVignette from "../components/ui/vignettes/SlidingVignette.astro";
 // Other imports
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
 import {formatDecimalHours} from "../formater/DecimalHoursFormater.ts";
+import {ApiFetcher} from "../utils/API/apiFetcher";
+import {PLAYERS_STATS} from "../utils/constantes";
 
 // Declaration of total playtime variable
-let totalHours: Promise<number> | number = 0;
-// Minecraft playtime
-const response = await fetch(
-    "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime",
-);
-if (response.ok) {
-    const json = await response.json();
-    totalHours = formatMinecraftPlayTime(
-        Number(json?.data?.[0]?.total_hours || 0),
-    ); // We add Minecraft playtime to total
-}
-// Palworld playtime
+let totalHours: number = 0;
+
+// Minecraft playtime from PocketBase
+const mcStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
+const totalTicksMinecraft = mcStats.reduce((acc, curr) => acc + (Number(curr.playtime) || 0), 0);
+totalHours = formatMinecraftPlayTime(totalTicksMinecraft);
+
+// Palworld playtime (Legacy fetch as it's not yet in PocketBase)
 const responsePalworld = await fetch(
     "https://otterlyapi.antredesloutres.fr/api/palworld/stats/total-hours",
 );
 if (responsePalworld.ok) {
     const json = await responsePalworld.json();
-    totalHours += (await formatDecimalHours(json?.data?.[0]?.total_hours)) || 0; // We add Palworld playtime to total
+    totalHours += (await formatDecimalHours(json?.data?.[0]?.total_hours)) || 0;
 }
 ---
 
@@ -38,7 +36,7 @@ if (responsePalworld.ok) {
     <Carrousel/>
 
     <LargeTransitionSection
-            title={`Un total de plus de #_${totalHours} heures_# jouées sur nos %serveurs%</span> !`}
+            title={`Un total de plus de #_${totalHours} heures_# jouées sur nos %serveurs% !`}
     />
 
     <PresentationSection/>
