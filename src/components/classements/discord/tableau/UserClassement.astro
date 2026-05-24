@@ -5,28 +5,13 @@ import type {
     DiscordUserType,
     DiscordUserStatsType,
 } from "../../../../types/UtilisateurDiscordType.ts";
+import {ApiFetcher} from "../../../../utils/API/apiFetcher";
 
 // Fetch des utilisateurs
-const reponseUsers = await fetch(
-    "https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord",
-);
-if (!reponseUsers.ok) {
-    throw new Error(`Erreur API Users : ${reponseUsers.status}`);
-}
-const jsonUsers = await reponseUsers.json();
-if (!jsonUsers.success || !Array.isArray(jsonUsers.data)) return [];
-const users: DiscordUserType[] = jsonUsers.data;
+const users = await ApiFetcher.getAllRecords<DiscordUserType>("discord_users");
 
 // Fetch des statistiques des utilisateurs depuis l'API
-const reponseStats = await fetch(
-    "https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/stats",
-);
-if (!reponseStats.ok) {
-    throw new Error(`Erreur API Stats : ${reponseStats.status}`);
-}
-const jsonStats = await reponseStats.json();
-if (!jsonStats.success || !Array.isArray(jsonStats.data)) return [];
-const stats: DiscordUserStatsType[] = jsonStats.data;
+const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>("discord_users_stats");
 ---
 
 <UserClassementReactComponent

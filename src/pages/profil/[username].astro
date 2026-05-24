@@ -8,6 +8,7 @@ import BadgeList from "../../components/sections/badges/BadgeList.astro";
 import {vocalTimeFormater} from "../../formater/VocalTimeFormater";
 import TransitionSection from "../../components/sections/common/transitions/TransitionSection.astro";
 import type {LinkAccount, DiscordUserType, DiscordUserStatsType, Roles} from "../../types/UtilisateurDiscordType.ts";
+import {ApiFetcher} from "../../utils/API/apiFetcher";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
@@ -20,32 +21,13 @@ const stats: (DiscordUserType & { stats: DiscordUserStatsType[] }) | undefined =
 export async function getStaticPaths() {
 
     // Récupération des informations des utilisateurs discord
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/';
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-        throw new Error(`Erreur API joueurs: ${response.status}`);
-    }
-    const json = await response.json();
-    if (!json.success || !Array.isArray(json.data)) return [];
-    const joueurs: DiscordUserType[] = json.data;
+    const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>("discord_users");
 
     // Récupération des statistiques des utilisateurs
-    const reponseStats = await fetch("https://otterlyapi.antredesloutres.fr/api/utilisateurs_discord/stats")
-    if (!reponseStats.ok) {
-        throw new Error(`Erreur API Stats : ${reponseStats.status}`)
-    }
-    const jsonStats = await reponseStats.json()
-    if (!jsonStats.success || !Array.isArray(jsonStats.data)) return [];
-    const stats: DiscordUserStatsType[] = jsonStats.data;
+    const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>("discord_users_stats");
 
     // Récupération des informations des comptes liées
-    const reponseAccountLink = await fetch("https://otterlyapi.antredesloutres.fr/api/joueurs")
-    if (!reponseAccountLink.ok){
-        throw new Error(`Erreur API Link account : ${reponseAccountLink.status}`)
-    }
-    const jsonAccountLink = await reponseAccountLink.json()
-    if (!json.success || !Array.isArray(json.data)) return [];
-    const accountsLinks: LinkAccount[] = jsonAccountLink.data;
+    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("joueurs");
 
     return joueurs
         .filter((joueur) => typeof joueur.username === 'string' && joueur.username.trim() !== '')
@@ -57,17 +39,17 @@ export async function getStaticPaths() {
 
             // Retrieve ALL stats for this user
             const userStatsHistory = stats.filter(
-                (stat) => stat.id_utilisateur === joueur.id
+                (stat) => stat.discord_user === joueur.id
             );
 
             // Aggregate stats
-            const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.nb_message) || 0), 0);
+            const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.message_count) || 0), 0);
             const totalVocalTime = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.vocal_time) || 0), 0);
 
             // Combine into global stats object
             const globalStats = {
                 ...joueur,
-                nb_message: totalMessages,
+                message_count: totalMessages,
                 vocal_time: totalVocalTime,
                 stats: userStatsHistory
             };
@@ -95,7 +77,7 @@ if (utilisateur && utilisateur.username && voyelles.includes(utilisateur.usernam
 
 // Vérifie le nombre de message des joueurs
 let messageFormat = " message"
-const msgCount = stats?.nb_message ?? utilisateur?.nb_message ?? 0;
+const msgCount = stats?.message_count ?? utilisateur?.message_count ?? 0;
 
 if (msgCount > 1) {
     messageFormat = " messages"
@@ -158,7 +140,7 @@ if (msgCount > 1) {
                             </svg>
                             Messages :
                         </strong>
-                        <span>{stats?.nb_message} {messageFormat}</span>
+                        <span>{stats?.message_count} {messageFormat}</span>
                     </div>
 
                     <div class="stats-row">

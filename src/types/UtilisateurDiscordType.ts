@@ -30,14 +30,14 @@ export type LinkAccount = {
 }
 
 export type DiscordUserStatsType = {
-    id: number
-    id_utilisateur: number
-    nb_message: number
-    vocal_time: number
-    date_stats: string
-    voice_channels: Channel[]
-    text_channels: Channel[]
-    vocal_with: DiscordUser[]
+    id: string;
+    discord_user: string;
+    message_count: number;
+    vocal_time: number;
+    voice_channels: Channel[];
+    text_channels: Channel[];
+    vocal_with: DiscordUser[];
+    date_stats: string;
 }
 
 export type Channel = {
