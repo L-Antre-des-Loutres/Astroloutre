@@ -8,141 +8,101 @@ import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.a
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 import Void from "../../../components/sections/common/Void.astro";
 
-// Type du serveur
-type ServeurType = {
-    id: number,
-    nom: string,
-    jeu: string,
-    version: string,
-    modpack: string,
-    modpack_url: string,
-    nom_monde: string,
-    embed_color: string,
-    actif: boolean,
-    global: boolean,
-    image: string,
-    description: string,
-    contenaire: string,
-    type: string,
-    ip: string
-    screens: ScreenType[]
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PLAYERS_STATS, PB_URL, PLAYER_SCREENSHOTS, SERVERS} from "../../../utils/constantes";
+import type {PlayerScreenshotType} from "../../../types/PlayerScreenshoot";
+import type {ServeurType as BaseServeurType} from "../../../types/ServeurType";
+
+// Type du serveur étendu pour la page
+type ServeurType = BaseServeurType & {
+    ip: string;
+    screens: PlayerScreenshotType[];
 };
-
-type PlayTimeType = {
-    serveur_id: number;
-    total_hours: number;
-}
-
-type ScreenType = {
-    id: number,
-    nom: string,
-    origine: number,
-    auteur: string
-    path: string,
-    jeu: string,
-    carrousel: boolean,
-    nom_serveur: string,
-}
 
 // Le serveur est passé via getStaticPaths → props
 const serveur: ServeurType | undefined = Astro.props.serveur;
 
-export async function getScreenList(): Promise<ScreenType[]> {
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/astroloutre/images';
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch images: ${response.status}`);
+export async function getScreenList(): Promise<PlayerScreenshotType[]> {
+    try {
+        return await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
+            expand: 'player,discord_users,server',
+            requestKey: null
+        });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des screenshots :", error);
+        return [];
     }
-    const json = await response.json();
-    if (!json.success) return [];
-
-    // On retourne la liste des images
-    return json.data ?? [];
 }
 
 // Génération des routes statiques pour chaque serveur
 export async function getStaticPaths() {
 
-    // On récupère la liste des serveurs
-    const apiUrl = 'https://otterlyapi.antredesloutres.fr/api/serveurs/';
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch servers: ${response.status}`);
-    }
-
-    const json = await response.json();
-
-    // On vérifie si la requête est un succès
-    if (!json.success) return
-
-    // On récupère les informations dans les Data
-    const serveurs = json.data ?? json;
-
-    if (!Array.isArray(serveurs)) {
-        throw new Error("Serveurs is not an array");
-    }
-
-    // On récupère le temps de jeu pour chaque serveur
-    const apiUrlPlayTimePerServeur = "https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/serveurs-total-playtime-per-server"
-    const responsePlayTimePerServeur = await fetch(apiUrlPlayTimePerServeur);
-
-    if (!responsePlayTimePerServeur.ok) {
-        throw new Error(`Failed to fetch servers: ${response.status}`);
-    }
-
-    const jsonPlayTimePerServeur = await responsePlayTimePerServeur.json();
-
-    // On vérifie si la requête est un succès
-    if (!jsonPlayTimePerServeur.success) return
-
-    const playTimes : PlayTimeType[] = jsonPlayTimePerServeur.data;
-
-    // On récupére la liste des images
+    // On récupère la liste des serveurs depuis PocketBase
+    const serversRaw = await ApiFetcher.getAllRecords<any>(SERVERS, { expand: 'platform' });
+    
+    const allStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
     const screenList = await getScreenList();
 
-    return serveurs.map((serveur) => {
+    const serveurs = serversRaw.map(s => {
+        const base = {
+            id: s.id,
+            name: s.name,
+            platform: s.expand?.platform?.name?.toLowerCase() || 'palworld',
+            version: s.version,
+            modpack: s.modpack,
+            modpack_url: s.modpack_url,
+            world_name: s.world_name,
+            embed_color: s.embed_color,
+            is_enabled: s.is_enabled,
+            is_global: s.is_global,
+            image: s.image ? `${PB_URL}/api/files/${s.collectionId}/${s.id}/${s.image}` : s.image,
+            description: s.description,
+            container: s.container,
+            type: s.type
+        };
+
         let ip: string;
-        if (serveur.jeu === "palworld") {
+        if (base.platform === "palworld") {
             ip = "antredesloutres.fr:8211"
-        } else if (serveur.type === "primary") {
+        } else if (base.type === "primary") {
             ip = "antredesloutres.fr"
         } else {
             ip = "secondaire.antredesloutres.fr"
         }
-        serveur.ip = ip
 
-        // Associe le playtime au serveur (par ID, nom ou autre clé logique)
-        const playTime = playTimes.find(pt => pt.serveur_id === serveur.id);
-
-        // On associe la liste des screen à chaque serveur
-        serveur.screens = screenList.filter(screen => screen.origine === serveur.id);
-
-        const statutServeur = serveur?.actif === 1
-            ? "Le serveur est actif"
-            : serveur?.actif === 0
-                ? "Le serveur est désactivé"
-                : "Statut inconnu";
+        // Aggrégation playtime
+        const playTimeTicks = allStats
+            .filter(stat => stat.server === s.id)
+            .reduce((acc, curr) => acc + (Number(curr.playtime) || 0), 0);
+        const playTimeHours = Math.round(playTimeTicks / 72000);
 
         return {
-            params: {
-                nomDuServeur: slugify(serveur.nom),
-            },
-            props: {
-                serveur,
-                statutServeur,
-                playTime: playTime ? playTime.total_hours : undefined,
-            },
+            ...base,
+            ip,
+            screens: screenList.filter(screen => screen.server === s.id),
+            playTimeHours,
+            statutServeur: base.is_enabled ? "Le serveur est actif" : "Le serveur est désactivé"
         };
     });
+
+    return serveurs.map((srv) => ({
+        params: {
+            nomDuServeur: slugify(srv.name),
+        },
+        props: {
+            serveur: srv,
+            statutServeur: srv.statutServeur,
+            playTime: srv.playTimeHours,
+        },
+    }));
 }
 ---
 {!serveur && <h1>Serveur introuvable</h1>}
 {serveur && (
-<Layout title={serveur.nom} title={serveur.nom} ogDescription=`Description du serveur ${serveur.nom}`>
-    <Banner bannerUrl=`/banner/palworld/${slugify(serveur.nom)}.webp`/>
+<Layout title={serveur.name} ogDescription={`Description du serveur ${serveur.name}`}>
+    <Banner bannerUrl=`/banner/palworld/${slugify(serveur.name)}.webp`/>
     <div class="profile-container">
-        <TransitionSection title=`Informations du serveur #${serveur.nom}#`/>
+        <TransitionSection title={`Informations du serveur #${serveur.name}#`}/>
         <div class="profile-details">
             <div class="avatar">
                 <img
@@ -160,7 +120,7 @@ export async function getStaticPaths() {
                         {serveur.modpack}
                     </a></span>
                     <span class="server-card-badge ip">{serveur.ip}</span>
-                    {serveur.actif ? (
+                    {serveur.is_enabled ? (
                             <span class="server-card-badge active">Activé</span>
                     ) : (
                             <span class="server-card-badge unactive">Désactivé</span>
@@ -194,21 +154,15 @@ export async function getStaticPaths() {
                             <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
                         </svg>
                     </button>
-                    <button class="super-button golden-outline">
-                        <a href="/classements/palworld/">Classement</a>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="scale-up-anim bi bi-emoji-sunglasses-fill" viewBox="0 0 16 16">
-                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M2.31 5.243A1 1 0 0 1 3.28 4H6a1 1 0 0 1 1 1v.116A4.2 4.2 0 0 1 8 5c.35 0 .69.04 1 .116V5a1 1 0 0 1 1-1h2.72a1 1 0 0 1 .97 1.243l-.311 1.242A2 2 0 0 1 11.439 8H11a2 2 0 0 1-1.994-1.839A3 3 0 0 0 8 6c-.393 0-.74.064-1.006.161A2 2 0 0 1 5 8h-.438a2 2 0 0 1-1.94-1.515zM4.969 9.75A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .866-.5z"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
 
-        <TransitionSection title=`Joueurs #Palworld# ayant rejoint #${serveur.nom}#`></TransitionSection>
+        <TransitionSection title=`Joueurs #Palworld# ayant rejoint #${serveur.name}#`></TransitionSection>
         <Void/>
 
-        <TransitionSection title=`%Screenshots% des joueurs sur le serveur #${serveur.nom}#`></TransitionSection>
-        <ServeurScreen screenList={serveur.screens}/>
+        <TransitionSection title=`%Screenshots% des joueurs sur le serveur #${serveur.name}#`></TransitionSection>
+        <ServeurScreen screenshots={serveur.screens}/>
     </div>
 
     <style>
@@ -300,4 +254,4 @@ export async function getStaticPaths() {
         });
     </script>
 </Layout>
-    )}
+)}

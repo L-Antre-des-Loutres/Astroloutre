@@ -40,7 +40,7 @@ const filteredArticles = articles
         <main class="project-content">
             <div class="project-header">
                 <img
-                        src={projet.data.image}
+                        src={projet.data.image || ""}
                         alt={projet.data.title}
                         class="main-image"
                 />
@@ -81,7 +81,7 @@ const filteredArticles = articles
                 {
                     filteredArticles.map((article) => (
                             <SlidingVignette
-                            image={article.data.image}
+                            image={article.data.image || ""}
                             image_alt={article.data.title}
                             title={`#${article.data.title}#`}
                             paragraph={

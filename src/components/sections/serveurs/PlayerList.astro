@@ -1,28 +1,42 @@
 ---
 import {slugify} from "../../../formater/JoueurFormater.ts";
 import {formatUUID} from "../../../formater/UUIDFormater.ts";
-type Player = {
-    playername: string;
-    compte_id: string
-
-};
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PLAYERS, PLAYERS_STATS} from "../../../utils/constantes";
+import type {PlayerType} from "../../../types/PlayerType";
 
 const { serveurId } = Astro.props;
 
-const reponse = await fetch(
-    `https://otterlyapi.antredesloutres.fr/api/joueurs/stats-serveur/stats-by-server/${serveurId}`
-);
+// Récupération des stats du serveur et de la liste globale des joueurs
+const allServerStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
+const statsForThisServer = allServerStats.filter(s => s.server === serveurId);
 
-const json = await reponse.json();
-const playerDataList: Player[] = json.data ?? [];
+const allPlayers = await ApiFetcher.getAllRecords<PlayerType>(PLAYERS);
+
+// Mapping pour retrouver le playername via l'account_id (UUID)
+const playerDataList = statsForThisServer.map(stat => {
+    const player = allPlayers.find(p => p.account_id === stat.account_id);
+    return {
+        playername: player ? player.playername : "Inconnu",
+        account_id: stat.account_id
+    };
+}).filter(p => p.playername !== "Inconnu");
+
+// Dédoublonnement au cas où
+const seen = new Set();
+const uniquePlayers = playerDataList.filter(el => {
+    const duplicate = seen.has(el.account_id);
+    seen.add(el.account_id);
+    return !duplicate;
+});
 ---
 <div class="player-grid">
-    {playerDataList.map((player) => (
-            <a href=`/joueurs/minecraft/${slugify(player.playername)}`>
+    {uniquePlayers.map((player) => (
+            <a href={`/joueurs/minecraft/${slugify(player.playername)}`}>
                 <div class="player-card">
                     <img
                             class="player-avatar"
-                            src={`https://mc-heads.net/avatar/${formatUUID(player.compte_id)}/64`}
+                            src={`https://mc-heads.net/avatar/${formatUUID(player.account_id)}/64`}
                             alt={`Avatar de ${player.playername}`}
                     />
                     <div class="player-name">{player.playername}</div>

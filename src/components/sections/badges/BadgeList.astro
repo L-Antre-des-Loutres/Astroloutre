@@ -1,59 +1,68 @@
 ---
 import {Image} from 'astro:assets';
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {BADGES, BADGES_EARNED, PB_URL, PLATEFORMS} from "../../../utils/constantes";
 
-const { PlayerOrUser = '', userId = '' , categoryId} = Astro.props;
+const { PlayerOrUser = '', userId = '', categoryId, allRelatedPbIds = [] } = Astro.props;
 
-export interface Badge {
-    id: number;
-    joueur_id: number;
-    utilisateur_id: number;
-    badge_id: number;
-    date_recu: string | null;
-    nom: string;
-    categorie_id: number;
-    actif: number;
-    image_url: string;
-    description: string;
-    obtention: string;
-    categorie: string;
-    pourcentage_obtention: string;
-}
+// Normalisation des IDs (on gère le cas où un seul ID est passé ou plusieurs pour les doublons)
+const targetIds = Array.isArray(allRelatedPbIds) && allRelatedPbIds.length > 0 
+    ? allRelatedPbIds 
+    : [userId].filter(Boolean);
 
-// Récupération de tous les badges
-const apiBase = "https://otterlyapi.antredesloutres.fr/api/badges";
-const allBadges: Badge[] = (await (await fetch(`${apiBase}/infos`)).json()).data ?? [];
+// Récupération dynamique des plateformes
+const platforms = await ApiFetcher.getAllRecords<any>(PLATEFORMS);
 
-// Badges possédés
-let ownedBadges: Badge[] = [];
-if (["player", "user"].includes(PlayerOrUser.toLowerCase())) {
-    const type = PlayerOrUser.toLowerCase() === "player" ? "joueurs" : "utilisateurs";
-    ownedBadges = (await (await fetch(`${apiBase}/${type}/${userId}`)).json()).data ?? [];
-} else {
-    console.error(`PlayerOrUser must be "player" or "user", not "${PlayerOrUser}"`);
-}
+// Mapping des anciennes catégories vers les Noms de plateformes
+const platformNameMap: Record<number, string> = {
+    1: "Discord",
+    2: "Minecraft"
+};
 
-// Fusion du total de badge avec les badges optenu
-const badgesWithStatus = allBadges.map(badge => {
-    const owned = ownedBadges.find(ob => ob.badge_id === badge.id);
-    return { ...badge, date_recu: owned?.date_recu ?? null };
+const targetPlatformName = platformNameMap[Number(categoryId)];
+const targetPlatform = platforms.find(p => p.name === targetPlatformName)?.id;
+
+// Récupération de tous les badges de la plateforme
+const allBadgesRaw = await ApiFetcher.getAllRecords<any>(BADGES);
+const activeBadgesForPlatform = allBadgesRaw.filter(b => b.is_enabled && b.plateform === targetPlatform);
+
+// Récupération des badges obtenus par le(s) compte(s)
+const allEarnedRaw = await ApiFetcher.getAllRecords<any>(BADGES_EARNED);
+
+// Filtrage des badges obtenus pour TOUS les IDs liés
+const isPlayer = PlayerOrUser.toLowerCase() === "player";
+const ownedBadges = allEarnedRaw.filter(earned => {
+    const idToMatch = isPlayer ? earned.player : earned.discord_user;
+    return targetIds.includes(idToMatch);
 });
 
-// Retrait de tous les badges qui ne sont pas actifs & qui ne sont pas de la bonne catégorie
-const activeBadges = badgesWithStatus.filter(badge =>
-    badge.actif === 1 && badge.categorie_id === Number(categoryId)
-);
+// Fusion du total de badge avec les badges obtenus
+const badgesWithStatus = activeBadgesForPlatform.map(badge => {
+    const owned = ownedBadges.find(ob => ob.badge === badge.id);
+    
+    // Construction de l'URL de l'image PocketBase
+    const imageUrl = `${PB_URL}/api/files/${badge.collectionId}/${badge.id}/${badge.image}`;
+    
+    return { 
+        ...badge, 
+        date_recu: owned?.date_received ?? null,
+        image_url: imageUrl,
+        nom: badge.name,
+        obtention: badge.obtention_method
+    };
+});
 
 // Formatage de dates
 const formatDate = (dateString: string | null) =>
     dateString ? new Date(dateString).toLocaleDateString("fr-FR") : "Non obtenu";
 
-const hasBadges = activeBadges.length > 0;
+const hasBadges = badgesWithStatus.length > 0;
 ---
 
 <div class="gallery-container">
     {hasBadges ? (
             <div class="serveur-screen">
-                {activeBadges.map((badge) => (
+                {badgesWithStatus.map((badge) => (
                         <div class={`screen-item ${!badge.date_recu ? "badge-not-obtained" : ""}`}>
                             <div class="image-wrapper">
                                 <Image

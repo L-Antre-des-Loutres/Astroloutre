@@ -1,17 +1,8 @@
 ---
 import {Image} from 'astro:assets';
-
-type CarrouselImage = {
-    id: number,
-    nom: string,
-    origine: string,
-    auteur: string,
-    path: string,
-    jeu: string,
-    nom_serveur: string,
-    carrousel: boolean,
-    auteur_pseudo: string,
-};
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PB_URL, PLAYER_SCREENSHOTS} from "../../../utils/constantes";
+import type {PlayerScreenshotType} from "../../../types/PlayerScreenshoot";
 
 // Fonction de mélange
 const shuffleArray = (array: any[]) => {
@@ -23,62 +14,49 @@ const shuffleArray = (array: any[]) => {
     return shuffled;
 };
 
-let minecraftImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
-let pokemonImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = [];
-let palworldImages: { id: number; nom: string; auteur: string; origine: string; path: string; jeu: string }[] = []
+let minecraftImages: any[] = [];
+let pokemonImages: any[] = [];
+let palworldImages: any[] = [];
 
 try {
-    const res = await fetch("https://otterlyapi.antredesloutres.fr/api/astroloutre/images");
-    if (!res.ok) return
+    // Récupération des images via PocketBase avec expansion des relations
+    const screenshots = await ApiFetcher.pb.collection(PLAYER_SCREENSHOTS).getFullList<PlayerScreenshotType>({
+        filter: 'is_in_carousel = true',
+        expand: 'player,server,server.platform,discord_users,platform',
+        requestKey: null
+    });
 
-    const json = await res.json();
-    const images: CarrouselImage[] = json.data;
+    const mapScreenshot = (img: PlayerScreenshotType) => {
+        const imageUrl = `${PB_URL}/api/files/${img.collectionId}/${img.id}/${img.screenshot}`;
+        const author = img.expand?.player?.playername || img.expand?.discord_users?.username || "Une loutre anonyme";
+        const serverName = img.expand?.server?.name;
+        
+        // On récupère le nom de la plateforme via le serveur OU directement via la plateforme liée
+        const platformName = (
+            img.expand?.server?.expand?.platform?.name || 
+            (img as any).expand?.platform?.name || 
+            "minecraft"
+        ).toLowerCase();
 
-    // Filtrer uniquement les images du jeu Minecraft
-    minecraftImages = images
-        .filter(img => img.jeu.toLowerCase() === "minecraft" && img.carrousel)
-        .map(img => ({
-            id: img.id,
-            nom: img.nom,
-            auteur: img.auteur,
-            origine: img.origine,
-            path: img.path,
-            jeu: img.jeu,
-            nom_serveur: img.nom_serveur,
-            carrousel: img.carrousel,
-            auteur_pseudo: img.auteur_pseudo,
-        }));
+        const attribution = serverName 
+            ? `Image par ${author} sur ${serverName}`
+            : `Image par ${author}`;
 
-    pokemonImages = images
-        .filter(img => img.jeu.toLowerCase() === "pokemon" && img.carrousel)
-        .map(img => ({
-            id: img.id,
-            nom: img.nom,
-            auteur: img.auteur,
-            origine: img.origine,
-            path: img.path,
-            jeu: img.jeu,
-            nom_serveur: img.nom_serveur,
-            carrousel: img.carrousel,
-            auteur_pseudo: img.auteur_pseudo,
-        }));
+        return {
+            path: imageUrl,
+            attribution,
+            platform: platformName
+        };
+    };
 
-    palworldImages = images
-        .filter(img => img.jeu.toLowerCase() === "palworld" && img.carrousel)
-        .map(img => ({
-            id: img.id,
-            nom: img.nom,
-            auteur: img.auteur,
-            origine: img.origine,
-            path: img.path,
-            jeu: img.jeu,
-            nom_serveur: img.nom_serveur,
-            carrousel: img.carrousel,
-            auteur_pseudo: img.auteur_pseudo,
-        }));
+    const mappedImages = screenshots.map(mapScreenshot);
+
+    minecraftImages = mappedImages.filter(img => img.platform === "minecraft");
+    pokemonImages = mappedImages.filter(img => img.platform === "pokemon");
+    palworldImages = mappedImages.filter(img => img.platform === "palworld");
 
 } catch (error) {
-    console.error("Erreur lors de la récupération des images :", error);
+    console.error("Erreur lors de la récupération des images du carrousel :", error);
 }
 
 const games = [
@@ -123,10 +101,6 @@ const games = [
             servers: {
                 title: "Nos serveurs",
                 link: "/serveurs/palworld"
-            },
-            classement: {
-                title: "Classements",
-                link: "/classements/palworld"
             }
         }
     }
@@ -157,7 +131,7 @@ const games = [
                                 />
                             <!-- Crédit de l'image -->
                                 <div class="carousel-auteur absolute bottom-4 left-4 text-white text-sm bg-black/40 px-3 py-1 rounded opacity-0 transition-opacity duration-500">
-                                    <p>Par {src.auteur_pseudo} sur {src.nom_serveur}</p>
+                                    <p>{src.attribution}</p>
                                 </div>
                         ))}
 

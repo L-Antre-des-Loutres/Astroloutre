@@ -9,7 +9,7 @@ import {discordActivityScore} from "../../../../utils/discordActivityScore.ts";
 
 /* Types */
 type UserWithStats = DiscordUserType & {
-    nb_message: number;
+    message_count: number;
     vocal_time: number;
     activity_score?: number;
     [key: string]: any;
@@ -24,21 +24,21 @@ type Props = {
 
 /* Colonnes et largeurs */
 const userStatsConfig: Record<string, string> = {
-    pseudo_discord: "Pseudo Discord",
-    join_date_discord: "Date d'arrivée",
-    first_activity: "Première activité",
-    last_activity: "Dernière activité",
-    nb_message: "Messages envoyés",
+    username: "Pseudo Discord",
+    joined_at: "Date d'arrivée",
+    first_active_at: "Première activité",
+    last_active_at: "Dernière activité",
+    message_count: "Messages envoyés",
     vocal_time: "Temps en vocal",
     activity_score: "Score d'activité"
 };
 
 const columnWidths: Record<string, string> = {
-    pseudo_discord: "200px",
-    join_date_discord: "150px",
-    first_activity: "150px",
-    last_activity: "150px",
-    nb_message: "150px",
+    username: "200px",
+    joined_at: "150px",
+    first_active_at: "150px",
+    last_active_at: "150px",
+    message_count: "150px",
     vocal_time: "150px",
     activity_score: "150px"
 };
@@ -87,10 +87,17 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
     const sortedPlayers = useMemo(() => {
         if (!Array.isArray(users) || !Array.isArray(stats)) return [];
 
-        // 1. Aggregate stats based on selectedYear
-        const statsMap = new Map<number, { nb_message: number; vocal_time: number }>();
+        // 0. Map PB IDs to Discord IDs
+        const pbIdToDiscordId = new Map<string, string>();
+        users.forEach(u => pbIdToDiscordId.set(u.id, u.discord_id));
+
+        // 1. Aggregate stats based on selectedYear, grouped by Discord Snowflake (discord_id)
+        const statsMap = new Map<string, { message_count: number; vocal_time: number }>();
 
         stats.forEach((stat) => {
+            const discordId = pbIdToDiscordId.get(stat.discord_user);
+            if (!discordId) return; // Skip if user not found
+
             // Parse DD/MM/YYYY format correctly
             let statYear: string;
             if (stat.date_stats) {
@@ -106,23 +113,32 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
             }
 
             if (selectedYear === "all" || statYear === selectedYear) {
-                const current = statsMap.get(stat.id_utilisateur) || {nb_message: 0, vocal_time: 0};
-                statsMap.set(stat.id_utilisateur, {
-                    nb_message: current.nb_message + (Number(stat.nb_message) || 0),
+                const current = statsMap.get(discordId) || {message_count: 0, vocal_time: 0};
+                statsMap.set(discordId, {
+                    message_count: current.message_count + (Number(stat.message_count) || 0),
                     vocal_time: current.vocal_time + (Number(stat.vocal_time) || 0),
                 });
             }
         });
 
-        // 2. Merge with users and calculate scores
-        const players: UserWithStats[] = users.map((user) => {
-            const userStats = statsMap.get(user.id) || {nb_message: 0, vocal_time: 0};
-            return {
-                ...user,
-                nb_message: userStats.nb_message,
-                vocal_time: userStats.vocal_time,
-            };
-        }).filter(p => p.nb_message > 0 || p.vocal_time > 0);
+        // 2. Deduplicate users by discord_id and merge with aggregated stats
+        const uniqueUsersMap = new Map<string, UserWithStats>();
+        users.forEach(user => {
+            const discordId = user.discord_id;
+            const userStats = statsMap.get(discordId) || {message_count: 0, vocal_time: 0};
+
+            if (userStats.message_count > 0 || userStats.vocal_time > 0) {
+                if (!uniqueUsersMap.has(discordId)) {
+                    uniqueUsersMap.set(discordId, {
+                        ...user,
+                        message_count: userStats.message_count,
+                        vocal_time: userStats.vocal_time,
+                    });
+                }
+            }
+        });
+
+        const players = Array.from(uniqueUsersMap.values());
 
         // Calcul du score d'activité pour chaque joueur
         // Recalcul manuel du score pour éviter les promesses dans le sort/useMemo
@@ -131,7 +147,7 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
         };
 
         players.forEach(p => {
-            p.activity_score = calculateScore(p.nb_message, p.vocal_time);
+            p.activity_score = calculateScore(p.message_count, p.vocal_time);
         });
 
 
@@ -142,12 +158,12 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
             let bVal = b[sortConfig.key];
 
             // Dates
-            if (["join_date_discord", "first_activity", "last_activity"].includes(sortConfig.key)) {
+            if (["joined_at", "first_active_at", "last_active_at"].includes(sortConfig.key)) {
                 aVal = aVal ? new Date(aVal).getTime() : 0;
                 bVal = bVal ? new Date(bVal).getTime() : 0;
             }
             // Nombres
-            else if (["nb_message", "vocal_time", "activity_score"].includes(sortConfig.key)) {
+            else if (["message_count", "vocal_time", "activity_score"].includes(sortConfig.key)) {
                 aVal = Number(aVal) || 0;
                 bVal = Number(bVal) || 0;
             }
@@ -235,33 +251,33 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
                                         style={{minWidth: columnWidths[key]}}
                                     >
                                         {(() => {
-                                            if (key === "pseudo_discord") {
+                                            if (key === "username") {
                                                 return (
                                                     <div className="flex items-center gap-3">
                                                         <img
                                                             src={player.avatar_url}
-                                                            alt={player.pseudo_discord}
+                                                            alt={player.username}
                                                             width={40}
                                                             height={40}
                                                             className="rounded-sm"
                                                         />
                                                         <a
-                                                            href={`/profil/${slugify(player.tag_discord)}`}
+                                                            href={`/profil/${slugify(player.discord_tag)}`}
                                                             className="ranking-link"
                                                         >
                                                             <span>{player[key] ?? "-"}</span>
                                                         </a>
                                                     </div>
                                                 );
-                                            } else if (key === "join_date_discord") {
+                                            } else if (key === "joined_at") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
-                                            } else if (key === "first_activity") {
+                                            } else if (key === "first_active_at") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
-                                            } else if (key === "last_activity") {
+                                            } else if (key === "last_active_at") {
                                                 return <div>{formatDateWithHours(player[key]) === "01/01/1970 01:00" ? "Aucune activité récente" : formatDateWithHours(player[key])}</div>;
                                             } else if (key === "vocal_time") {
                                                 return <div>{!player[key] ? "Aucun temps" : formatDecimalHoursToString(player[key])}</div>;
-                                            } else if (key === "nb_message") {
+                                            } else if (key === "message_count") {
                                                 return <div>{!player[key] ? "Aucun message" : `${formatNumber(player[key])} ${player[key] > 1 ? "messages" : "message"}`}</div>;
                                             } else if (key === "activity_score") {
                                                 return <div>{!player[key] ? "Aucun score d'activité" : `${formatNumber(player[key])} ${player[key] > 1 ? "points" : "point"}`}</div>
