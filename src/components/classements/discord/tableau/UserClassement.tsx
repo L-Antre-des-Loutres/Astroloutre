@@ -64,14 +64,21 @@ const UserClassement: React.FC<Props> = ({users, stats}) => {
                         if (year && year.length === 4 && !isNaN(Number(year))) {
                             _years.add(year);
                         }
+                    } else {
+                        // Fallback to trying Date constructor if format is different
+                        const fallbackYear = new Date(s.date_stats).getFullYear().toString();
+                        if (fallbackYear && fallbackYear.length === 4 && !isNaN(Number(fallbackYear))) {
+                            _years.add(fallbackYear);
+                        }
                     }
                 }
             });
         }
 
-        // Always add 2025 if we have any stats, to count all stats for the entire year
+        // Always add 2025 and the current year if we have any stats
         if (stats && stats.length > 0) {
             _years.add("2025");
+            _years.add(new Date().getFullYear().toString());
         }
 
         return Array.from(_years).sort((a, b) => b.localeCompare(a));
