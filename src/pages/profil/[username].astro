@@ -10,8 +10,10 @@ import TransitionSection from "../../components/sections/common/transitions/Tran
 import UserScreenshots from "../../components/sections/profil/UserScreenshots.astro";
 import type {LinkAccount, DiscordUserType, DiscordUserStatsType, Roles} from "../../types/UtilisateurDiscordType.ts";
 import {ApiFetcher} from "../../utils/API/apiFetcher";
-import {DISCORD_USER_STATS, DISCORD_USERS, PLAYER_SCREENSHOTS} from "../../utils/constantes.ts";
+import {DISCORD_USER_STATS, DISCORD_USERS, PLAYER_SCREENSHOTS, POKEDEVINER_STATS} from "../../utils/constantes.ts";
 import type {PlayerScreenshotType} from "../../types/PlayerScreenshoot";
+import type {PokedevinerStatType} from "../../types/PokedevinerStatsType.ts";
+import PokedevinerStatsList from "../../components/sections/profil/PokedevinerStatsList.astro";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
@@ -21,6 +23,7 @@ const userScreenshots: PlayerScreenshotType[] = Astro.props.userScreenshots || [
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 // Stats for this user
 const stats: (DiscordUserType & { message_count: number, vocal_time: number, stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
+const userPokedevinerStats: PokedevinerStatType[] = Astro.props.userPokedevinerStats || [];
 
 /**
  * Génère les pages statiques
@@ -37,6 +40,7 @@ export async function getStaticPaths() {
     const allScreenshots = await ApiFetcher.getAllRecords<PlayerScreenshotType>(PLAYER_SCREENSHOTS, {
         expand: 'server,server.platform,platform'
     });
+    const allPokedevinerStats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS);
 
     // ──────────────────────────────────────────────
     // Regroupement par Discord ID pour gérer les doublons
@@ -86,6 +90,11 @@ export async function getStaticPaths() {
                 (screen) => allRelatedPbIds.includes(screen.discord_users)
             );
 
+            // Retrieve ALL pokedeviner stats for all PB IDs of this user
+            const userPokedevinerStats = allPokedevinerStats.filter(
+                (stat) => allRelatedPbIds.includes(stat.discord_user)
+            );
+
             // Aggregate stats
             const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.message_count) || 0), 0);
             const totalVocalTime = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.vocal_time) || 0), 0);
@@ -106,6 +115,7 @@ export async function getStaticPaths() {
                     joueur,
                     allRelatedPbIds,
                     userScreenshots,
+                    userPokedevinerStats,
                     accountLinks: accountLinks, // Returns array, empty if none
                     stats: globalStats, // Pass combined stats
                 },
@@ -273,6 +283,9 @@ if (msgCount > 1) {
 
         <TransitionSection title={`%Screenshots% de l'utilisateur #${utilisateur.username}#`}/>
         <UserScreenshots screenshots={userScreenshots} />
+
+        <TransitionSection title={`%Statistique% sur #Pokedeviner#`}/>
+        <PokedevinerStatsList stats={userPokedevinerStats} />
     </div>
 
     <style>
