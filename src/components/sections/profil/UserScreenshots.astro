@@ -21,7 +21,7 @@ const hasScreens = screenshots.length > 0;
                     return (
                         <div class="screen-item">
                             <div class="image-wrapper">
-                                <img src={imageUrl} alt={screen.name} loading="lazy" />
+                                <img src={imageUrl} alt={screen.name} loading="lazy" class="zoomable-image" />
                             </div>
                             <div class="info-wrapper">
                                 <p class="author">
@@ -39,6 +39,62 @@ const hasScreens = screenshots.length > 0;
             </div>
     )}
 </div>
+
+<div id="screenshot-lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="Screenshot en plein écran" />
+        <button id="lightbox-close" class="lightbox-close" aria-label="Fermer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<script>
+    const lightbox = document.getElementById('screenshot-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('lightbox-close');
+    const zoomableImages = document.querySelectorAll('.zoomable-image');
+
+    if (lightbox && lightboxImg && closeBtn) {
+        zoomableImages.forEach((img) => {
+            img.addEventListener('click', (e) => {
+                const target = e.target as HTMLImageElement;
+                lightboxImg.setAttribute('src', target.src);
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden'; // Empêche le défilement de l'arrière-plan
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            // Léger délai pour vider la source afin d'éviter un clignotement lors de la transition
+            setTimeout(() => {
+                if(!lightbox.classList.contains('active')) lightboxImg.setAttribute('src', '');
+            }, 300);
+        };
+
+        closeBtn.addEventListener('click', closeLightbox);
+        
+        lightbox.addEventListener('click', (e) => {
+            // Ferme si on clique en dehors de l'image (sur le fond ou le conteneur)
+            if (e.target === lightbox || e.target === document.querySelector('.lightbox-content')) {
+                closeLightbox();
+            }
+        });
+        
+        // Support de la touche Echap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    }
+</script>
 
 <style>
     /* --- VARIABLES --- */
@@ -147,5 +203,82 @@ const hasScreens = screenshots.length > 0;
         font-size: 1.25rem;
         color: var(--server-screen-color-text-muted);
         font-weight: 500;
+    }
+
+    /* --- LIGHTBOX --- */
+    .zoomable-image {
+        cursor: pointer;
+    }
+
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        backdrop-filter: blur(4px);
+    }
+
+    .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .lightbox-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .lightbox-content img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+    }
+
+    .lightbox.active .lightbox-content img {
+        transform: scale(1);
+    }
+
+    .lightbox-close {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+        z-index: 10000;
+    }
+
+    .lightbox-close:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-close svg {
+        width: 32px;
+        height: 32px;
     }
 </style>

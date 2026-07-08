@@ -112,6 +112,11 @@ const isSuccess = (stat: PokedevinerStatType) => stat.success_at && stat.success
         flex-direction: column;
         gap: 1rem;
         position: relative;
+        z-index: 1;
+    }
+
+    .poke-card:has(details[open]), .poke-card:hover {
+        z-index: 10;
     }
 
     .poke-card::before {
@@ -182,9 +187,7 @@ const isSuccess = (stat: PokedevinerStatType) => stat.success_at && stat.success
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
-        background-color: rgba(0, 0, 0, 0.02);
         padding: 0;
-        border-radius: 0.5rem;
     }
 
     .stat-row {
@@ -309,9 +312,6 @@ const isSuccess = (stat: PokedevinerStatType) => stat.success_at && stat.success
 
     /* Dark mode adaptation if the site uses one */
     @media (prefers-color-scheme: dark) {
-        .poke-card-body {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
         .empty-state {
             background: rgba(255, 255, 255, 0.02);
         }
