@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 import {formatNumber} from "../../../../formater/NumberFormater.ts";
 import {formatSecondsToString} from "../../../../formater/SecondsFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
@@ -50,7 +50,7 @@ function getStatYear(stat: PokedevinerStatType): string | null {
     return year.toString();
 }
 
-const PokedevinerClassement: React.FC<Props> = ({users, stats}) => {
+const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
 
     const [selectedYear, setSelectedYear] = useState<string>("all");
 
@@ -250,8 +250,8 @@ const PokedevinerClassement: React.FC<Props> = ({users, stats}) => {
                                                 return (
                                                     <div className="flex items-center gap-3">
                                                         <img
-                                                            src={player.avatar_url}
-                                                            alt={player.username}
+                                                            src={player.avatar_url || ""}
+                                                            alt={player.username || "Inconnu"}
                                                             width={40}
                                                             height={40}
                                                             className="rounded-sm"
