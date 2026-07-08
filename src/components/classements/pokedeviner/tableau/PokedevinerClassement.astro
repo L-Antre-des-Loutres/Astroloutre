@@ -6,10 +6,28 @@ import {ApiFetcher} from "../../../../utils/API/apiFetcher";
 import {DISCORD_USERS, POKEDEVINER_STATS} from "../../../../utils/constantes.ts";
 
 // Fetch des utilisateurs Discord
-const users = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
+const rawUsers = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
+
+// Conversion en POJO pur pour éviter que le composant React (client:load) ne plante lors de la sérialisation (devalue)
+const users = rawUsers.map(u => ({
+    id: u.id,
+    username: u.username,
+    discord_tag: u.discord_tag,
+    avatar_url: u.avatar_url,
+    roles: u.roles || []
+} as DiscordUserType));
 
 // Fetch des parties de Pokedeviner depuis l'API
-const stats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS);
+const rawStats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS);
+
+// Nettoyage des données pour ne garder que le nécessaire et éviter d'envoyer la très lourde liste "pokemon_try_list" au composant React client
+const stats = rawStats.map(stat => ({
+    discord_user: stat.discord_user,
+    start_at: stat.start_at,
+    success_at: stat.success_at,
+    nb_try: stat.nb_try,
+    created: stat.created
+} as PokedevinerStatType));
 ---
 
 <PokedevinerClassementReactComponent
