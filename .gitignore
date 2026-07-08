@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # qodana
 qodana.yaml
+
+# Claude
+/.claude

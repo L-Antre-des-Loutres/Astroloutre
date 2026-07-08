@@ -1,0 +1,19 @@
+---
+import PokedevinerClassementReactComponent from "./PokedevinerClassement.tsx";
+import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
+import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
+import {ApiFetcher} from "../../../../utils/API/apiFetcher";
+import {DISCORD_USERS, POKEDEVINER_STATS} from "../../../../utils/constantes.ts";
+
+// Fetch des utilisateurs Discord
+const users = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
+
+// Fetch des parties de Pokedeviner depuis l'API
+const stats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS);
+---
+
+<PokedevinerClassementReactComponent
+        client:load
+        users={users}
+        stats={stats}
+/>
