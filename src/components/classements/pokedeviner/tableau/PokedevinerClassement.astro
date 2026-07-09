@@ -1,9 +1,8 @@
 ---
 import PokedevinerClassementReactComponent from "./PokedevinerClassement.tsx";
 import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
-import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
 import {ApiFetcher} from "../../../../utils/API/apiFetcher";
-import {DISCORD_USERS, POKEDEVINER_STATS} from "../../../../utils/constantes.ts";
+import {DISCORD_USERS} from "../../../../utils/constantes.ts";
 
 // Fetch des utilisateurs Discord
 const rawUsers = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
@@ -16,22 +15,9 @@ const users = rawUsers.map(u => ({
     avatar_url: u.avatar_url,
     roles: u.roles || []
 } as DiscordUserType));
-
-// Fetch des parties de Pokedeviner depuis l'API
-const rawStats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS);
-
-// Nettoyage des données pour ne garder que le nécessaire et éviter d'envoyer la très lourde liste "pokemon_try_list" au composant React client
-const stats = rawStats.map(stat => ({
-    discord_user: stat.discord_user,
-    start_at: stat.start_at,
-    success_at: stat.success_at,
-    nb_try: stat.nb_try,
-    created: stat.created
-} as PokedevinerStatType));
 ---
 
 <PokedevinerClassementReactComponent
         client:load
         users={users}
-        stats={stats}
 />

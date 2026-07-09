@@ -1,9 +1,11 @@
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
+import PocketBase from 'pocketbase';
 import {formatNumber} from "../../../../formater/NumberFormater.ts";
 import {formatSecondsToString} from "../../../../formater/SecondsFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
 import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
 import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
+import {PB_URL, POKEDEVINER_STATS} from "../../../../utils/constantes.ts";
 
 
 /* Types */
@@ -19,7 +21,7 @@ type PlayerWithPokedevinerStats = DiscordUserType & {
 /* Props attendues */
 type Props = {
     users: DiscordUserType[];
-    stats: PokedevinerStatType[];
+    stats?: PokedevinerStatType[];
 };
 
 /* Colonnes et largeurs */
@@ -50,9 +52,29 @@ function getStatYear(stat: PokedevinerStatType): string | null {
     return year.toString();
 }
 
-const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
+const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats = []}) => {
 
+    const [stats, setStats] = useState<PokedevinerStatType[]>(initialStats);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [selectedYear, setSelectedYear] = useState<string>("all");
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const pb = new PocketBase(PB_URL);
+                const records = await pb.collection(POKEDEVINER_STATS).getFullList<PokedevinerStatType>({
+                    fields: 'discord_user,start_at,success_at,nb_try,created',
+                });
+                setStats(records);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des statistiques:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchStats();
+    }, []);
 
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
@@ -201,8 +223,14 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
             </div>
 
             {/* Tableau des joueurs */}
-            <div className="ranking-table-container">
-                <table className="ranking-table">
+            <div className="ranking-table-container relative">
+                {isLoading && (
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-transparent">
+                        <div className="w-12 h-12 border-4 border-white/80 border-t-transparent rounded-full animate-spin mb-4 shadow-lg"></div>
+                        <span className="text-white font-semibold tracking-wider text-sm bg-black/50 px-4 py-1 rounded-full backdrop-blur-sm shadow-lg">Chargement...</span>
+                    </div>
+                )}
+                <table className={`ranking-table transition-all duration-300 ${isLoading ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
                     <thead className="ranking-thead">
                     <tr>
                         {Object.entries(pokedevinerStatsConfig).map(([key, label]) => {
@@ -295,7 +323,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
                     gagnée avec le moins d'essais.
                 </p>
                 <p className="mt-2">
-                    Ces données sont mises à jour quotidiennement et ne reflètent pas les changements en temps réel.
+                    Ces données sont mises à jour au chargement de la page.
                 </p>
                 <p className="mt-2">
                     Pour faire supprimer vos données, vous pouvez nous contacter sur Discord ou par e-mail à{" "}
