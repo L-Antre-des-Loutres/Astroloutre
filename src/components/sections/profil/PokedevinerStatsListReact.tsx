@@ -68,7 +68,9 @@ export default function PokedevinerStatsListReact({ pbIds }: Props) {
                                             </svg>
                                         )}
                                     </div>
-                                    <h3 className="pokemon-name">{stat.pokemon_name}</h3>
+                                    <h3 className="pokemon-name">
+                                        {(stat.expired === true || isSuccess(stat)) ? stat.pokemon_name : "???"}
+                                    </h3>
                                 </div>
                                 
                                 <div className="poke-card-body">

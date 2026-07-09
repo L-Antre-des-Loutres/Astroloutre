@@ -7,6 +7,7 @@ export type PokedevinerStatType = {
     nb_try: number;       // nombre d'essais
     pokemon_name: string; // Pokémon à deviner
     pokemon_try_list: any; // liste JSON des essais
+    expired?: boolean;    // true si la partie est expirée
     created: string;
     updated: string;
 };
