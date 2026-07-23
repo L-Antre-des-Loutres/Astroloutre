@@ -1,57 +1,18 @@
-import { useEffect, useState } from "react";
-import PocketBase from "pocketbase";
 import type { PokedevinerStatType } from "../../../types/PokedevinerStatsType.ts";
 import { formatDate } from "../../../formater/DateFormater.ts";
-import { PB_URL, POKEDEVINER_STATS } from "../../../utils/constantes.ts";
 
 interface Props {
-    pbIds: string[];
+    stats: PokedevinerStatType[];
 }
 
-export default function PokedevinerStatsListReact({ pbIds }: Props) {
-    const [stats, setStats] = useState<PokedevinerStatType[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            if (!pbIds || pbIds.length === 0) {
-                setIsLoading(false);
-                return;
-            }
-            try {
-                const pb = new PocketBase(PB_URL);
-                
-                // Build filter string for multiple IDs
-                const filterStr = pbIds.map(id => `discord_user = '${id}'`).join(' || ');
-                
-                const records = await pb.collection(POKEDEVINER_STATS).getFullList<PokedevinerStatType>({
-                    filter: filterStr,
-                    sort: '-created'
-                });
-                setStats(records);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des stats pokedeviner:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchStats();
-    }, [pbIds]);
-
+export default function PokedevinerStatsListReact({ stats }: Props) {
     const isSuccess = (stat: PokedevinerStatType) => stat.success_at && stat.success_at !== "";
+    const isExpired = (stat: PokedevinerStatType) => stat.is_expired === true || stat.expired === true;
     const hasStats = stats.length > 0;
 
     return (
         <div className="poke-stats-container relative min-h-[150px]">
-            {isLoading && (
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-transparent">
-                    <div className="w-12 h-12 border-4 border-white/80 border-t-transparent rounded-full animate-spin mb-4 shadow-lg"></div>
-                    <span className="text-white font-semibold tracking-wider text-sm bg-black/50 px-4 py-1 rounded-full backdrop-blur-sm shadow-lg">Chargement...</span>
-                </div>
-            )}
-            
-            <div className={`transition-all duration-300 ${isLoading ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
+            <div className="transition-all duration-300">
                 {hasStats ? (
                     <div className="poke-stats-grid">
                         {stats.map((stat, idx) => (
@@ -69,7 +30,7 @@ export default function PokedevinerStatsListReact({ pbIds }: Props) {
                                         )}
                                     </div>
                                     <h3 className="pokemon-name">
-                                        {(stat.expired === true || isSuccess(stat)) ? stat.pokemon_name : "???"}
+                                        {(isExpired(stat) || isSuccess(stat)) ? stat.pokemon_name : "???"}
                                     </h3>
                                 </div>
                                 
@@ -80,7 +41,7 @@ export default function PokedevinerStatsListReact({ pbIds }: Props) {
                                     </div>
                                     <div className="stat-row">
                                         <span className="stat-label">Début</span>
-                                        <span className="stat-value">{formatDate(stat.start_at)}</span>
+                                        <span className="stat-value">{formatDate(stat.created)}</span>
                                     </div>
                                     <div className="stat-row">
                                         <span className="stat-label">Réussite</span>
@@ -105,11 +66,9 @@ export default function PokedevinerStatsListReact({ pbIds }: Props) {
                         ))}
                     </div>
                 ) : (
-                    !isLoading && (
-                        <div className="empty-state">
-                            <p>Aucune partie de Pokedeviner jouée pour le moment !</p>
-                        </div>
-                    )
+                    <div className="empty-state">
+                        <p>Aucune partie de Pokedeviner jouée pour le moment !</p>
+                    </div>
                 )}
             </div>
         </div>

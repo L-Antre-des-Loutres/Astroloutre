@@ -1,8 +1,9 @@
 ---
 import PokedevinerClassementReactComponent from "./PokedevinerClassement.tsx";
 import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
+import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
 import {ApiFetcher} from "../../../../utils/API/apiFetcher";
-import {DISCORD_USERS} from "../../../../utils/constantes.ts";
+import {DISCORD_USERS, POKEDEVINER_STATS} from "../../../../utils/constantes.ts";
 
 // Fetch des utilisateurs Discord
 const rawUsers = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
@@ -15,9 +16,14 @@ const users = rawUsers.map(u => ({
     avatar_url: u.avatar_url,
     roles: u.roles || []
 } as DiscordUserType));
+
+const stats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS, {
+    fields: "discord_user,created,success_at,nb_try"
+});
 ---
 
 <PokedevinerClassementReactComponent
         client:load
         users={users}
+        stats={stats}
 />

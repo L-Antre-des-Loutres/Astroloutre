@@ -1,14 +1,15 @@
 ---
 import PokedevinerStatsListReact from "./PokedevinerStatsListReact.tsx";
+import type {PokedevinerStatType} from "../../../types/PokedevinerStatsType.ts";
 
 interface Props {
-    pbIds?: string[];
+    stats?: PokedevinerStatType[];
 }
 
-const { pbIds = [] } = Astro.props;
+const { stats = [] } = Astro.props;
 ---
 
-<PokedevinerStatsListReact client:load pbIds={pbIds} />
+<PokedevinerStatsListReact client:load stats={stats} />
 
 <style is:global>
     /* --- VARIABLES --- */
