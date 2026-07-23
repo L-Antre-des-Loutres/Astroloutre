@@ -1,11 +1,9 @@
-import {useEffect, useMemo, useState} from "react";
-import PocketBase from 'pocketbase';
+import {useMemo, useState} from "react";
 import {formatNumber} from "../../../../formater/NumberFormater.ts";
 import {formatSecondsToString} from "../../../../formater/SecondsFormater.ts";
 import {slugify} from "../../../../formater/JoueurFormater.ts";
 import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
 import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
-import {PB_URL, POKEDEVINER_STATS} from "../../../../utils/constantes.ts";
 
 
 /* Types */
@@ -21,7 +19,7 @@ type PlayerWithPokedevinerStats = DiscordUserType & {
 /* Props attendues */
 type Props = {
     users: DiscordUserType[];
-    stats?: PokedevinerStatType[];
+    stats: PokedevinerStatType[];
 };
 
 /* Colonnes et largeurs */
@@ -43,9 +41,9 @@ const columnWidths: Record<string, string> = {
     avg_time: "150px",
 };
 
-// Détermine l'année d'une partie à partir de start_at (fallback : created)
+// Détermine l'année d'une partie à partir de la date de création du record
 function getStatYear(stat: PokedevinerStatType): string | null {
-    const raw = stat.start_at || stat.created;
+    const raw = stat.created;
     if (!raw) return null;
     const year = new Date(raw).getFullYear();
     if (isNaN(year)) return null;
@@ -53,28 +51,8 @@ function getStatYear(stat: PokedevinerStatType): string | null {
 }
 
 const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats = []}) => {
-
-    const [stats, setStats] = useState<PokedevinerStatType[]>(initialStats);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const stats = initialStats;
     const [selectedYear, setSelectedYear] = useState<string>("all");
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const pb = new PocketBase(PB_URL);
-                const records = await pb.collection(POKEDEVINER_STATS).getFullList<PokedevinerStatType>({
-                    fields: 'discord_user,start_at,success_at,nb_try,created',
-                });
-                setStats(records);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des statistiques:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchStats();
-    }, []);
 
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
@@ -142,7 +120,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
                 if (tries > 0 && tries < agg.best_try) agg.best_try = tries;
 
                 // Durée de résolution
-                const start = stat.start_at ? new Date(stat.start_at).getTime() : NaN;
+                const start = stat.created ? new Date(stat.created).getTime() : NaN;
                 const end = stat.success_at ? new Date(stat.success_at).getTime() : NaN;
                 if (!isNaN(start) && !isNaN(end) && end > start) {
                     agg.total_time += (end - start) / 1000;
@@ -224,13 +202,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
 
             {/* Tableau des joueurs */}
             <div className="ranking-table-container relative">
-                {isLoading && (
-                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-transparent">
-                        <div className="w-12 h-12 border-4 border-white/80 border-t-transparent rounded-full animate-spin mb-4 shadow-lg"></div>
-                        <span className="text-white font-semibold tracking-wider text-sm bg-black/50 px-4 py-1 rounded-full backdrop-blur-sm shadow-lg">Chargement...</span>
-                    </div>
-                )}
-                <table className={`ranking-table transition-all duration-300 ${isLoading ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
+                <table className="ranking-table">
                     <thead className="ranking-thead">
                     <tr>
                         {Object.entries(pokedevinerStatsConfig).map(([key, label]) => {
