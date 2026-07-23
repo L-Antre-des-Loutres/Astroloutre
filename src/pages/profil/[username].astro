@@ -19,12 +19,10 @@ import PokedevinerStatsList from "../../components/sections/profil/PokedevinerSt
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
 const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
 const userScreenshots: PlayerScreenshotType[] = Astro.props.userScreenshots || [];
+const pokedevinerStats: PokedevinerStatType[] = Astro.props.pokedevinerStats || [];
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
-// Stats for this user
 const stats: (DiscordUserType & { message_count: number, vocal_time: number, stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
-const userPokedevinerStats: PokedevinerStatType[] = Astro.props.userPokedevinerStats || [];
-
 /**
  * Génère les pages statiques
  */
@@ -40,8 +38,10 @@ export async function getStaticPaths() {
     const allScreenshots = await ApiFetcher.getAllRecords<PlayerScreenshotType>(PLAYER_SCREENSHOTS, {
         expand: 'server,server.platform,platform'
     });
-    const allPokedevinerStats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS);
-
+    const allPokedevinerStats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS, {
+        fields: "discord_user,created,success_at,nb_try,pokemon_name,pokemon_try_list,is_expired",
+        sort: "-created"
+    });
     // ──────────────────────────────────────────────
     // Regroupement par Discord ID pour gérer les doublons
     // ──────────────────────────────────────────────
@@ -89,9 +89,7 @@ export async function getStaticPaths() {
             const userScreenshots = allScreenshots.filter(
                 (screen) => allRelatedPbIds.includes(screen.discord_users)
             );
-
-            // Retrieve ALL pokedeviner stats for all PB IDs of this user
-            const userPokedevinerStats = allPokedevinerStats.filter(
+            const pokedevinerStats = allPokedevinerStats.filter(
                 (stat) => allRelatedPbIds.includes(stat.discord_user)
             );
 
@@ -115,7 +113,7 @@ export async function getStaticPaths() {
                     joueur,
                     allRelatedPbIds,
                     userScreenshots,
-                    userPokedevinerStats,
+                    pokedevinerStats,
                     accountLinks: accountLinks, // Returns array, empty if none
                     stats: globalStats, // Pass combined stats
                 },
@@ -285,7 +283,7 @@ if (msgCount > 1) {
         <UserScreenshots screenshots={userScreenshots} />
 
         <TransitionSection title={`%Statistique% sur #Pokedeviner#`}/>
-        <PokedevinerStatsList stats={userPokedevinerStats} />
+        <PokedevinerStatsList stats={pokedevinerStats} />
     </div>
 
     <style>

@@ -41,17 +41,17 @@ const columnWidths: Record<string, string> = {
     avg_time: "150px",
 };
 
-// Détermine l'année d'une partie à partir de start_at (fallback : created)
+// Détermine l'année d'une partie à partir de la date de création du record
 function getStatYear(stat: PokedevinerStatType): string | null {
-    const raw = stat.start_at || stat.created;
+    const raw = stat.created;
     if (!raw) return null;
     const year = new Date(raw).getFullYear();
     if (isNaN(year)) return null;
     return year.toString();
 }
 
-const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
-
+const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats = []}) => {
+    const stats = initialStats;
     const [selectedYear, setSelectedYear] = useState<string>("all");
 
     // Tri du tableau sélectionné au chargement de la page
@@ -120,7 +120,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
                 if (tries > 0 && tries < agg.best_try) agg.best_try = tries;
 
                 // Durée de résolution
-                const start = stat.start_at ? new Date(stat.start_at).getTime() : NaN;
+                const start = stat.created ? new Date(stat.created).getTime() : NaN;
                 const end = stat.success_at ? new Date(stat.success_at).getTime() : NaN;
                 if (!isNaN(start) && !isNaN(end) && end > start) {
                     agg.total_time += (end - start) / 1000;
@@ -201,7 +201,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
             </div>
 
             {/* Tableau des joueurs */}
-            <div className="ranking-table-container">
+            <div className="ranking-table-container relative">
                 <table className="ranking-table">
                     <thead className="ranking-thead">
                     <tr>
@@ -295,7 +295,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats = []}) => {
                     gagnée avec le moins d'essais.
                 </p>
                 <p className="mt-2">
-                    Ces données sont mises à jour quotidiennement et ne reflètent pas les changements en temps réel.
+                    Ces données sont mises à jour au chargement de la page.
                 </p>
                 <p className="mt-2">
                     Pour faire supprimer vos données, vous pouvez nous contacter sur Discord ou par e-mail à{" "}
