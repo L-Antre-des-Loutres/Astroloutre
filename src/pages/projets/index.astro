@@ -1,19 +1,51 @@
 ---
-import {getCollection} from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import SlidingVignette from "../../components/ui/vignettes/SlidingVignette.astro";
 import {slugify} from "../../formater/JoueurFormater";
 import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import { ApiFetcher } from "../../utils/API/apiFetcher";
+import { POCKETBASE_COLLECTION_PROJETS, PB_URL } from "../../utils/constantes";
+import type { ProjectType } from "../../types/ProjectType";
 
 const tag = Astro.url.searchParams.get('tag');
-const articles = await getCollection('blog');
+let projects = await ApiFetcher.getAllRecords<ProjectType & { created: string }>(POCKETBASE_COLLECTION_PROJETS, {
+    expand: 'tags'
+});
 
-// Tri par date de publication décroissante et filtre par tag si un tag est spécifié
-const filteredArticles = tag
-    ? articles.filter(article => article.data.tags?.includes(tag))
-    : articles;
-filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+// Ne récupérer que les projets qui ont le tag "Antre des loutres"
+projects = projects.filter(p => p.expand?.tags?.some((t: any) => t.name.toLowerCase() === "antre des loutres" || t.name.toLowerCase() === "antre des loutre"));
+
+// Tri par date de publication décroissante
+const sortedProjects = projects.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+
+// Groupement par catégorie
+const categorizedProjects = new Map<string, typeof projects>();
+const uncategorizedProjects: typeof projects = [];
+const unmaintainedProjects: typeof projects = [];
+
+sortedProjects.forEach(project => {
+    if (project.is_maintained === false) {
+        unmaintainedProjects.push(project);
+    } else {
+        const categoryTags = project.expand?.tags?.filter((t: any) => t.is_category === true) || [];
+        
+        if (categoryTags.length > 0) {
+            // On l'ajoute dans chaque catégorie
+            categoryTags.forEach((cat: any) => {
+                if (!categorizedProjects.has(cat.name)) {
+                    categorizedProjects.set(cat.name, []);
+                }
+                categorizedProjects.get(cat.name)!.push(project);
+            });
+        } else {
+            uncategorizedProjects.push(project);
+        }
+    }
+});
+
+// Convert to array and sort categories alphabetically
+const categoriesArray = Array.from(categorizedProjects.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
@@ -21,11 +53,41 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
     <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 
     <div class="projects-container">
-        <ul class="projects-list">
-            {filteredArticles.map((article) => (
-                <SlidingVignette image={article.data.image || ""} image_alt={article.data.title} title=`#${article.data.title}#` paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0.8em"/>
-            ))}
-        </ul>
+        {categoriesArray.map(([categoryName, catProjects]) => (
+            <div class="category-section">
+                <h2 class="category-title">{categoryName}</h2>
+                <ul class="projects-list">
+                    {catProjects.map((article) => {
+                        const imageUrl = article.logo ? `${PB_URL}/api/files/${article.collectionId}/${article.id}/${article.logo}` : "";
+                        return <SlidingVignette image={imageUrl} image_alt={article.name} title={`#${article.name}#`} paragraph={article.description} card_link={`/projets/${slugify(article.name)}`} margin="0.8em"/>
+                    })}
+                </ul>
+            </div>
+        ))}
+
+        {uncategorizedProjects.length > 0 && (
+            <div class="category-section">
+                <h2 class="category-title">Autres</h2>
+                <ul class="projects-list">
+                    {uncategorizedProjects.map((article) => {
+                        const imageUrl = article.logo ? `${PB_URL}/api/files/${article.collectionId}/${article.id}/${article.logo}` : "";
+                        return <SlidingVignette image={imageUrl} image_alt={article.name} title={`#${article.name}#`} paragraph={article.description} card_link={`/projets/${slugify(article.name)}`} margin="0.8em"/>
+                    })}
+                </ul>
+            </div>
+        )}
+
+        {unmaintainedProjects.length > 0 && (
+            <div class="category-section">
+                <h2 class="category-title" style="color: var(--color-gray-light); opacity: 0.8;">Non Maintenus</h2>
+                <ul class="projects-list">
+                    {unmaintainedProjects.map((article) => {
+                        const imageUrl = article.logo ? `${PB_URL}/api/files/${article.collectionId}/${article.id}/${article.logo}` : "";
+                        return <SlidingVignette image={imageUrl} image_alt={article.name} title={`#${article.name}#`} paragraph={article.description} card_link={`/projets/${slugify(article.name)}`} margin="0.8em"/>
+                    })}
+                </ul>
+            </div>
+        )}
     </div>
 
 </Layout>
@@ -38,6 +100,20 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
         padding-bottom: 2rem;
         max-width: 1400px;
         width: 100%;
+    }
+    
+    .category-section {
+        margin-bottom: 4rem;
+    }
+    
+    .category-title {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: var(--h2-title-color, var(--color-gray-deep));
+        text-transform: uppercase;
+        letter-spacing: 2px;
     }
 
     .projects-list {
