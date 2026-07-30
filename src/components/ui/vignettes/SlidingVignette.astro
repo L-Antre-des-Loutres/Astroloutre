@@ -35,7 +35,11 @@ const cssVars = {
         <div class="universe-sliding-card">
             <div class="front-content">
                 <div class="universe-sliding-card-image-container">
-                    <img src={image} alt={image_alt}/>
+                    {image ? (
+                        <img src={image} alt={image_alt}/>
+                    ) : (
+                        <h3 class="fallback-title" set:html={parsedTitle}></h3>
+                    )}
                 </div>
             </div>
             <div class="content">
@@ -45,3 +49,24 @@ const cssVars = {
         </div>
     </a>
 </div>
+
+<style>
+    .universe-sliding-card-container {
+        background-color: var(--server-screen-color-bg-card, #2a2a2a);
+    }
+    
+    .fallback-title {
+        font-size: 2rem;
+        font-weight: 800;
+        text-align: center;
+        color: var(--default-text-color, #fff);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        margin: 0;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+</style>
