@@ -48,6 +48,7 @@ const categoriesArray = Array.from(categoriesSet).sort((a, b) => a.localeCompare
 
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
     <Banner/>
+
     <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 
     <div class="projects-container">
@@ -96,6 +97,20 @@ const categoriesArray = Array.from(categoriesSet).sort((a, b) => a.localeCompare
         padding-bottom: 2rem;
         max-width: 1400px;
         width: 100%;
+    }
+    
+    .sliding-cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        justify-items: center;
+        align-items: start;
+        margin: 0 auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 1400px;
+        width: 100%;
+        margin-bottom: 4rem;
     }
     
     .category-section {

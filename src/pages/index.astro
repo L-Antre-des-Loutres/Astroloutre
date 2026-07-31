@@ -10,8 +10,11 @@ import TransitionSection from "../components/sections/common/transitions/Transit
 import SlidingVignette from "../components/ui/vignettes/SlidingVignette.astro";
 // Other imports
 import {formatMinecraftPlayTime} from "../formater/MinecraftPlayTimeFormater.ts";
+import {slugify} from "../formater/JoueurFormater";
 import {ApiFetcher} from "../utils/API/apiFetcher";
-import {PLAYERS_STATS} from "../utils/constantes";
+import {PLAYERS_STATS, POCKETBASE_COLLECTION_PROJETS, PB_URL} from "../utils/constantes";
+import type {ProjectType} from "../types/ProjectType";
+import type {ProjectType} from "../types/ProjectType";
 
 // Declaration of total playtime variable
 let totalHours: number = 0;
@@ -20,6 +23,13 @@ let totalHours: number = 0;
 const mcStats = await ApiFetcher.getAllRecords<any>(PLAYERS_STATS);
 const totalTicksMinecraft = mcStats.reduce((acc, curr) => acc + (Number(curr.playtime) || 0), 0);
 totalHours = formatMinecraftPlayTime(totalTicksMinecraft);
+
+const projects = await ApiFetcher.getAllRecords<ProjectType & { created: string }>(POCKETBASE_COLLECTION_PROJETS, {
+    expand: 'tags'
+});
+const botProjects = projects
+    .filter(p => p.expand?.tags?.some((t: any) => t.name.toLowerCase().includes("bot")))
+    .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
 ---
 
 <Layout>
@@ -36,40 +46,18 @@ totalHours = formatMinecraftPlayTime(totalTicksMinecraft);
     <TransitionSection title="Des #bots# codés par %nos soins% !"/>
 
     <div class="sliding-cards-container">
-        <SlidingVignette
-                image="https://raw.githubusercontent.com/L-Antre-des-Loutres/Arisoutre/main/src/app/assets/images/arisoutre-logo.png"
-            image_alt="Logo Arisoutre"
-            title="#Arisoutre#, elle c'est la #patronne#"
-            paragraph="Arisoutre gère tout ce qui est récupération des données Discord, ainsi que la modération. C'est aussi elle qui dit bienvenue lorsqu'il y a des nouveaux !"
-            card_link="https://github.com/L-Antre-des-Loutres/Arisoutre"
-        />
-        <SlidingVignette
-                image="https://raw.githubusercontent.com/Corentin-cott/Mineotter/refs/heads/main/src/app/imgs/logo-text.png"
-            image_alt="Logo Mineotter"
-            title="#Mineotter#, le bot de nos #serveurs Minecraft#"
-            paragraph="Mineotter, c'est le bot qui gère les serveurs Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est elle qui gère ça !"
-            card_link="https://github.com/Corentin-cott/Mineotter"
-        />
-        <SlidingVignette
-                image="https://raw.githubusercontent.com/L-Antre-des-Loutres/Multiloutre/refs/heads/main/multiloutre-logo.png"
-            image_alt="Logo Multiloutre"
-            title="#Multiloutre#, le bot de tous #nos autres serveurs#"
-            paragraph="Multiloutre, c'est le bot qui gère les serveurs autres que Minecraft, que ce soit le chat lié, l'ouverture des serveurs et leur fermeture. C'est lui qui gère ça !"
-            card_link="https://github.com/L-Antre-des-Loutres/MultiLoutre"
-        />
-        <SlidingVignette
-                image="/icons/logo_mateloutre.png"
-            image_alt="Logo Mateloutre"
-            title="#Mateloutre#, la peluche de notre #catégorie Pokémon#"
-            paragraph="Mateloutre, c'est le petit nouveau de la bande, pour l'instant il affiche les news récentes de Pokémon mais il fera bientôt d'autres trucs !"
-                card_link="https://github.com/L-Antre-des-Loutres/Matloutre"
-        />
-        <SlidingVignette
-            image="https://raw.githubusercontent.com/matheo-1712/Citlali/refs/heads/main/logo.png"
-            image_alt="Logo Citlali"
-            title="#Citlaloutre#, celle qui n'est pas vraiment une #loutre#"
-            paragraph="Citlaloutre (Citlali de son vrai nom) est le bot Genshin de l'Antre des Loutres, il permet d'afficher les builds des personnages demandés"
-            card_link="https://github.com/matheo-1712/Citlali"
-        />
+        {botProjects.map((projet) => {
+            const imageUrl = projet.logo ? `${PB_URL}/api/files/${projet.collectionId}/${projet.id}/${projet.logo}` : "";
+            return (
+                <SlidingVignette 
+                    image={imageUrl} 
+                    image_alt={projet.name} 
+                    title={`#${projet.name}#`} 
+                    paragraph={projet.description} 
+                    card_link={`/projets/${slugify(projet.name)}`} 
+                    margin="0.8em"
+                />
+            );
+        })}
     </div>
 </Layout>

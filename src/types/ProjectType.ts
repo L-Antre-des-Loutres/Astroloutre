@@ -10,4 +10,5 @@ export type ProjectType = {
     is_maintained: boolean;
     wiki_url: string;
     publish_url: string;
+    expand?: any;
 }
