@@ -44,6 +44,14 @@ fullySortedProjects.forEach(project => {
     categoryTags.forEach((cat: any) => categoriesSet.add(cat.name));
 });
 const categoriesArray = Array.from(categoriesSet).sort((a, b) => a.localeCompare(b));
+
+let hasAutres = fullySortedProjects.some(project => {
+    if (project.is_maintained === false) return false;
+    const categoryTags = project.expand?.tags?.filter((t: any) => t.is_category === true) || [];
+    return categoryTags.length === 0;
+});
+
+let hasNonMaintenus = fullySortedProjects.some(project => project.is_maintained === false);
 ---
 
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
@@ -52,14 +60,13 @@ const categoriesArray = Array.from(categoriesSet).sort((a, b) => a.localeCompare
     <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 
     <div class="projects-container">
-        <!-- Barre de filtres (Portfolio) -->
         <div class="portfolio-filters">
             <button class="filter-btn active" data-filter="all">Tous</button>
             {categoriesArray.map(cat => (
                 <button class="filter-btn" data-filter={cat}>{cat}</button>
             ))}
-            <button class="filter-btn" data-filter="Autres">Autres</button>
-            <button class="filter-btn" data-filter="Non Maintenus">Non Maintenus</button>
+            {hasAutres && <button class="filter-btn" data-filter="Autres">Autres</button>}
+            {hasNonMaintenus && <button class="filter-btn" data-filter="Non Maintenus">Non Maintenus</button>}
         </div>
 
         <ul class="projects-list">
