@@ -1,9 +1,9 @@
 import {useMemo, useState} from "react";
-import {formatNumber} from "../../../../formater/NumberFormater.ts";
-import {formatSecondsToString} from "../../../../formater/SecondsFormater.ts";
-import {slugify} from "../../../../formater/JoueurFormater.ts";
-import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
-import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
+import {formatNumber} from "../../../../../formater/NumberFormater.ts";
+import {formatSecondsToString} from "../../../../../formater/SecondsFormater.ts";
+import {slugify} from "../../../../../formater/JoueurFormater.ts";
+import type {DiscordUserType} from "../../../../../types/UtilisateurDiscordType.ts";
+import type {PokedevinerStatType} from "../../../../../types/PokedevinerStatsType.ts";
 
 
 /* Types */
