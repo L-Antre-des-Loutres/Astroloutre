@@ -10,16 +10,19 @@ import TransitionSection from "../../components/sections/common/transitions/Tran
 import UserScreenshots from "../../components/sections/profil/UserScreenshots.astro";
 import type {LinkAccount, DiscordUserType, DiscordUserStatsType, Roles} from "../../types/UtilisateurDiscordType.ts";
 import {ApiFetcher} from "../../utils/API/apiFetcher";
-import {DISCORD_USER_STATS, DISCORD_USERS, PLAYER_SCREENSHOTS, POKEDEVINER_STATS} from "../../utils/constantes.ts";
+import {DISCORD_USER_STATS, DISCORD_USERS, PLAYER_SCREENSHOTS, POKEDEVINER_STATS, POKE_SILHOUETTE_SCORES} from "../../utils/constantes.ts";
 import type {PlayerScreenshotType} from "../../types/PlayerScreenshoot";
 import type {PokedevinerStatType} from "../../types/PokedevinerStatsType.ts";
 import PokedevinerStatsList from "../../components/sections/profil/PokedevinerStatsList.astro";
+import type {PokeSilhouetteScoreType} from "../../types/PokeSilhouetteStatsType.ts";
+import PokeSilhouetteStatsList from "../../components/sections/profil/PokeSilhouetteStatsList.astro";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
 const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
 const userScreenshots: PlayerScreenshotType[] = Astro.props.userScreenshots || [];
 const pokedevinerStats: PokedevinerStatType[] = Astro.props.pokedevinerStats || [];
+const pokeSilhouetteStats: PokeSilhouetteScoreType[] = Astro.props.pokeSilhouetteStats || [];
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
 const stats: (DiscordUserType & { message_count: number, vocal_time: number, stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
@@ -41,6 +44,9 @@ export async function getStaticPaths() {
     const allPokedevinerStats = await ApiFetcher.getAllRecords<PokedevinerStatType>(POKEDEVINER_STATS, {
         fields: "discord_user,created,success_at,nb_try,pokemon_name,pokemon_try_list,is_expired",
         sort: "-created"
+    });
+    const allPokeSilhouetteScores = await ApiFetcher.getAllRecords<PokeSilhouetteScoreType>(POKE_SILHOUETTE_SCORES, {
+        expand: "game"
     });
     // ──────────────────────────────────────────────
     // Regroupement par Discord ID pour gérer les doublons
@@ -92,6 +98,13 @@ export async function getStaticPaths() {
             const pokedevinerStats = allPokedevinerStats.filter(
                 (stat) => allRelatedPbIds.includes(stat.discord_user)
             );
+            const pokeSilhouetteStats = allPokeSilhouetteScores
+                .filter((stat) => allRelatedPbIds.includes(stat.discord_user))
+                .sort((a, b) => {
+                    const dateA = a.expand?.game?.started_at ? new Date(a.expand.game.started_at).getTime() : 0;
+                    const dateB = b.expand?.game?.started_at ? new Date(b.expand.game.started_at).getTime() : 0;
+                    return dateB - dateA;
+                });
 
             // Aggregate stats
             const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.message_count) || 0), 0);
@@ -114,6 +127,7 @@ export async function getStaticPaths() {
                     allRelatedPbIds,
                     userScreenshots,
                     pokedevinerStats,
+                    pokeSilhouetteStats,
                     accountLinks: accountLinks, // Returns array, empty if none
                     stats: globalStats, // Pass combined stats
                 },
@@ -284,6 +298,9 @@ if (msgCount > 1) {
 
         <TransitionSection title={`%Statistique% sur #Pokedeviner#`}/>
         <PokedevinerStatsList stats={pokedevinerStats} />
+
+        <TransitionSection title={`%Statistique% sur #Poke-Silhouette#`}/>
+        <PokeSilhouetteStatsList scores={pokeSilhouetteStats} />
     </div>
 
     <style>
