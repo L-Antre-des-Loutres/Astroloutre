@@ -2,6 +2,7 @@
 //  API URL
 // ──────────────────────────────────────────────
 export const PB_URL = "https://pocketbase.antredesloutres.fr"
+export const PAPI_SPRITE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
 
 
 // ──────────────────────────────────────────────

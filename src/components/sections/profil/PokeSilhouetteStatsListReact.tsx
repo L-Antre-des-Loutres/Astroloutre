@@ -1,6 +1,7 @@
 import type { PokeSilhouetteScoreType } from "../../../types/PokeSilhouetteStatsType.ts";
 import { formatDate } from "../../../formater/DateFormater.ts";
 import { formatSecondsToString } from "../../../formater/SecondsFormater.ts";
+import {PAPI_SPRITE_URL} from "../../../utils/constantes.ts";
 
 interface Props {
     scores: PokeSilhouetteScoreType[];
@@ -25,9 +26,8 @@ export default function PokeSilhouetteStatsListReact({ scores }: Props) {
                                     <div className="poke-card-header">
                                         <div className="poke-icon overflow-hidden">
                                             {game && game.pokemon_id ? (
-                                                // TODO: Mettre ça sur papi dans le futur (la il est 1h du mat j'ai pas le courage)
                                                 <img
-                                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${game.pokemon_id}.png`} 
+                                                    src={`${PAPI_SPRITE_URL}${game.pokemon_id}.png`}
                                                     alt={game.pokemon_name}
                                                     className="w-full h-full object-contain drop-shadow-md"
                                                 />
