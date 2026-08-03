@@ -1,0 +1,198 @@
+---
+import PokeSilhouetteStatsListReact from "./PokeSilhouetteStatsListReact.tsx";
+import type {PokeSilhouetteScoreType} from "../../../types/PokeSilhouetteStatsType.ts";
+
+interface Props {
+    scores?: PokeSilhouetteScoreType[];
+}
+
+const { scores = [] } = Astro.props;
+---
+
+<PokeSilhouetteStatsListReact client:load scores={scores} />
+
+<style is:global>
+    /* --- VARIABLES --- */
+    :root {
+        --poke-card-bg: var(--server-screen-color-bg-card, #ffffff);
+        --poke-card-border: var(--server-screen-color-border, #e5e7eb);
+        --poke-text-main: var(--server-screen-color-text-main, #1f2937);
+        --poke-text-muted: var(--server-screen-color-text-muted, #6b7280);
+        --poke-success: #10b981;
+        --poke-success-bg: rgba(16, 185, 129, 0.1);
+        --poke-top3: #f59e0b;
+        --poke-top3-bg: rgba(245, 158, 11, 0.1);
+        --poke-failed: #ef4444;
+        --poke-failed-bg: rgba(239, 68, 68, 0.1);
+        --poke-card-radius: 1rem;
+        --poke-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --poke-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .poke-stats-container {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    /* --- GRILLE --- */
+    .poke-stats-grid {
+        display: grid;
+        gap: 1.5rem;
+        padding: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    /* --- CARTE --- */
+    .poke-card {
+        background-color: var(--poke-card-bg);
+        border: 2px solid var(--poke-card-border);
+        border-radius: var(--poke-card-radius);
+        padding: 1.25rem;
+        box-shadow: var(--poke-shadow);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .poke-card:has(details[open]), .poke-card:hover {
+        z-index: 10;
+    }
+
+    .poke-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        border-top-left-radius: calc(var(--poke-card-radius) - 2px);
+        border-top-right-radius: calc(var(--poke-card-radius) - 2px);
+    }
+
+    .poke-card.success::before {
+        background-color: var(--poke-success);
+    }
+
+    .poke-card.top3::before {
+        background-color: var(--poke-top3);
+    }
+
+    .poke-card.failed::before {
+        background-color: var(--poke-failed);
+    }
+
+    .poke-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--poke-shadow-hover);
+    }
+
+    /* --- EN-TÊTE --- */
+    .poke-card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .poke-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .poke-card.success .poke-icon {
+        background-color: var(--poke-success-bg);
+        color: var(--poke-success);
+    }
+
+    .poke-card.top3 .poke-icon {
+        background-color: var(--poke-top3-bg);
+        color: var(--poke-top3);
+    }
+
+    .poke-card.failed .poke-icon {
+        background-color: var(--poke-failed-bg);
+        color: var(--poke-failed);
+    }
+
+    .poke-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .pokemon-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--poke-text-main);
+        margin: 0;
+        text-transform: capitalize;
+    }
+
+    /* --- CORPS --- */
+    .poke-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0;
+    }
+
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+
+    .stat-label {
+        color: var(--poke-text-muted);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .stat-value {
+        color: var(--poke-text-main);
+        font-weight: 600;
+    }
+
+    .stat-value.highlight {
+        background-color: var(--server-screen-color-accent, #3b82f6);
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* --- EMPTY STATE --- */
+    .empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: var(--poke-card-radius);
+        border: 2px dashed var(--poke-card-border);
+        margin: 1rem;
+    }
+
+    .empty-state p {
+        font-size: 1.1rem;
+        color: var(--poke-text-muted);
+        font-weight: 500;
+        margin: 0;
+    }
+
+    /* Dark mode adaptation if the site uses one */
+    @media (prefers-color-scheme: dark) {
+        .empty-state {
+            background: rgba(255, 255, 255, 0.02);
+        }
+    }
+</style>
