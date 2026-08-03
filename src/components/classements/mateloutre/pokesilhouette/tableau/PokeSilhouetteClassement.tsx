@@ -8,7 +8,6 @@ import type {PokeSilhouetteScoreType, PokeSilhouetteGameType} from "../../../../
 /* Types */
 type PlayerWithPokeSilhouetteStats = DiscordUserType & {
     games_found: number;
-    avg_rank: number;
     games_won: number;
     avg_time: number;
     best_time: number;
@@ -26,7 +25,6 @@ type Props = {
 const pokeSilhouetteStatsConfig: Record<string, string> = {
     username: "Joueur",
     games_found: "Parties trouvées",
-    avg_rank: "Rang moyen",
     games_won: "Parties gagnées",
     avg_time: "Temps moyen",
     best_time: "Meilleur temps",
@@ -35,7 +33,6 @@ const pokeSilhouetteStatsConfig: Record<string, string> = {
 const columnWidths: Record<string, string> = {
     username: "220px",
     games_found: "150px",
-    avg_rank: "150px",
     games_won: "150px",
     avg_time: "150px",
     best_time: "150px",
@@ -89,7 +86,6 @@ const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialS
 
         type Agg = {
             games_found: number;
-            total_rank: number;
             games_won: number;
             total_time: number;
             best_time: number;
@@ -107,14 +103,12 @@ const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialS
 
             const agg = aggMap.get(score.discord_user) || {
                 games_found: 0,
-                total_rank: 0,
                 games_won: 0,
                 total_time: 0,
                 best_time: Infinity,
             };
 
             agg.games_found += 1;
-            agg.total_rank += score.rank || 0;
             
             if (score.rank === 1) {
                 agg.games_won += 1;
@@ -140,7 +134,6 @@ const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialS
             players.push({
                 ...user,
                 games_found: agg.games_found,
-                avg_rank: agg.games_found > 0 ? agg.total_rank / agg.games_found : 0,
                 games_won: agg.games_won,
                 avg_time: avg_time,
                 best_time: agg.best_time === Infinity ? 0 : agg.best_time,
@@ -153,7 +146,7 @@ const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialS
             let valB = b[sortConfig.key];
 
             // Remplacer les valeurs nulles par Infinity pour les tris de temps ou rang si on tri croissant (pour les mettre en bas)
-            if (sortConfig.key === "best_time" || sortConfig.key === "avg_time" || sortConfig.key === "avg_rank") {
+            if (sortConfig.key === "best_time" || sortConfig.key === "avg_time") {
                 if (valA === 0) valA = Infinity;
                 if (valB === 0) valB = Infinity;
             }
@@ -174,7 +167,7 @@ const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialS
         }
         // Pour les temps (best_time / avg_time) et le rang (avg_rank), on inverse la logique :
         // Un petit chiffre est meilleur, donc le 1er clic trie en croissant (asc).
-        if (sortConfig.key !== key && (key === "best_time" || key === "avg_time" || key === "avg_rank")) {
+        if (sortConfig.key !== key && (key === "best_time" || key === "avg_time")) {
             direction = "asc";
         }
         setSortConfig({ key, direction });
@@ -267,8 +260,6 @@ const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialS
                                                 return <div>{`${formatNumber(player.games_found)}`}</div>;
                                             } else if (key === "games_won") {
                                                 return <div>{`${formatNumber(player.games_won)}`}</div>;
-                                            } else if (key === "avg_rank") {
-                                                return <div>{player.avg_rank > 0 ? player.avg_rank.toFixed(1) : "-"}</div>;
                                             } else if (key === "avg_time" || key === "best_time") {
                                                 return <div>{formatSecondsToString(player[key] / 1000)}</div>;
                                             } else {
