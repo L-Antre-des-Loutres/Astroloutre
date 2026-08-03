@@ -1,5 +1,6 @@
 ---
 import PokedevinerClassement from "../../components/classements/mateloutre/pokedeviner/tableau/PokedevinerClassement.astro";
+import PokeSilhouetteClassement from "../../components/classements/mateloutre/pokesilhouette/tableau/PokeSilhouetteClassement.astro";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
@@ -7,7 +8,84 @@ import LargeTransitionSection from "../../components/sections/common/transitions
 
 <Layout title="Classement Mateloutre">
     <Banner/>
-    <LargeTransitionSection title="%Classement% #Mateloutre#" invertedBackground/>
-    <LargeTransitionSection title="%Classement% #Pokedeviner#" invertedBackground/>
-    <PokedevinerClassement/>
+    <LargeTransitionSection title="%Classements% #Mateloutre#" invertedBackground/>
+
+    <div class="max-w-[95vw] mx-auto px-4 py-4 sm:py-8">
+        
+        {/* Navigation des onglets */}
+        <div class="flex justify-center mb-12">
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button
+                    id="tab-pokedeviner"
+                    class="ranking-filter-button active"
+                    onclick="switchTab('pokedeviner')"
+                >
+                    Pokedeviner
+                </button>
+                <button
+                    id="tab-pokesilhouette"
+                    class="ranking-filter-button inactive"
+                    onclick="switchTab('pokesilhouette')"
+                >
+                    Poke-Silhouette
+                </button>
+            </div>
+        </div>
+
+        {/* Contenu Pokedeviner */}
+        <div id="content-pokedeviner" class="tab-content active">
+            <PokedevinerClassement/>
+        </div>
+
+        {/* Contenu Poke-Silhouette */}
+        <div id="content-pokesilhouette" class="tab-content hidden">
+            <PokeSilhouetteClassement/>
+        </div>
+    </div>
 </Layout>
+
+<style>
+    /* Animation on tab content */
+    .tab-content {
+        animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script is:inline>
+    function switchTab(tabName) {
+        // Mettre à jour les boutons
+        const tabPokedeviner = document.getElementById('tab-pokedeviner');
+        const tabPokeSilhouette = document.getElementById('tab-pokesilhouette');
+        
+        if (tabName === 'pokedeviner') {
+            tabPokedeviner.classList.add('active');
+            tabPokedeviner.classList.remove('inactive');
+            tabPokeSilhouette.classList.add('inactive');
+            tabPokeSilhouette.classList.remove('active');
+        } else {
+            tabPokeSilhouette.classList.add('active');
+            tabPokeSilhouette.classList.remove('inactive');
+            tabPokedeviner.classList.add('inactive');
+            tabPokedeviner.classList.remove('active');
+        }
+
+        // Mettre à jour le contenu
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.add('hidden');
+            content.classList.remove('active');
+        });
+        document.getElementById(`content-${tabName}`).classList.remove('hidden');
+        document.getElementById(`content-${tabName}`).classList.add('active');
+    }
+</script>
