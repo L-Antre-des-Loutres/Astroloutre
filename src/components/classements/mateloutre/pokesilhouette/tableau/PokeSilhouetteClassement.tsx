@@ -1,180 +1,178 @@
 import {useMemo, useState} from "react";
-import {formatNumber} from "../../../../formater/NumberFormater.ts";
-import {formatSecondsToString} from "../../../../formater/SecondsFormater.ts";
-import {slugify} from "../../../../formater/JoueurFormater.ts";
-import type {DiscordUserType} from "../../../../types/UtilisateurDiscordType.ts";
-import type {PokedevinerStatType} from "../../../../types/PokedevinerStatsType.ts";
-
+import {formatNumber} from "../../../../../formater/NumberFormater.ts";
+import {formatSecondsToString} from "../../../../../formater/SecondsFormater.ts";
+import {slugify} from "../../../../../formater/JoueurFormater.ts";
+import type {DiscordUserType} from "../../../../../types/UtilisateurDiscordType.ts";
+import type {PokeSilhouetteScoreType, PokeSilhouetteGameType} from "../../../../../types/PokeSilhouetteStatsType.ts";
 
 /* Types */
-type PlayerWithPokedevinerStats = DiscordUserType & {
-    games_played: number;
+type PlayerWithPokeSilhouetteStats = DiscordUserType & {
+    games_found: number;
     games_won: number;
-    avg_tries: number;
-    best_try: number;
     avg_time: number;
+    best_time: number;
     [key: string]: any;
 };
 
 /* Props attendues */
 type Props = {
     users: DiscordUserType[];
-    stats: PokedevinerStatType[];
+    scores: PokeSilhouetteScoreType[];
+    games: PokeSilhouetteGameType[];
 };
 
 /* Colonnes et largeurs */
-const pokedevinerStatsConfig: Record<string, string> = {
+const pokeSilhouetteStatsConfig: Record<string, string> = {
     username: "Joueur",
+    games_found: "Parties trouvées",
     games_won: "Parties gagnées",
-    games_played: "Parties jouées",
-    avg_tries: "Essais moyens",
-    best_try: "Meilleur score",
     avg_time: "Temps moyen",
+    best_time: "Meilleur temps",
 };
 
 const columnWidths: Record<string, string> = {
     username: "220px",
+    games_found: "150px",
     games_won: "150px",
-    games_played: "150px",
-    avg_tries: "150px",
-    best_try: "150px",
     avg_time: "150px",
+    best_time: "150px",
 };
 
-// Détermine l'année d'une partie à partir de la date de création du record
-function getStatYear(stat: PokedevinerStatType): string | null {
-    const raw = stat.created;
+// Détermine l'année d'une partie à partir de la date de création (du jeu en priorité, sinon du score)
+function getStatYear(score: PokeSilhouetteScoreType, gamesById: Map<string, PokeSilhouetteGameType>): string | null {
+    const game = gamesById.get(score.game);
+    const raw = game?.started_at || game?.created || score.created;
     if (!raw) return null;
     const year = new Date(raw).getFullYear();
     if (isNaN(year)) return null;
     return year.toString();
 }
 
-const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats = []}) => {
-    const stats = initialStats;
+const PokeSilhouetteClassement: React.FC<Props> = ({users = [], scores: initialScores = [], games = []}) => {
+    const scores = initialScores;
     const [selectedYear, setSelectedYear] = useState<string>("all");
 
     // Tri du tableau sélectionné au chargement de la page
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
-        key: "games_won",
+        key: "games_found",
         direction: "desc",
     });
+
+    const gamesById = useMemo(() => {
+        const map = new Map<string, PokeSilhouetteGameType>();
+        games.forEach(g => map.set(g.id, g));
+        return map;
+    }, [games]);
 
     // Années disponibles dans les données
     const years = useMemo(() => {
         const _years = new Set<string>();
-        if (Array.isArray(stats)) {
-            stats.forEach((s) => {
-                const y = getStatYear(s);
+        if (Array.isArray(scores)) {
+            scores.forEach((s) => {
+                const y = getStatYear(s, gamesById);
                 if (y) _years.add(y);
             });
         }
         return Array.from(_years).sort((a, b) => b.localeCompare(a));
-    }, [stats]);
+    }, [scores, gamesById]);
 
     // Agrégation des parties par joueur, puis tri
     const sortedPlayers = useMemo(() => {
-        if (!Array.isArray(users) || !Array.isArray(stats)) return [];
+        if (!Array.isArray(users) || !Array.isArray(scores)) return [];
 
         // Map id PocketBase -> utilisateur Discord
         const usersById = new Map<string, DiscordUserType>();
         users.forEach((u) => usersById.set(u.id, u));
 
         type Agg = {
-            games_played: number;
+            games_found: number;
             games_won: number;
-            total_tries: number;
-            best_try: number;
-            total_time: number;   // secondes cumulées (parties gagnées chronométrées)
-            timed_games: number;  // nombre de parties chronométrées
+            total_time: number;
+            best_time: number;
         };
         const aggMap = new Map<string, Agg>();
 
-        stats.forEach((stat) => {
-            if (!stat.discord_user) return;
+        scores.forEach((score) => {
+            if (!score.discord_user) return;
 
             // Filtre par année
             if (selectedYear !== "all") {
-                const y = getStatYear(stat);
+                const y = getStatYear(score, gamesById);
                 if (y !== selectedYear) return;
             }
 
-            const agg = aggMap.get(stat.discord_user) || {
-                games_played: 0,
+            const agg = aggMap.get(score.discord_user) || {
+                games_found: 0,
                 games_won: 0,
-                total_tries: 0,
-                best_try: Infinity,
                 total_time: 0,
-                timed_games: 0,
+                best_time: Infinity,
             };
 
-            agg.games_played += 1;
-
-            // Une partie est gagnée (terminée) si elle a une date de succès
-            const won = Boolean(stat.success_at);
-            if (won) {
+            agg.games_found += 1;
+            
+            if (score.rank === 1) {
                 agg.games_won += 1;
-
-                const tries = Number(stat.nb_try) || 0;
-                agg.total_tries += tries;
-                if (tries > 0 && tries < agg.best_try) agg.best_try = tries;
-
-                // Durée de résolution
-                const start = stat.created ? new Date(stat.created).getTime() : NaN;
-                const end = stat.success_at ? new Date(stat.success_at).getTime() : NaN;
-                if (!isNaN(start) && !isNaN(end) && end > start) {
-                    agg.total_time += (end - start) / 1000;
-                    agg.timed_games += 1;
-                }
             }
 
-            aggMap.set(stat.discord_user, agg);
+            const time = Number(score.elapsed_ms) || 0;
+            if (time > 0) {
+                agg.total_time += time;
+                if (time < agg.best_time) agg.best_time = time;
+            }
+
+            aggMap.set(score.discord_user, agg);
         });
 
         // Construction de la liste des joueurs
-        const players: PlayerWithPokedevinerStats[] = [];
+        const players: PlayerWithPokeSilhouetteStats[] = [];
         aggMap.forEach((agg, pbId) => {
             const user = usersById.get(pbId);
-            if (!user || agg.games_played <= 0) return;
+            if (!user || agg.games_found <= 0) return;
 
-            // Le temps moyen est calculé UNIQUEMENT sur les parties terminées et chronométrées.
-            // Les parties non finies (timeout, sans date de succès) sont simplement ignorées :
-            // elles ne doivent PAS masquer le temps moyen déjà acquis sur les parties gagnées.
-            const avg_time = agg.timed_games > 0 ? agg.total_time / agg.timed_games : 0;
+            const avg_time = agg.games_found > 0 ? agg.total_time / agg.games_found : 0;
 
             players.push({
                 ...user,
-                games_played: agg.games_played,
+                games_found: agg.games_found,
                 games_won: agg.games_won,
-                avg_tries: agg.games_won > 0 ? agg.total_tries / agg.games_won : 0,
-                best_try: agg.best_try === Infinity ? 0 : agg.best_try,
-                avg_time,
+                avg_time: avg_time,
+                best_time: agg.best_time === Infinity ? 0 : agg.best_time,
             });
         });
 
-        // Tri
-        return [...players].sort((a, b) => {
-            let aVal = a[sortConfig.key];
-            let bVal = b[sortConfig.key];
+        // Application du tri
+        players.sort((a, b) => {
+            let valA = a[sortConfig.key];
+            let valB = b[sortConfig.key];
 
-            // Nombres
-            if (["games_played", "games_won", "avg_tries", "best_try", "avg_time"].includes(sortConfig.key)) {
-                aVal = Number(aVal) || 0;
-                bVal = Number(bVal) || 0;
-            }
-            // Chaînes
-            else {
-                aVal = aVal ? String(aVal).toLowerCase() : "";
-                bVal = bVal ? String(bVal).toLowerCase() : "";
+            // Remplacer les valeurs nulles par Infinity pour les tris de temps ou rang si on tri croissant (pour les mettre en bas)
+            if (sortConfig.key === "best_time" || sortConfig.key === "avg_time") {
+                if (valA === 0) valA = Infinity;
+                if (valB === 0) valB = Infinity;
             }
 
-            if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
-            if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
+            if (valA < valB) return sortConfig.direction === "asc" ? -1 : 1;
+            if (valA > valB) return sortConfig.direction === "asc" ? 1 : -1;
             return 0;
         });
-    }, [sortConfig, users, stats, selectedYear]);
 
-    /* Front */
+        return players;
+    }, [users, scores, gamesById, sortConfig, selectedYear]);
+
+    // Changement du tri (au clic sur une colonne)
+    const requestSort = (key: string) => {
+        let direction: "asc" | "desc" = "desc";
+        if (sortConfig.key === key && sortConfig.direction === "desc") {
+            direction = "asc";
+        }
+        // Pour les temps (best_time / avg_time) et le rang (avg_rank), on inverse la logique :
+        // Un petit chiffre est meilleur, donc le 1er clic trie en croissant (asc).
+        if (sortConfig.key !== key && (key === "best_time" || key === "avg_time")) {
+            direction = "asc";
+        }
+        setSortConfig({ key, direction });
+    };
+
     return (
         <div className="min-h-[40vh] flex flex-col items-center justify-start px-4 py-0">
 
@@ -205,20 +203,14 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
                 <table className="ranking-table">
                     <thead className="ranking-thead">
                     <tr>
-                        {Object.entries(pokedevinerStatsConfig).map(([key, label]) => {
+                        {Object.entries(pokeSilhouetteStatsConfig).map(([key, label]) => {
                             const isActive = sortConfig?.key === key;
                             return (
                                 <th
                                     key={key}
-                                    onClick={() => {
-                                        let direction: "asc" | "desc" = "desc";
-                                        if (isActive && sortConfig?.direction === "desc") {
-                                            direction = "asc";
-                                        }
-                                        setSortConfig({key, direction});
-                                    }}
+                                    onClick={() => requestSort(key)}
                                     className="ranking-th"
-                                    style={{minWidth: columnWidths[key]}}
+                                    style={{minWidth: columnWidths[key] || "auto"}}
                                 >
                                     {label} {isActive ? (sortConfig.direction === "asc" ? "▲" : "▼") : ""}
                                 </th>
@@ -230,20 +222,20 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
                     {!Array.isArray(sortedPlayers) || sortedPlayers.length === 0 ? (
                         <tr>
                             <td
-                                colSpan={Object.keys(pokedevinerStatsConfig).length}
+                                colSpan={Object.keys(pokeSilhouetteStatsConfig).length}
                                 className="text-center px-6 py-8 ranking-td ranking-tr-even"
                             >
-                                Pas de données Pokedeviner.
+                                Pas de données Poke-Silhouette.
                             </td>
                         </tr>
                     ) : (
                         sortedPlayers.map((player, idx) => (
-                            <tr key={idx} className={idx % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
-                                {Object.keys(pokedevinerStatsConfig).map((key) => (
+                            <tr key={player.id} className={idx % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
+                                {Object.keys(pokeSilhouetteStatsConfig).map((key) => (
                                     <td
-                                        key={key}
+                                        key={`${player.id}-${key}`}
                                         className="ranking-td"
-                                        style={{minWidth: columnWidths[key]}}
+                                        style={{minWidth: columnWidths[key] || "auto"}}
                                     >
                                         {(() => {
                                             if (key === "username") {
@@ -264,17 +256,12 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
                                                         </a>
                                                     </div>
                                                 );
+                                            } else if (key === "games_found") {
+                                                return <div>{`${formatNumber(player.games_found)}`}</div>;
                                             } else if (key === "games_won") {
-                                                return <div>{`${formatNumber(player.games_won)} ${player.games_won > 1 ? "parties" : "partie"}`}</div>;
-                                            } else if (key === "games_played") {
-                                                return <div>{`${formatNumber(player.games_played)} ${player.games_played > 1 ? "parties" : "partie"}`}</div>;
-                                            } else if (key === "avg_tries") {
-                                                const rounded = Math.round(player.avg_tries);
-                                                return <div>{rounded > 0 ? `${rounded} ${rounded > 1 ? "essais" : "essai"}` : "—"}</div>;
-                                            } else if (key === "best_try") {
-                                                return <div>{player.best_try > 0 ? `${player.best_try} ${player.best_try > 1 ? "essais" : "essai"}` : "—"}</div>;
-                                            } else if (key === "avg_time") {
-                                                return <div>{formatSecondsToString(player.avg_time)}</div>;
+                                                return <div>{`${formatNumber(player.games_won)}`}</div>;
+                                            } else if (key === "avg_time" || key === "best_time") {
+                                                return <div>{formatSecondsToString(player[key] / 1000)}</div>;
                                             } else {
                                                 return player[key] ?? "-";
                                             }
@@ -291,8 +278,7 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
             {/* Infos */}
             <div className="hidden sm:block text-center ranking-info-text">
                 <p className="mt-2 sm:mt-4">
-                    Cliquez sur une colonne pour trier le classement. Le « meilleur score » correspond à la partie
-                    gagnée avec le moins d'essais.
+                    Cliquez sur une colonne pour trier le classement.
                 </p>
                 <p className="mt-2">
                     Ces données sont mises à jour au chargement de la page.
@@ -322,4 +308,4 @@ const PokedevinerClassement: React.FC<Props> = ({users = [], stats: initialStats
     );
 };
 
-export default PokedevinerClassement;
+export default PokeSilhouetteClassement;

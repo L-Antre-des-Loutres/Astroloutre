@@ -1,30 +1,96 @@
 ---
-import {getCollection} from 'astro:content';
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import SlidingVignette from "../../components/ui/vignettes/SlidingVignette.astro";
 import {slugify} from "../../formater/JoueurFormater";
 import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import { ApiFetcher } from "../../utils/API/apiFetcher";
+import { POCKETBASE_COLLECTION_PROJETS, PB_URL } from "../../utils/constantes";
+import type { ProjectType } from "../../types/ProjectType";
 
 const tag = Astro.url.searchParams.get('tag');
-const articles = await getCollection('blog');
+let projects = await ApiFetcher.getAllRecords<ProjectType & { created: string }>(POCKETBASE_COLLECTION_PROJETS, {
+    expand: 'tags'
+});
 
-// Tri par date de publication décroissante et filtre par tag si un tag est spécifié
-const filteredArticles = tag
-    ? articles.filter(article => article.data.tags?.includes(tag))
-    : articles;
-filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+// Ne récupérer que les projets qui ont le tag "Antre des loutres"
+projects = projects.filter(p => p.expand?.tags?.some((t: any) => t.name.toLowerCase() === "antre des loutres" || t.name.toLowerCase() === "antre des loutre"));
+
+// Tri par date de publication décroissante (base de tri)
+const sortedProjects = projects.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+
+function getPrimaryCategory(project: any) {
+    if (project.is_maintained === false) return "ZZZ_NonMaintenus";
+    const categoryTags = project.expand?.tags?.filter((t: any) => t.is_category === true) || [];
+    if (categoryTags.length > 0) {
+        const catNames = categoryTags.map((t: any) => t.name).sort();
+        return catNames[0];
+    }
+    return "YYY_Autres";
+}
+
+// Tri par catégorie (tout en conservant le tri par date au sein de chaque catégorie grâce à la stabilité du tri)
+const fullySortedProjects = sortedProjects.sort((a, b) => {
+    const catA = getPrimaryCategory(a);
+    const catB = getPrimaryCategory(b);
+    return catA.localeCompare(catB);
+});
+
+// Collect all unique categories to build the filter bar
+const categoriesSet = new Set<string>();
+fullySortedProjects.forEach(project => {
+    if (project.is_maintained === false) return; // Non maintenus is handled separately
+    const categoryTags = project.expand?.tags?.filter((t: any) => t.is_category === true) || [];
+    categoryTags.forEach((cat: any) => categoriesSet.add(cat.name));
+});
+const categoriesArray = Array.from(categoriesSet).sort((a, b) => a.localeCompare(b));
+
+let hasAutres = fullySortedProjects.some(project => {
+    if (project.is_maintained === false) return false;
+    const categoryTags = project.expand?.tags?.filter((t: any) => t.is_category === true) || [];
+    return categoryTags.length === 0;
+});
+
+let hasNonMaintenus = fullySortedProjects.some(project => project.is_maintained === false);
 ---
 
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
     <Banner/>
+
     <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 
     <div class="projects-container">
-        <ul class="projects-list">
-            {filteredArticles.map((article) => (
-                <SlidingVignette image={article.data.image || ""} image_alt={article.data.title} title=`#${article.data.title}#` paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0.8em"/>
+        <div class="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            {categoriesArray.map(cat => (
+                <button class="filter-btn" data-filter={cat}>{cat}</button>
             ))}
+            {hasAutres && <button class="filter-btn" data-filter="Autres">Autres</button>}
+            {hasNonMaintenus && <button class="filter-btn" data-filter="Non Maintenus">Non Maintenus</button>}
+        </div>
+
+        <ul class="projects-list">
+            {fullySortedProjects.map((article) => {
+                let cats: string[] = [];
+                if (article.is_maintained === false) {
+                    cats.push("Non Maintenus");
+                } else {
+                    const categoryTags = article.expand?.tags?.filter((t: any) => t.is_category === true) || [];
+                    if (categoryTags.length > 0) {
+                        categoryTags.forEach((c: any) => cats.push(c.name));
+                    } else {
+                        cats.push("Autres");
+                    }
+                }
+                const catString = cats.join(",");
+                const imageUrl = article.logo ? `${PB_URL}/api/files/${article.collectionId}/${article.id}/${article.logo}` : "";
+                
+                return (
+                    <li class="portfolio-item" data-categories={catString}>
+                        <SlidingVignette image={imageUrl} image_alt={article.name} title={`#${article.name}#`} paragraph={article.description} card_link={`/projets/${slugify(article.name)}`} margin="0.8em"/>
+                    </li>
+                );
+            })}
         </ul>
     </div>
 
@@ -39,17 +105,92 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
         max-width: 1400px;
         width: 100%;
     }
-
-    .projects-list {
+    
+    .sliding-cards-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 2rem;
+        justify-items: center;
+        align-items: start;
+        margin: 0 auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 1400px;
+        width: 100%;
+        margin-bottom: 4rem;
+    }
+    
+    .category-section {
+        margin-bottom: 4rem;
+    }
+    
+    .category-title {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: var(--h2-title-color, var(--color-gray-deep));
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .portfolio-filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+        margin-bottom: 3.5rem;
+        padding: 0 1rem;
+    }
+    
+    .filter-btn {
+        background: transparent;
+        border: 2px solid var(--server-screen-color-border, rgba(255, 255, 255, 0.1));
+        color: var(--default-text-color, #e0e0e0);
+        padding: 0.6rem 1.4rem;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--h1-title-color, #FF8C42);
+        color: var(--h1-title-color, #FF8C42);
+        transform: translateY(-2px);
+    }
+    
+    .filter-btn.active {
+        background: var(--h1-title-color, #FF8C42);
+        border-color: var(--h1-title-color, #FF8C42);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
+    }
+
+    .portfolio-item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    
+    .portfolio-item.hidden {
+        display: none;
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    .projects-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2.5rem;
         list-style: none;
         padding: 0;
         margin: 0 auto;
         width: 100%;
-
-        justify-items: center;
         align-items: start;
     }
 
@@ -68,7 +209,53 @@ filteredArticles.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTim
 
         .projects-list {
             grid-template-columns: 1fr;
-            gap: 1.2rem;
+            gap: 1.5rem;
+        }
+        
+        .filter-btn {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
         }
     }
 </style>
+
+<script>
+    function initFilters() {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active class
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filterValue = btn.getAttribute('data-filter');
+                
+                // Filter items
+                portfolioItems.forEach(item => {
+                    const itemCategories = item.getAttribute('data-categories')?.split(',') || [];
+                    
+                    if (filterValue === 'all' || itemCategories.includes(filterValue)) {
+                        item.classList.remove('hidden');
+                        // Small timeout to allow display:block to apply before animating opacity
+                        setTimeout(() => {
+                            (item as HTMLElement).style.opacity = '1';
+                            (item as HTMLElement).style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.classList.add('hidden');
+                        (item as HTMLElement).style.opacity = '0';
+                        (item as HTMLElement).style.transform = 'scale(0.9)';
+                    }
+                });
+            });
+        });
+    }
+
+    // Run on standard load
+    document.addEventListener("DOMContentLoaded", initFilters);
+    
+    // Run on Astro view transitions
+    document.addEventListener("astro:page-load", initFilters);
+</script>

@@ -2,6 +2,7 @@
 //  API URL
 // ──────────────────────────────────────────────
 export const PB_URL = "https://pocketbase.antredesloutres.fr"
+export const PAPI_SPRITE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
 
 
 // ──────────────────────────────────────────────
@@ -19,3 +20,6 @@ export const PLAYER_SCREENSHOTS = "player_screenshots"
 export const POKEMON_PLAYERS = "pokemon_players"
 export const CAPTURED_POKEMONS = "captured_pokemons"
 export const POKEDEVINER_STATS = "pokedeviner_stats"
+export const POKE_SILHOUETTE_GAMES = "pokesilhouette_games"
+export const POKE_SILHOUETTE_SCORES = "pokesilhouette_scores"
+export const POCKETBASE_COLLECTION_PROJETS = "projects"

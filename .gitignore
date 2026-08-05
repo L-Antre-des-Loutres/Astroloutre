@@ -28,3 +28,5 @@ qodana.yaml
 
 # Claude
 /.claude
+
+src/data/github-cache.json

@@ -1,33 +1,47 @@
 ---
-import {getCollection} from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import Title from "../../../../public/images/titles/nos-projet.webp"
 import Banner from "../../../components/sections/layout/Banner.astro";
 import {slugify} from "../../../formater/JoueurFormater";
 import SlidingVignette from "../../../components/ui/vignettes/SlidingVignette.astro";
 import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
+import { ApiFetcher } from "../../../utils/API/apiFetcher";
+import { POCKETBASE_COLLECTION_PROJETS, PB_URL } from "../../../utils/constantes";
+import type { ProjectType } from "../../../types/ProjectType";
 
 export async function getStaticPaths() {
-    const articles = await getCollection("blog");
+    const allProjets = await ApiFetcher.getAllRecords<ProjectType & { created: string }>(POCKETBASE_COLLECTION_PROJETS, {
+        expand: 'tags'
+    });
 
-    // Récupère la liste de tous les tags uniques
-    const tags = new Set(
-        articles.flatMap((article) => article.data.tags ?? [])
-    );
+    // Récupère la liste de tous les tags uniques (sans le tag générique "Antre des loutres")
+    const tags = new Set<string>();
+    allProjets.forEach((projet) => {
+        if (projet.expand?.tags) {
+            projet.expand.tags.forEach((t: any) => {
+                // Ignore le tag global s'il y est, car cette page filtre par catégorie spécifique
+                if (t.name.toLowerCase() !== "antre des loutres" && t.name.toLowerCase() !== "antre des loutre") {
+                    tags.add(t.name);
+                }
+            });
+        }
+    });
 
     return Array.from(tags).map((tag) => ({
-        params: {tag},
+        params: {tag: tag},
         props: {tag},
     }));
 }
 
 const {tag} = Astro.props;
-const articles = await getCollection("blog");
+const allProjets = await ApiFetcher.getAllRecords<ProjectType & { created: string }>(POCKETBASE_COLLECTION_PROJETS, {
+    expand: 'tags'
+});
 
 // Filtre par le tag donné dans l'URL
-const filteredArticles = articles
-    .filter((article) => article.data.tags?.includes(tag))
-    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const filteredArticles = allProjets
+    .filter((projet) => projet.expand?.tags?.some((t: any) => t.name === tag))
+    .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
 ---
 
 <Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
@@ -36,9 +50,12 @@ const filteredArticles = articles
 
     <div class="projects-container">
         <ul class="projects-list">
-            {filteredArticles.map((article) => (
-                    <SlidingVignette image={article.data.image || ""} image_alt={article.data.title} title=`#${article.data.title}#` paragraph={article.data.description} card_link={`/projets/${slugify(article.data.title)}`} margin="0.8em"/>
-            ))}
+            {filteredArticles.map((article) => {
+                const imageUrl = article.logo ? `${PB_URL}/api/files/${article.collectionId}/${article.id}/${article.logo}` : "";
+                return (
+                    <SlidingVignette image={imageUrl} image_alt={article.name} title={`#${article.name}#`} paragraph={article.description} card_link={`/projets/${slugify(article.name)}`} margin="0.8em"/>
+                );
+            })}
         </ul>
     </div>
 
@@ -56,15 +73,22 @@ const filteredArticles = articles
 
     .projects-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         list-style: none;
         padding: 0;
         margin: 0 auto;
         width: 100%;
+        max-width: 1200px;
 
         justify-items: center;
         align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+        .projects-list {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 
     @media (max-width: 900px) {
