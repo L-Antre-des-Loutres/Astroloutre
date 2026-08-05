@@ -429,6 +429,7 @@ const languageStats = languages && totalLanguageBytes > 0 ? Object.entries(langu
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        min-width: 0; /* Prevents grid blowout from long content like tables/pre */
     }
 
     .main-image {
@@ -659,6 +660,15 @@ const languageStats = languages && totalLanguageBytes > 0 ? Object.entries(langu
         font-size: 1.1rem;
         font-style: italic;
     }
+
+    .markdown-body :global(table) {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1.5em;
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+    }
     
     .markdown-body :global(th), .markdown-body :global(td) {
         border: 1px solid var(--server-screen-color-border, rgba(255, 255, 255, 0.1));
@@ -696,11 +706,12 @@ const languageStats = languages && totalLanguageBytes > 0 ? Object.entries(langu
 
     .languages-section {
         flex: 1;
-        min-width: 300px;
+        min-width: min(100%, 300px);
     }
     
     .contributors-section {
         min-width: fit-content;
+        max-width: 100%;
     }
     
     .languages-section h3, .contributors-section h3 {
@@ -768,7 +779,7 @@ const languageStats = languages && totalLanguageBytes > 0 ? Object.entries(langu
         .sidebar-list {
             /* Grid project cards */
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
             gap: 1.5rem;
         }
     }
