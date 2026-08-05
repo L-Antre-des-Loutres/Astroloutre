@@ -54,14 +54,16 @@ export async function getStaticPaths() {
                 
                 // Fetch the repo info first to get pushed_at
                 const repoRes = await fetch(`https://api.github.com/repos/${repoPath}`, { headers });
-                if (repoRes.ok) {
-                    const repoData = await repoRes.json();
-                    defaultBranch = repoData.default_branch || "main";
-                    pushedAt = repoData.pushed_at || "";
-                    
-                    if (pushedAt && githubCache[repoPath] && githubCache[repoPath].pushedAt === pushedAt) {
-                        useCache = true;
-                    }
+                if (!repoRes.ok) {
+                    throw new Error(`Repo API retour:${repoRes.status}`);
+                }
+                
+                const repoData = await repoRes.json();
+                defaultBranch = repoData.default_branch || "main";
+                pushedAt = repoData.pushed_at || "";
+                
+                if (pushedAt && githubCache[repoPath] && githubCache[repoPath].pushedAt === pushedAt) {
+                    useCache = true;
                 }
 
                 if (useCache) {
@@ -73,7 +75,11 @@ export async function getStaticPaths() {
                 } else {
                     // 1. Fetch README
                     const readmeRes = await fetch(`https://api.github.com/repos/${repoPath}/readme`, { headers });
-                    if (readmeRes.ok) {
+                    if (!readmeRes.ok) {
+                        if (readmeRes.status !== 404) {
+                            throw new Error(`Readme API retour:${readmeRes.status}`);
+                        }
+                    } else {
                         const readmeData = await readmeRes.json();
                         let markdown = Buffer.from(readmeData.content, 'base64').toString('utf8');
 
@@ -155,8 +161,17 @@ export async function getStaticPaths() {
                 cacheUpdated = true;
             }
 
-            } catch (e) {
-                console.error(`Erreur lors de la récupération GitHub pour ${repoPath}:`, e);
+            } catch (e: any) {
+                console.warn(`Impossible de récupérer toutes les infos GitHub pour ${repoPath} (${e.message}). Tentative d'utilisation du cache de secours...`);
+                if (githubCache[repoPath]) {
+                    readmeHtml = githubCache[repoPath].readmeHtml || readmeHtml;
+                    contributors = githubCache[repoPath].contributors || [];
+                    version = githubCache[repoPath].version || version;
+                    languages = githubCache[repoPath].languages || {};
+                    lastCommitDate = githubCache[repoPath].lastCommitDate || "";
+                } else {
+                    console.error(`Aucun cache disponible en secours pour ${repoPath}.`);
+                }
             }
         }
         
