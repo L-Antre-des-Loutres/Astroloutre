@@ -159,6 +159,13 @@ export async function getStaticPaths() {
                 console.error(`Erreur lors de la récupération GitHub pour ${repoPath}:`, e);
             }
         }
+        
+        // Retire la première image si le README commence par elle (ex: logo), même si récupéré du cache
+        if (readmeHtml) {
+            readmeHtml = readmeHtml.replace(/^\s*(<(?:p|div|a|h[1-6]|span)[^>]*>\s*)*<img[^>]+>(?:\s*<\/(?:p|div|a|h[1-6]|span)>)?/i, (match) => {
+                return match.replace(/<img[^>]+>/i, '');
+            });
+        }
 
         return {
             params: {title: slugify(projet.name)},
@@ -584,6 +591,8 @@ const languageStats = languages && totalLanguageBytes > 0 ? Object.entries(langu
     .markdown-body :global(img) {
         max-width: 100%;
         height: auto;
+        max-height: 400px;
+        object-fit: contain;
         border-radius: 8px;
         margin: 0.2em 0.2em 0.2em 0;
     }
