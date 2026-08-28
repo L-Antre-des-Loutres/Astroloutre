@@ -1,5 +1,6 @@
 ---
 import {slugify} from "../../../formater/ServeurFormater";
+import {publicAsset} from "../../../utils/publicAsset";
 import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/sections/layout/Banner.astro";
 
@@ -95,10 +96,22 @@ export async function getStaticPaths() {
         },
     }));
 }
+
+// Visuel de l'embed Discord : la bannière large du serveur si elle existe,
+// sinon son image PocketBase (qui a déjà son propre repli).
+const ogImage = serveur
+    ? publicAsset(`/banner/minecraft/${slugify(serveur.name)}.webp`) ?? serveur.image
+    : undefined;
 ---
 {!serveur && <h1>Serveur introuvable</h1>}
 {serveur && (
-<Layout title={serveur.name} ogDescription={`Description du serveur ${serveur.name}`}>
+<Layout
+        title={serveur.name}
+        ogTitle={`${serveur.name} — serveur Minecraft`}
+        ogDescription={serveur.description || `Rejoins ${serveur.name}, un serveur Minecraft de l'Antre des Loutres. IP, version, statut et joueurs connectés.`}
+        ogImage={ogImage}
+        ogImageAlt={`Bannière du serveur ${serveur.name}`}
+>
     <Banner bannerUrl={`/banner/minecraft/${slugify(serveur.name)}.webp`}/>
     <div class="profile-container">
         <TransitionSection title={`Informations du serveur #${serveur.name}#`}/>

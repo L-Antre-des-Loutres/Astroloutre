@@ -1,5 +1,6 @@
 ---
 import {slugify} from "../../../formater/ServeurFormater";
+import {publicAsset} from "../../../utils/publicAsset";
 import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/sections/layout/Banner.astro";
 
@@ -96,10 +97,24 @@ export async function getStaticPaths() {
         },
     }));
 }
+
+// Visuel de l'embed Discord : la bannière large du serveur si elle existe,
+// sinon son image PocketBase.
+const ogImage = serveur
+    ? publicAsset(`/banner/palworld/${slugify(serveur.name)}.webp`)
+        ?? serveur.image
+        ?? '/banner/palworld/palworld_endgame.webp'
+    : undefined;
 ---
 {!serveur && <h1>Serveur introuvable</h1>}
 {serveur && (
-<Layout title={serveur.name} ogDescription={`Description du serveur ${serveur.name}`}>
+<Layout
+        title={serveur.name}
+        ogTitle={`${serveur.name} — serveur Palworld`}
+        ogDescription={serveur.description || `Rejoins ${serveur.name}, un serveur Palworld de l'Antre des Loutres. IP, version, statut et joueurs connectés.`}
+        ogImage={ogImage}
+        ogImageAlt={`Bannière du serveur ${serveur.name}`}
+>
     <Banner bannerUrl=`/banner/palworld/${slugify(serveur.name)}.webp`/>
     <div class="profile-container">
         <TransitionSection title={`Informations du serveur #${serveur.name}#`}/>

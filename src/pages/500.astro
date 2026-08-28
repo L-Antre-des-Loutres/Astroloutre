@@ -9,7 +9,11 @@ interface Props {
 const { error = 500 } = Astro.props;
 ---
 
-<Layout title="Erreur 500">
+<Layout
+        title="Erreur 500"
+        ogDescription="Une erreur est survenue de notre côté. Les loutres réparent ça au plus vite !"
+        noindex
+>
     <Banner/>
     <div class="error-page-content">
         <LargeTransitionSection title=`Erreur %#${error}#% !` invertedBackground/>

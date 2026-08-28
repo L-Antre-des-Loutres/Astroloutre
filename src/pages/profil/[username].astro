@@ -153,8 +153,14 @@ if (msgCount > 1) {
 ---
 {!utilisateur && <h1>Joueur introuvable</h1>}
 {utilisateur && (
-<Layout ogImage={utilisateur?.avatar_url} title={`${utilisateur?.username}`}
-        ogDescription={`Profil Discord : ${utilisateur?.username}`}>
+<Layout
+        title={utilisateur.username}
+        ogTitle={`Profil ${prefixe}${utilisateur.username}`}
+        ogDescription={`${utilisateur.username} sur le Discord de l'Antre des Loutres : ${msgCount}${messageFormat}, badges et statistiques de la communauté.`}
+        ogImage={utilisateur.avatar_url}
+        ogImageAlt={`Avatar Discord ${prefixe}${utilisateur.username}`}
+        ogType="profile"
+>
     <Banner/>
 
     <div class="profile-container">

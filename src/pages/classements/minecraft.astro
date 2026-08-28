@@ -6,7 +6,12 @@ import PlayerClassement from "../../components/classements/minecraft/tableau/Pla
 import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
 ---
 
-<Layout>
+<Layout
+        title="Classement Minecraft"
+        ogDescription="Le classement des joueurs Minecraft de l'Antre des Loutres : temps de jeu, statistiques et podium de la communauté."
+        ogImage="/banner/minecraft/la_vanilla.webp"
+        ogImageAlt="Classement des joueurs Minecraft de l'Antre des Loutres"
+>
     <Banner  bannerUrl=`/banner/minecraft/la_vanilla.webp`/>
     <LargeTransitionSection title="%Classement% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
     <PlayerClassement jeu="minecraft" />

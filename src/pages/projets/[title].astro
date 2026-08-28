@@ -248,7 +248,14 @@ const languageStats = languages && totalLanguageBytes > 0 ? Object.entries(langu
 }).sort((a, b) => parseFloat(b.percent) - parseFloat(a.percent)) : [];
 ---
 
-<Layout title={projet.name}>
+<Layout
+        title={projet.name}
+        ogTitle={projet.name}
+        ogDescription={projet.description || `${projet.name}, un projet développé par l'Antre des Loutres.`}
+        ogImage={imageUrl}
+        ogImageAlt={`Logo du projet ${projet.name}`}
+        ogType="article"
+>
     <Banner/>
     <LargeTransitionSection
             title={`#${projet.name}#`}

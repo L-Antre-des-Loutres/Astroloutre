@@ -44,7 +44,12 @@ const filteredArticles = allProjets
     .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
 ---
 
-<Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
+<Layout
+        title="Projets"
+        ogTitle="Nos projets"
+        ogDescription="Bots Discord, sites web, outils… tous les projets développés par et pour la communauté de l'Antre des Loutres."
+        ogImageAlt="Les projets de l'Antre des Loutres"
+>
     <Banner/>
     <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
 

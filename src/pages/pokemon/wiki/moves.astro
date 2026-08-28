@@ -3,13 +3,21 @@ import LargeTransitionSection from "../../../components/sections/common/transiti
 import Banner from "../../../components/sections/layout/Banner.astro";
 import ContentLayout from "../../../components/wiki/ContentLayout.astro";
 import Layout from "../../../layouts/Layout.astro";
+import movesIllustrations from "../../../assets/pokemon_wiki/_moves.png";
 import SlidingVignette from "../../../components/ui/vignettes/SlidingVignette.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 
 
 ---
 
-<Layout title="Wiki RLM" forceDarkTheme={true}>
+<Layout
+        title="Capacités"
+        ogTitle="Capacités du Royaume de Loutre Mer"
+        ogDescription="La liste des capacités Pokémon du Royaume de Loutre Mer, avec leur puissance et leur type sur le serveur Cobblemon."
+        ogImage={movesIllustrations.src}
+        ogImageAlt="Capacités du Royaume de Loutre Mer"
+        forceDarkTheme={true}
+>
     <Banner />
 
     <LargeTransitionSection title="Accueil du #Wiki RLM#" invertedBackground/>

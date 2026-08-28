@@ -1,0 +1,69 @@
+---
+import {
+    SITE_NAME,
+    BRAND_COLOR,
+    DEFAULT_OG_IMAGE,
+    DEFAULT_OG_DESCRIPTION,
+    absoluteUrl,
+    embedDescription
+} from "../../../utils/seo";
+
+interface Props {
+    /** Titre affiché dans l'onglet du navigateur. */
+    title: string;
+    /** Titre affiché dans l'embed Discord. Par défaut : le titre de la page. */
+    ogTitle?: string;
+    /** Description de la page (embed + SEO). Markdown accepté, il sera nettoyé. */
+    description?: string;
+    /** Visuel de l'embed. Chemin relatif accepté, il sera rendu absolu. */
+    ogImage?: string;
+    ogImageAlt?: string;
+    /** "website" par défaut, "article" pour une page de contenu, "profile" pour un profil. */
+    ogType?: string;
+    noindex?: boolean;
+}
+
+const {
+    title,
+    ogTitle = title,
+    description,
+    ogImage,
+    ogImageAlt,
+    ogType = "website",
+    noindex = false,
+} = Astro.props;
+
+// L'URL réelle de la page. Sans ça, Discord affiche celle de l'accueil sur tous les liens.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// Discord ignore silencieusement une image en chemin relatif.
+const image = absoluteUrl(ogImage, Astro.site) ?? absoluteUrl(DEFAULT_OG_IMAGE, Astro.site)!;
+
+const embedDesc = embedDescription(description, DEFAULT_OG_DESCRIPTION);
+const imageAlt = ogImageAlt ?? ogTitle;
+---
+
+<title>{title}</title>
+<meta name="description" content={embedDesc} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<!-- Open Graph : c'est ce que lit Discord pour construire l'embed -->
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={embedDesc} />
+<meta property="og:image" content={image} />
+<meta property="og:image:alt" content={imageAlt} />
+
+<!-- Fait passer l'embed en grande image plutôt qu'en vignette -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={embedDesc} />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<!-- Barre de couleur à gauche de l'embed Discord -->
+<meta name="theme-color" content={BRAND_COLOR} />

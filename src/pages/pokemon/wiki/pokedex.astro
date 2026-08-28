@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import monsIllustrations from "../../../assets/pokemon_wiki/_mons.png";
 import Banner from "../../../components/sections/layout/Banner.astro";
 import LargeTransitionSection from "../../../components/sections/common/transitions/LargeTransitionSection.astro";
 import ContentLayout from "../../../components/wiki/ContentLayout.astro";
@@ -45,7 +46,14 @@ const typeColors: Record<string, string> = {
 };
 ---
 
-<Layout title="Pokédex" forceDarkTheme={true}>
+<Layout
+        title="Pokédex"
+        ogTitle="Pokédex du Royaume de Loutre Mer"
+        ogDescription="Tous les Pokémon du Royaume de Loutre Mer : types, statistiques, évolutions et formes exclusives du serveur."
+        ogImage={monsIllustrations.src}
+        ogImageAlt="Pokédex du Royaume de Loutre Mer"
+        forceDarkTheme={true}
+>
     <Banner />
 
     <LargeTransitionSection title="Pokédex du <span style='white-space: nowrap;'>Royaume de Loutre Mer</span>"

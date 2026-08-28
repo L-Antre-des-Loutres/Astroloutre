@@ -100,7 +100,14 @@ if (!joueur || !joueur.discord_user) {
 }
 ---
 
-<Layout ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}>
+<Layout
+        title={joueur.playername}
+        ogTitle={`Profil Minecraft ${prefixe}${joueur.playername}`}
+        ogDescription={`${joueur.playername} sur les serveurs Minecraft de l'Antre des Loutres : ${playtime}h de jeu, badges et statistiques.`}
+        ogImage={`https://mc-heads.net/avatar/${joueur.playername}/512`}
+        ogImageAlt={`Tête Minecraft ${prefixe}${joueur.playername}`}
+        ogType="profile"
+>
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
 
     <TransitionSection title=`Profil ![/icons/logo_minecraft.svg] ${prefixe} #${joueur.playername}#`/>

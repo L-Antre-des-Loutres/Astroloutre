@@ -105,7 +105,16 @@ const nextImage = await showdownApiGetPkmArt(
 );
 ---
 
-<Layout title={pokemon.name} forceDarkTheme={true}>
+<Layout
+        title={pokemon.name}
+        ogTitle={`${pokemon.name} — Pokédex RLM`}
+        ogDescription={pokemon.pokedex_entries?.[0]?.description
+            || `${pokemon.name}, Pokémon ${pokemon.types.join(" / ")} du Royaume de Loutre Mer : statistiques, capacités, évolutions et localisations.`}
+        ogImage={currentImage}
+        ogImageAlt={`Sprite ${pokemon.name}`}
+        ogType="article"
+        forceDarkTheme={true}
+>
     <Banner bannerUrl={pokemon.bannerUrl} />
 
     <!-- DEV ONLY

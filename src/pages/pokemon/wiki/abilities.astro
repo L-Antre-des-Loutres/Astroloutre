@@ -3,13 +3,21 @@ import LargeTransitionSection from "../../../components/sections/common/transiti
 import Banner from "../../../components/sections/layout/Banner.astro";
 import ContentLayout from "../../../components/wiki/ContentLayout.astro";
 import Layout from "../../../layouts/Layout.astro";
+import abilitiesIllustrations from "../../../assets/pokemon_wiki/_abilities.png";
 import SlidingVignette from "../../../components/ui/vignettes/SlidingVignette.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 
 
 ---
 
-<Layout title="Wiki RLM" forceDarkTheme={true}>
+<Layout
+        title="Talents"
+        ogTitle="Talents du Royaume de Loutre Mer"
+        ogDescription="La liste des talents Pokémon du Royaume de Loutre Mer, avec leurs effets sur le serveur Cobblemon de l'Antre des Loutres."
+        ogImage={abilitiesIllustrations.src}
+        ogImageAlt="Talents du Royaume de Loutre Mer"
+        forceDarkTheme={true}
+>
     <Banner />
 
     <LargeTransitionSection title="Accueil du #Wiki RLM#" invertedBackground/>

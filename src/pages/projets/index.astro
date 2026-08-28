@@ -54,7 +54,12 @@ let hasAutres = fullySortedProjects.some(project => {
 let hasNonMaintenus = fullySortedProjects.some(project => project.is_maintained === false);
 ---
 
-<Layout title="Projets" ogTitle="Projets - Antre des loutres" ogDescription="Projets de l'antre des loutres">
+<Layout
+        title="Projets"
+        ogTitle="Nos projets"
+        ogDescription="Bots Discord, sites web, outils… tous les projets développés par et pour la communauté de l'Antre des Loutres."
+        ogImageAlt="Les projets de l'Antre des Loutres"
+>
     <Banner/>
 
     <LargeTransitionSection title="Nos %super projets% !" invertedBackground/>
