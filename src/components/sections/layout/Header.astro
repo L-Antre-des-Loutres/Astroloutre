@@ -5,6 +5,7 @@ import discord_icon from "../../../assets/icons/discord_icon.png";
 import profil_icon from "../../../assets/icons/profil_icon.png";
 import home_icon from "../../../assets/icons/home_icon.png";
 import adl_logo from "../../../assets/adl_small_logo.png";
+import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 ---
 
 <header>
@@ -48,7 +49,7 @@ import adl_logo from "../../../assets/adl_small_logo.png";
 
 			<a href="https://github.com/L-Antre-des-Loutres" target="_blank"><Image src={github_icon} alt="GitHub" /></a>
 			<a href="https://discord.gg/k4ZBFVdntp" target="_blank"><Image src={discord_icon} alt="Discord" /></a>
-			<a id="profil-url" href="https://otterlyapi.antredesloutres.fr/api/auth/discord/login">
+			<a id="profil-url" href={getOapiLoginUrl()}>
 				<img id="user-avatar" src={profil_icon.src} alt="pdp" style="width:42px; height:42px; border-radius:50%; object-fit:cover;" />
 			</a>
 		</div>
@@ -224,7 +225,8 @@ import adl_logo from "../../../assets/adl_small_logo.png";
 </style>
 
 <script>
-    import {slugify} from "../../../formater/ServeurFormater.ts";
+    import {slugify} from "../../../formater/JoueurFormater.ts";
+    import {clearOapiSessionCache, getOapiLoginUrl, getOapiSession} from "../../../utils/API/oapiAuth.ts";
 
 	const headerInner = document.querySelector(".header-inner");
 
@@ -236,19 +238,25 @@ import adl_logo from "../../../assets/adl_small_logo.png";
 		toggleOpacity();
 	}
 
-	async function fetchUserAvatar() {
-		try {
-			const res = await fetch('https://otterlyapi.antredesloutres.fr/api/auth/discord/me', { credentials: 'include' });
-			if (res.ok) {
-				const data = await res.json();
-				const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
-				const profilLink = document.getElementById('profil-url') as HTMLAnchorElement | null;
-				if (data.avatarUrl && avatarImg) avatarImg.src = data.avatarUrl;
-				if (data.username && profilLink) profilLink.href = `/profil/${slugify(data.username)}`;
-			}
-		} catch (e) {
-			console.error('Erreur fetch user:', e);
+	async function loadDiscordSession() {
+		const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
+		const profilLink = document.getElementById('profil-url') as HTMLAnchorElement | null;
+		if (!profilLink) return;
+
+		// Par défaut : connexion Discord via OAPI, avec retour sur la page courante
+		profilLink.href = getOapiLoginUrl(window.location.pathname + window.location.search);
+		profilLink.addEventListener('click', clearOapiSessionCache);
+
+		const session = await getOapiSession();
+		if (!session?.authenticated) return;
+
+		if (session.avatar_url && avatarImg) avatarImg.src = session.avatar_url;
+		// Les pages profil sont indexées par discord_tag
+		const tag = session.discord_tag ?? session.username;
+		if (tag) {
+			profilLink.href = `/profil/${slugify(tag)}/`;
+			profilLink.removeEventListener('click', clearOapiSessionCache);
 		}
 	}
-	fetchUserAvatar();
+	loadDiscordSession();
 </script>

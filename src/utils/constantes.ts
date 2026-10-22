@@ -2,6 +2,7 @@
 //  API URL
 // ──────────────────────────────────────────────
 export const PB_URL = "https://pocketbase.antredesloutres.fr"
+export const OAPI_URL = "https://oapi.antredesloutres.fr"
 export const PAPI_SPRITE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
 
 
@@ -23,3 +24,15 @@ export const POKEDEVINER_STATS = "pokedeviner_stats"
 export const POKE_SILHOUETTE_GAMES = "pokesilhouette_games"
 export const POKE_SILHOUETTE_SCORES = "pokesilhouette_scores"
 export const POCKETBASE_COLLECTION_PROJETS = "projects"
+
+
+// ──────────────────────────────────────────────
+//  OAPI routes
+// ──────────────────────────────────────────────
+export const OAPI_DISCORD_STATS_ROUTE = "/api/admin/discord/stats"
+// Routes de connexion dédiées au site (retour sur antredesloutres.fr + CORS)
+export const OAPI_AUTH_LOGIN_ROUTE = "/api/auth/site/login"
+export const OAPI_AUTH_LOGOUT_ROUTE = "/api/auth/site/logout"
+export const OAPI_AUTH_ME_ROUTE = "/api/auth/site/me"
+// Recalcule les badges de l'utilisateur connecté (cookie de session OAPI)
+export const OAPI_BADGES_REFRESH_ROUTE = "/api/badges/me/refresh"
