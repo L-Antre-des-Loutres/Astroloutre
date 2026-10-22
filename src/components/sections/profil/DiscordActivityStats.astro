@@ -1,0 +1,207 @@
+---
+import type {DiscordActivityType} from "../../../types/DiscordActivityType.ts";
+import {vocalTimeFormater} from "../../../formater/VocalTimeFormater";
+import {formatDate} from "../../../formater/DateFormater";
+import {formatNumber} from "../../../formater/NumberFormater";
+
+interface Props {
+    activity?: DiscordActivityType | null;
+    companionHref?: string | null; // lien vers le profil du compagnon vocal s'il existe
+}
+
+const {activity, companionHref} = Astro.props;
+
+type Card = {
+    title: string;
+    value: string;
+    detail: string;
+    icon: string;
+    href?: string | null;
+};
+
+const plural = (count: number, word: string) => `${formatNumber(count)} ${word}${count > 1 ? "s" : ""}`;
+
+// Retire les emojis et séparateurs décoratifs des noms de salons ("🧊 · discu-mc" → "discu-mc")
+const cleanChannelName = (name: string) => {
+    const cleaned = name
+        .replace(/\p{Extended_Pictographic}|️|‍/gu, '')
+        .replace(/^[\s·•|│・\-–—:]+/u, '')
+        .trim();
+    return cleaned || name;
+};
+
+// Une carte par statistique disponible, les valeurs nulles sont ignorées
+const cards: Card[] = activity ? [
+    activity.favorite_text_channel && {
+        title: "Salon textuel préféré",
+        value: `#${cleanChannelName(activity.favorite_text_channel.name)}`,
+        detail: plural(activity.favorite_text_channel.message_count, "message"),
+        icon: "M7 20l4-16m2 16l4-16M6 9h14M4 15h14",
+    },
+    activity.favorite_voice_channel && {
+        title: "Salon vocal préféré",
+        value: cleanChannelName(activity.favorite_voice_channel.name),
+        detail: `${vocalTimeFormater(activity.favorite_voice_channel.vocal_hours)}`,
+        icon: "M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z",
+    },
+    activity.top_voice_companion && {
+        title: "Compagnon vocal",
+        value: activity.top_voice_companion.username,
+        detail: `${plural(activity.top_voice_companion.records_together, "journée")}`,
+        icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z",
+        href: companionHref,
+    },
+    activity.record_messages_day && {
+        title: "Record de messages",
+        value: plural(activity.record_messages_day.message_count, "message"),
+        detail: `le ${formatDate(activity.record_messages_day.date)}`,
+        icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z",
+    },
+    activity.record_vocal_day && {
+        title: "Record en vocal",
+        value: vocalTimeFormater(activity.record_vocal_day.vocal_hours),
+        detail: `le ${formatDate(activity.record_vocal_day.date)}`,
+        icon: "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z",
+    },
+].filter((card): card is Card => !!card) : [];
+---
+
+{cards.length > 0 ? (
+    <div class="discord-activity-grid">
+        {cards.map((card) => {
+            const Tag = card.href ? "a" : "div";
+            return (
+                <Tag href={card.href ?? undefined} class:list={["discord-activity-card", {clickable: card.href}]}>
+                    <span class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={card.icon}/>
+                        </svg>
+                    </span>
+                    <span class="card-title">{card.title}</span>
+                    <span class="card-value" title={card.value}>{card.value}</span>
+                    <span class="card-detail">{card.detail}</span>
+                </Tag>
+            );
+        })}
+    </div>
+) : (
+    <div class="discord-activity-empty">
+        <span class="server-card-badge unactive">Aucune statistique Discord disponible</span>
+    </div>
+)}
+
+<style>
+    .discord-activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .discord-activity-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        min-width: 0;
+        padding: 1.5rem 1rem 1.25rem;
+        overflow: hidden;
+        text-align: center;
+        color: var(--pTextColor);
+        background-color: var(--server-screen-color-bg-card);
+        border: 1px solid var(--server-screen-color-border);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Liseré doré en haut de carte */
+    .discord-activity-card::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--golden-gradient-shift-1), var(--golden-gradient-shift-2), var(--golden-gradient-shift-3));
+    }
+
+    .discord-activity-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--server-screen-color-accent);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.08);
+    }
+
+    .discord-activity-card.clickable {
+        cursor: pointer;
+    }
+
+    .discord-activity-card.clickable .card-value {
+        text-decoration: underline;
+        text-decoration-color: var(--server-screen-color-accent);
+        text-underline-offset: 4px;
+    }
+
+    .card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: 0.35rem;
+        border-radius: 50%;
+        color: var(--server-screen-color-accent);
+        background-color: color-mix(in srgb, var(--server-screen-color-accent) 15%, transparent);
+    }
+
+    .card-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--server-screen-color-text-muted);
+    }
+
+    .card-value {
+        max-width: 100%;
+        font-size: 1.2rem;
+        font-weight: bold;
+        line-height: 1.3;
+        color: var(--server-screen-color-text-main);
+        overflow-wrap: anywhere;
+        /* Les noms de salons très longs sont coupés sur deux lignes (nom complet au survol) */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .card-detail {
+        font-size: 0.85rem;
+        color: var(--server-screen-color-text-muted);
+    }
+
+    .discord-activity-empty {
+        display: flex;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    @media (max-width: 600px) {
+        .discord-activity-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            padding: 1rem;
+        }
+
+        .discord-activity-card {
+            padding: 1.25rem 0.75rem 1rem;
+        }
+
+        .card-value {
+            font-size: 1rem;
+        }
+    }
+</style>
