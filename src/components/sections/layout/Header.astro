@@ -52,6 +52,12 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 			<a id="profil-url" href={getOapiLoginUrl()}>
 				<img id="user-avatar" src={profil_icon.src} alt="pdp" style="width:42px; height:42px; border-radius:50%; object-fit:cover;" />
 			</a>
+			{/* Affiché par le script une fois la session Discord confirmée */}
+			<a id="logout-url" class="logout-button" href="#" title="Se déconnecter" aria-label="Se déconnecter" hidden>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+				</svg>
+			</a>
 		</div>
 	</div>
 </header>
@@ -123,6 +129,29 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 
 	#right img:hover {
 		transform: scale(1.1);
+	}
+
+	.logout-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		color: var(--header-text-color);
+		border: 1px solid currentColor;
+		opacity: 0.7;
+		transition: opacity 0.2s, color 0.2s, transform 0.2s;
+	}
+
+	.logout-button:hover {
+		opacity: 1;
+		color: var(--server-cards-badge-background-color-3-unactive);
+		transform: scale(1.1);
+	}
+
+	.logout-button[hidden] {
+		display: none;
 	}
 
 	.logo-hover-wrapper {
@@ -226,7 +255,7 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 
 <script>
     import {slugify} from "../../../formater/JoueurFormater.ts";
-    import {clearOapiSessionCache, getOapiLoginUrl, getOapiSession} from "../../../utils/API/oapiAuth.ts";
+    import {clearOapiSessionCache, getOapiLoginUrl, getOapiLogoutUrl, getOapiSession} from "../../../utils/API/oapiAuth.ts";
 
 	const headerInner = document.querySelector(".header-inner");
 
@@ -249,6 +278,14 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 
 		const session = await getOapiSession();
 		if (!session?.authenticated) return;
+
+		// Déconnexion OAPI, avec retour sur la page courante
+		const logoutLink = document.getElementById('logout-url') as HTMLAnchorElement | null;
+		if (logoutLink) {
+			logoutLink.href = getOapiLogoutUrl(window.location.pathname + window.location.search);
+			logoutLink.addEventListener('click', clearOapiSessionCache);
+			logoutLink.hidden = false;
+		}
 
 		if (session.avatar_url && avatarImg) avatarImg.src = session.avatar_url;
 		// Les pages profil sont indexées par discord_tag
