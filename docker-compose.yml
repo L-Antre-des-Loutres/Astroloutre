@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: .
+      secrets:
+        - env
+    container_name: site-astroloutre
+    restart: unless-stopped
+    ports:
+      # Port de l'hôte à adapter via WEB_PORT si besoin (ex. WEB_PORT=8080 dans l'environnement)
+      - "${WEB_PORT:-8080}:80"
+
+secrets:
+  env:
+    # .env du dossier, jamais copié dans l'image (voir Dockerfile)
+    file: ./.env
