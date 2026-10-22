@@ -43,10 +43,13 @@ export function clearOapiSessionCache() {
     }
 }
 
-function readCachedSession(): OapiSessionType | null {
+/**
+ * @param allowExpired renvoie aussi une session expirée (repli quand OAPI refuse la requête)
+ */
+function readCachedSession(allowExpired = false): OapiSessionType | null {
     try {
         const cached = JSON.parse(sessionStorage.getItem(SESSION_CACHE_KEY) ?? "null");
-        if (cached && Date.now() - cached.savedAt < SESSION_CACHE_TTL) return cached.session;
+        if (cached && (allowExpired || Date.now() - cached.savedAt < SESSION_CACHE_TTL)) return cached.session;
     } catch {
         // Cache illisible : on redemande la session à OAPI
     }
@@ -61,14 +64,10 @@ function cacheSession(session: OapiSessionType) {
     }
 }
 
-/**
- * Récupère l'utilisateur Discord connecté via le cookie de session OAPI.
- * @returns null si OAPI est injoignable ou refuse la requête (quota, CORS...)
- */
-export async function getOapiSession(): Promise<OapiSessionType | null> {
-    const cached = readCachedSession();
-    if (cached) return cached;
+// Appel en cours partagé : le header et la page profil demandent la session en même temps
+let pendingSession: Promise<OapiSessionType | null> | null = null;
 
+async function fetchOapiSession(): Promise<OapiSessionType | null> {
     try {
         const response = await fetch(oapiUrl(OAPI_AUTH_ME_ROUTE), {
             credentials: "include",
@@ -78,16 +77,34 @@ export async function getOapiSession(): Promise<OapiSessionType | null> {
 
         if (!response.ok) {
             if (response.status !== 429) console.error(`OAPI: ${OAPI_AUTH_ME_ROUTE} a répondu ${response.status}.`);
-            return null;
+            // Quota atteint ou erreur passagère : on garde la dernière session connue plutôt que de déconnecter
+            return readCachedSession(true);
         }
 
         const session = await response.json() as OapiSessionType;
-        cacheSession(session);
+        // Seule une session connectée est mise en cache : une connexion faite entre-temps
+        // (autre onglet, retour d'OAPI) doit être vue dès la page suivante
+        if (session.authenticated) cacheSession(session);
+        else clearOapiSessionCache();
         return session;
     } catch (error) {
         console.error("OAPI: impossible de récupérer la session Discord:", error);
-        return null;
+        return readCachedSession(true);
     }
+}
+
+/**
+ * Récupère l'utilisateur Discord connecté via le cookie de session OAPI.
+ * @returns null si OAPI est injoignable ou refuse la requête (quota, CORS...) et qu'aucune session n'est connue
+ */
+export function getOapiSession(): Promise<OapiSessionType | null> {
+    const cached = readCachedSession();
+    if (cached) return Promise.resolve(cached);
+
+    pendingSession ??= fetchOapiSession().finally(() => {
+        pendingSession = null;
+    });
+    return pendingSession;
 }
 
 /**
@@ -104,6 +121,8 @@ export async function refreshOapiBadges(): Promise<number | null> {
         });
 
         if (!response.ok) console.error(`OAPI: ${OAPI_BADGES_REFRESH_ROUTE} a répondu ${response.status}.`);
+        // Cookie expiré : la session en cache n'est plus valable
+        if (response.status === 401) clearOapiSessionCache();
         return response.status;
     } catch (error) {
         console.error("OAPI: impossible de rafraîchir les badges:", error);
