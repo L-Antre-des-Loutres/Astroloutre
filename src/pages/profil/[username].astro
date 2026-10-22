@@ -16,6 +16,9 @@ import type {PokedevinerStatType} from "../../types/PokedevinerStatsType.ts";
 import PokedevinerStatsList from "../../components/sections/profil/PokedevinerStatsList.astro";
 import type {PokeSilhouetteScoreType} from "../../types/PokeSilhouetteStatsType.ts";
 import PokeSilhouetteStatsList from "../../components/sections/profil/PokeSilhouetteStatsList.astro";
+import DiscordActivityStats from "../../components/sections/profil/DiscordActivityStats.astro";
+import {OapiFetcher} from "../../utils/API/oapiFetcher";
+import type {ActivityDay, DiscordActivityType} from "../../types/DiscordActivityType.ts";
 
 // Props passées depuis getStaticPaths
 const utilisateur: DiscordUserType | undefined = Astro.props.joueur;
@@ -25,6 +28,8 @@ const pokedevinerStats: PokedevinerStatType[] = Astro.props.pokedevinerStats || 
 const pokeSilhouetteStats: PokeSilhouetteScoreType[] = Astro.props.pokeSilhouetteStats || [];
 // Returns LinkAccount[] instead of single object
 const accountLinks: LinkAccount[] = Astro.props.accountLinks || [];
+const discordActivity: DiscordActivityType | null = Astro.props.discordActivity ?? null;
+const companionHref: string | null = Astro.props.companionHref ?? null;
 const stats: (DiscordUserType & { message_count: number, vocal_time: number, stats: DiscordUserStatsType[] }) | undefined = Astro.props.stats;
 /**
  * Génère les pages statiques
@@ -48,6 +53,14 @@ export async function getStaticPaths() {
     const allPokeSilhouetteScores = await ApiFetcher.getAllRecords<PokeSilhouetteScoreType>(POKE_SILHOUETTE_SCORES, {
         expand: "game"
     });
+    const discordStats = await OapiFetcher.getDiscordStats();
+
+    // Record vocal recalculé sans les journées de plus de 24h (données erronées côté bot)
+    const plausibleVocalRecord = (daily: ActivityDay[] = []): ActivityDay | null =>
+        daily
+            .filter((day) => day.vocal_hours > 0 && day.vocal_hours <= 24)
+            // À égalité, la date la plus ancienne l'emporte (même règle qu'OAPI, daily est trié par date)
+            .reduce<ActivityDay | null>((best, day) => (!best || day.vocal_hours > best.vocal_hours ? day : best), null);
     // ──────────────────────────────────────────────
     // Regroupement par Discord ID pour gérer les doublons
     // ──────────────────────────────────────────────
@@ -71,6 +84,17 @@ export async function getStaticPaths() {
         const ids = pbIdsByDiscordId.get(joueur.discord_id) || [];
         ids.push(joueur.id);
         pbIdsByDiscordId.set(joueur.discord_id, ids);
+    });
+
+    // Lien de profil par ID Discord, ID PocketBase ou tag (pour le compagnon vocal)
+    const profileHrefByRef = new Map<string, string>();
+    joueurs.forEach((joueur) => {
+        const profil = playersByDiscordId.get(joueur.discord_id);
+        const tag = profil?.discord_tag;
+        // Même filtre que les pages générées : pas de lien vers un profil inexistant
+        if (!tag || typeof profil.username !== 'string' || profil.username.trim() === '') return;
+        const href = `/profil/${slugify(tag)}/`;
+        [joueur.id, joueur.discord_id, tag].forEach((ref) => ref && profileHrefByRef.set(ref, href));
     });
 
     // ──────────────────────────────────────────────
@@ -106,6 +130,21 @@ export async function getStaticPaths() {
                     return dateB - dateA;
                 });
 
+            // Statistiques détaillées OAPI (salons préférés, records, compagnon vocal)
+            const playerActivity = discordStats?.players.find(
+                (player) => player.discord_id === joueur.discord_id || allRelatedPbIds.includes(player.id)
+            );
+            // L'historique journalier n'est pas affiché : on ne le transmet pas à la page
+            const discordActivity = playerActivity ? {
+                ...playerActivity.stats,
+                record_vocal_day: plausibleVocalRecord(playerActivity.stats.daily),
+                daily: [],
+            } : null;
+            const companion = discordActivity?.top_voice_companion;
+            const companionHref = companion
+                ? profileHrefByRef.get(companion.id) ?? profileHrefByRef.get(companion.username) ?? null
+                : null;
+
             // Aggregate stats
             const totalMessages = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.message_count) || 0), 0);
             const totalVocalTime = userStatsHistory.reduce((acc, curr) => acc + (Number(curr.vocal_time) || 0), 0);
@@ -130,6 +169,8 @@ export async function getStaticPaths() {
                     pokeSilhouetteStats,
                     accountLinks: accountLinks, // Returns array, empty if none
                     stats: globalStats, // Pass combined stats
+                    discordActivity,
+                    companionHref,
                 },
             };
         });
@@ -289,6 +330,8 @@ if (msgCount > 1) {
                 </div>
             </div>
         </div>
+
+        <DiscordActivityStats activity={discordActivity} companionHref={companionHref} />
 
         <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.username}#`}/>
         <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1} allRelatedPbIds={allRelatedPbIds} />
