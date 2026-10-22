@@ -30,3 +30,9 @@ export const POCKETBASE_COLLECTION_PROJETS = "projects"
 //  OAPI routes
 // ──────────────────────────────────────────────
 export const OAPI_DISCORD_STATS_ROUTE = "/api/admin/discord/stats"
+// Routes de connexion dédiées au site (retour sur antredesloutres.fr + CORS)
+export const OAPI_AUTH_LOGIN_ROUTE = "/api/auth/site/login"
+export const OAPI_AUTH_LOGOUT_ROUTE = "/api/auth/site/logout"
+export const OAPI_AUTH_ME_ROUTE = "/api/auth/site/me"
+// Recalcule les badges de l'utilisateur connecté (cookie de session OAPI)
+export const OAPI_BADGES_REFRESH_ROUTE = "/api/badges/me/refresh"

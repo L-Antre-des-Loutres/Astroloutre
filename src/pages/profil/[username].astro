@@ -334,6 +334,18 @@ if (msgCount > 1) {
         <DiscordActivityStats activity={discordActivity} companionHref={companionHref} />
 
         <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.username}#`}/>
+        {/* Visible uniquement par le propriétaire du profil une fois connecté (voir script) */}
+        <div id="badges-refresh" class="badges-refresh" data-discord-id={utilisateur.discord_id} hidden>
+            <button id="badges-refresh-button" type="button" class="super-button golden-outline" style="border-radius: 5px">
+                <span style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span id="badges-refresh-label">Rafraîchir</span>
+                </span>
+            </button>
+            <p id="badges-refresh-message" class="badges-refresh-message" aria-live="polite"></p>
+        </div>
         <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1} allRelatedPbIds={allRelatedPbIds} />
 
         <TransitionSection title={`%Screenshots% de l'utilisateur #${utilisateur.username}#`}/>
@@ -423,6 +435,28 @@ if (msgCount > 1) {
         }
 
 
+        .badges-refresh {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .badges-refresh button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .badges-refresh-message {
+            font-size: 0.85rem;
+            color: var(--pTextColor);
+        }
+
+        .badges-refresh[hidden] {
+            display: none;
+        }
+
         @media (max-width: 990px) {
             .profile-details {
                 grid-template-columns: 1fr;
@@ -438,6 +472,51 @@ if (msgCount > 1) {
 
 </Layout>
     )}
+
+<script>
+    import {getOapiSession, refreshOapiBadges} from "../../utils/API/oapiAuth.ts";
+
+    const REFRESH_MESSAGES: Record<number, string> = {
+        401: "Session expirée : reconnecte-toi pour rafraîchir tes badges.",
+        429: "Trop de demandes, réessaie dans quelques instants.",
+    };
+
+    async function refreshBadges(button: HTMLButtonElement) {
+        const label = document.getElementById('badges-refresh-label');
+        const message = document.getElementById('badges-refresh-message');
+
+        button.disabled = true;
+        if (label) label.textContent = 'Rafraîchissement...';
+        if (message) message.textContent = '';
+
+        const status = await refreshOapiBadges();
+
+        button.disabled = false;
+        if (label) label.textContent = 'Rafraîchir';
+        if (!message) return;
+        if (status !== null && status >= 200 && status < 300) {
+            // Le site est statique : les nouveaux badges s'afficheront à la prochaine génération
+            message.textContent = "Badges rafraîchis ! Ils apparaîtront à la prochaine mise à jour du site.";
+        } else {
+            message.textContent = (status !== null && REFRESH_MESSAGES[status]) || "Impossible de rafraîchir les badges pour le moment.";
+        }
+    }
+
+    // Bouton "Rafraîchir" des badges : affiché seulement si on consulte son propre profil
+    async function showBadgesRefresh() {
+        const container = document.getElementById('badges-refresh');
+        const profileDiscordId = container?.dataset.discordId;
+        if (!container || !profileDiscordId) return;
+
+        const session = await getOapiSession();
+        if (!session?.authenticated || session.discord_id !== profileDiscordId) return;
+
+        container.hidden = false;
+        const button = document.getElementById('badges-refresh-button') as HTMLButtonElement | null;
+        button?.addEventListener('click', () => refreshBadges(button));
+    }
+    showBadgesRefresh();
+</script>
 
 <script>
     /**

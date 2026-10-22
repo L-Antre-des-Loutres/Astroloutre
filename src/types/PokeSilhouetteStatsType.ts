@@ -16,6 +16,7 @@ export type PokeSilhouetteGameType = {
 
 // Type d'un score (collection PocketBase "pokesilhouette_scores")
 export type PokeSilhouetteScoreType = {
+[x: string]: any;
     id: string;
     game: string; // relation vers pokesilhouette_games
     discord_user: string; // relation vers discord_users
