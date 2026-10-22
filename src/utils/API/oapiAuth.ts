@@ -1,4 +1,4 @@
-import {OAPI_AUTH_LOGIN_ROUTE, OAPI_AUTH_LOGOUT_ROUTE, OAPI_AUTH_ME_ROUTE, OAPI_URL} from "../constantes.ts";
+import {OAPI_AUTH_LOGIN_ROUTE, OAPI_AUTH_LOGOUT_ROUTE, OAPI_AUTH_ME_ROUTE, OAPI_BADGES_REFRESH_ROUTE, OAPI_URL} from "../constantes.ts";
 import type {OapiSessionType} from "../../types/OapiSessionType.ts";
 
 /**
@@ -86,6 +86,27 @@ export async function getOapiSession(): Promise<OapiSessionType | null> {
         return session;
     } catch (error) {
         console.error("OAPI: impossible de récupérer la session Discord:", error);
+        return null;
+    }
+}
+
+/**
+ * Demande à OAPI de recalculer les badges de l'utilisateur connecté.
+ * @returns le statut HTTP de la réponse, ou null si OAPI est injoignable
+ */
+export async function refreshOapiBadges(): Promise<number | null> {
+    try {
+        const response = await fetch(oapiUrl(OAPI_BADGES_REFRESH_ROUTE), {
+            method: "POST",
+            credentials: "include",
+            cache: "no-store",
+            signal: AbortSignal.timeout(30_000),
+        });
+
+        if (!response.ok) console.error(`OAPI: ${OAPI_BADGES_REFRESH_ROUTE} a répondu ${response.status}.`);
+        return response.status;
+    } catch (error) {
+        console.error("OAPI: impossible de rafraîchir les badges:", error);
         return null;
     }
 }
