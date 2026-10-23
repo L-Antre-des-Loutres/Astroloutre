@@ -14,8 +14,8 @@ const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USE
 // Filtrer fondateurs par rôle
 const fondateurs = utilisateurs.filter(u => u.roles?.some(r => r.id === FOUNDER_ROLE_ID));
 // Filtrer investisseurs par rôle (en excluant ceux qui sont déjà fondateurs)
-const investisseurs = utilisateurs.filter(u => 
-    u.roles?.some(r => r.id === INVESTOR_ROLE_ID) && 
+const investisseurs = utilisateurs.filter(u =>
+    u.roles?.some(r => r.id === INVESTOR_ROLE_ID) &&
     !u.roles?.some(r => r.id === FOUNDER_ROLE_ID)
 );
 
@@ -27,7 +27,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
 <div class="organigramme">
 
     <section class="org-section fondateurs">
-        <h3>Fondateurs</h3>
+        <h3 class="organization-text">Fondateurs</h3>
         <ul class="user-list">
             {uniqueFondateurs.map((user) => (
                     <li class="user-card">
@@ -48,7 +48,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
     </section>
 
     <section class="org-section investisseurs">
-        <h3>Nos investisseurs</h3>
+        <h3 class="organization-text">Nos investisseurs</h3>
         <ul class="user-list">
             {uniqueInvestisseurs.map((user) => (
                     <li class="user-card">
@@ -69,7 +69,7 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
     </section>
 
     <section class="org-section partenaires" style="margin: 0;">
-        <h3>Nos partenaires</h3>
+        <h3 class="organization-text">Nos partenaires</h3>
         <ul class="user-list">
             <li class="user-card">
                 <a href="https://discord.gg/eJxb9fXUgZ" class="user-link">
@@ -160,5 +160,9 @@ const uniqueInvestisseurs = [...new Set(investisseurs.map(u => u.discord_id))].m
     .user-tag {
         font-size: 0.75rem;
         color: var(--light-text-color);
+    }
+
+    .organization-text {
+        color: var(--default-text-color);
     }
 </style>

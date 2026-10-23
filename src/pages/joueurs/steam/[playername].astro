@@ -1,0 +1,352 @@
+---
+import Banner from "../../../components/sections/layout/Banner.astro";
+import Layout from "../../../layouts/Layout.astro";
+import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
+import PalworldStats from "../../../components/sections/joueurs/steam/PalworldStats.astro";
+import {isSteamPlayer, slugify} from "../../../formater/JoueurFormater";
+import {formatDate} from "../../../formater/DateFormater";
+
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import type {PlayerType} from "../../../types/PlayerType.ts";
+import type {PalworldStatsType} from "../../../types/PalworldStatsType.ts";
+import type {DiscordUserType} from "../../../types/UtilisateurDiscordType.ts";
+import {DISCORD_USERS, PALWORLD_STATS, PLAYERS} from "../../../utils/constantes.ts";
+
+// Props passées depuis getStaticPaths
+const joueur: PlayerType | undefined = Astro.props.joueur;
+const palworldStats: PalworldStatsType[] = Astro.props.palworldStats || [];
+
+// Génération des pages statiques
+export async function getStaticPaths() {
+
+    // ──────────────────────────────────────────────
+    // Récupération des informations
+    // ──────────────────────────────────────────────
+
+    const joueurs = await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, {expand: 'platform'});
+    const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
+    const allPalworldStats = await ApiFetcher.getAllRecords<PalworldStatsType>(PALWORLD_STATS, {expand: 'server'});
+
+    const steamJoueurs = joueurs.filter(isSteamPlayer);
+
+    // Dédoublonnement par playername (on garde le record le plus récent)
+    const playersByName = new Map<string, PlayerType>();
+
+    const sortedJoueurs = [...steamJoueurs].sort((a, b) => {
+        const dateA = a.last_connected_at ? new Date(a.last_connected_at).getTime() : 0;
+        const dateB = b.last_connected_at ? new Date(b.last_connected_at).getTime() : 0;
+        return dateB - dateA;
+    });
+
+    sortedJoueurs.forEach(joueur => {
+        const nameSlug = slugify(joueur.playername);
+        if (!playersByName.has(nameSlug)) {
+            playersByName.set(nameSlug, joueur);
+        }
+    });
+
+    return Array.from(playersByName.values())
+        .filter(joueur => joueur.playername.trim() !== '')
+        .map(joueur => {
+            const utilisateur = utilisateurs.find(u => u.id === joueur.discord_user);
+            const discordTag = utilisateur ? utilisateur.discord_tag : null;
+
+            // Regrouper tous les records PocketBase pour ce même joueur (si doublons)
+            const allRelatedPbIds = steamJoueurs
+                .filter(j => slugify(j.playername) === slugify(joueur.playername))
+                .map(j => j.id);
+
+            const palworldStats = allPalworldStats.filter(s => allRelatedPbIds.includes(s.player));
+
+            return {
+                params: {
+                    playername: slugify(joueur.playername),
+                },
+                props: {
+                    joueur: {
+                        ...joueur,
+                        discord_tag: discordTag ? slugify(discordTag) : null,
+                    },
+                    palworldStats,
+                },
+            };
+        });
+}
+
+const voyelles = ['a', 'e', 'i', 'o', 'u', 'y', 'h'];
+let prefixe = "de ";
+
+if (joueur && joueur.playername && voyelles.includes(joueur.playername[0].toLowerCase())) {
+    prefixe = "d’";
+}
+
+// Jeux Steam pris en charge : ajouter une entrée (et sa section plus bas) pour chaque nouveau jeu
+const steamGames = [
+    {
+        id: "palworld",
+        name: "Palworld",
+        logo: "/icons/logo_palworld.png",
+        banner: "/banner/palworld/palworld_endgame.webp",
+        played: palworldStats.length > 0,
+    },
+];
+const playedGames = steamGames.filter(game => game.played);
+
+const avatar = joueur?.avatar_url || "/icons/logo_steam.svg";
+const banner = playedGames[0]?.banner ?? steamGames[0].banner;
+---
+
+<Layout ogImage={avatar} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Steam ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques sur nos serveurs de jeux Steam et plus encore...`}>
+    <Banner bannerUrl={banner} />
+
+    <TransitionSection title=`Profil ![/icons/logo_steam.svg] ${prefixe} #${joueur.playername}#`/>
+
+    {joueur && (
+        <div class="profile-container">
+            <div class="profile-details">
+                <div class="avatar">
+                    <img src={avatar} alt={`Avatar de ${joueur.playername}`}
+                         class="mx-auto rounded-lg object-cover h-[21em] min-h-[300px] w-auto max-w-full"
+                         width="300" height="300" loading="eager" />
+                </div>
+
+                {/* Colonne 2 : Informations */}
+                <div class="info-grid">
+                    <h2>Informations</h2>
+
+                    <div class="server-card-footer">
+                        <span class="server-card-badge version">{joueur.playername}</span>
+                        {playedGames.map(game => <a class="server-card-badge modpack" href={`#${game.id}`}>{game.name}</a>)}
+                    </div>
+
+                    <div class="server-desc-container">
+                        <div class="stats-row">
+                            <label style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor" width="18" height="18">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M5 13l4 4L19 7"/>
+                                </svg>
+                                SteamID :
+                            </label>
+                            <input
+                                    type="text"
+                                    value={joueur.account_id}
+                                    readonly
+                                    onclick="this.select()"
+                                    style="margin-top: 4px; width: 100%; padding: 4px 8px; border: 1px solid var(--player-profile-border); background-color: var(--player-profile-input-bg); color: var(--player-profile-text-primary); border-radius: 4px; font-family: monospace;"
+                            />
+                        </div>
+                        <div class="stats-row">
+                            <strong>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor" width="18" height="18"
+                                     style="vertical-align: middle; margin-right: 6px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                                </svg>
+                                Jeux suivis :
+                            </strong>
+                            <span>{playedGames.length > 0 ? playedGames.map(game => game.name).join(", ") : "Aucun pour le moment"}</span>
+                        </div>
+
+                        <div class="stats-row">
+                            <strong>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor" width="18" height="18"
+                                     style="vertical-align: middle; margin-right: 6px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                Première connexion :
+                            </strong>
+                            <span>{formatDate(joueur.first_connected_at)}</span>
+                        </div>
+
+                        <div class="stats-row">
+                            <strong>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor" width="18" height="18"
+                                     style="vertical-align: middle; margin-right: 6px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                Dernière connexion :
+                            </strong>
+                            <span>{formatDate(joueur.last_connected_at)}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Colonne 3 : Actions */}
+                <div class="info-grid">
+                    <h2>Action</h2>
+                    <button class="button-copy super-button golden-outline"
+                            data-uuid={joueur.account_id}>
+                        <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                            <span>Copier SteamID</span>
+                        </span>
+                    </button>
+                    {joueur.profile_url && (
+                        <a class="super-button golden-outline" href={joueur.profile_url}
+                           target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                                <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658a3.387 3.387 0 0 1 1.912-.59c.064 0 .127.003.19.006l2.862-4.142V8.91a4.528 4.528 0 0 1 4.524-4.524 4.528 4.528 0 0 1 4.523 4.524 4.528 4.528 0 0 1-4.523 4.524h-.105l-4.076 2.911c0 .052.004.105.004.159a3.392 3.392 0 0 1-3.39 3.393 3.406 3.406 0 0 1-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25a2.551 2.551 0 0 0 3.337-3.334 2.547 2.547 0 0 0-3.255-1.379l1.523.63a1.878 1.878 0 0 1-1.446 3.443zm11.415-9.303a3.019 3.019 0 0 0-3.015-3.015 3.015 3.015 0 1 0 3.015 3.015zm-5.273-.005a2.264 2.264 0 1 1 4.531 0 2.267 2.267 0 0 1-2.266 2.265 2.264 2.264 0 0 1-2.265-2.265z"/>
+                            </svg>
+                            Profil Steam
+                        </a>
+                    )}
+                    {joueur.discord_user && joueur.discord_tag && (
+                        <a class="super-button golden-outline" href={`/profil/${joueur.discord_tag}`}>
+                            <img src="/icons/discord_logo.svg" alt="" width="20" height="20" />
+                            Profil Discord
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            {playedGames.length === 0 && (
+                <>
+                    <TransitionSection title={`%Statistiques% ${prefixe} #${joueur.playername}#`}/>
+                    <div class="no-game">
+                        <span class="server-card-badge unactive">Ce joueur n’a encore joué à aucun de nos jeux Steam</span>
+                    </div>
+                </>
+            )}
+
+            {/* Une section par jeu Steam pris en charge */}
+            {palworldStats.length > 0 && (
+                <section id="palworld" class="game-section">
+                    <PalworldStats stats={palworldStats} playername={joueur.playername} prefixe={prefixe} />
+                </section>
+            )}
+        </div>
+    )}
+
+    <style>
+        .profile-container {
+            border-radius: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--player-profile-text-primary);
+        }
+
+        .profile-details {
+            color: var(--player-profile-text-primary);
+            display: grid;
+            grid-template-columns: 0.6fr 1fr 0.6fr;
+            gap: 1rem;
+            align-items: flex-start;
+            justify-items: center;
+            padding: 2rem;
+        }
+
+        .avatar,
+        .info-grid {
+            width: 100%;
+        }
+
+        .no-game {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .game-section {
+            scroll-margin-top: 6rem;
+        }
+
+        .avatar img {
+            border-radius: 8px;
+            display: inline;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .server-desc-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .stats-row {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--player-profile-card-bg);
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        @media (max-width: 600px) {
+            .server-desc-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .icon {
+            display: inline;
+            vertical-align: text-bottom;
+            margin-right: 6px;
+            color: var(--player-profile-icon-color);
+        }
+
+        button.super-button {
+            width: 100%;
+            font-size: 1em;
+            justify-self: center;
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 1rem;
+        }
+
+        @media (max-width: 990px) {
+            .profile-details {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                text-align: center;
+            }
+
+            .stats-row {
+                align-items: center;
+            }
+        }
+    </style>
+
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".button-copy");
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const uuid = button.getAttribute("data-uuid");
+                    navigator.clipboard.writeText(uuid).then(() => {
+                        const span = button.querySelector("span span");
+                        const originalText = span.textContent;
+                        span.textContent = "SteamID copié !";
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</Layout>
