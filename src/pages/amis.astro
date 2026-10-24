@@ -373,13 +373,13 @@ import TransitionSection from "../components/sections/common/transitions/Transit
             background-color: var(--player-profile-input-bg);
         }
 
-        /* Colonne étroite : les boutons passent sous le membre */
+        /* Colonne étroite : les boutons restent à côté du membre et ne passent dessous que faute de place */
         .friend-list.compact .friend-row {
             flex-wrap: wrap;
         }
 
         .friend-list.compact .friend-person {
-            flex-basis: 100%;
+            flex-basis: 12rem;
         }
 
         .friend-person {
