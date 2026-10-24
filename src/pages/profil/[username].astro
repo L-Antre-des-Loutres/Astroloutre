@@ -306,7 +306,7 @@ if (msgCount > 1) {
                 <div class="server-boutons-container"
                      style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
                     {accountLinks.length > 0 ? (
-                        accountLinks.map(account => (
+                        accountLinks.map(account => isSteamPlayer(account) || isMinecraftPlayer(account) ? (
                                 <a href={playerPageHref(account)} class="w-full">
                                 <button class="super-button golden-outline w-full" style="border-radius: 5px">
                                     <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">

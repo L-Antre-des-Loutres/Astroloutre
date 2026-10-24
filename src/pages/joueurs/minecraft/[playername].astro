@@ -1,7 +1,7 @@
 ---
 import Banner from "../../../components/sections/layout/Banner.astro";
 import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
-import {isSteamPlayer, isMinecraftPlayer, slugify} from "../../../formater/JoueurFormater";
+import {isMinecraftPlayer, slugify} from "../../../formater/JoueurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/sections/badges/BadgeList.astro";
@@ -26,9 +26,6 @@ export async function getStaticPaths() {
     // Récupération des informations
     // ──────────────────────────────────────────────
 
-    // Les comptes Steam ont leur propre page (/joueurs/steam)
-    const joueurs = (await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, {expand: 'platform'}))
-        .filter(joueur => !isSteamPlayer(joueur));
     // Uniquement les comptes Minecraft (les comptes Steam ont leur propre page /joueurs/steam)
     const joueurs = (await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, {expand: 'platform'}))
         .filter(isMinecraftPlayer);
