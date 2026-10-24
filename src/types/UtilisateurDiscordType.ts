@@ -27,6 +27,7 @@ export type LinkAccount = {
     first_connected_at: string
     last_connected_at: string
     playername: string
+    avatar_url?: string
     expand?: {
         platform?: { id: string; name: string }
     }

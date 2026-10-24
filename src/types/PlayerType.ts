@@ -8,6 +8,9 @@ export type PlayerType = {
     first_connected_at: string;
     last_connected_at: string;
     playername: string;
+    // Renseignés pour les comptes Steam
+    avatar_url?: string;
+    profile_url?: string;
     expand?: {
         platform?: { id: string; name: string };
     };

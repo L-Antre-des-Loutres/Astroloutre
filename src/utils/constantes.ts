@@ -4,6 +4,7 @@
 export const PB_URL = "https://pocketbase.antredesloutres.fr"
 export const OAPI_URL = "https://oapi.antredesloutres.fr"
 export const PAPI_SPRITE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
+export const PALDB_ICON_URL = "https://cdn.paldb.cc/image/Pal/Texture/PalIcon/Normal/"
 
 
 // ──────────────────────────────────────────────
@@ -24,6 +25,7 @@ export const POKEDEVINER_STATS = "pokedeviner_stats"
 export const POKE_SILHOUETTE_GAMES = "pokesilhouette_games"
 export const POKE_SILHOUETTE_SCORES = "pokesilhouette_scores"
 export const POCKETBASE_COLLECTION_PROJETS = "projects"
+export const PALWORLD_STATS = "palworld_stats"
 
 
 // ──────────────────────────────────────────────
