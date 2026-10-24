@@ -47,6 +47,9 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 				</div>
 			</div>
 
+			{/* Affiché par le script une fois la session Discord confirmée */}
+			<a id="friends-url" href="/amis" hidden><p class="dropdown-title">Amis</p></a>
+
 			<a href="https://github.com/L-Antre-des-Loutres" target="_blank"><Image src={github_icon} alt="GitHub" /></a>
 			<a href="https://discord.gg/k4ZBFVdntp" target="_blank"><Image src={discord_icon} alt="Discord" /></a>
 			<a id="profil-url" href={getOapiLoginUrl()}>
@@ -150,7 +153,8 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 		transform: scale(1.1);
 	}
 
-	.logout-button[hidden] {
+	.logout-button[hidden],
+	#friends-url[hidden] {
 		display: none;
 	}
 
@@ -286,6 +290,9 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 			logoutLink.addEventListener('click', clearOapiSessionCache);
 			logoutLink.hidden = false;
 		}
+
+		const friendsLink = document.getElementById('friends-url');
+		if (friendsLink) friendsLink.hidden = false;
 
 		if (session.avatar_url && avatarImg) avatarImg.src = session.avatar_url;
 		// Les pages profil sont indexées par discord_tag

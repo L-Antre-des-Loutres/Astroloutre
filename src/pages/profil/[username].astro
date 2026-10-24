@@ -242,6 +242,20 @@ if (msgCount > 1) {
                     })}
                 </div>
 
+                {/* Visible uniquement quand on consulte le profil d'un autre membre en étant connecté (voir script) */}
+                <div id="friend-action" class="friend-action" data-discord-id={utilisateur.discord_id}
+                     data-discord-tag={utilisateur.discord_tag} hidden>
+                    <button id="friend-action-button" type="button" class="super-button golden-outline friend-action-button">
+                        <svg class="friend-action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                        <span id="friend-action-label">Ajouter en ami</span>
+                    </button>
+                    <button id="friend-action-cancel" type="button" class="friend-action-cancel" hidden>Annuler la demande</button>
+                    <a id="friend-action-link" class="server-card-badge active friend-action-link" href="/amis" hidden>✓ Vous êtes amis</a>
+                    <p id="friend-action-message" class="server-card-badge friend-action-message" aria-live="polite" hidden></p>
+                </div>
+
                 <div class="server-desc-container">
                     <div class="stats-row">
                         <strong>
@@ -440,6 +454,56 @@ if (msgCount > 1) {
         }
 
 
+        .friend-action {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0.75rem 0;
+        }
+
+        .friend-action[hidden],
+        .friend-action [hidden] {
+            display: none;
+        }
+
+        /* Même version compacte du super-button que "Rafraîchir mes badges" */
+        .friend-action .friend-action-button {
+            gap: 8px;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .friend-action .friend-action-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .friend-action .friend-action-button:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .friend-action .friend-action-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .friend-action-cancel {
+            font-size: 0.85rem;
+            text-decoration: underline;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .friend-action-cancel:hover:not(:disabled) {
+            opacity: 1;
+        }
+
+        .friend-action-link {
+            text-decoration: none;
+        }
+
         .badges-refresh {
             display: flex;
             flex-wrap: wrap;
@@ -571,6 +635,104 @@ if (msgCount > 1) {
         button?.addEventListener('click', () => refreshBadges(button));
     }
     showBadgesRefresh();
+</script>
+
+<script>
+    import {getOapiSession} from "../../utils/API/oapiAuth.ts";
+    import {acceptFriend, getFriends, OapiFriendsError, removeFriend, requestFriendByTag} from "../../utils/API/oapiFriends.ts";
+    import type {Friendship} from "../../utils/API/oapiFriends.ts";
+
+    type FriendState = "none" | "outgoing" | "incoming" | "friends";
+
+    const container = document.getElementById('friend-action');
+    const button = document.getElementById('friend-action-button') as HTMLButtonElement | null;
+    const label = document.getElementById('friend-action-label');
+    const cancel = document.getElementById('friend-action-cancel') as HTMLButtonElement | null;
+    const friendsLink = document.getElementById('friend-action-link');
+    const message = document.getElementById('friend-action-message');
+
+    // Membre OAPI correspondant au profil, connu une fois qu'une demande existe dans un sens ou dans l'autre
+    let entry: Friendship | undefined;
+    let state: FriendState = "none";
+
+    function showMessage(text: string, success: boolean) {
+        if (!message) return;
+        message.textContent = text;
+        message.classList.toggle('active', success);
+        message.classList.toggle('unactive', !success);
+        message.hidden = false;
+    }
+
+    function render() {
+        if (!button || !label || !cancel || !friendsLink) return;
+        button.hidden = state === "friends";
+        button.disabled = state === "outgoing";
+        label.textContent = state === "incoming" ? "Accepter sa demande d'ami"
+            : state === "outgoing" ? "Demande envoyée" : "Ajouter en ami";
+        cancel.hidden = state !== "outgoing";
+        friendsLink.hidden = state !== "friends";
+    }
+
+    async function loadState(discordId: string) {
+        const list = await getFriends();
+        const match = (kind: "friends" | "incoming" | "outgoing") => list[kind].find((item) => item.user.discord_id === discordId);
+        entry = match("friends") ?? match("incoming") ?? match("outgoing");
+        state = match("friends") ? "friends" : match("incoming") ? "incoming" : match("outgoing") ? "outgoing" : "none";
+    }
+
+    async function run(work: () => Promise<string>, discordId: string) {
+        if (!button || !cancel) return;
+        button.disabled = cancel.disabled = true;
+        if (message) message.hidden = true;
+        try {
+            const success = await work();
+            await loadState(discordId);
+            showMessage(success, true);
+        } catch (error) {
+            showMessage(error instanceof OapiFriendsError ? error.message : "Impossible de joindre OAPI pour le moment.", false);
+            if (error instanceof OapiFriendsError && error.status === 401) container?.setAttribute('hidden', '');
+        } finally {
+            cancel.disabled = false;
+            render();
+        }
+    }
+
+    async function showFriendAction() {
+        const discordId = container?.dataset.discordId;
+        const discordTag = container?.dataset.discordTag;
+        // Sans tag Discord, OAPI ne peut pas recevoir de demande pour ce membre
+        if (!container || !button || !cancel || !discordId || !discordTag) return;
+
+        const session = await getOapiSession();
+        if (!session?.authenticated || session.discord_id === discordId) return;
+
+        try {
+            await loadState(discordId);
+        } catch (error) {
+            // OAPI indisponible ou session expirée : on n'affiche pas un bouton qui ne marcherait pas
+            console.error("OAPI: impossible de charger les amis:", error);
+            return;
+        }
+        render();
+        container.hidden = false;
+
+        button.addEventListener('click', () => run(async () => {
+            if (state === "incoming" && entry) {
+                await acceptFriend(entry.user.id);
+                return "Demande acceptée : vous êtes maintenant amis !";
+            }
+            const result = await requestFriendByTag(discordTag);
+            return result.status === "accepted"
+                ? "Ce membre t'avait déjà envoyé une demande : vous êtes maintenant amis !"
+                : "Demande d'ami envoyée !";
+        }, discordId));
+
+        cancel.addEventListener('click', () => run(async () => {
+            if (entry) await removeFriend(entry.user.id);
+            return "Ta demande a été annulée.";
+        }, discordId));
+    }
+    showFriendAction();
 </script>
 
 <script>
