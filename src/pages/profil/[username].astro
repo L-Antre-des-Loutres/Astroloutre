@@ -1,6 +1,6 @@
 ---
 import {Image} from 'astro:assets';
-import {slugify} from "../../formater/JoueurFormater";
+import {isMinecraftPlayer, slugify} from "../../formater/JoueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import {formatDate} from "../../formater/DateFormater";
@@ -42,7 +42,8 @@ export async function getStaticPaths() {
 
     const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
     const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>(DISCORD_USER_STATS);
-    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players");
+    // La plateforme (expand) sert à choisir le lien et l'avatar de chaque compte lié
+    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players", {expand: 'platform'});
     const allScreenshots = await ApiFetcher.getAllRecords<PlayerScreenshotType>(PLAYER_SCREENSHOTS, {
         expand: 'server,server.platform,platform'
     });
@@ -291,7 +292,7 @@ if (msgCount > 1) {
                 <div class="server-boutons-container"
                      style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
                     {accountLinks.length > 0 ? (
-                        accountLinks.map(account => (
+                        accountLinks.map(account => isMinecraftPlayer(account) ? (
                                 <a href={`/joueurs/minecraft/${slugify(account.playername)}`} class="w-full">
                                 <button class="super-button golden-outline w-full" style="border-radius: 5px">
                                     <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
@@ -301,6 +302,11 @@ if (msgCount > 1) {
                                     </span>
                                 </button>
                             </a>
+                        ) : (
+                            // Pas encore de page joueur pour les autres plateformes : compte affiché sans lien
+                            <div class="server-card-badge" style="width: 100%; text-align: center;">
+                                {account.playername} ({account.expand?.platform?.name ?? "Plateforme inconnue"})
+                            </div>
                         ))
                     ) : (
                             <div class="server-card-badge unactive" style="width: 100%; text-align: center;">Aucun
