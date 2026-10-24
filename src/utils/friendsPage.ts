@@ -174,10 +174,13 @@ export function initFriendsPage(root: HTMLElement) {
         get('[data-summary]').textContent = parts.join(' · ');
     }
 
-    async function refreshFriends() {
+    /**
+     * @param fresh ignore la liste en cache (bouton "Actualiser")
+     */
+    async function refreshFriends(fresh = false) {
         listLoading.hidden = false;
         try {
-            data = await getFriends();
+            data = await getFriends(fresh);
             for (const kind of ['friends', 'incoming', 'outgoing'] as const) renderList(kind);
             lists.hidden = false;
         } finally {
@@ -244,7 +247,7 @@ export function initFriendsPage(root: HTMLElement) {
         });
     });
     search.addEventListener('input', () => renderList('friends'));
-    get('[data-refresh]').addEventListener('click', () => void perform(refreshFriends));
-    get('[data-retry]').addEventListener('click', () => void perform(connected ? refreshFriends : connect));
+    get('[data-refresh]').addEventListener('click', () => void perform(() => refreshFriends(true)));
+    get('[data-retry]').addEventListener('click', () => void perform(connected ? () => refreshFriends(true) : connect));
     void perform(connect);
 }

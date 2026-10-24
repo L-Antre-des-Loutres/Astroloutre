@@ -61,6 +61,39 @@ export class OapiFriendsError extends Error {
 // Quota OAPI atteint : plus aucun appel avant cette date (partagé par toute la page)
 let retryAt = 0;
 
+// OAPI limite les routes à ~10 appels/min : la liste est gardée en cache pendant la navigation entre profils
+const FRIENDS_CACHE_KEY = "oapi-friends";
+const FRIENDS_CACHE_TTL = 60 * 1000;
+
+function readCachedFriends(): FriendList | null {
+    try {
+        const cached = JSON.parse(sessionStorage.getItem(FRIENDS_CACHE_KEY) ?? "null");
+        if (cached && Date.now() - cached.savedAt < FRIENDS_CACHE_TTL) return cached.list;
+    } catch {
+        // Cache illisible : on redemande la liste à OAPI
+    }
+    return null;
+}
+
+function cacheFriends(list: FriendList) {
+    try {
+        sessionStorage.setItem(FRIENDS_CACHE_KEY, JSON.stringify({list, savedAt: Date.now()}));
+    } catch {
+        // Stockage indisponible : la liste sera simplement redemandée
+    }
+}
+
+/**
+ * Oublie la liste d'amis en cache, à appeler dès qu'elle change.
+ */
+export function clearFriendsCache() {
+    try {
+        sessionStorage.removeItem(FRIENDS_CACHE_KEY);
+    } catch {
+        // Stockage indisponible : rien à oublier
+    }
+}
+
 /**
  * @returns la date (ms) avant laquelle OAPI refusera les appels, 0 si aucun quota n'est atteint
  */
@@ -82,8 +115,12 @@ async function call(path: string, method = "GET"): Promise<unknown> {
             signal: AbortSignal.timeout(15_000),
         });
     } catch {
-        throw new OapiFriendsError(0, "Impossible de joindre OAPI. Vérifie ta connexion puis réessaie.");
+        // Un 429 renvoyé sans en-têtes CORS arrive ici aussi : le navigateur masque alors la réponse
+        throw new OapiFriendsError(0, "OAPI ne répond pas : trop de demandes ou connexion coupée. Patiente une minute puis réessaie.");
     }
+
+    // Toute action (demande, acceptation, retrait) rend la liste en cache obsolète
+    if (method !== "GET") clearFriendsCache();
 
     if (!response.ok) {
         if (response.status === 429) {
@@ -93,7 +130,10 @@ async function call(path: string, method = "GET"): Promise<unknown> {
             throw new OapiFriendsError(429, undefined, wait);
         }
         // Cookie expiré : la session en cache n'est plus valable
-        if (response.status === 401) clearOapiSessionCache();
+        if (response.status === 401) {
+            clearOapiSessionCache();
+            clearFriendsCache();
+        }
         throw new OapiFriendsError(response.status);
     }
 
@@ -118,12 +158,17 @@ function isFriendship(value: unknown): value is Friendship {
 
 /**
  * Amis, demandes reçues et demandes envoyées de l'utilisateur connecté.
+ * @param fresh ignore le cache (bouton "Actualiser")
  */
-export async function getFriends(): Promise<FriendList> {
+export async function getFriends(fresh = false): Promise<FriendList> {
+    const cached = fresh ? null : readCachedFriends();
+    if (cached) return cached;
+
     const data = await call("") as FriendList | null;
     const valid = !!data && (["friends", "incoming", "outgoing"] as const)
         .every((kind) => Array.isArray(data[kind]) && data[kind].every(isFriendship));
     if (!valid) throw new OapiFriendsError(0, "La liste d'amis renvoyée par OAPI est illisible. Réessaie plus tard.");
+    cacheFriends(data);
     return data;
 }
 

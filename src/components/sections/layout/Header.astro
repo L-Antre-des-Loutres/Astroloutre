@@ -260,6 +260,7 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 <script>
     import {slugify} from "../../../formater/JoueurFormater.ts";
     import {clearOapiSessionCache, getOapiLoginUrl, getOapiLogoutUrl, getOapiSession} from "../../../utils/API/oapiAuth.ts";
+    import {clearFriendsCache} from "../../../utils/API/oapiFriends.ts";
 
 	const headerInner = document.querySelector(".header-inner");
 
@@ -287,7 +288,10 @@ import {getOapiLoginUrl} from "../../../utils/API/oapiAuth.ts";
 		const logoutLink = document.getElementById('logout-url') as HTMLAnchorElement | null;
 		if (logoutLink) {
 			logoutLink.href = getOapiLogoutUrl(window.location.pathname + window.location.search);
-			logoutLink.addEventListener('click', clearOapiSessionCache);
+			logoutLink.addEventListener('click', () => {
+				clearOapiSessionCache();
+				clearFriendsCache();
+			});
 			logoutLink.hidden = false;
 		}
 
