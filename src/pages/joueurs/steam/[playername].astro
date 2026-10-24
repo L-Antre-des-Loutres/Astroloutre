@@ -212,7 +212,7 @@ const banner = playedGames[0]?.banner ?? steamGames[0].banner;
             {/* Badges Steam : communs à tous les jeux, affichés avant les catégories de jeux */}
             <TransitionSection title={`Badges ![/icons/logo_steam.svg] obtenus`}/>
             <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId={3} allRelatedPbIds={allRelatedPbIds} />
-
+            <TransitionSection title={`Jeux ![/icons/logo_steam.svg]`}/>
             {playedGames.length === 0 && (
                 <>
                     <TransitionSection title={`%Statistiques% ${prefixe} #${joueur.playername}#`}/>
