@@ -15,16 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      # Un échec sur une version ne doit pas annuler le build des autres
+      fail-fast: false
       matrix:
         node-version: [22.x, 24.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version: ${{ matrix.node-version }}
+        # Astro 7 exige Node >= 22.23.4 : sans ça, setup-node prend la version 22 en cache sur le runner, souvent plus ancienne
+        check-latest: true
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
