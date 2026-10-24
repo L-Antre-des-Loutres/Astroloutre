@@ -480,6 +480,46 @@ const servers = stats
         white-space: normal;
     }
 
+    /* Vignette du Pal le plus découpé : portrait encadré sur un halo doré */
+    .featured-pal {
+        grid-column: span 2;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+        text-align: left;
+        background:
+                radial-gradient(circle at 15% 50%, color-mix(in srgb, var(--server-screen-color-accent) 20%, transparent) 0%, transparent 55%),
+                var(--server-screen-color-bg-card);
+    }
+
+    .featured-portrait {
+        flex-shrink: 0;
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: 14px;
+        border: 2px solid color-mix(in srgb, var(--server-screen-color-accent) 70%, transparent);
+        box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.45);
+    }
+
+    .featured-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        min-width: 0;
+    }
+
+    .featured-text .card-value {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .featured-detail {
+        font-size: 0.85rem;
+        color: var(--server-screen-color-text-muted);
+    }
+
     /* --- ÉQUIPE : vignettes server-card (styles globaux du site) --- */
     .pal-team {
         display: grid;
@@ -490,20 +530,20 @@ const servers = stats
         text-align: left;
     }
 
-    /* Bannière du serveur assombrie, Pal au premier plan */
+    /* Bannière du serveur assombrie, Pal en buste posé sur le bas de l'image */
     .pal-vignette-image {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: center;
-        height: 160px;
-        background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), var(--server-banner) center / cover;
+        height: 170px;
+        background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.6)), var(--server-banner) center / cover;
     }
 
     .server-card .pal-vignette-image img {
-        width: 112px;
-        height: 112px;
+        width: auto;
+        height: 150px;
         object-fit: contain;
-        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.6));
     }
 
     .pal-passives {
