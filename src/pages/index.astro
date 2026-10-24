@@ -14,7 +14,6 @@ import {slugify} from "../formater/JoueurFormater";
 import {ApiFetcher} from "../utils/API/apiFetcher";
 import {PLAYERS_STATS, POCKETBASE_COLLECTION_PROJETS, PB_URL} from "../utils/constantes";
 import type {ProjectType} from "../types/ProjectType";
-import type {ProjectType} from "../types/ProjectType";
 
 // Declaration of total playtime variable
 let totalHours: number = 0;
@@ -49,12 +48,12 @@ const botProjects = projects
         {botProjects.map((projet) => {
             const imageUrl = projet.logo ? `${PB_URL}/api/files/${projet.collectionId}/${projet.id}/${projet.logo}` : "";
             return (
-                <SlidingVignette 
-                    image={imageUrl} 
-                    image_alt={projet.name} 
-                    title={`#${projet.name}#`} 
-                    paragraph={projet.description} 
-                    card_link={`/projets/${slugify(projet.name)}`} 
+                <SlidingVignette
+                    image={imageUrl}
+                    image_alt={projet.name}
+                    title={`#${projet.name}#`}
+                    paragraph={projet.description}
+                    card_link={`/projets/${slugify(projet.name)}`}
                     margin="0.8em"
                 />
             );

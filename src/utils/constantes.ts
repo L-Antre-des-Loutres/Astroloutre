@@ -38,3 +38,5 @@ export const OAPI_AUTH_LOGOUT_ROUTE = "/api/auth/site/logout"
 export const OAPI_AUTH_ME_ROUTE = "/api/auth/site/me"
 // Recalcule les badges de l'utilisateur connecté (cookie de session OAPI)
 export const OAPI_BADGES_REFRESH_ROUTE = "/api/badges/me/refresh"
+// Amis de l'utilisateur connecté (cookie de session OAPI), partagés avec l'ADL ROM Patcher
+export const OAPI_FRIENDS_ROUTE = "/api/friends/me"

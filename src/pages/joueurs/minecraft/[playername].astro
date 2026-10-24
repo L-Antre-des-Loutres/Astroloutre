@@ -1,7 +1,7 @@
 ---
 import Banner from "../../../components/sections/layout/Banner.astro";
 import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
-import {isSteamPlayer, slugify} from "../../../formater/JoueurFormater";
+import {isSteamPlayer, isMinecraftPlayer, slugify} from "../../../formater/JoueurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/sections/badges/BadgeList.astro";
@@ -29,12 +29,15 @@ export async function getStaticPaths() {
     // Les comptes Steam ont leur propre page (/joueurs/steam)
     const joueurs = (await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, {expand: 'platform'}))
         .filter(joueur => !isSteamPlayer(joueur));
+    // Uniquement les comptes Minecraft (les comptes Steam ont leur propre page /joueurs/steam)
+    const joueurs = (await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, {expand: 'platform'}))
+        .filter(isMinecraftPlayer);
     const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
     const allStats = await ApiFetcher.getAllRecords<PlayerStatsType>(PLAYERS_STATS);
 
     // Dédoublonnement par playername (on garde le record le plus récent)
     const playersByName = new Map<string, PlayerType>();
-    
+
     // Tri par date de connexion pour avoir le plus récent
     const sortedJoueurs = [...joueurs].sort((a, b) => {
         const dateA = a.last_connected_at ? new Date(a.last_connected_at).getTime() : 0;

@@ -1,6 +1,6 @@
 ---
 import {Image} from 'astro:assets';
-import {isSteamPlayer, playerPageHref, slugify} from "../../formater/JoueurFormater";
+import {isSteamPlayer, isMinecraftPlayer, playerPageHref, slugify} from "../../formater/JoueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import {formatDate} from "../../formater/DateFormater";
@@ -42,6 +42,7 @@ export async function getStaticPaths() {
 
     const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
     const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>(DISCORD_USER_STATS);
+    // La plateforme (expand) sert à choisir le lien et l'avatar de chaque compte lié
     const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players", {expand: 'platform'});
     const allScreenshots = await ApiFetcher.getAllRecords<PlayerScreenshotType>(PLAYER_SCREENSHOTS, {
         expand: 'server,server.platform,platform'
@@ -241,6 +242,20 @@ if (msgCount > 1) {
                     })}
                 </div>
 
+                {/* Visible uniquement quand on consulte le profil d'un autre membre en étant connecté (voir script) */}
+                <div id="friend-action" class="friend-action" data-discord-id={utilisateur.discord_id}
+                     data-discord-tag={utilisateur.discord_tag} hidden>
+                    <button id="friend-action-button" type="button" class="super-button golden-outline friend-action-button">
+                        <svg class="friend-action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                        <span id="friend-action-label">Ajouter en ami</span>
+                    </button>
+                    <button id="friend-action-cancel" type="button" class="friend-action-cancel" hidden>Annuler la demande</button>
+                    <a id="friend-action-link" class="server-card-badge active friend-action-link" href="/amis" hidden>✓ Vous êtes amis</a>
+                    <p id="friend-action-message" class="server-card-badge friend-action-message" aria-live="polite" hidden></p>
+                </div>
+
                 <div class="server-desc-container">
                     <div class="stats-row">
                         <strong>
@@ -307,6 +322,11 @@ if (msgCount > 1) {
                                     </span>
                                 </button>
                             </a>
+                        ) : (
+                            // Pas encore de page joueur pour les autres plateformes : compte affiché sans lien
+                            <div class="server-card-badge" style="width: 100%; text-align: center;">
+                                {account.playername} ({account.expand?.platform?.name ?? "Plateforme inconnue"})
+                            </div>
                         ))
                     ) : (
                             <div class="server-card-badge unactive" style="width: 100%; text-align: center;">Aucun
@@ -342,15 +362,14 @@ if (msgCount > 1) {
         <TransitionSection title={`%Badges% de l'utilisateur #${utilisateur.username}#`}/>
         {/* Visible uniquement par le propriétaire du profil une fois connecté (voir script) */}
         <div id="badges-refresh" class="badges-refresh" data-discord-id={utilisateur.discord_id} hidden>
-            <button id="badges-refresh-button" type="button" class="super-button golden-outline" style="border-radius: 5px">
-                <span style="display: flex; align-items: center; gap: 8px; justify-content: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                    <span id="badges-refresh-label">Rafraîchir</span>
-                </span>
+            <button id="badges-refresh-button" type="button" class="super-button golden-outline badges-refresh-button"
+                    title="Recalculer mes badges">
+                <svg class="badges-refresh-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span id="badges-refresh-label">Rafraîchir mes badges</span>
             </button>
-            <p id="badges-refresh-message" class="badges-refresh-message" aria-live="polite"></p>
+            <p id="badges-refresh-message" class="server-card-badge badges-refresh-message" aria-live="polite" hidden></p>
         </div>
         <BadgeList PlayerOrUser="User" userId={utilisateur.id} categoryId={1} allRelatedPbIds={allRelatedPbIds} />
 
@@ -441,26 +460,121 @@ if (msgCount > 1) {
         }
 
 
-        .badges-refresh {
+        .friend-action {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 0.75rem;
+            margin: 0.75rem 0;
         }
 
-        .badges-refresh button:disabled {
-            opacity: 0.6;
+        .friend-action[hidden],
+        .friend-action [hidden] {
+            display: none;
+        }
+
+        /* Même version compacte du super-button que "Rafraîchir mes badges" */
+        .friend-action .friend-action-button {
+            gap: 8px;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .friend-action .friend-action-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .friend-action .friend-action-button:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .friend-action .friend-action-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .friend-action-cancel {
+            font-size: 0.85rem;
+            text-decoration: underline;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .friend-action-cancel:hover:not(:disabled) {
+            opacity: 1;
+        }
+
+        .friend-action-link {
+            text-decoration: none;
+        }
+
+        .badges-refresh {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1.25rem 1rem 0.5rem;
+        }
+
+        .badges-refresh[hidden],
+        .badges-refresh-message[hidden] {
+            display: none;
+        }
+
+        /* Version compacte du super-button : action secondaire au-dessus de la galerie */
+        .badges-refresh .badges-refresh-button {
+            gap: 8px;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .badges-refresh .badges-refresh-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .badges-refresh .badges-refresh-button:disabled {
+            opacity: 0.7;
             cursor: wait;
         }
 
-        .badges-refresh-message {
-            font-size: 0.85rem;
-            color: var(--pTextColor);
+        .badges-refresh .badges-refresh-icon {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.4s ease;
         }
 
-        .badges-refresh[hidden] {
-            display: none;
+        .badges-refresh .badges-refresh-button:hover:not(:disabled) .badges-refresh-icon {
+            transform: rotate(180deg);
+        }
+
+        .badges-refresh .badges-refresh-button.is-loading .badges-refresh-icon {
+            animation: badges-refresh-spin 0.9s linear infinite;
+        }
+
+        @keyframes badges-refresh-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .badges-refresh-message {
+            margin: 0;
+            animation: badges-refresh-fade 0.25s ease;
+        }
+
+        @keyframes badges-refresh-fade {
+            from { opacity: 0; transform: translateY(-2px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .badges-refresh .badges-refresh-icon,
+            .badges-refresh .badges-refresh-button,
+            .badges-refresh-message {
+                animation: none !important;
+                transition: none;
+            }
         }
 
         @media (max-width: 990px) {
@@ -492,20 +606,25 @@ if (msgCount > 1) {
         const message = document.getElementById('badges-refresh-message');
 
         button.disabled = true;
+        button.classList.add('is-loading');
         if (label) label.textContent = 'Rafraîchissement...';
-        if (message) message.textContent = '';
+        if (message) message.hidden = true;
 
         const status = await refreshOapiBadges();
 
         button.disabled = false;
-        if (label) label.textContent = 'Rafraîchir';
+        button.classList.remove('is-loading');
+        if (label) label.textContent = 'Rafraîchir mes badges';
         if (!message) return;
-        if (status !== null && status >= 200 && status < 300) {
-            // Le site est statique : les nouveaux badges s'afficheront à la prochaine génération
-            message.textContent = "Badges rafraîchis ! Ils apparaîtront à la prochaine mise à jour du site.";
-        } else {
-            message.textContent = (status !== null && REFRESH_MESSAGES[status]) || "Impossible de rafraîchir les badges pour le moment.";
-        }
+
+        const success = status !== null && status >= 200 && status < 300;
+        // Le site est statique : les nouveaux badges s'afficheront à la prochaine génération
+        message.textContent = success
+            ? "Badges rafraîchis ! Ils apparaîtront à la prochaine mise à jour du site."
+            : (status !== null && REFRESH_MESSAGES[status]) || "Impossible de rafraîchir les badges pour le moment.";
+        message.classList.toggle('active', success);
+        message.classList.toggle('unactive', !success);
+        message.hidden = false;
     }
 
     // Bouton "Rafraîchir" des badges : affiché seulement si on consulte son propre profil
@@ -522,6 +641,104 @@ if (msgCount > 1) {
         button?.addEventListener('click', () => refreshBadges(button));
     }
     showBadgesRefresh();
+</script>
+
+<script>
+    import {getOapiSession} from "../../utils/API/oapiAuth.ts";
+    import {acceptFriend, getFriends, OapiFriendsError, removeFriend, requestFriendByTag} from "../../utils/API/oapiFriends.ts";
+    import type {Friendship} from "../../utils/API/oapiFriends.ts";
+
+    type FriendState = "none" | "outgoing" | "incoming" | "friends";
+
+    const container = document.getElementById('friend-action');
+    const button = document.getElementById('friend-action-button') as HTMLButtonElement | null;
+    const label = document.getElementById('friend-action-label');
+    const cancel = document.getElementById('friend-action-cancel') as HTMLButtonElement | null;
+    const friendsLink = document.getElementById('friend-action-link');
+    const message = document.getElementById('friend-action-message');
+
+    // Membre OAPI correspondant au profil, connu une fois qu'une demande existe dans un sens ou dans l'autre
+    let entry: Friendship | undefined;
+    let state: FriendState = "none";
+
+    function showMessage(text: string, success: boolean) {
+        if (!message) return;
+        message.textContent = text;
+        message.classList.toggle('active', success);
+        message.classList.toggle('unactive', !success);
+        message.hidden = false;
+    }
+
+    function render() {
+        if (!button || !label || !cancel || !friendsLink) return;
+        button.hidden = state === "friends";
+        button.disabled = state === "outgoing";
+        label.textContent = state === "incoming" ? "Accepter sa demande d'ami"
+            : state === "outgoing" ? "Demande envoyée" : "Ajouter en ami";
+        cancel.hidden = state !== "outgoing";
+        friendsLink.hidden = state !== "friends";
+    }
+
+    async function loadState(discordId: string) {
+        const list = await getFriends();
+        const match = (kind: "friends" | "incoming" | "outgoing") => list[kind].find((item) => item.user.discord_id === discordId);
+        entry = match("friends") ?? match("incoming") ?? match("outgoing");
+        state = match("friends") ? "friends" : match("incoming") ? "incoming" : match("outgoing") ? "outgoing" : "none";
+    }
+
+    async function run(work: () => Promise<string>, discordId: string) {
+        if (!button || !cancel) return;
+        button.disabled = cancel.disabled = true;
+        if (message) message.hidden = true;
+        try {
+            const success = await work();
+            await loadState(discordId);
+            showMessage(success, true);
+        } catch (error) {
+            showMessage(error instanceof OapiFriendsError ? error.message : "Impossible de joindre OAPI pour le moment.", false);
+            if (error instanceof OapiFriendsError && error.status === 401) container?.setAttribute('hidden', '');
+        } finally {
+            cancel.disabled = false;
+            render();
+        }
+    }
+
+    async function showFriendAction() {
+        const discordId = container?.dataset.discordId;
+        const discordTag = container?.dataset.discordTag;
+        // Sans tag Discord, OAPI ne peut pas recevoir de demande pour ce membre
+        if (!container || !button || !cancel || !discordId || !discordTag) return;
+
+        const session = await getOapiSession();
+        if (!session?.authenticated || session.discord_id === discordId) return;
+
+        try {
+            await loadState(discordId);
+        } catch (error) {
+            // OAPI indisponible ou session expirée : on n'affiche pas un bouton qui ne marcherait pas
+            console.error("OAPI: impossible de charger les amis:", error);
+            return;
+        }
+        render();
+        container.hidden = false;
+
+        button.addEventListener('click', () => run(async () => {
+            if (state === "incoming" && entry) {
+                await acceptFriend(entry.user.id);
+                return "Demande acceptée : vous êtes maintenant amis !";
+            }
+            const result = await requestFriendByTag(discordTag);
+            return result.status === "accepted"
+                ? "Ce membre t'avait déjà envoyé une demande : vous êtes maintenant amis !"
+                : "Demande d'ami envoyée !";
+        }, discordId));
+
+        cancel.addEventListener('click', () => run(async () => {
+            if (entry) await removeFriend(entry.user.id);
+            return "Ta demande a été annulée.";
+        }, discordId));
+    }
+    showFriendAction();
 </script>
 
 <script>

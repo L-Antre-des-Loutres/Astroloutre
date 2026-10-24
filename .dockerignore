@@ -1,0 +1,19 @@
+# Dépendances et sorties : réinstallées / régénérées dans l'image
+node_modules
+dist
+.astro
+
+# Secrets : passés au build via le secret "env" (voir docker-compose.yml)
+.env
+.env.*
+!.env.example
+
+# Outils et fichiers locaux
+.git
+.github
+.idea
+.claude
+.DS_Store
+*.log
+Dockerfile
+docker-compose.yml
