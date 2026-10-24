@@ -16,11 +16,12 @@ const platforms = await ApiFetcher.getAllRecords<any>(PLATEFORMS);
 // Mapping des anciennes catégories vers les Noms de plateformes
 const platformNameMap: Record<number, string> = {
     1: "Discord",
-    2: "Minecraft"
+    2: "Minecraft",
+    3: "Steam"
 };
 
 const targetPlatformName = platformNameMap[Number(categoryId)];
-const targetPlatform = platforms.find(p => p.name === targetPlatformName)?.id;
+const targetPlatform = platforms.find(p => p.name?.toLowerCase() === targetPlatformName?.toLowerCase())?.id;
 
 // Récupération de tous les badges de la plateforme
 const allBadgesRaw = await ApiFetcher.getAllRecords<any>(BADGES);
