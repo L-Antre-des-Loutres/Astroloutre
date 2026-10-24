@@ -3,6 +3,7 @@ import Banner from "../../../components/sections/layout/Banner.astro";
 import Layout from "../../../layouts/Layout.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 import PalworldStats from "../../../components/sections/joueurs/steam/PalworldStats.astro";
+import SteamGameCategory from "../../../components/sections/joueurs/steam/SteamGameCategory.astro";
 import {isSteamPlayer, slugify} from "../../../formater/JoueurFormater";
 import {formatDate} from "../../../formater/DateFormater";
 
@@ -214,11 +215,11 @@ const banner = playedGames[0]?.banner ?? steamGames[0].banner;
                 </>
             )}
 
-            {/* Une section par jeu Steam pris en charge */}
+            {/* Une catégorie repliable par jeu Steam : dépliée seulement si le joueur n'a joué qu'à un seul jeu */}
             {palworldStats.length > 0 && (
-                <section id="palworld" class="game-section">
+                <SteamGameCategory id="palworld" name="Palworld" logo="/icons/logo_palworld.png" banner="/banner/palworld/palworld_endgame.webp" open={playedGames.length === 1}>
                     <PalworldStats stats={palworldStats} playername={joueur.playername} prefixe={prefixe} />
-                </section>
+                </SteamGameCategory>
             )}
         </div>
     )}
@@ -256,10 +257,6 @@ const banner = playedGames[0]?.banner ?? steamGames[0].banner;
             display: flex;
             justify-content: center;
             padding: 2rem;
-        }
-
-        .game-section {
-            scroll-margin-top: 6rem;
         }
 
         .avatar img {

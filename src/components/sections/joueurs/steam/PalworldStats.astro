@@ -122,11 +122,78 @@ const servers = stats
     .filter(server => server.team.length > 0 || server.topPals.length > 0 || server.bosses.length > 0);
 ---
 
-<TransitionSection title={`%Statistiques% ![/icons/logo_palworld.png] ${prefixe} #${playername}#`}/>
-
 {stats.length === 0 ? (
-    <p style="padding: 5em;">Ce joueur n’a pas de données.</p>
+    <>
+        <TransitionSection title={`%Statistiques% ${prefixe} #${playername}#`}/>
+        <p style="padding: 5em;">Ce joueur n’a pas de données.</p>
+    </>
 ) : (
+<>
+    {/* 1. Équipe actuelle */}
+    {servers.some(server => server.team.length > 0) && (
+        <>
+            <TransitionSection title={`Équipe ${prefixe} #${playername}#`}/>
+
+            {/* Choix du serveur (mêmes boutons que la page classements) : uniquement s'il y en a plusieurs */}
+            {servers.length > 1 && (
+                <div class="server-selector">
+                    {servers.map((server, index) => (
+                        <button type="button" data-server={server.id}
+                                class={`ranking-filter-button ${index === 0 ? "active" : "inactive"}`}>
+                            {server.name}
+                        </button>
+                    ))}
+                </div>
+            )}
+
+            {servers.map(({id, name, team}, index) => (
+                <div class="server-block" data-server={id} hidden={index > 0}>
+                    <div class="team-server">
+                        <span class="server-card-badge version">{name}</span>
+                    </div>
+
+                        {/* Une vignette par Pal, mêmes classes que les vignettes des serveurs */}
+                        <div class="pal-team">
+                            {team.map(pal => (
+                                <div class="server-card pal-vignette">
+                                    <div class="server-card-image pal-vignette-image"
+                                         style={`--server-banner: url('/banner/palworld/${slugify(name)}.webp')`}>
+                                        <img src={palIcon(pal.species)} alt={pal.species_name_fr} loading="lazy"
+                                             onerror="this.style.visibility='hidden'"/>
+                                    </div>
+
+                                    <div class="server-card-content">
+                                        <h3>{pal.nickname || pal.species_name_fr}</h3>
+                                        <p class="server-card-description">
+                                            {pal.species_name_fr} · Rang {pal.rank}
+                                            <br/>
+                                            PV {pal.talent_hp} · ATK {pal.talent_attack} · DEF {pal.talent_defense}
+                                            {pal.passives_fr?.length > 0 && (
+                                                <>
+                                                    <br/>
+                                                    <span class="pal-passives">{pal.passives_fr.join(" · ")}</span>
+                                                </>
+                                            )}
+                                        </p>
+
+                                        <div class="server-card-footer">
+                                            <span class="server-card-badge version">Niv. {pal.level}</span>
+                                            {pal.is_alpha && <span class="server-card-badge unactive">Alpha</span>}
+                                            {pal.is_lucky && <span class="server-card-badge active">Chromatique</span>}
+                                            {pal.awakened && <span class="server-card-badge ip">Éveillé</span>}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                </div>
+            ))}
+        </>
+    )}
+
+    {/* 2. Statistiques tous serveurs */}
+    <TransitionSection title={`%Statistiques% ${prefixe} #${playername}#`}/>
+
     <div class="palworld-tables">
         <div class="key-stats">
             {keyStats.map(card => (
@@ -215,11 +282,12 @@ const servers = stats
             </table>
         </div>
     </div>
-)}
 
-{servers.length > 0 && (
-    <>
-        <div class="palworld-servers">
+    {/* 3. Classements par serveur */}
+    {servers.some(server => server.topPals.length > 0 || server.bosses.length > 0) && (
+        <>
+            <TransitionSection title={`%Classements% ${prefixe} #${playername}#`}/>
+
             {/* Choix du serveur (mêmes boutons que la page classements) : uniquement s'il y en a plusieurs */}
             {servers.length > 1 && (
                 <div class="server-selector">
@@ -232,49 +300,8 @@ const servers = stats
                 </div>
             )}
 
-            {servers.map(({id, name, team, topPals, bosses}, index) => (
+            {servers.map(({id, topPals, bosses}, index) => (
                 <div class="server-block" data-server={id} hidden={index > 0}>
-                    {team.length > 0 && (
-                        <>
-                            <TransitionSection title={`Équipe ${prefixe} #${playername}# sur ${name}`} invertedBackground/>
-
-                            {/* Une vignette par Pal, mêmes classes que les vignettes des serveurs */}
-                            <div class="pal-team">
-                                {team.map(pal => (
-                                    <div class="server-card pal-vignette">
-                                        <div class="server-card-image pal-vignette-image"
-                                             style={`--server-banner: url('/banner/palworld/${slugify(name)}.webp')`}>
-                                            <img src={palIcon(pal.species)} alt={pal.species_name_fr} loading="lazy"
-                                                 onerror="this.style.visibility='hidden'"/>
-                                        </div>
-
-                                        <div class="server-card-content">
-                                            <h3>{pal.nickname || pal.species_name_fr}</h3>
-                                            <p class="server-card-description">
-                                                {pal.species_name_fr} · Rang {pal.rank}
-                                                <br/>
-                                                PV {pal.talent_hp} · ATK {pal.talent_attack} · DEF {pal.talent_defense}
-                                                {pal.passives_fr?.length > 0 && (
-                                                    <>
-                                                        <br/>
-                                                        <span class="pal-passives">{pal.passives_fr.join(" · ")}</span>
-                                                    </>
-                                                )}
-                                            </p>
-
-                                            <div class="server-card-footer">
-                                                <span class="server-card-badge version">Niv. {pal.level}</span>
-                                                {pal.is_alpha && <span class="server-card-badge unactive">Alpha</span>}
-                                                {pal.is_lucky && <span class="server-card-badge active">Chromatique</span>}
-                                                {pal.awakened && <span class="server-card-badge ip">Éveillé</span>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </>
-                    )}
-
                     {(topPals.length > 0 || bosses.length > 0) && (
                         <div class="palworld-rankings">
                         {topPals.length > 0 && (
@@ -332,24 +359,22 @@ const servers = stats
                     )}
                 </div>
             ))}
-        </div>
-    </>
+        </>
+    )}
+</>
 )}
 
 <script>
-    // Affiche l'équipe et les classements du serveur sélectionné
-    document.querySelectorAll<HTMLButtonElement>(".palworld-servers .server-selector button").forEach((button) => {
+    // Le même serveur est affiché dans l'équipe et dans les classements (sélecteurs synchronisés)
+    document.querySelectorAll<HTMLButtonElement>(".server-selector button").forEach((button) => {
         button.addEventListener("click", () => {
-            const wrapper = button.closest(".palworld-servers");
-            if (!wrapper) return;
-
-            wrapper.querySelectorAll<HTMLButtonElement>(".server-selector button").forEach((other) => {
-                const isActive = other === button;
+            document.querySelectorAll<HTMLButtonElement>(".server-selector button").forEach((other) => {
+                const isActive = other.dataset.server === button.dataset.server;
                 other.classList.toggle("active", isActive);
                 other.classList.toggle("inactive", !isActive);
             });
 
-            wrapper.querySelectorAll<HTMLElement>(".server-block").forEach((serverBlock) => {
+            document.querySelectorAll<HTMLElement>(".server-block").forEach((serverBlock) => {
                 serverBlock.hidden = serverBlock.dataset.server !== button.dataset.server;
             });
         });
@@ -521,6 +546,12 @@ const servers = stats
     }
 
     /* --- ÉQUIPE : vignettes server-card (styles globaux du site) --- */
+    .team-server {
+        display: flex;
+        justify-content: center;
+        padding-top: 1.5rem;
+    }
+
     .pal-team {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));

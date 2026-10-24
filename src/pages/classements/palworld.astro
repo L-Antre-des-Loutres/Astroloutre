@@ -1,0 +1,13 @@
+---
+// page palworld.astro
+import Layout from "../../layouts/Layout.astro";
+import Banner from "../../components/sections/layout/Banner.astro";
+import PalworldClassement from "../../components/classements/palworld/tableau/PalworldClassement.astro"
+import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+---
+
+<Layout title="Classement Palworld">
+    <Banner  bannerUrl=`/banner/palworld/palworld_endgame.webp`/>
+    <LargeTransitionSection title="%Classement% ![/icons/logo_palworld.png]" invertedBackground/>
+    <PalworldClassement />
+</Layout>

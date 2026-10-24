@@ -1,0 +1,106 @@
+---
+import PalworldClassementReactComposant from './PalworldClassement.tsx';
+
+import {makeServersMap, pickStatsFor, type Server} from "../../../../utils/stats";
+import {ApiFetcher} from "../../../../utils/API/apiFetcher";
+import {PALWORLD_STATS, PLAYERS, SERVERS} from "../../../../utils/constantes";
+import {isSteamPlayer, slugify} from "../../../../formater/JoueurFormater";
+import type {PlayerType} from "../../../../types/PlayerType";
+import type {PalworldStatsType} from "../../../../types/PalworldStatsType";
+import type {PalworldRankingStats} from "./PalworldClassement.tsx";
+
+// Fetch des serveurs Palworld depuis PocketBase
+const serversRaw = await ApiFetcher.getAllRecords<any>(SERVERS, { expand: 'platform' });
+const servers: Server[] = serversRaw
+    .map(s => ({
+        id: s.id,
+        nom: s.name,
+        jeu: s.expand?.platform?.name || 'Unknown',
+        description: s.description,
+        actif: s.is_enabled ? 1 : 0,
+        global: s.is_global ? 1 : 0,
+        type: s.type,
+        modpack: s.modpack
+    }))
+    .filter(s => s.jeu.toLowerCase() === 'palworld');
+
+// Catégorisation des serveurs (même logique que le classement Minecraft)
+const activeGlobalServers   = servers.filter(s => s.global === 1 && s.actif === 1);
+const inactiveGlobalServers = servers.filter(s => s.global === 1 && s.actif === 0);
+const partnerServers        = servers.filter(s => s.global === 0 || s.type?.toLowerCase() === 'partner');
+
+const serversListActiveGlobal   = makeServersMap(activeGlobalServers);
+const serversListInactiveGlobal = makeServersMap(inactiveGlobalServers);
+const serversListPartner        = makeServersMap(partnerServers);
+
+// Fetch des statistiques Palworld et des joueurs Steam
+const statsRaw = await ApiFetcher.getAllRecords<PalworldStatsType>(PALWORLD_STATS);
+const steamPlayers = (await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, { expand: 'platform' })).filter(isSteamPlayer);
+
+// Mapping vers les stats du classement
+// Le lien vers le profil n'est donné que si les stats sont liées à un compte Steam de l'Antre des loutres
+const playersRaw: (PalworldRankingStats & { serveur_id: string })[] = statsRaw.map(stat => {
+    const player = steamPlayers.find(p => p.id === stat.player && p.playername?.trim());
+    return {
+        key: player ? slugify(player.playername) : `palworld-${stat.player_id || stat.playername}`,
+        playername: player?.playername || stat.playername || "Inconnu",
+        avatar: player?.avatar_url || null,
+        profil: player ? `/joueurs/steam/${slugify(player.playername)}` : null,
+        level: Number(stat.level) || 0,
+        nb_catch_pal: Number(stat.nb_catch_pal) || 0,
+        species_captured: Number(stat.species_captured) || 0,
+        pals_possedes: Number(stat.pal_summary?.total) || 0,
+        tower_boss_defeated: Number(stat.tower_boss_defeated) || 0,
+        dungeon_clear: Number(stat.dungeon_clear) || 0,
+        completed_quests: Number(stat.completed_quests) || 0,
+        unlocked_technologies: Number(stat.unlocked_technologies) || 0,
+        fishing_total: Number(stat.fishing_total) || 0,
+        craft_item_total: Number(stat.craft_item_total) || 0,
+        serveur_id: stat.server
+    };
+}).filter(p => p.playername !== "Inconnu");
+
+// Regroupement des statistiques par serveur
+const groupedStats: Record<string, PalworldRankingStats[]> = {};
+playersRaw.forEach(entry => {
+    const serverId = (entry.serveur_id ?? '').toString();
+    if (!groupedStats[serverId]) groupedStats[serverId] = [];
+    groupedStats[serverId].push(entry);
+});
+
+// Agrégation tous serveurs confondus : les compteurs s'additionnent, le niveau et les espèces gardent le maximum
+const MAX_KEYS: (keyof PalworldRankingStats)[] = ["level", "species_captured"];
+const SUM_KEYS: (keyof PalworldRankingStats)[] = [
+    "nb_catch_pal", "pals_possedes", "tower_boss_defeated", "dungeon_clear",
+    "completed_quests", "unlocked_technologies", "fishing_total", "craft_item_total"
+];
+const aggregated = new Map<string, PalworldRankingStats>();
+playersRaw.forEach(({serveur_id, ...entry}) => {
+    const existing = aggregated.get(entry.key);
+    if (!existing) {
+        aggregated.set(entry.key, {...entry});
+        return;
+    }
+    MAX_KEYS.forEach(k => (existing as any)[k] = Math.max(existing[k] as number, entry[k] as number));
+    SUM_KEYS.forEach(k => (existing as any)[k] = (existing[k] as number) + (entry[k] as number));
+});
+
+const TOTAL_SERVER_ID = ""; // "" = toutes les stats
+
+const statsAllServer = {
+    ...pickStatsFor(serversListActiveGlobal, groupedStats as any),
+    ...pickStatsFor(serversListInactiveGlobal, groupedStats as any),
+    ...pickStatsFor(serversListPartner, groupedStats as any),
+    [TOTAL_SERVER_ID]: Array.from(aggregated.values())
+};
+---
+
+<PalworldClassementReactComposant
+        client:load
+
+        serversListActiveGlobal={serversListActiveGlobal}
+        serversListInactiveGlobal={serversListInactiveGlobal}
+        serversListPartner={serversListPartner}
+
+        statsAllServer={statsAllServer}
+/>
