@@ -1,0 +1,358 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Banner from "../components/sections/layout/Banner.astro";
+import TransitionSection from "../components/sections/common/transitions/TransitionSection.astro";
+---
+
+<Layout title="Mes amis" ogDescription="Retrouve tes amis de l'Antre des Loutres et gère tes demandes d'amitié avec ton compte Discord.">
+    <Banner/>
+
+    <div class="friends-page" data-friends-page>
+        <TransitionSection title="Mes #amis#"/>
+
+        <p class="friends-status" data-session-loading role="status">Vérification de ta connexion…</p>
+        <noscript><p class="friends-panel">Active JavaScript pour te connecter avec Discord et gérer tes amis.</p></noscript>
+
+        <div class="friends-alert" data-error hidden role="alert">
+            <p data-error-message></p>
+            <button type="button" class="friend-button secondary" data-retry data-api-control>Réessayer</button>
+        </div>
+        <p class="friends-feedback" data-feedback role="status" aria-live="polite"></p>
+        <p class="friends-status" data-cooldown role="status" hidden></p>
+
+        {/* Visiteur non connecté */}
+        <section class="friends-panel friends-guest" data-guest hidden aria-labelledby="guest-title">
+            <h2 id="guest-title">Tes amis t'attendent</h2>
+            <p>Connecte-toi avec ton compte Discord pour envoyer une demande, accepter une invitation ou retrouver ta liste d'amis.</p>
+            <a class="super-button golden-outline" data-login>Se connecter avec Discord</a>
+        </section>
+
+        {/* Espace connecté */}
+        <div class="friends-workspace" data-workspace hidden>
+            <section class="friends-panel" aria-labelledby="add-title">
+                <h2 id="add-title">Ajouter un ami</h2>
+                <form class="friends-add-form" data-add-form>
+                    <label for="friend-tag">Tag Discord de ton ami</label>
+                    <div class="friends-input-row">
+                        <input id="friend-tag" name="tag" type="text" placeholder="Ex. rerebleue" required maxlength="33"
+                               aria-describedby="friend-tag-help" autocomplete="off" autocapitalize="none" spellcheck="false"
+                               data-api-control disabled/>
+                        <button class="friend-button primary" type="submit" data-api-control disabled>Envoyer la demande</button>
+                    </div>
+                    <p id="friend-tag-help" class="friends-small">Son nom d'utilisateur Discord exact, avec ou sans @. Tu peux aussi l'ajouter depuis son profil.</p>
+                </form>
+            </section>
+
+            <div class="friends-list-heading">
+                <h2>Mes amis <span class="friend-count" data-count="friends">—</span></h2>
+                <button class="friend-button secondary" type="button" data-refresh data-api-control disabled>↻ Actualiser</button>
+            </div>
+            <p class="friends-status" data-list-loading role="status" hidden>Chargement de tes amis…</p>
+
+            <div data-lists hidden>
+                <section class="friends-panel" aria-label="Liste de mes amis">
+                    <label class="friends-small" for="friend-search">Rechercher dans mes amis</label>
+                    <input class="friends-search" id="friend-search" type="search" placeholder="Un nom, un tag…" autocomplete="off" data-search/>
+                    <ul class="friend-list" data-list="friends"></ul>
+                    <p class="friends-empty" data-empty="friends"></p>
+                </section>
+
+                <div class="friends-requests">
+                    <section class="friends-panel" aria-labelledby="incoming-title">
+                        <h2 id="incoming-title">Demandes reçues <span class="friend-count" data-count="incoming">—</span></h2>
+                        <ul class="friend-list" data-list="incoming"></ul>
+                        <p class="friends-empty" data-empty="incoming">Aucune demande en attente.</p>
+                    </section>
+                    <section class="friends-panel" aria-labelledby="outgoing-title">
+                        <h2 id="outgoing-title">Demandes envoyées <span class="friend-count" data-count="outgoing">—</span></h2>
+                        <ul class="friend-list" data-list="outgoing"></ul>
+                        <p class="friends-empty" data-empty="outgoing">Aucune demande envoyée pour le moment.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <template data-friend-template>
+            <li class="friend-row">
+                <div class="friend-person">
+                    <div class="friend-avatar"><span data-initial aria-hidden="true"></span><img alt="" hidden referrerpolicy="no-referrer"/></div>
+                    <div class="friend-profile">
+                        <a class="friend-name" data-name></a>
+                        <p class="friends-small" data-tag></p>
+                        <p class="friends-small" data-since></p>
+                    </div>
+                </div>
+                <div class="friend-actions" data-actions></div>
+            </li>
+        </template>
+
+        <dialog class="friends-dialog" data-confirm-dialog aria-labelledby="remove-title" aria-describedby="remove-description">
+            <h2 id="remove-title">Retirer cet ami ?</h2>
+            <p id="remove-description"></p>
+            <form method="dialog" class="friend-actions">
+                <button class="friend-button secondary" value="cancel" autofocus>Garder cet ami</button>
+                <button class="friend-button danger" value="confirm">Retirer</button>
+            </form>
+        </dialog>
+    </div>
+
+    {/* Global : les boutons d'action sont créés par le script et n'ont pas l'attribut de portée d'Astro */}
+    <style is:global>
+        .friends-page {
+            max-width: 960px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+            color: var(--default-text-color);
+        }
+
+        .friends-page [hidden] {
+            display: none !important;
+        }
+
+        .friends-panel {
+            background-color: var(--player-profile-card-bg);
+            border: 1px solid var(--server-cards-badge-background-color-1);
+            border-radius: 1rem;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1.25rem;
+        }
+
+        .friends-page h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--h2-title-color);
+        }
+
+        .friends-guest {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .friends-status,
+        .friends-feedback {
+            margin: 1rem 0 0;
+            text-align: center;
+            color: var(--light-text-color);
+        }
+
+        .friends-feedback:empty {
+            display: none;
+        }
+
+        .friends-alert {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--color-red);
+            background-color: color-mix(in srgb, var(--color-red) 12%, transparent);
+        }
+
+        .friends-small {
+            margin: 0.25rem 0 0;
+            font-size: 0.85rem;
+            color: var(--deep-text-color);
+        }
+
+        .friends-add-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .friends-input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .friends-input-row input,
+        .friends-search {
+            flex: 1 1 14rem;
+            min-width: 0;
+            padding: 0.6rem 0.9rem;
+            border-radius: 0.6rem;
+            border: 1px solid var(--server-cards-badge-background-color-1);
+            background-color: var(--background-color);
+            color: var(--default-text-color);
+            font-size: 1rem;
+        }
+
+        .friends-search {
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0 0.5rem;
+        }
+
+        .friends-list-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .friends-list-heading h2 {
+            margin: 0;
+        }
+
+        .friend-count {
+            margin-left: 0.4rem;
+            padding: 0.1rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            background-color: var(--server-cards-badge-background-color-1);
+            color: var(--server-cards-badge-text-color-1);
+        }
+
+        .friends-requests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+            gap: 0 1.25rem;
+        }
+
+        .friend-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .friend-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--server-cards-badge-background-color-1);
+        }
+
+        .friend-list .friend-row:first-child {
+            border-top: none;
+        }
+
+        .friend-person {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .friend-avatar {
+            position: relative;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            font-weight: bold;
+            background-color: var(--server-cards-badge-background-color-4);
+            color: var(--server-cards-badge-text-color-4);
+        }
+
+        .friend-avatar img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .friend-profile {
+            min-width: 0;
+        }
+
+        .friend-name {
+            font-weight: bold;
+            color: var(--default-text-color);
+            overflow-wrap: anywhere;
+        }
+
+        .friend-name[href]:hover {
+            color: var(--h1-title-color);
+            text-decoration: underline;
+        }
+
+        .friends-empty {
+            margin: 0.5rem 0 0;
+            color: var(--deep-text-color);
+        }
+
+        .friend-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .friend-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.6rem;
+            border: 1px solid transparent;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .friend-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .friend-button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .friend-button.primary {
+            background-color: var(--color-gold-deep);
+            color: var(--color-black);
+        }
+
+        .friend-button.secondary {
+            background-color: transparent;
+            border-color: var(--server-cards-badge-background-color-4);
+            color: var(--default-text-color);
+        }
+
+        .friend-button.danger {
+            background-color: var(--color-red);
+            color: var(--color-white);
+        }
+
+        .friends-dialog {
+            /* Le reset de Tailwind supprime le centrage natif des <dialog> */
+            margin: auto;
+            max-width: min(28rem, calc(100% - 2rem));
+            padding: 1.5rem;
+            border: 1px solid var(--server-cards-badge-background-color-1);
+            border-radius: 1rem;
+            background-color: var(--player-profile-card-bg);
+            color: var(--default-text-color);
+        }
+
+        .friends-dialog::backdrop {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .friends-dialog .friend-actions {
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+    </style>
+</Layout>
+
+<script>
+    import {initFriendsPage} from "../utils/friendsPage.ts";
+
+    const root = document.querySelector<HTMLElement>('[data-friends-page]');
+    if (root) initFriendsPage(root);
+</script>
