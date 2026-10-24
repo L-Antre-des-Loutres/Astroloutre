@@ -23,17 +23,17 @@ const sum = (pick: (stat: PalworldStatsType) => number | undefined) =>
 
 // Colonnes du tableau de progression
 const progressionColumns: { label: string, pick: (stat: PalworldStatsType) => number }[] = [
-    {label: "Pals capturés", pick: s => s.nb_catch_pal},
-    {label: "Espèces capturées", pick: s => s.species_captured},
+    {label: "Captures", pick: s => s.nb_catch_pal},
+    {label: "Espèces", pick: s => s.species_captured},
     {label: "Quêtes", pick: s => s.completed_quests},
     {label: "Technologies", pick: s => s.unlocked_technologies},
-    {label: "Boss de tour", pick: s => s.tower_boss_defeated},
+    {label: "Boss", pick: s => s.tower_boss_defeated},
     {label: "Donjons", pick: s => s.dungeon_clear},
-    {label: "Plateformes pétrolières", pick: s => s.oilrig_clear},
+    {label: "Pétroliers", pick: s => s.oilrig_clear},
     {label: "Téléporteurs", pick: s => s.fast_travel_unlocked},
-    {label: "Poissons pêchés", pick: s => s.fishing_total},
-    {label: "Pals découpés", pick: s => s.pal_butcher_total},
-    {label: "Objets fabriqués", pick: s => s.craft_item_total},
+    {label: "Pêche", pick: s => s.fishing_total},
+    {label: "Découpes", pick: s => s.pal_butcher_total},
+    {label: "Objets créés", pick: s => s.craft_item_total},
 ];
 
 // Colonnes du tableau de collection (résumé des Pals possédés)
@@ -47,45 +47,79 @@ const collectionColumns: { label: string, pick: (stat: PalworldStatsType) => num
     {label: "Talents parfaits", pick: s => s.pal_summary?.perfect_talents ?? 0},
 ];
 
-// Captures et découpes par espèce, additionnées sur tous les serveurs
-const palCounts = new Map<string, { species: string, name: string, captures: number, butcher: number }>();
-const addPalCounts = (record: Record<string, PalworldCountType> | null, key: "captures" | "butcher") =>
-    Object.entries(record ?? {}).forEach(([species, value]) => {
-        if (!value.name_fr) return;
-        const entry = palCounts.get(species) ?? {species, name: value.name_fr, captures: 0, butcher: 0};
-        entry[key] += value.count;
-        palCounts.set(species, entry);
-    });
-stats.forEach(stat => {
+// Icônes (heroicons) des cartes de statistiques clés
+const ICONS = {
+    level: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6",
+    capture: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z",
+    species: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+    collection: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+    boss: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9",
+    dungeon: "M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7",
+};
+
+// Chiffres mis en avant au-dessus des tableaux (tous serveurs confondus)
+const keyStats = [
+    {title: "Niveau max", value: Math.max(0, ...stats.map(stat => stat.level || 0)), icon: ICONS.level},
+    {title: "Pals capturés", value: sum(s => s.nb_catch_pal), icon: ICONS.capture},
+    {title: "Espèces capturées", value: Math.max(0, ...stats.map(stat => stat.species_captured || 0)), icon: ICONS.species},
+    {title: "Pals possédés", value: sum(s => s.pal_summary?.total), icon: ICONS.collection},
+    {title: "Boss de tour", value: sum(s => s.tower_boss_defeated), icon: ICONS.boss},
+    {title: "Donjons", value: sum(s => s.dungeon_clear), icon: ICONS.dungeon},
+];
+
+// Pal le plus découpé, tous serveurs confondus
+const butcherTotals = new Map<string, { species: string, name: string, count: number }>();
+stats.forEach(stat => Object.entries(stat.butcher_by_species ?? {}).forEach(([species, value]) => {
+    if (!value.name_fr) return;
+    const entry = butcherTotals.get(species) ?? {species, name: value.name_fr, count: 0};
+    entry.count += value.count;
+    butcherTotals.set(species, entry);
+}));
+const mostButchered = [...butcherTotals.values()].sort((a, b) => b.count - a.count)[0];
+
+// Captures et découpes par espèce sur un serveur
+const topPalsOf = (stat: PalworldStatsType) => {
+    const palCounts = new Map<string, { species: string, name: string, captures: number, butcher: number }>();
+    const addPalCounts = (record: Record<string, PalworldCountType> | null, key: "captures" | "butcher") =>
+        Object.entries(record ?? {}).forEach(([species, value]) => {
+            if (!value.name_fr) return;
+            const entry = palCounts.get(species) ?? {species, name: value.name_fr, captures: 0, butcher: 0};
+            entry[key] += value.count;
+            palCounts.set(species, entry);
+        });
     addPalCounts(stat.capture_by_species, "captures");
     addPalCounts(stat.butcher_by_species, "butcher");
-});
-const topPals = [...palCounts.values()]
-    .sort((a, b) => b.captures - a.captures || b.butcher - a.butcher)
-    .slice(0, 15);
+    return [...palCounts.values()]
+        .sort((a, b) => b.captures - a.captures || b.butcher - a.butcher)
+        .slice(0, 15);
+};
 
-// Boss vaincus : les variantes de difficulté (Normal, Hard...) partagent le même nom, on les additionne
-const bossCounts = new Map<string, { name: string, type: string, count: number }>();
-const addBossCounts = (record: Record<string, PalworldCountType> | null, type: string) =>
-    Object.values(record ?? {}).forEach(value => {
-        if (!value.name_fr) return;
-        const key = `${type}|${value.name_fr}`;
-        const entry = bossCounts.get(key) ?? {name: value.name_fr, type, count: 0};
-        entry.count += value.count;
-        bossCounts.set(key, entry);
-    });
-stats.forEach(stat => {
+// Boss vaincus sur un serveur : les variantes de difficulté (Normal, Hard...) partagent le même nom, on les additionne
+const bossesOf = (stat: PalworldStatsType) => {
+    const bossCounts = new Map<string, { name: string, type: string, count: number }>();
+    const addBossCounts = (record: Record<string, PalworldCountType> | null, type: string) =>
+        Object.values(record ?? {}).forEach(value => {
+            if (!value.name_fr) return;
+            const key = `${type}|${value.name_fr}`;
+            const entry = bossCounts.get(key) ?? {name: value.name_fr, type, count: 0};
+            entry.count += value.count;
+            bossCounts.set(key, entry);
+        });
     addBossCounts(stat.tower_boss_defeats, "Tour");
     addBossCounts(stat.raid_boss_defeats, "Raid");
-});
-const bosses = [...bossCounts.values()].sort((a, b) => b.count - a.count);
+    return [...bossCounts.values()].sort((a, b) => b.count - a.count);
+};
 
-const teams = stats
+// Équipe et classements par serveur, affichés selon le serveur choisi
+const servers = stats
     .map(stat => ({
+        id: stat.server,
         name: serverName(stat),
         team: [...(stat.pal_team ?? [])].sort((a, b) => a.slot_index - b.slot_index),
+        topPals: topPalsOf(stat),
+        bosses: bossesOf(stat),
     }))
-    .filter(entry => entry.team.length > 0);
+    .filter(server => server.team.length > 0 || server.topPals.length > 0 || server.bosses.length > 0);
 ---
 
 <TransitionSection title={`%Statistiques% ![/icons/logo_palworld.png] ${prefixe} #${playername}#`}/>
@@ -94,13 +128,37 @@ const teams = stats
     <p style="padding: 5em;">Ce joueur n’a pas de données.</p>
 ) : (
     <div class="palworld-tables">
+        <div class="key-stats">
+            {keyStats.map(card => (
+                <div class="key-stat-card">
+                    <span class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={card.icon}/>
+                        </svg>
+                    </span>
+                    <span class="card-title">{card.title}</span>
+                    <span class="card-value">{formatNumber(card.value || 0)}</span>
+                </div>
+            ))}
+
+            {mostButchered && (
+                <div class="key-stat-card featured-pal">
+                    <img class="featured-portrait" src={palIcon(mostButchered.species)} alt={mostButchered.name}
+                         width="72" height="72" loading="lazy" onerror="this.style.visibility='hidden'"/>
+                    <div class="featured-text">
+                        <span class="card-title">Pal le plus découpé</span>
+                        <span class="card-value">{mostButchered.name}</span>
+                        <span class="featured-detail">{formatNumber(mostButchered.count)} découpes</span>
+                    </div>
+                </div>
+            )}
+        </div>
+
         <div class="ranking-table-container">
             <table class="ranking-table">
                 <thead class="ranking-thead">
                 <tr>
                     <th class="ranking-th">Nom du serveur</th>
-                    <th class="ranking-th">Niveau</th>
-                    <th class="ranking-th">Guilde</th>
                     {progressionColumns.map(column => <th class="ranking-th">{column.label}</th>)}
                 </tr>
                 </thead>
@@ -111,15 +169,11 @@ const teams = stats
                             <img src="/icons/logo_palworld_mini.jpg" alt="Palworld" width="24" height="24"/>
                             <a class="ranking-link" href={`/serveurs/palworld/${slugify(serverName(stat))}`}>{serverName(stat)}</a>
                         </td>
-                        <td class="ranking-td">{stat.level}</td>
-                        <td class="ranking-td">{stat.guild_name || "—"}</td>
                         {progressionColumns.map(column => <td class="ranking-td">{formatNumber(column.pick(stat) || 0)}</td>)}
                     </tr>
                 ))}
                 <tr class="ranking-thead">
                     <td class="ranking-td">Total tous serveurs</td>
-                    <td class="ranking-td">{Math.max(...stats.map(stat => stat.level || 0))}</td>
-                    <td class="ranking-td">—</td>
                     {progressionColumns.map(column => <td class="ranking-td">{formatNumber(sum(column.pick))}</td>)}
                 </tr>
                 </tbody>
@@ -131,6 +185,8 @@ const teams = stats
                 <thead class="ranking-thead">
                 <tr>
                     <th class="ranking-th">Collection</th>
+                    <th class="ranking-th">Niveau</th>
+                    <th class="ranking-th">Guilde</th>
                     {collectionColumns.map(column => <th class="ranking-th">{column.label}</th>)}
                     <th class="ranking-th">Niveau moyen</th>
                 </tr>
@@ -142,12 +198,16 @@ const teams = stats
                             <img src="/icons/logo_palworld_mini.jpg" alt="Palworld" width="24" height="24"/>
                             {serverName(stat)}
                         </td>
+                        <td class="ranking-td">{stat.level}</td>
+                        <td class="ranking-td wrap-cell">{stat.guild_name || "—"}</td>
                         {collectionColumns.map(column => <td class="ranking-td">{formatNumber(column.pick(stat))}</td>)}
                         <td class="ranking-td">{Math.round(stat.pal_summary?.average_level ?? 0)}</td>
                     </tr>
                 ))}
                 <tr class="ranking-thead">
                     <td class="ranking-td">Total tous serveurs</td>
+                    <td class="ranking-td">{Math.max(...stats.map(stat => stat.level || 0))}</td>
+                    <td class="ranking-td">—</td>
                     {collectionColumns.map(column => <td class="ranking-td">{formatNumber(sum(column.pick))}</td>)}
                     <td class="ranking-td">—</td>
                 </tr>
@@ -157,120 +217,144 @@ const teams = stats
     </div>
 )}
 
-{teams.length > 0 && (
+{servers.length > 0 && (
     <>
-        <TransitionSection title={`Pals ${prefixe} #${playername}#`}/>
+        <div class="palworld-servers">
+            {/* Choix du serveur (mêmes boutons que la page classements) : uniquement s'il y en a plusieurs */}
+            {servers.length > 1 && (
+                <div class="server-selector">
+                    {servers.map((server, index) => (
+                        <button type="button" data-server={server.id}
+                                class={`ranking-filter-button ${index === 0 ? "active" : "inactive"}`}>
+                            {server.name}
+                        </button>
+                    ))}
+                </div>
+            )}
 
-        <div class="palworld-teams">
-            {teams.map(({name, team}) => (
-                <div class="team-card">
-                    <div class="team-header">
-                        <h3 class="team-server-name">
-                            <span class="server-label">Serveur</span>
-                            {name}
-                        </h3>
-                        <span class="badge-count">{team.length} / 5</span>
-                    </div>
+            {servers.map(({id, name, team, topPals, bosses}, index) => (
+                <div class="server-block" data-server={id} hidden={index > 0}>
+                    {team.length > 0 && (
+                        <>
+                            <TransitionSection title={`Équipe ${prefixe} #${playername}# sur ${name}`} invertedBackground/>
 
-                    <div class="pal-team">
-                        {team.map(pal => (
-                            <div class:list={["pal-card", {"is-alpha": pal.is_alpha, "is-lucky": pal.is_lucky}]}>
-                                <div class="pal-visual">
-                                    <div class="visual-bg"></div>
-                                    <img src={palIcon(pal.species)} alt={pal.species_name_fr} class="pal-image floating-anim"
-                                         loading="lazy" onerror="this.style.visibility='hidden'"/>
-                                    <div class="level-badge">Lvl {pal.level}</div>
-                                </div>
-                                <div class="name-container">
-                                    <strong class="pal-name">{pal.nickname || pal.species_name_fr}</strong>
-                                    {pal.nickname && <span class="pal-species">{pal.species_name_fr}</span>}
-                                    <span class="pal-rank" title={`Rang ${pal.rank}`}>
-                                        {Array.from({length: 4}, (_, i) => i < pal.rank - 1 ? "★" : "☆").join("")}
-                                    </span>
-                                    <div class="pal-tags">
-                                        {pal.is_alpha && <span class="pal-tag alpha">ALPHA</span>}
-                                        {pal.is_lucky && <span class="pal-tag lucky">CHROMATIQUE</span>}
-                                        {pal.awakened && <span class="pal-tag awakened">ÉVEILLÉ</span>}
+                            {/* Une vignette par Pal, mêmes classes que les vignettes des serveurs */}
+                            <div class="pal-team">
+                                {team.map(pal => (
+                                    <div class="server-card pal-vignette">
+                                        <div class="server-card-image pal-vignette-image"
+                                             style={`--server-banner: url('/banner/palworld/${slugify(name)}.webp')`}>
+                                            <img src={palIcon(pal.species)} alt={pal.species_name_fr} loading="lazy"
+                                                 onerror="this.style.visibility='hidden'"/>
+                                        </div>
+
+                                        <div class="server-card-content">
+                                            <h3>{pal.nickname || pal.species_name_fr}</h3>
+                                            <p class="server-card-description">
+                                                {pal.species_name_fr} · Rang {pal.rank}
+                                                <br/>
+                                                PV {pal.talent_hp} · ATK {pal.talent_attack} · DEF {pal.talent_defense}
+                                                {pal.passives_fr?.length > 0 && (
+                                                    <>
+                                                        <br/>
+                                                        <span class="pal-passives">{pal.passives_fr.join(" · ")}</span>
+                                                    </>
+                                                )}
+                                            </p>
+
+                                            <div class="server-card-footer">
+                                                <span class="server-card-badge version">Niv. {pal.level}</span>
+                                                {pal.is_alpha && <span class="server-card-badge unactive">Alpha</span>}
+                                                {pal.is_lucky && <span class="server-card-badge active">Chromatique</span>}
+                                                {pal.awakened && <span class="server-card-badge ip">Éveillé</span>}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="details-grid">
-                                    <div class="detail-pill"><span class="label">PV</span><span class="value">{pal.talent_hp}</span></div>
-                                    <div class="detail-pill"><span class="label">Attaque</span><span class="value">{pal.talent_attack}</span></div>
-                                    <div class="detail-pill"><span class="label">Défense</span><span class="value">{pal.talent_defense}</span></div>
-                                </div>
-                                {pal.passives_fr?.length > 0 && (
-                                    <div class="pal-passives">
-                                        {pal.passives_fr.map(passive => <span class="passive-pill">{passive}</span>)}
-                                    </div>
-                                )}
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        </>
+                    )}
+
+                    {(topPals.length > 0 || bosses.length > 0) && (
+                        <div class="palworld-rankings">
+                        {topPals.length > 0 && (
+                            <div class="ranking-table-container">
+                                <table class="ranking-table">
+                                    <thead class="ranking-thead">
+                                    <tr>
+                                        <th class="ranking-th">#</th>
+                                        <th class="ranking-th">Pals les plus capturés</th>
+                                        <th class="ranking-th">Captures</th>
+                                        <th class="ranking-th">Découpes</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {topPals.map((pal, index) => (
+                                        <tr class={index % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
+                                            <td class="ranking-td">{index + 1}</td>
+                                            <td class="ranking-td server-cell">
+                                                <img src={palIcon(pal.species)} alt="" width="32" height="32" loading="lazy"
+                                                     onerror="this.style.visibility='hidden'"/>
+                                                {pal.name}
+                                            </td>
+                                            <td class="ranking-td">{formatNumber(pal.captures)}</td>
+                                            <td class="ranking-td">{formatNumber(pal.butcher)}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+
+                        {bosses.length > 0 && (
+                            <div class="ranking-table-container">
+                                <table class="ranking-table">
+                                    <thead class="ranking-thead">
+                                    <tr>
+                                        <th class="ranking-th">Boss vaincus</th>
+                                        <th class="ranking-th">Type</th>
+                                        <th class="ranking-th">Victoires</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {bosses.map((boss, index) => (
+                                        <tr class={index % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
+                                            <td class="ranking-td boss-cell">{boss.name}</td>
+                                            <td class="ranking-td">{boss.type}</td>
+                                            <td class="ranking-td">{formatNumber(boss.count)}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
     </>
 )}
 
-{(topPals.length > 0 || bosses.length > 0) && (
-    <>
-        <TransitionSection title={`%Classements% ${prefixe} #${playername}#`}/>
+<script>
+    // Affiche l'équipe et les classements du serveur sélectionné
+    document.querySelectorAll<HTMLButtonElement>(".palworld-servers .server-selector button").forEach((button) => {
+        button.addEventListener("click", () => {
+            const wrapper = button.closest(".palworld-servers");
+            if (!wrapper) return;
 
-        <div class="palworld-rankings">
-            {topPals.length > 0 && (
-                <div class="ranking-table-container">
-                    <table class="ranking-table">
-                        <thead class="ranking-thead">
-                        <tr>
-                            <th class="ranking-th">#</th>
-                            <th class="ranking-th">Pals les plus capturés</th>
-                            <th class="ranking-th">Captures</th>
-                            <th class="ranking-th">Découpes</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {topPals.map((pal, index) => (
-                            <tr class={index % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
-                                <td class="ranking-td">{index + 1}</td>
-                                <td class="ranking-td server-cell">
-                                    <img src={palIcon(pal.species)} alt="" width="32" height="32" loading="lazy"
-                                         onerror="this.style.visibility='hidden'"/>
-                                    {pal.name}
-                                </td>
-                                <td class="ranking-td">{formatNumber(pal.captures)}</td>
-                                <td class="ranking-td">{formatNumber(pal.butcher)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+            wrapper.querySelectorAll<HTMLButtonElement>(".server-selector button").forEach((other) => {
+                const isActive = other === button;
+                other.classList.toggle("active", isActive);
+                other.classList.toggle("inactive", !isActive);
+            });
 
-            {bosses.length > 0 && (
-                <div class="ranking-table-container">
-                    <table class="ranking-table">
-                        <thead class="ranking-thead">
-                        <tr>
-                            <th class="ranking-th">Boss vaincus</th>
-                            <th class="ranking-th">Type</th>
-                            <th class="ranking-th">Victoires</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {bosses.map((boss, index) => (
-                            <tr class={index % 2 === 0 ? "ranking-tr-even" : "ranking-tr-odd"}>
-                                <td class="ranking-td boss-cell">{boss.name}</td>
-                                <td class="ranking-td">{boss.type}</td>
-                                <td class="ranking-td">{formatNumber(boss.count)}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-        </div>
-    </>
-)}
+            wrapper.querySelectorAll<HTMLElement>(".server-block").forEach((serverBlock) => {
+                serverBlock.hidden = serverBlock.dataset.server !== button.dataset.server;
+            });
+        });
+    });
+</script>
 
 <style>
     /* --- TABLEAUX (même rendu que PlayerStatsTable sur la page Minecraft) --- */
@@ -280,6 +364,95 @@ const teams = stats
         gap: 2rem;
         padding: 2rem 1rem;
         text-align: left;
+    }
+
+    /* --- STATISTIQUES CLÉS (même rendu que les statistiques Discord) --- */
+    .key-stats {
+        display: grid;
+        /* 6 cartes + la vignette du Pal le plus découpé sur 2 colonnes */
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
+
+    .key-stat-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+        min-width: 0;
+        padding: 1.5rem 1rem 1.25rem;
+        overflow: hidden;
+        text-align: center;
+        background-color: var(--server-screen-color-bg-card);
+        border: 1px solid var(--server-screen-color-border);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Liseré doré en haut de carte */
+    .key-stat-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--golden-gradient-shift-1), var(--golden-gradient-shift-2), var(--golden-gradient-shift-3));
+    }
+
+    .key-stat-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--server-screen-color-accent);
+    }
+
+    .card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: 0.35rem;
+        border-radius: 50%;
+        color: var(--server-screen-color-accent);
+        background-color: color-mix(in srgb, var(--server-screen-color-accent) 15%, transparent);
+    }
+
+    .card-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--server-screen-color-text-muted);
+    }
+
+    .card-value {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--server-screen-color-text-main);
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* --- CHOIX DU SERVEUR --- */
+    .server-selector {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 2rem 1rem 0;
+    }
+
+    .server-block[hidden] {
+        display: none;
+    }
+
+    .palworld-tables .ranking-th {
+        white-space: nowrap;
+    }
+
+    /* Plus de colonnes que le tableau Minecraft : marges internes resserrées */
+    .palworld-tables .ranking-th,
+    .palworld-tables .ranking-td {
+        padding: 1rem;
     }
 
     .server-cell {
@@ -302,256 +475,59 @@ const teams = stats
         text-align: left;
     }
 
-    .boss-cell {
+    .boss-cell,
+    .wrap-cell {
         white-space: normal;
     }
 
-    /* --- ÉQUIPES (même rendu que les équipes Pokémon de la page Minecraft) --- */
-    .palworld-teams {
-        --glass-border: color-mix(in srgb, var(--server-cards-text-color, #fff), transparent 85%);
-        --text-main: var(--server-cards-text-color, #fff);
-        --text-muted: var(--server-cards-transition-color, #ccc);
-        --accent-color: var(--color-gold, #ffb347);
-
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
+    /* --- ÉQUIPE : vignettes server-card (styles globaux du site) --- */
+    .pal-team {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 1.5rem;
+        padding: 1rem 1rem 2.5rem;
+        margin: 0 1rem;
         text-align: left;
     }
 
-    .team-card {
-        background: color-mix(in srgb, var(--server-cards-background-color, #1a1a1a), transparent 10%);
-        border: 2px solid var(--badge-list-color-border);
-        border-radius: 16px;
-        overflow: hidden;
-        transition: all 0.4s ease;
-        box-shadow: 0 8px 32px color-mix(in srgb, var(--server-cards-text-color, #000), transparent 90%);
-    }
-
-    .team-card:hover {
-        border-color: var(--badge-list-color-accent);
-        transform: translateY(-2px);
-    }
-
-    .team-header {
+    /* Bannière du serveur assombrie, Pal au premier plan */
+    .pal-vignette-image {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding: 1.5rem 2rem;
-        background: linear-gradient(90deg, color-mix(in srgb, var(--server-cards-text-color), transparent 97%) 0%, transparent 100%);
-        border-bottom: 1px solid var(--glass-border);
-    }
-
-    .team-server-name {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        margin: 0;
-        font-size: 1.8rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: var(--server-cards-title-color);
-    }
-
-    .server-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--text-muted);
-        font-weight: 700;
-    }
-
-    .badge-count {
-        font-size: 0.85rem;
-        color: var(--accent-color);
-        font-weight: 600;
-        background: color-mix(in srgb, var(--accent-color), transparent 90%);
-        padding: 2px 8px;
-        border-radius: 12px;
-    }
-
-    .pal-team {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 1.5rem;
-        padding: 2rem;
-    }
-
-    .pal-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 1rem;
-        background: color-mix(in srgb, var(--server-cards-background-color), transparent 40%);
-        border: 1px solid var(--glass-border);
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        color: var(--text-main);
-    }
-
-    .pal-card:hover {
-        transform: translateY(-5px) scale(1.02);
-        border-color: var(--badge-list-color-accent);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .pal-card.is-alpha {
-        background: linear-gradient(135deg, color-mix(in srgb, var(--server-cards-background-color), transparent 10%) 0%, color-mix(in srgb, var(--color-red), transparent 85%) 100%);
-    }
-
-    .pal-card.is-lucky {
-        background: linear-gradient(135deg, color-mix(in srgb, var(--server-cards-background-color), transparent 10%) 0%, color-mix(in srgb, var(--accent-color), transparent 80%) 100%);
-        border-color: color-mix(in srgb, var(--accent-color), transparent 70%);
-    }
-
-    .pal-visual {
-        position: relative;
-        width: 100%;
-        height: 120px;
-        display: flex;
         justify-content: center;
-        align-items: center;
+        height: 160px;
+        background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), var(--server-banner) center / cover;
     }
 
-    .visual-bg {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: radial-gradient(circle, color-mix(in srgb, var(--text-main), transparent 90%) 0%, transparent 70%);
-        transition: all 0.3s ease;
-    }
-
-    .pal-card:hover .visual-bg {
-        width: 130px;
-        height: 130px;
-    }
-
-    .pal-image {
-        height: 100%;
-        width: auto;
+    .server-card .pal-vignette-image img {
+        width: 112px;
+        height: 112px;
         object-fit: contain;
-        z-index: 2;
-        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
-    }
-
-    .floating-anim {
-        animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
-    }
-
-    .level-badge {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        z-index: 3;
-        background: rgba(0, 0, 0, 0.6);
-        color: #fff;
-        font-size: 0.7rem;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: monospace;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .name-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.25rem;
-        text-align: center;
-    }
-
-    .pal-name {
-        font-size: 1.1rem;
-        font-weight: 700;
-    }
-
-    .pal-species {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-    }
-
-    .pal-rank {
-        color: var(--accent-color);
-        letter-spacing: 2px;
-    }
-
-    .pal-tags {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.25rem;
-    }
-
-    .pal-tag {
-        font-size: 0.6rem;
-        padding: 1px 6px;
-        border-radius: 4px;
-        font-weight: 800;
-        letter-spacing: 1px;
-        color: #000;
-    }
-
-    .pal-tag.alpha { background: linear-gradient(90deg, #ff6b6b, var(--color-red)); color: #fff; }
-    .pal-tag.lucky { background: linear-gradient(90deg, var(--accent-color), var(--color-gold-deep)); }
-    .pal-tag.awakened { background: linear-gradient(90deg, #8b7cf6, var(--color-purple)); color: #fff; }
-
-    .details-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-        width: 100%;
-    }
-
-    .detail-pill {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: color-mix(in srgb, var(--server-cards-text-color), transparent 95%);
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 0.8rem;
-    }
-
-    .detail-pill .label {
-        color: var(--text-muted);
-    }
-
-    .detail-pill .value {
-        font-weight: 700;
-        font-family: monospace;
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
     }
 
     .pal-passives {
+        font-style: italic;
+    }
+
+    /* Le pied de vignette est masqué sous 800px par défaut : on garde le niveau visible */
+    .pal-vignette .server-card-footer {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.3rem;
     }
 
-    .passive-pill {
-        font-size: 0.7rem;
-        padding: 2px 8px;
-        border-radius: 20px;
-        color: var(--accent-color);
-        background: color-mix(in srgb, var(--accent-color), transparent 90%);
-    }
-
-    @media (max-width: 1200px) {
+    @media (max-width: 1400px) {
         .pal-team {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .key-stats {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .featured-pal {
+            grid-column: 1 / -1;
         }
     }
 
@@ -559,17 +535,21 @@ const teams = stats
         .palworld-rankings {
             grid-template-columns: minmax(0, 1fr);
         }
+
+        .pal-team {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
     @media (max-width: 600px) {
-        .pal-team {
+        .key-stats {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.75rem;
-            padding: 1rem;
         }
 
-        .team-header {
-            padding: 1rem;
+        .pal-team {
+            grid-template-columns: minmax(0, 1fr);
+            margin: 0;
         }
     }
 </style>
