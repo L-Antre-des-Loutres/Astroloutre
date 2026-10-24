@@ -1,0 +1,85 @@
+---
+import {slugify} from "../../../formater/JoueurFormater.ts";
+import {ApiFetcher} from "../../../utils/API/apiFetcher";
+import {PALWORLD_STATS} from "../../../utils/constantes";
+import type {PalworldStatsType} from "../../../types/PalworldStatsType";
+import type {PlayerType} from "../../../types/PlayerType";
+
+const { serveurId } = Astro.props;
+
+// Récupération des stats Palworld du serveur avec le compte Steam associé
+const statsForThisServer = await ApiFetcher.getAllRecords<PalworldStatsType & { expand?: { player?: PlayerType } }>(PALWORLD_STATS, {
+    filter: `server = "${serveurId}"`,
+    expand: 'player',
+});
+
+const playerDataList = statsForThisServer.map(stat => {
+    const player = stat.expand?.player;
+    return {
+        playername: player?.playername || stat.playername || "",
+        avatar_url: player?.avatar_url || "/icons/logo_steam.svg",
+        // Sans compte Steam lié, aucune page joueur n'est générée
+        has_profile: !!player,
+    };
+}).filter(p => p.playername.trim() !== "");
+
+// Dédoublonnement par playername (même logique que les pages joueurs Steam)
+const seen = new Set();
+const uniquePlayers = playerDataList.filter(el => {
+    const nameSlug = slugify(el.playername);
+    const duplicate = seen.has(nameSlug);
+    seen.add(nameSlug);
+    return !duplicate;
+});
+---
+<div class="player-grid">
+    {uniquePlayers.map((player) => (
+            <a href={player.has_profile ? `/joueurs/steam/${slugify(player.playername)}` : undefined}>
+                <div class="player-card">
+                    <img
+                            class="player-avatar"
+                            src={player.avatar_url}
+                            alt={`Avatar de ${player.playername}`}
+                    />
+                    <div class="player-name">{player.playername}</div>
+                </div>
+            </a>
+    ))}
+</div>
+
+
+<style>
+    .player-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .player-card {
+        background-color: var(--server-player-vignette-background-color);
+        border: 2px solid var(--server-player-vignette-outline-color);
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+        transition: transform 0.2s ease;
+    }
+
+    .player-card:hover {
+        transform: scale(1.05);
+    }
+
+    .player-avatar {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .player-name {
+        font-weight: 600;
+        color: var(--server-player-vignette-playername-color);
+        font-size: 0.9rem;
+        word-break: break-word;
+    }
+</style>

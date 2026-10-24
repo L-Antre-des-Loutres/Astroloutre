@@ -3,10 +3,9 @@ import {slugify} from "../../../formater/ServeurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import Banner from "../../../components/sections/layout/Banner.astro";
 
-import PlayerList from "../../../components/sections/serveurs/PlayerList.astro";
+import PalworldPlayerList from "../../../components/sections/serveurs/PalworldPlayerList.astro";
 import ServeurScreen from "../../../components/sections/serveurs/ServeurScreen.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
-import Void from "../../../components/sections/common/Void.astro";
 
 import {ApiFetcher} from "../../../utils/API/apiFetcher";
 import {PLAYERS_STATS, PB_URL, PLAYER_SCREENSHOTS, SERVERS} from "../../../utils/constantes";
@@ -159,7 +158,7 @@ export async function getStaticPaths() {
         </div>
 
         <TransitionSection title=`Joueurs #Palworld# ayant rejoint #${serveur.name}#`></TransitionSection>
-        <Void/>
+        <PalworldPlayerList serveurId={serveur.id}/>
 
         <TransitionSection title=`%Screenshots% des joueurs sur le serveur #${serveur.name}#`></TransitionSection>
         <ServeurScreen screenshots={serveur.screens}/>
