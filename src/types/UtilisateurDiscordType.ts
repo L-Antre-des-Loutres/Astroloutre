@@ -27,6 +27,9 @@ export type LinkAccount = {
     first_connected_at: string
     last_connected_at: string
     playername: string
+    expand?: {
+        platform?: { id: string; name: string }
+    }
 }
 
 export type DiscordUserStatsType = {
