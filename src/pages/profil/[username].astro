@@ -1,6 +1,6 @@
 ---
 import {Image} from 'astro:assets';
-import {slugify} from "../../formater/JoueurFormater";
+import {isSteamPlayer, playerPageHref, slugify} from "../../formater/JoueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import {formatDate} from "../../formater/DateFormater";
@@ -42,7 +42,7 @@ export async function getStaticPaths() {
 
     const joueurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
     const stats = await ApiFetcher.getAllRecords<DiscordUserStatsType>(DISCORD_USER_STATS);
-    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players");
+    const accountsLinks = await ApiFetcher.getAllRecords<LinkAccount>("players", {expand: 'platform'});
     const allScreenshots = await ApiFetcher.getAllRecords<PlayerScreenshotType>(PLAYER_SCREENSHOTS, {
         expand: 'server,server.platform,platform'
     });
@@ -292,12 +292,18 @@ if (msgCount > 1) {
                      style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
                     {accountLinks.length > 0 ? (
                         accountLinks.map(account => (
-                                <a href={`/joueurs/minecraft/${slugify(account.playername)}`} class="w-full">
+                                <a href={playerPageHref(account)} class="w-full">
                                 <button class="super-button golden-outline w-full" style="border-radius: 5px">
                                     <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                                        <Image src={`https://mc-heads.net/avatar/${account.playername}/32`} alt="Head"
+                                        <Image src={isSteamPlayer(account) && account.avatar_url ? account.avatar_url : `https://mc-heads.net/avatar/${account.playername}/32`} alt="Head"
                                                width={24} height={24} class="rounded-sm"/>
                                         {account.playername}
+                                        {isSteamPlayer(account) && (
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-label="Compte Steam" role="img">
+                                                <title>Compte Steam</title>
+                                                <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658a3.387 3.387 0 0 1 1.912-.59c.064 0 .127.003.19.006l2.862-4.142V8.91a4.528 4.528 0 0 1 4.524-4.524 4.528 4.528 0 0 1 4.523 4.524 4.528 4.528 0 0 1-4.523 4.524h-.105l-4.076 2.911c0 .052.004.105.004.159a3.392 3.392 0 0 1-3.39 3.393 3.406 3.406 0 0 1-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25a2.551 2.551 0 0 0 3.337-3.334 2.547 2.547 0 0 0-3.255-1.379l1.523.63a1.878 1.878 0 0 1-1.446 3.443zm11.415-9.303a3.019 3.019 0 0 0-3.015-3.015 3.015 3.015 0 1 0 3.015 3.015zm-5.273-.005a2.264 2.264 0 1 1 4.531 0 2.267 2.267 0 0 1-2.266 2.265 2.264 2.264 0 0 1-2.265-2.265z"/>
+                                            </svg>
+                                        )}
                                     </span>
                                 </button>
                             </a>

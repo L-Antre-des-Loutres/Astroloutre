@@ -1,7 +1,7 @@
 ---
 import Banner from "../../../components/sections/layout/Banner.astro";
 import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
-import {slugify} from "../../../formater/JoueurFormater";
+import {isSteamPlayer, slugify} from "../../../formater/JoueurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/sections/badges/BadgeList.astro";
@@ -26,7 +26,9 @@ export async function getStaticPaths() {
     // Récupération des informations
     // ──────────────────────────────────────────────
 
-    const joueurs = await ApiFetcher.getAllRecords<PlayerType>(PLAYERS);
+    // Les comptes Steam ont leur propre page (/joueurs/steam)
+    const joueurs = (await ApiFetcher.getAllRecords<PlayerType>(PLAYERS, {expand: 'platform'}))
+        .filter(joueur => !isSteamPlayer(joueur));
     const utilisateurs = await ApiFetcher.getAllRecords<DiscordUserType>(DISCORD_USERS);
     const allStats = await ApiFetcher.getAllRecords<PlayerStatsType>(PLAYERS_STATS);
 
