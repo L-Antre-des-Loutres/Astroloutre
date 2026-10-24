@@ -127,11 +127,13 @@ export function initFriendsPage(root: HTMLElement) {
         for (const entry of entries) {
             const row = template.content.cloneNode(true) as DocumentFragment;
             const name = displayName(entry.user);
-            const nameLink = row.querySelector<HTMLAnchorElement>('[data-name]')!;
-            nameLink.textContent = name;
+            row.querySelector('[data-name]')!.textContent = name;
             // Les pages profil sont indexées par discord_tag
-            if (entry.user.discord_tag) nameLink.href = `/profil/${slugify(entry.user.discord_tag)}/`;
-            else nameLink.removeAttribute('href');
+            const profileLink = row.querySelector<HTMLAnchorElement>('[data-profile-link]')!;
+            if (entry.user.discord_tag) {
+                profileLink.href = `/profil/${slugify(entry.user.discord_tag)}/`;
+                profileLink.title = `Voir le profil de ${name}`;
+            }
             row.querySelector('[data-tag]')!.textContent = entry.user.discord_tag ? `@${entry.user.discord_tag}` : '';
             row.querySelector('[data-since]')!.textContent = dateLabel(entry.since, kind);
             setAvatar(row.querySelector<HTMLElement>('.friend-avatar')!, entry.user);
@@ -160,7 +162,16 @@ export function initFriendsPage(root: HTMLElement) {
             ? "Aucun ami ne correspond à ta recherche."
             : "Ta bande de loutres commence ici. Envoie ta première demande !";
         get(`[data-count="${kind}"]`).textContent = String(data[kind].length);
+        renderSummary();
         syncControls();
+    }
+
+    function renderSummary() {
+        if (!data) return;
+        const plural = (count: number, word: string) => `${count} ${word}${count > 1 ? 's' : ''}`;
+        const parts = [data.friends.length ? plural(data.friends.length, 'ami') : "Pas encore d'ami"];
+        if (data.incoming.length) parts.push(`${plural(data.incoming.length, 'demande')} à traiter`);
+        get('[data-summary]').textContent = parts.join(' · ');
     }
 
     async function refreshFriends() {
@@ -182,6 +193,8 @@ export function initFriendsPage(root: HTMLElement) {
             return;
         }
         connected = true;
+        get('[data-account-name]').textContent = session.username ?? '';
+        setAvatar(get('.friends-account .friend-avatar'), {id: '', username: session.username, avatar_url: session.avatar_url});
         guest.hidden = true;
         workspace.hidden = false;
         loading.hidden = true;

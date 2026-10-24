@@ -6,22 +6,23 @@ import TransitionSection from "../components/sections/common/transitions/Transit
 
 <Layout title="Mes amis" ogDescription="Retrouve tes amis de l'Antre des Loutres et gère tes demandes d'amitié avec ton compte Discord.">
     <Banner/>
+    <TransitionSection title="Mes #amis#"/>
 
     <div class="friends-page" data-friends-page>
-        <TransitionSection title="Mes #amis#"/>
 
         <p class="friends-status" data-session-loading role="status">Vérification de ta connexion…</p>
-        <noscript><p class="friends-panel">Active JavaScript pour te connecter avec Discord et gérer tes amis.</p></noscript>
+        <noscript><p class="friends-card">Active JavaScript pour te connecter avec Discord et gérer tes amis.</p></noscript>
 
         <div class="friends-alert" data-error hidden role="alert">
             <p data-error-message></p>
-            <button type="button" class="friend-button secondary" data-retry data-api-control>Réessayer</button>
+            <button type="button" class="friend-button ghost" data-retry data-api-control>Réessayer</button>
         </div>
         <p class="friends-feedback" data-feedback role="status" aria-live="polite"></p>
         <p class="friends-status" data-cooldown role="status" hidden></p>
 
         {/* Visiteur non connecté */}
-        <section class="friends-panel friends-guest" data-guest hidden aria-labelledby="guest-title">
+        <section class="friends-card friends-guest" data-guest hidden aria-labelledby="guest-title">
+            <div class="friends-guest-icon" aria-hidden="true">🦦</div>
             <h2 id="guest-title">Tes amis t'attendent</h2>
             <p>Connecte-toi avec ton compte Discord pour envoyer une demande, accepter une invitation ou retrouver ta liste d'amis.</p>
             <a class="super-button golden-outline" data-login>Se connecter avec Discord</a>
@@ -29,43 +30,64 @@ import TransitionSection from "../components/sections/common/transitions/Transit
 
         {/* Espace connecté */}
         <div class="friends-workspace" data-workspace hidden>
-            <section class="friends-panel" aria-labelledby="add-title">
-                <h2 id="add-title">Ajouter un ami</h2>
-                <form class="friends-add-form" data-add-form>
-                    <label for="friend-tag">Tag Discord de ton ami</label>
-                    <div class="friends-input-row">
-                        <input id="friend-tag" name="tag" type="text" placeholder="Ex. rerebleue" required maxlength="33"
-                               aria-describedby="friend-tag-help" autocomplete="off" autocapitalize="none" spellcheck="false"
-                               data-api-control disabled/>
-                        <button class="friend-button primary" type="submit" data-api-control disabled>Envoyer la demande</button>
-                    </div>
-                    <p id="friend-tag-help" class="friends-small">Son nom d'utilisateur Discord exact, avec ou sans @. Tu peux aussi l'ajouter depuis son profil.</p>
-                </form>
+            <section class="friends-card friends-account" aria-label="Compte connecté">
+                <div class="friend-avatar large">
+                    <span data-initial aria-hidden="true"></span><img data-account-avatar alt="" hidden referrerpolicy="no-referrer"/>
+                </div>
+                <div class="friends-account-text">
+                    <p class="friends-account-name">Salut <strong data-account-name></strong> !</p>
+                    <p class="friends-muted" data-summary>Chargement de ta bande…</p>
+                </div>
+                <button class="friend-button ghost" type="button" data-refresh data-api-control disabled title="Actualiser la liste">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Actualiser
+                </button>
             </section>
 
-            <div class="friends-list-heading">
-                <h2>Mes amis <span class="friend-count" data-count="friends">—</span></h2>
-                <button class="friend-button secondary" type="button" data-refresh data-api-control disabled>↻ Actualiser</button>
-            </div>
             <p class="friends-status" data-list-loading role="status" hidden>Chargement de tes amis…</p>
 
-            <div data-lists hidden>
-                <section class="friends-panel" aria-label="Liste de mes amis">
-                    <label class="friends-small" for="friend-search">Rechercher dans mes amis</label>
-                    <input class="friends-search" id="friend-search" type="search" placeholder="Un nom, un tag…" autocomplete="off" data-search/>
+            <div class="friends-grid" data-lists hidden>
+                {/* Colonne principale : la liste d'amis */}
+                <section class="friends-card friends-main" aria-labelledby="friends-title">
+                    <div class="friends-card-header">
+                        <h2 id="friends-title">Mes amis <span class="friend-count" data-count="friends">—</span></h2>
+                    </div>
+                    <label class="sr-only" for="friend-search">Rechercher dans mes amis</label>
+                    <div class="friends-search-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/>
+                        </svg>
+                        <input class="friends-input" id="friend-search" type="search" placeholder="Rechercher un ami…" autocomplete="off" data-search/>
+                    </div>
                     <ul class="friend-list" data-list="friends"></ul>
                     <p class="friends-empty" data-empty="friends"></p>
                 </section>
 
-                <div class="friends-requests">
-                    <section class="friends-panel" aria-labelledby="incoming-title">
+                {/* Colonne latérale : ajout et demandes */}
+                <div class="friends-side">
+                    <section class="friends-card" aria-labelledby="add-title">
+                        <h2 id="add-title">Ajouter un ami</h2>
+                        <form class="friends-add-form" data-add-form>
+                            <label class="friends-muted" for="friend-tag">Son tag Discord, avec ou sans @</label>
+                            <input class="friends-input" id="friend-tag" name="tag" type="text" placeholder="Ex. rerebleue" required maxlength="33"
+                                   aria-describedby="friend-tag-help" autocomplete="off" autocapitalize="none" spellcheck="false"
+                                   data-api-control disabled/>
+                            <button class="friend-button primary" type="submit" data-api-control disabled>Envoyer la demande</button>
+                            <p id="friend-tag-help" class="friends-muted small">Tu peux aussi l'ajouter depuis sa page profil.</p>
+                        </form>
+                    </section>
+
+                    <section class="friends-card friends-incoming" aria-labelledby="incoming-title">
                         <h2 id="incoming-title">Demandes reçues <span class="friend-count" data-count="incoming">—</span></h2>
-                        <ul class="friend-list" data-list="incoming"></ul>
+                        <ul class="friend-list compact" data-list="incoming"></ul>
                         <p class="friends-empty" data-empty="incoming">Aucune demande en attente.</p>
                     </section>
-                    <section class="friends-panel" aria-labelledby="outgoing-title">
+
+                    <section class="friends-card" aria-labelledby="outgoing-title">
                         <h2 id="outgoing-title">Demandes envoyées <span class="friend-count" data-count="outgoing">—</span></h2>
-                        <ul class="friend-list" data-list="outgoing"></ul>
+                        <ul class="friend-list compact" data-list="outgoing"></ul>
                         <p class="friends-empty" data-empty="outgoing">Aucune demande envoyée pour le moment.</p>
                     </section>
                 </div>
@@ -74,14 +96,14 @@ import TransitionSection from "../components/sections/common/transitions/Transit
 
         <template data-friend-template>
             <li class="friend-row">
-                <div class="friend-person">
+                <a class="friend-person" data-profile-link>
                     <div class="friend-avatar"><span data-initial aria-hidden="true"></span><img alt="" hidden referrerpolicy="no-referrer"/></div>
                     <div class="friend-profile">
-                        <a class="friend-name" data-name></a>
-                        <p class="friends-small" data-tag></p>
-                        <p class="friends-small" data-since></p>
+                        <span class="friend-name" data-name></span>
+                        <span class="friend-tag" data-tag></span>
+                        <span class="friends-muted small" data-since></span>
                     </div>
-                </div>
+                </a>
                 <div class="friend-actions" data-actions></div>
             </li>
         </template>
@@ -90,53 +112,88 @@ import TransitionSection from "../components/sections/common/transitions/Transit
             <h2 id="remove-title">Retirer cet ami ?</h2>
             <p id="remove-description"></p>
             <form method="dialog" class="friend-actions">
-                <button class="friend-button secondary" value="cancel" autofocus>Garder cet ami</button>
-                <button class="friend-button danger" value="confirm">Retirer</button>
+                <button class="friend-button ghost" value="cancel" autofocus>Garder cet ami</button>
+                <button class="friend-button danger-solid" value="confirm">Retirer</button>
             </form>
         </dialog>
     </div>
 
-    {/* Global : les boutons d'action sont créés par le script et n'ont pas l'attribut de portée d'Astro */}
+    {/* Global : les lignes et boutons d'action sont créés par le script et n'ont pas l'attribut de portée d'Astro */}
     <style is:global>
         .friends-page {
-            max-width: 960px;
-            margin: 0 auto 3rem;
-            padding: 0 1rem;
-            color: var(--default-text-color);
+            --friends-accent: var(--color-gold-deep);
+            --friends-radius: 1.25rem;
+            /* Toute la largeur disponible, avec juste une marge de respiration sur les bords */
+            margin: 0 0 4rem;
+            padding: 0 clamp(1rem, 2.5vw, 2.5rem);
+            color: var(--player-profile-text-primary);
         }
 
         .friends-page [hidden] {
             display: none !important;
         }
 
-        .friends-panel {
+        .friends-page .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        /* ── Cartes ─────────────────────────────── */
+        .friends-card {
             background-color: var(--player-profile-card-bg);
-            border: 1px solid var(--server-cards-badge-background-color-1);
-            border-radius: 1rem;
+            border: 1px solid var(--player-profile-border);
+            border-radius: var(--friends-radius);
             padding: 1.25rem 1.5rem;
-            margin-top: 1.25rem;
         }
 
         .friends-page h2 {
-            margin: 0 0 0.75rem;
-            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 0 1rem;
+            font-size: 1.15rem;
             font-weight: bold;
             color: var(--h2-title-color);
         }
 
-        .friends-guest {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            text-align: center;
+        .friends-muted {
+            margin: 0;
+            color: var(--player-profile-text-secondary);
         }
 
+        .friends-muted.small {
+            font-size: 0.8rem;
+        }
+
+        .friend-count {
+            min-width: 1.6rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            text-align: center;
+            background-color: var(--player-profile-input-bg);
+            color: var(--player-profile-text-primary);
+        }
+
+        /* ── Messages ───────────────────────────── */
         .friends-status,
         .friends-feedback {
-            margin: 1rem 0 0;
+            margin: 1.25rem 0 0;
             text-align: center;
-            color: var(--light-text-color);
+            color: var(--player-profile-text-secondary);
+        }
+
+        .friends-feedback {
+            width: fit-content;
+            margin: 1.25rem auto 0;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            color: var(--color-white);
+            background-color: var(--color-green);
         }
 
         .friends-feedback:empty {
@@ -149,100 +206,217 @@ import TransitionSection from "../components/sections/common/transitions/Transit
             align-items: center;
             justify-content: space-between;
             gap: 0.75rem;
-            margin-top: 1rem;
+            margin-top: 1.25rem;
             padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
+            border-radius: 1rem;
             border: 1px solid var(--color-red);
             background-color: color-mix(in srgb, var(--color-red) 12%, transparent);
         }
 
-        .friends-small {
-            margin: 0.25rem 0 0;
-            font-size: 0.85rem;
-            color: var(--deep-text-color);
+        /* ── Visiteur ───────────────────────────── */
+        .friends-guest {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            max-width: 36rem;
+            margin: 2rem auto 0;
+            padding: 2.5rem 2rem;
+            text-align: center;
         }
 
-        .friends-add-form label {
-            display: block;
+        .friends-guest h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .friends-guest-icon {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        /* ── Compte connecté ────────────────────── */
+        .friends-account {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(120deg, color-mix(in srgb, var(--friends-accent) 14%, transparent), transparent 60%), var(--player-profile-card-bg);
+        }
+
+        .friends-account-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .friends-account-name {
+            margin: 0 0 0.15rem;
+            font-size: 1.2rem;
+        }
+
+        .friends-account-name strong {
+            color: var(--h1-title-color);
+        }
+
+        /* ── Grille ─────────────────────────────── */
+        .friends-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+            align-items: start;
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .friends-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 860px) {
+            .friends-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            /* Sur mobile, l'ajout et les demandes passent avant la liste */
+            .friends-side {
+                order: -1;
+            }
+        }
+
+        /* Demandes reçues en attente : mises en avant */
+        .friends-incoming:has(.friend-row) {
+            border-color: var(--friends-accent);
+            box-shadow: 0 0 0 1px var(--friends-accent), 0 8px 24px color-mix(in srgb, var(--friends-accent) 18%, transparent);
+        }
+
+        .friends-incoming:has(.friend-row) .friend-count {
+            background-color: var(--friends-accent);
+            color: var(--color-black);
+        }
+
+        /* ── Champs ─────────────────────────────── */
+        .friends-input {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border-radius: 999px;
+            border: 1px solid var(--player-profile-border);
+            background-color: var(--player-profile-input-bg);
+            color: var(--player-profile-text-primary);
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .friends-input:focus {
+            outline: none;
+            border-color: var(--friends-accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--friends-accent) 25%, transparent);
+        }
+
+        .friends-add-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .friends-search-wrapper {
+            position: relative;
             margin-bottom: 0.5rem;
         }
 
-        .friends-input-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+        .friends-search-wrapper svg {
+            position: absolute;
+            top: 50%;
+            left: 0.9rem;
+            width: 18px;
+            height: 18px;
+            transform: translateY(-50%);
+            color: var(--player-profile-text-secondary);
+            pointer-events: none;
         }
 
-        .friends-input-row input,
-        .friends-search {
-            flex: 1 1 14rem;
-            min-width: 0;
-            padding: 0.6rem 0.9rem;
-            border-radius: 0.6rem;
-            border: 1px solid var(--server-cards-badge-background-color-1);
-            background-color: var(--background-color);
-            color: var(--default-text-color);
-            font-size: 1rem;
+        .friends-search-wrapper .friends-input {
+            padding-left: 2.5rem;
         }
 
-        .friends-search {
-            display: block;
-            width: 100%;
-            margin: 0.5rem 0 0.5rem;
-        }
-
-        .friends-list-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .friends-list-heading h2 {
-            margin: 0;
-        }
-
-        .friend-count {
-            margin-left: 0.4rem;
-            padding: 0.1rem 0.55rem;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            background-color: var(--server-cards-badge-background-color-1);
-            color: var(--server-cards-badge-text-color-1);
-        }
-
-        .friends-requests {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-            gap: 0 1.25rem;
-        }
-
+        /* ── Lignes ─────────────────────────────── */
         .friend-list {
             list-style: none;
             margin: 0;
             padding: 0;
         }
 
+        /* La liste d'amis se répartit en colonnes pour occuper la largeur */
+        .friend-list[data-list="friends"] {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+            gap: 0.5rem 1.5rem;
+        }
+
+        .friend-list[data-list="friends"] .friend-row {
+            margin: 0;
+            border: 1px solid var(--player-profile-border);
+        }
+
         .friend-row {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 0.75rem;
-            padding: 0.75rem 0;
-            border-top: 1px solid var(--server-cards-badge-background-color-1);
+            margin: 0 -0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 1rem;
+            transition: background-color 0.2s;
         }
 
-        .friend-list .friend-row:first-child {
-            border-top: none;
+        .friend-row:hover {
+            background-color: var(--player-profile-input-bg);
+        }
+
+        /* Colonne étroite : les boutons passent sous le membre */
+        .friend-list.compact .friend-row {
+            flex-wrap: wrap;
+        }
+
+        .friend-list.compact .friend-person {
+            flex-basis: 100%;
         }
 
         .friend-person {
             display: flex;
+            flex: 1;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.85rem;
             min-width: 0;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .friend-person[href]:hover .friend-name {
+            color: var(--h1-title-color);
+        }
+
+        .friend-profile {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .friend-name {
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: color 0.2s;
+        }
+
+        .friend-tag {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--player-profile-text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .friend-avatar {
@@ -250,13 +424,30 @@ import TransitionSection from "../components/sections/common/transitions/Transit
             flex-shrink: 0;
             display: grid;
             place-items: center;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             overflow: hidden;
             font-weight: bold;
-            background-color: var(--server-cards-badge-background-color-4);
-            color: var(--server-cards-badge-text-color-4);
+            background-color: var(--player-profile-input-bg);
+            color: var(--player-profile-text-primary);
+            box-shadow: 0 0 0 2px var(--player-profile-card-bg), 0 0 0 4px var(--player-profile-border);
+        }
+
+        .friend-list[data-list="friends"] .friend-avatar {
+            box-shadow: 0 0 0 2px var(--player-profile-card-bg), 0 0 0 4px var(--friends-accent);
+        }
+
+        .friend-list.compact .friend-avatar {
+            width: 40px;
+            height: 40px;
+        }
+
+        .friend-avatar.large {
+            width: 64px;
+            height: 64px;
+            font-size: 1.5rem;
+            box-shadow: 0 0 0 3px var(--player-profile-card-bg), 0 0 0 5px var(--friends-accent);
         }
 
         .friend-avatar img {
@@ -267,40 +458,45 @@ import TransitionSection from "../components/sections/common/transitions/Transit
             object-fit: cover;
         }
 
-        .friend-profile {
-            min-width: 0;
-        }
-
-        .friend-name {
-            font-weight: bold;
-            color: var(--default-text-color);
-            overflow-wrap: anywhere;
-        }
-
-        .friend-name[href]:hover {
-            color: var(--h1-title-color);
-            text-decoration: underline;
-        }
-
         .friends-empty {
-            margin: 0.5rem 0 0;
-            color: var(--deep-text-color);
+            margin: 0.25rem 0 0;
+            padding: 1rem;
+            border: 1px dashed var(--player-profile-border);
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--player-profile-text-secondary);
         }
 
+        /* ── Boutons ────────────────────────────── */
         .friend-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
 
+        .friend-list.compact .friend-actions {
+            margin-left: auto;
+        }
+
         .friend-button {
-            padding: 0.5rem 1rem;
-            border-radius: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
             border: 1px solid transparent;
-            font-weight: bold;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
             cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
+        }
+
+        .friend-button svg {
+            width: 16px;
+            height: 16px;
         }
 
         .friend-button:hover:not(:disabled) {
@@ -308,44 +504,76 @@ import TransitionSection from "../components/sections/common/transitions/Transit
         }
 
         .friend-button:disabled {
-            opacity: 0.55;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
         .friend-button.primary {
-            background-color: var(--color-gold-deep);
+            padding: 0.65rem 1.1rem;
+            background: linear-gradient(90deg, var(--golden-gradient-shift-1), var(--golden-gradient-shift-3));
             color: var(--color-black);
         }
 
+        .friend-button.ghost,
         .friend-button.secondary {
             background-color: transparent;
-            border-color: var(--server-cards-badge-background-color-4);
-            color: var(--default-text-color);
+            border-color: var(--player-profile-border);
+            color: var(--player-profile-text-primary);
         }
 
+        .friend-button.ghost:hover:not(:disabled),
+        .friend-button.secondary:hover:not(:disabled) {
+            border-color: var(--friends-accent);
+        }
+
+        /* Retirer reste discret dans la liste et ne s'affirme qu'au survol */
         .friend-button.danger {
+            background-color: transparent;
+            border-color: transparent;
+            color: var(--player-profile-text-secondary);
+        }
+
+        .friend-button.danger:hover:not(:disabled),
+        .friend-button.danger:focus-visible {
+            border-color: var(--color-red);
+            color: var(--color-red);
+        }
+
+        .friend-button.danger-solid {
             background-color: var(--color-red);
             color: var(--color-white);
         }
 
+        /* ── Confirmation ───────────────────────── */
         .friends-dialog {
             /* Le reset de Tailwind supprime le centrage natif des <dialog> */
             margin: auto;
             max-width: min(28rem, calc(100% - 2rem));
             padding: 1.5rem;
-            border: 1px solid var(--server-cards-badge-background-color-1);
-            border-radius: 1rem;
-            background-color: var(--player-profile-card-bg);
-            color: var(--default-text-color);
+            border: 1px solid var(--player-profile-border);
+            border-radius: var(--friends-radius);
+            background-color: var(--background-color);
+            color: var(--player-profile-text-primary);
         }
 
         .friends-dialog::backdrop {
             background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
         }
 
         .friends-dialog .friend-actions {
             justify-content: flex-end;
-            margin-top: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        @media (max-width: 520px) {
+            .friends-account {
+                flex-wrap: wrap;
+            }
+
+            .friends-account [data-refresh] {
+                width: 100%;
+            }
         }
     </style>
 </Layout>
