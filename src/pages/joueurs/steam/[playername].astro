@@ -4,6 +4,7 @@ import Layout from "../../../layouts/Layout.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 import PalworldStats from "../../../components/sections/joueurs/steam/PalworldStats.astro";
 import SteamGameCategory from "../../../components/sections/joueurs/steam/SteamGameCategory.astro";
+import BadgeList from "../../../components/sections/badges/BadgeList.astro";
 import {isSteamPlayer, slugify} from "../../../formater/JoueurFormater";
 import {formatDate} from "../../../formater/DateFormater";
 
@@ -16,6 +17,7 @@ import {DISCORD_USERS, PALWORLD_STATS, PLAYERS} from "../../../utils/constantes.
 // Props passées depuis getStaticPaths
 const joueur: PlayerType | undefined = Astro.props.joueur;
 const palworldStats: PalworldStatsType[] = Astro.props.palworldStats || [];
+const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
 
 // Génération des pages statiques
 export async function getStaticPaths() {
@@ -69,6 +71,7 @@ export async function getStaticPaths() {
                         discord_tag: discordTag ? slugify(discordTag) : null,
                     },
                     palworldStats,
+                    allRelatedPbIds,
                 },
             };
         });
@@ -205,6 +208,10 @@ const banner = playedGames[0]?.banner ?? steamGames[0].banner;
                     )}
                 </div>
             </div>
+
+            {/* Badges Steam : communs à tous les jeux, affichés avant les catégories de jeux */}
+            <TransitionSection title={`Badges ![/icons/logo_steam.svg] obtenus`}/>
+            <BadgeList PlayerOrUser="player" userId={joueur.id} categoryId={3} allRelatedPbIds={allRelatedPbIds} />
 
             {playedGames.length === 0 && (
                 <>
