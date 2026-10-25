@@ -220,7 +220,7 @@ const PlayerClassement: React.FC<Props> = ({
                                                 return (
                                                     <div className="flex items-center gap-3">
                                                         <img
-                                                            src={`https://mc-heads.net/avatar/${player.uuid}/28`}
+                                                            src={player.head}
                                                             alt={player.playername}
                                                             width={28}
                                                             height={28}

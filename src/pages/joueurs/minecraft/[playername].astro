@@ -1,7 +1,7 @@
 ---
 import Banner from "../../../components/sections/layout/Banner.astro";
 import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
-import {isMinecraftPlayer, slugify} from "../../../formater/JoueurFormater";
+import {isMinecraftPlayer, playerHeadUrl, playerSkinUrl, slugify} from "../../../formater/JoueurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/sections/badges/BadgeList.astro";
@@ -102,7 +102,7 @@ if (!joueur || !joueur.discord_user) {
 }
 ---
 
-<Layout ogImage={`https://mc-heads.net/avatar/${joueur?.playername}/64`} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}>
+<Layout ogImage={joueur ? playerHeadUrl(joueur, 64) : undefined} title={`${joueur?.playername}`} ogDescription={`Voici le profil du joueur Minecraft ${joueur?.playername} sur l'Antre des loutres, vous pouvez voir ses statistiques, ses badges et plus encore dans le futur...`}>
     <Banner bannerUrl={`/banner/minecraft/la_vanilla.webp`} />
 
     <TransitionSection title=`Profil ![/icons/logo_minecraft.svg] ${prefixe} #${joueur.playername}#`/>
@@ -111,7 +111,7 @@ if (!joueur || !joueur.discord_user) {
         <div class="profile-container">
             <div class="profile-details">
                 <div class="avatar">
-                    <img src={`https://mc-heads.net/body/${joueur.playername}/128`} alt={`Avatar de ${joueur.playername}`} style="display: inline;" />
+                    <img src={playerSkinUrl(joueur, 128)} alt={`Avatar de ${joueur.playername}`} style="display: inline;" />
                 </div>
 
                 {/* Colonne 2 : Informations */}
@@ -189,7 +189,7 @@ if (!joueur || !joueur.discord_user) {
                     <button class="button-copy super-button golden-outline"
                             data-uuid={joueur.account_id}>
                         <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                        <img src={`https://mc-heads.net/avatar/${joueur.playername}/32`} alt="Copier UUID"/>
+                        <img src={playerHeadUrl(joueur, 32)} alt="Copier UUID"/>
                         <span>Copier UUID</span>
                             </span>
                     </button>

@@ -21,6 +21,7 @@ export type Roles = {
 // Type des données des joueurs
 export type LinkAccount = {
     id: string
+    collectionId?: string
     discord_user: string
     platform: string
     account_id: string
@@ -28,6 +29,8 @@ export type LinkAccount = {
     last_connected_at: string
     playername: string
     avatar_url?: string
+    skin?: string
+    head?: string
     expand?: {
         platform?: { id: string; name: string }
     }

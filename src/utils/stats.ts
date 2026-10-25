@@ -13,6 +13,7 @@ export type Server = {
 export type PlayerStats = {
     playername: string;
     uuid: string;
+    head?: string;
     tmps_jeu: number;
     nb_mort: number;
     nb_kills: number;

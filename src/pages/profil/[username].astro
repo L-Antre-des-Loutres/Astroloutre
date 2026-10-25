@@ -1,6 +1,6 @@
 ---
 import {Image} from 'astro:assets';
-import {isSteamPlayer, isMinecraftPlayer, playerPageHref, slugify} from "../../formater/JoueurFormater";
+import {isSteamPlayer, isMinecraftPlayer, playerHeadUrl, playerPageHref, slugify} from "../../formater/JoueurFormater";
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import {formatDate} from "../../formater/DateFormater";
@@ -310,7 +310,7 @@ if (msgCount > 1) {
                                 <a href={playerPageHref(account)} class="w-full">
                                 <button class="super-button golden-outline w-full" style="border-radius: 5px">
                                     <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                                        <Image src={isSteamPlayer(account) && account.avatar_url ? account.avatar_url : `https://mc-heads.net/avatar/${account.playername}/32`} alt="Head"
+                                        <Image src={isSteamPlayer(account) && account.avatar_url ? account.avatar_url : playerHeadUrl(account, 32)} alt="Head"
                                                width={24} height={24} class="rounded-sm"/>
                                         {account.playername}
                                         {isSteamPlayer(account) && (

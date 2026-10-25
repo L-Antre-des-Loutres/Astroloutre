@@ -1,6 +1,5 @@
 ---
-import {slugify} from "../../../formater/JoueurFormater.ts";
-import {formatUUID} from "../../../formater/UUIDFormater.ts";
+import {playerHeadUrl, slugify} from "../../../formater/JoueurFormater.ts";
 import {ApiFetcher} from "../../../utils/API/apiFetcher";
 import {PLAYERS, PLAYERS_STATS} from "../../../utils/constantes";
 import type {PlayerType} from "../../../types/PlayerType";
@@ -18,7 +17,8 @@ const playerDataList = statsForThisServer.map(stat => {
     const player = allPlayers.find(p => p.account_id === stat.account_id);
     return {
         playername: player ? player.playername : "Inconnu",
-        account_id: stat.account_id
+        account_id: stat.account_id,
+        head: player ? playerHeadUrl(player, 64) : ""
     };
 }).filter(p => p.playername !== "Inconnu");
 
@@ -36,7 +36,7 @@ const uniquePlayers = playerDataList.filter(el => {
                 <div class="player-card">
                     <img
                             class="player-avatar"
-                            src={`https://mc-heads.net/avatar/${formatUUID(player.account_id)}/64`}
+                            src={player.head}
                             alt={`Avatar de ${player.playername}`}
                     />
                     <div class="player-name">{player.playername}</div>

@@ -1,3 +1,5 @@
+import {PB_URL} from "../utils/constantes";
+
 export function slugify(str: string | null | undefined): string {
     return (str || "")
         .normalize("NFD")
@@ -21,4 +23,21 @@ export function isMinecraftPlayer(player: { expand?: { platform?: { name?: strin
 // Lien vers la page joueur adaptée à la plateforme du compte
 export function playerPageHref(player: { playername: string, expand?: { platform?: { name?: string } } }): string {
     return `/joueurs/${isSteamPlayer(player) ? "steam" : "minecraft"}/${slugify(player.playername)}`;
+}
+
+type PlayerImages = { id: string, collectionId?: string, playername: string, head?: string, skin?: string };
+
+// URL d'un fichier PocketBase du joueur, ou null si le champ n'est pas encore rempli par l'API
+function playerFileUrl(player: PlayerImages, file?: string): string | null {
+    return file && player.collectionId ? `${PB_URL}/api/files/${player.collectionId}/${player.id}/${file}` : null;
+}
+
+// Tête du joueur stockée sur PocketBase (repli sur mc-heads tant que l'API ne l'a pas remplie)
+export function playerHeadUrl(player: PlayerImages, size: number): string {
+    return playerFileUrl(player, player.head) ?? `https://mc-heads.net/avatar/${player.playername}/${size}`;
+}
+
+// Skin du joueur stocké sur PocketBase (repli sur mc-heads tant que l'API ne l'a pas rempli)
+export function playerSkinUrl(player: PlayerImages, size: number): string {
+    return playerFileUrl(player, player.skin) ?? `https://mc-heads.net/body/${player.playername}/${size}`;
 }
