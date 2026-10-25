@@ -220,7 +220,13 @@ const PlayerClassement: React.FC<Props> = ({
                                                 return (
                                                     <div className="flex items-center gap-3">
                                                         <img
-                                                            src={`https://mc-heads.net/avatar/${player.uuid}/28`}
+                                                            src={player.head}
+                                                            onError={(e) => {
+                                                                // Fichier PocketBase supprimé après un changement de skin : repli unique sur mc-heads
+                                                                if (player.headFallback && e.currentTarget.src !== player.headFallback) {
+                                                                    e.currentTarget.src = player.headFallback;
+                                                                }
+                                                            }}
                                                             alt={player.playername}
                                                             width={28}
                                                             height={28}

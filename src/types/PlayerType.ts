@@ -1,6 +1,7 @@
 // Type des données joueur
 export type PlayerType = {
     id: string;
+    collectionId?: string;
     discord_user: string | null;
     discord_tag: string | null;
     platform: string;
@@ -11,6 +12,9 @@ export type PlayerType = {
     // Renseignés pour les comptes Steam
     avatar_url?: string;
     profile_url?: string;
+    // Fichiers PocketBase remplis par l'API pour les comptes Minecraft
+    skin?: string;
+    head?: string;
     expand?: {
         platform?: { id: string; name: string };
     };

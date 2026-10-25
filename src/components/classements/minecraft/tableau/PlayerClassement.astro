@@ -6,6 +6,7 @@ import {
     type Server, type PlayerStats
 } from "../../../../utils/stats";
 import {ApiFetcher} from "../../../../utils/API/apiFetcher";
+import {mcHeadsHeadUrl, playerHeadUrl} from "../../../../formater/JoueurFormater";
 import {SERVERS, PLAYERS, PLAYERS_STATS} from "../../../../utils/constantes";
 
 const { jeu } = Astro.props;
@@ -52,6 +53,8 @@ let playersRaw: PlayerStats[] = statsRaw.map(stat => {
     return {
         playername: player ? player.playername : "Inconnu",
         uuid: stat.account_id,
+        head: player ? playerHeadUrl(player, 28) : "",
+        headFallback: player ? mcHeadsHeadUrl(player.playername, 28) : "",
         tmps_jeu: Number(stat.playtime) || 0,
         nb_mort: Number(stat.deaths) || 0,
         nb_kills: Number(stat.mob_kills) || 0,
