@@ -1,0 +1,90 @@
+---
+import {mcHeadsBodyUrl} from "../../../formater/JoueurFormater";
+
+interface Props {
+    texture: string | null;
+    playername: string;
+}
+
+const {texture, playername} = Astro.props;
+const fallback = mcHeadsBodyUrl(playername, 128);
+const alt = `Avatar de ${playername}`;
+---
+
+{texture ? (
+    <>
+    <canvas
+        role="img"
+        class="skin-3d"
+        width="220"
+        height="380"
+        data-skin={texture}
+        data-fallback={fallback}
+        data-alt={alt}
+        aria-label={alt}
+    ></canvas>
+    <noscript>
+        <style is:inline>.skin-3d { display: none; }</style>
+        <img src={fallback} alt={alt} style="display: inline;" />
+    </noscript>
+    </>
+) : (
+    <img src={fallback} alt={alt} style="display: inline;" />
+)}
+
+<style>
+    .skin-3d {
+        touch-action: pan-y;
+        display: inline-block;
+    }
+</style>
+
+<script>
+    function showFallback(canvas: HTMLCanvasElement) {
+        const img = document.createElement("img");
+        img.src = canvas.dataset.fallback ?? "";
+        img.alt = canvas.dataset.alt ?? "";
+        img.style.display = "inline";
+        canvas.replaceWith(img);
+    }
+
+    async function initSkinViewers() {
+        const canvases = document.querySelectorAll<HTMLCanvasElement>("canvas.skin-3d");
+        if (canvases.length === 0) return;
+
+        let lib: typeof import("skinview3d");
+        try {
+            lib = await import("skinview3d");
+        } catch (e) {
+            console.warn("skinview3d: import impossible", e);
+            canvases.forEach(showFallback);
+            return;
+        }
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        canvases.forEach((canvas) => {
+            let viewer: InstanceType<typeof lib.SkinViewer> | undefined;
+            try {
+                // Vue de face par défaut, comme l'ancienne image ; on peut tourner le skin en glissant
+                viewer = new lib.SkinViewer({canvas, width: canvas.width, height: canvas.height});
+                viewer.controls.enableZoom = false;
+                if (!reduceMotion) {
+                    viewer.animation = new lib.IdleAnimation();
+                }
+                const v = viewer;
+                viewer.loadSkin(canvas.dataset.skin as string, {model: "auto-detect"}).catch((e: unknown) => {
+                    console.warn("skinview3d: texture illisible", e);
+                    v.dispose();
+                    showFallback(canvas);
+                });
+            } catch (e) {
+                console.warn("skinview3d: initialisation impossible", e);
+                viewer?.dispose();
+                showFallback(canvas);
+            }
+        });
+    }
+
+    initSkinViewers();
+</script>
