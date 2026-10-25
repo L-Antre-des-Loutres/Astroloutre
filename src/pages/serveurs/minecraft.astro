@@ -2,12 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import Banner from "../../components/sections/layout/Banner.astro";
 import LargeTransitionSection from "../../components/sections/common/transitions/LargeTransitionSection.astro";
+import TransitionSection from "../../components/sections/common/transitions/TransitionSection.astro";
 import type {ServeurType} from "../../types/ServeurType.ts";
 import {slugify} from "../../formater/JoueurFormater.ts";
 import GameServerVignette from "../../components/ui/vignettes/GameServerVignette.astro";
 
 import {ApiFetcher} from "../../utils/API/apiFetcher";
-import {SERVERS, PB_URL} from "../../utils/constantes";
+import {ACTIVE_SERVERS, SERVERS, PB_URL} from "../../utils/constantes";
 
 const jeu = 'minecraft';
 
@@ -15,6 +16,11 @@ const jeu = 'minecraft';
 const serversRaw = await ApiFetcher.getAllRecords<ServeurType>(SERVERS, {
     expand: 'platform',
     sort: '-is_enabled'
+});
+
+// Adresses de connexion (uniquement les champs utiles : la collection contient aussi les accès RCON)
+const activeServers = await ApiFetcher.getAllRecords<{ server: string; host: string }>(ACTIVE_SERVERS, {
+    fields: 'server,host'
 });
 
 const data = serversRaw
@@ -25,8 +31,12 @@ const data = serversRaw
     .map(item => ({
         ...item,
         // Construction de l'URL de l'image PocketBase si c'est une image stockée, sinon image par défaut
-        image: item.image ? `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.image}` : "/banner/minecraft/nos_serveurs.webp"
+        image: item.image ? `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.image}` : "/banner/minecraft/nos_serveurs.webp",
+        ip: activeServers.find(a => a.server === item.id)?.host ?? null
     }));
+
+const serveursActifs = data.filter(item => item.is_enabled);
+const serveursDesactives = data.filter(item => !item.is_enabled);
 ---
 
 <Layout>
@@ -36,12 +46,25 @@ const data = serversRaw
 <LargeTransitionSection title="%Nos serveurs% ![https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg]" invertedBackground/>
 
 <div class="grid-container">
-    {data.map((item: ServeurType) => (
+    {serveursActifs.map((item) => (
         <a href={'/serveurs/' + jeu + "/" + slugify(item.name)} class="card-link">
-            <GameServerVignette image={item.image} image_alt="Server Image" title={item.name} paragraph={item.description} version={item.version} jeu="minecraft" type={item.type} actif={item.is_enabled}/>
+            <GameServerVignette image={item.image} image_alt="Server Image" title={item.name} paragraph={item.description} version={item.version} jeu="minecraft" type={item.type} actif={item.is_enabled} ip={item.ip}/>
         </a>
     ))}
 </div>
+
+{serveursDesactives.length > 0 && (
+    <>
+        <TransitionSection title="Serveurs #désactivés#"/>
+        <div class="grid-container">
+            {serveursDesactives.map((item) => (
+                <a href={'/serveurs/' + jeu + "/" + slugify(item.name)} class="card-link">
+                    <GameServerVignette image={item.image} image_alt="Server Image" title={item.name} paragraph={item.description} version={item.version} jeu="minecraft" type={item.type} actif={item.is_enabled} ip={null}/>
+                </a>
+            ))}
+        </div>
+    </>
+)}
 
 </Layout>
 
