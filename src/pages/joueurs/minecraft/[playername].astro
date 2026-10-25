@@ -1,13 +1,15 @@
 ---
 import Banner from "../../../components/sections/layout/Banner.astro";
 import PlayerStats from "../../../components/sections/joueurs/PlayerStatsData.astro";
-import {isMinecraftPlayer, playerHeadUrl, playerSkinUrl, slugify} from "../../../formater/JoueurFormater";
+import {fallbackOnError, isMinecraftPlayer, mcHeadsHeadUrl, playerHeadUrl, slugify} from "../../../formater/JoueurFormater";
 import Layout from "../../../layouts/Layout.astro";
 import {formatDate} from "../../../formater/DateFormater";
 import BadgeList from "../../../components/sections/badges/BadgeList.astro";
 import TransitionSection from "../../../components/sections/common/transitions/TransitionSection.astro";
 import {formatMinecraftPlayTime} from "../../../formater/MinecraftPlayTimeFormater";
 import PokemonTeams from "../../../components/sections/joueurs/PokemonTeams.astro";
+import SkinViewer3D from "../../../components/sections/joueurs/SkinViewer3D.astro";
+import {fetchSkinDataUrl} from "../../../utils/skinTexture";
 
 import {ApiFetcher} from "../../../utils/API/apiFetcher";
 import type {PlayerStatsType, PlayerType} from "../../../types/PlayerType.ts";
@@ -18,6 +20,7 @@ import {DISCORD_USERS, PLAYERS, PLAYERS_STATS} from "../../../utils/constantes.t
 const joueur: PlayerType | undefined = Astro.props.joueur;
 const allRelatedPbIds: string[] = Astro.props.allRelatedPbIds || [];
 const playtime = Astro.props.playtime || 0;
+const skinTexture = joueur ? await fetchSkinDataUrl(joueur) : null;
 
 // Génération des pages statiques
 export async function getStaticPaths() {
@@ -111,7 +114,7 @@ if (!joueur || !joueur.discord_user) {
         <div class="profile-container">
             <div class="profile-details">
                 <div class="avatar">
-                    <img src={playerSkinUrl(joueur, 128)} alt={`Avatar de ${joueur.playername}`} style="display: inline;" />
+                    <SkinViewer3D texture={skinTexture} playername={joueur.playername} />
                 </div>
 
                 {/* Colonne 2 : Informations */}
@@ -189,7 +192,7 @@ if (!joueur || !joueur.discord_user) {
                     <button class="button-copy super-button golden-outline"
                             data-uuid={joueur.account_id}>
                         <span style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                        <img src={playerHeadUrl(joueur, 32)} alt="Copier UUID"/>
+                        <img src={playerHeadUrl(joueur, 32)} onerror={fallbackOnError(mcHeadsHeadUrl(joueur.playername, 32))} width="32" height="32" alt="Copier UUID"/>
                         <span>Copier UUID</span>
                             </span>
                     </button>
@@ -265,7 +268,8 @@ if (!joueur || !joueur.discord_user) {
             width: 100%;
         }
 
-        .avatar img {
+        .avatar img,
+        .avatar canvas {
             border-radius: 8px;
         }
 

@@ -1,5 +1,5 @@
 ---
-import {playerHeadUrl, slugify} from "../../../formater/JoueurFormater.ts";
+import {fallbackOnError, mcHeadsHeadUrl, playerHeadUrl, slugify} from "../../../formater/JoueurFormater.ts";
 import {ApiFetcher} from "../../../utils/API/apiFetcher";
 import {PLAYERS, PLAYERS_STATS} from "../../../utils/constantes";
 import type {PlayerType} from "../../../types/PlayerType";
@@ -18,7 +18,8 @@ const playerDataList = statsForThisServer.map(stat => {
     return {
         playername: player ? player.playername : "Inconnu",
         account_id: stat.account_id,
-        head: player ? playerHeadUrl(player, 64) : ""
+        head: player ? playerHeadUrl(player, 64) : "",
+        headFallback: player ? mcHeadsHeadUrl(player.playername, 64) : ""
     };
 }).filter(p => p.playername !== "Inconnu");
 
@@ -37,6 +38,7 @@ const uniquePlayers = playerDataList.filter(el => {
                     <img
                             class="player-avatar"
                             src={player.head}
+                            onerror={fallbackOnError(player.headFallback)}
                             alt={`Avatar de ${player.playername}`}
                     />
                     <div class="player-name">{player.playername}</div>

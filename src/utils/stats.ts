@@ -14,6 +14,7 @@ export type PlayerStats = {
     playername: string;
     uuid: string;
     head?: string;
+    headFallback?: string;
     tmps_jeu: number;
     nb_mort: number;
     nb_kills: number;

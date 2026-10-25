@@ -32,12 +32,23 @@ function playerFileUrl(player: PlayerImages, file?: string): string | null {
     return file && player.collectionId ? `${PB_URL}/api/files/${player.collectionId}/${player.id}/${file}` : null;
 }
 
-// Tête du joueur stockée sur PocketBase (repli sur mc-heads tant que l'API ne l'a pas remplie)
-export function playerHeadUrl(player: PlayerImages, size: number): string {
-    return playerFileUrl(player, player.head) ?? `https://mc-heads.net/avatar/${player.playername}/${size}`;
+// Tête du joueur générée par mc-heads
+export function mcHeadsHeadUrl(playername: string, size: number): string {
+    return `https://mc-heads.net/avatar/${encodeURIComponent(playername)}/${size}`;
 }
 
-// Skin du joueur stocké sur PocketBase (repli sur mc-heads tant que l'API ne l'a pas rempli)
-export function playerSkinUrl(player: PlayerImages, size: number): string {
-    return playerFileUrl(player, player.skin) ?? `https://mc-heads.net/body/${player.playername}/${size}`;
+// Corps du joueur généré par mc-heads
+export function mcHeadsBodyUrl(playername: string, size: number): string {
+    return `https://mc-heads.net/body/${encodeURIComponent(playername)}/${size}`;
+}
+
+// Tête du joueur stockée sur PocketBase (repli sur mc-heads tant que l'API ne l'a pas remplie)
+export function playerHeadUrl(player: PlayerImages, size: number): string {
+    return playerFileUrl(player, player.head) ?? mcHeadsHeadUrl(player.playername, size);
+}
+
+// Attribut onerror : quand l'API change un skin, PocketBase supprime l'ancien fichier encore référencé
+// par le site statique jusqu'au prochain build, on bascule alors une seule fois sur mc-heads
+export function fallbackOnError(url: string): string {
+    return `this.onerror=null;this.src='${url}'`;
 }
